@@ -91,6 +91,10 @@ jobs:
           npx --yes serve@latest out -l 3000 &
           npx --yes wait-on@latest http://localhost:3000/en/ --timeout 60000
 
+      # Pure logic, so it needs no browser and runs before the slow suites.
+      - name: Chat matcher tests
+        run: npm run test:chat
+
       - name: Theme persistence tests
         run: node tests/theme.spec.mjs
         env:

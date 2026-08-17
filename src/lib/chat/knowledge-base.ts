@@ -24,9 +24,30 @@ export type KnowledgeEntry = {
 
 export const knowledgeBase: KnowledgeEntry[] = [
   {
+    /* People greet an assistant before asking anything — answering "I do not
+       know" to "hello" makes it look broken before it has been given a real
+       question. This entry steers the conversation instead. */
+    id: 'greeting',
+    keywords: {
+      pl: ['czesc', 'cześć', 'hej', 'witam', 'dzien dobry', 'dzień dobry', 'siema', 'halo'],
+      en: ['hi', 'hello', 'hey', 'good morning', 'good evening', 'greetings'],
+    },
+    answer: {
+      pl: 'Cześć. Odpowiadam na pytania o składanie komputera — podstawki i platformy, chłodzenie, pamięć, zasilacze, montaż i problemy przy pierwszym uruchomieniu. Zapytaj konkretnie, a wskażę ci też właściwą stronę.',
+      en: 'Hello. I answer questions about building a PC — sockets and platforms, cooling, memory, power supplies, assembly and first-boot problems. Ask something specific and I will point you at the right page too.',
+    },
+    links: [
+      {
+        href: '/poradniki/assembly-step-by-step',
+        label: { pl: 'Składanie krok po kroku', en: 'Building step by step' },
+      },
+      { href: '/faq', label: { pl: 'Częste pytania', en: 'Common questions' } },
+    ],
+  },
+  {
     id: 'socket-choice',
     keywords: {
-      pl: ['podstawka', 'socket', 'am5', 'am4', 'lga', 'platforma', 'gniazdo'],
+      pl: ['podstawka', 'socket', 'am5', 'am4', 'lga', 'platforma', 'gniazdo', 'plyta glowna'],
       en: ['socket', 'am5', 'am4', 'lga', 'platform', 'motherboard socket'],
     },
     answer: {
@@ -51,6 +72,8 @@ export const knowledgeBase: KnowledgeEntry[] = [
         'wiatrak',
         'wentylator',
         'temperatura',
+        'powietrze',
+        'woda',
       ],
       en: ['cooling', 'cooler', 'liquid', 'air', 'aio', 'radiator', 'temperature', 'thermal'],
     },
@@ -138,7 +161,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
   {
     id: 'thermal-paste',
     keywords: {
-      pl: ['pasta', 'termopasta', 'termoprzewodząca', 'smarowanie'],
+      pl: ['pasta', 'termopasta', 'termoprzewodzaca', 'smarowanie', 'nalozyc'],
       en: ['paste', 'thermal paste', 'compound', 'tim'],
     },
     answer: {
@@ -205,8 +228,12 @@ export const knowledgeBase: KnowledgeEntry[] = [
   {
     id: 'budget',
     keywords: {
-      pl: ['budżet', 'budzet', 'ile kosztuje', 'cena', 'tanio', 'najtańszy', 'najtanszy', 'za ile'],
-      en: ['budget', 'how much', 'price', 'cost', 'cheap', 'cheapest', 'affordable'],
+      pl: ['budzet', 'kosztuje', 'koszt', 'cena', 'tanio', 'najtanszy', 'za ile', 'wydac'],
+      /* "how much" is deliberately absent: it opens "how much RAM", "how much
+         wattage" and "how much thermal paste" just as often as it opens a
+         question about money, and it pulled those to this entry. The
+         money-specific terms below carry the intent on their own. */
+      en: ['budget', 'how much money', 'price', 'cost', 'cheap', 'cheapest', 'affordable', 'spend'],
     },
     answer: {
       pl: 'W zestawie do grania karta graficzna decyduje o liczbie klatek najbardziej i zwykle powinna pochłonąć 35–45 procent budżetu. Nie tnij natomiast zasilacza ani chłodzenia — te podzespoły przetrwają kilka kolejnych zestawów. Mamy cztery gotowe listy zakupowe w różnych budżetach, każda z uzasadnieniem doboru części.',
@@ -236,25 +263,105 @@ export const knowledgeBase: KnowledgeEntry[] = [
 /**
  * Scores a question against one entry.
  *
- * Longer keywords score higher, because a match on "dual channel" is far more
- * informative about intent than a match on "ram". Whole-word matches score
- * above substring matches for the same reason — "ram" inside "program" should
- * not pull the answer about memory.
+ * A whole-word match earns a flat bonus plus the term length; a bare substring
+ * earns only the length. That ordering matters: "dual channel" appearing in a
+ * question says far more about intent than "ram" does, while "ram" inside
+ * "program" should say nothing at all.
  */
 function scoreEntry(entry: KnowledgeEntry, question: string, locale: Locale): number {
-  const normalized = ` ${question.toLowerCase()} `;
+  /* Both sides go through the same normalisation, so diacritics, casing and
+     punctuation cannot cause a mismatch between them. */
+  const normalized = normalise(question);
   let score = 0;
 
   for (const keyword of entry.keywords[locale]) {
-    const term = keyword.toLowerCase();
-    if (normalized.includes(` ${term} `) || normalized.includes(` ${term},`)) {
-      score += term.length * 2;
-    } else if (normalized.includes(term)) {
+    const term = normalise(keyword);
+    if (!term) continue;
+
+    /* Whole-word match on a stem, allowing an inflected ending.
+
+       Polish inflects heavily and the endings are long: "podstawka" becomes
+       "podstawkę", "pasta" becomes "pastę", "kosztuje" from "koszt". Matching
+       on the stem — the keyword minus its own ending — with up to four
+       trailing letters covers the real cases.
+
+       The prefix boundary stays strict. That asymmetry is the whole point:
+       allowing letters before the term is what would let "ram" match inside
+       "program", which is exactly the false positive to avoid. */
+    const stem = stemFor(term);
+    if (new RegExp(`(?:^| )${escapeRegExp(stem)}\\p{L}{0,4}(?: |$)`, 'u').test(normalized)) {
+      score += WHOLE_WORD_SCORE + term.length;
+      continue;
+    }
+
+    /* Substring match anywhere, worth much less: it is weak evidence, so it
+       contributes but rarely clears the threshold on its own. */
+    if (normalized.includes(term)) {
       score += term.length;
     }
   }
 
   return score;
+}
+
+/**
+ * Flat bonus for matching a whole word.
+ *
+ * Term length alone was the original scoring rule, and it had a fatal flaw: a
+ * three-letter keyword like "ram" could never reach the threshold no matter how
+ * exactly it matched, so "Ile RAM-u potrzebuję?" — one of the suggested
+ * questions — returned "I do not know". A flat bonus makes a genuine word match
+ * count for something regardless of how short the word is, with length still
+ * breaking ties in favour of the more specific term.
+ */
+const WHOLE_WORD_SCORE = 8;
+
+/**
+ * Normalises text for matching: lower case, Polish diacritics folded, and
+ * punctuation reduced to spaces.
+ *
+ * Folding diacritics means someone typing "pamiec" without diacritics — which
+ * is extremely common — matches "pamięć". Punctuation becoming a space is what
+ * lets a trailing question mark or a hyphen in "RAM-u" stop blocking a match.
+ */
+const DIACRITIC_FOLD: Record<string, string> = {
+  ą: 'a',
+  ć: 'c',
+  ę: 'e',
+  ł: 'l',
+  ń: 'n',
+  ó: 'o',
+  ś: 's',
+  ź: 'z',
+  ż: 'z',
+};
+
+function normalise(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[ąćęłńóśźż]/g, (char) => DIACRITIC_FOLD[char] ?? char)
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim();
+}
+
+/**
+ * Trims a likely inflectional ending off a keyword, leaving a stem to match on.
+ *
+ * Crude by design: a real stemmer is far more machinery than a keyword matcher
+ * needs, and the failure mode of over-trimming is a slightly looser match, not
+ * a wrong answer — the threshold still has to be cleared.
+ *
+ * Short words are left alone. Trimming "ram" or "psu" would leave a fragment
+ * that matches almost anything.
+ */
+function stemFor(term: string): string {
+  if (term.length <= 5 || term.includes(' ')) return term;
+  return term.replace(/(?:ami|ach|om|ie|y|a|e|i|u|o)$/u, '');
+}
+
+/** Escapes a term for safe use inside a constructed regular expression. */
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /**

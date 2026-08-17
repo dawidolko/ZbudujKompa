@@ -26,7 +26,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mjs,css,md,json,yml}\"",
     "test:theme": "node tests/theme.spec.mjs",
     "test:a11y": "node tests/a11y.spec.mjs",
-    "test": "npm run test:theme && npm run test:interaction && npm run test:a11y",
+    "test": "npm run test:chat && npm run test:theme && npm run test:interaction && npm run test:a11y",
     "verify": "npm run check:secrets && npm run typecheck && npm run lint && npm run format:check && npm run build",
     "docker:build": "docker compose -f .tools/docker/docker-compose.yml build",
     "docker:up": "docker compose -f .tools/docker/docker-compose.yml up -d",
@@ -37,7 +37,8 @@
     "brand:assets": "node .tools/scripts/generate-brand-assets.mjs",
     "chat:key": "node .tools/scripts/setup-chat-key.mjs",
     "check:secrets": "node .tools/scripts/check-secrets.mjs",
-    "photos:fetch": "node .tools/scripts/fetch-photos.mjs"
+    "photos:fetch": "node .tools/scripts/fetch-photos.mjs",
+    "test:chat": "node --experimental-strip-types tests/chat.spec.mjs"
   },
   "dependencies": {
     "next": "16.3.0",
