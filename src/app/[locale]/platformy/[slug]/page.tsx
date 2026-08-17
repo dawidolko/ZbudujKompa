@@ -9,10 +9,10 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { getSocket, sockets } from '@/lib/sockets';
-import { builds, buildTotal } from '@/lib/builds';
+import { builds } from '@/lib/builds';
 import { getOpinionsFor } from '@/lib/knowledge';
 import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
-import { formatPrice, t } from '@/lib/utils';
+import { t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
 
@@ -213,9 +213,7 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
                   title={t(build.name, typedLocale)}
                   description={t(build.tagline, typedLocale)}
                   footer={
-                    <p className="font-display text-lg font-bold text-text-primary">
-                      {formatPrice(buildTotal(build), typedLocale)}
-                    </p>
+                    <p className="text-xs text-text-muted">{t(build.useCase, typedLocale)}</p>
                   }
                 />
               </li>

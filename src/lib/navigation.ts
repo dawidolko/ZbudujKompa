@@ -150,6 +150,14 @@ export const navigation: NavSection[] = [
         },
       },
       {
+        href: '/zrodla',
+        label: { pl: 'Źródła i linki', en: 'Sources and links' },
+        description: {
+          pl: 'Dokumentacja producentów i niezależne testy',
+          en: 'Manufacturer documentation and independent testing',
+        },
+      },
+      {
         href: '/faq',
         label: { pl: 'Najczęstsze pytania', en: 'Frequently asked questions' },
         description: {
@@ -177,6 +185,8 @@ export function allContentRoutes(): string[] {
     '/narzedzia/zasilacz',
     '/slownik',
     '/faq',
+    '/zrodla',
+    '/mapa-serwisu',
     '/o-serwisie',
     '/kontakt',
   ];
@@ -202,6 +212,8 @@ export const footerNavigation: { label: Localized; links: NavLink[] }[] = [
       { href: '/o-serwisie', label: { pl: 'O serwisie', en: 'About' } },
       { href: '/slownik', label: { pl: 'Słownik', en: 'Glossary' } },
       { href: '/faq', label: { pl: 'FAQ', en: 'FAQ' } },
+      { href: '/zrodla', label: { pl: 'Źródła', en: 'Sources' } },
+      { href: '/mapa-serwisu', label: { pl: 'Mapa serwisu', en: 'Site map' } },
       { href: '/kontakt', label: { pl: 'Kontakt', en: 'Contact' } },
       { href: '/dostepnosc', label: { pl: 'Dostępność', en: 'Accessibility' } },
     ],

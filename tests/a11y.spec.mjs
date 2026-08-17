@@ -38,6 +38,12 @@ const PAGES = [
   '/pl/o-serwisie/',
   '/pl/kontakt/',
   '/pl/dostepnosc/',
+  '/pl/mapa-serwisu/',
+  '/pl/zrodla/',
+  '/en/zrodla/',
+  '/pl/poradniki/instalacja-windows/',
+  '/pl/poradniki/instalacja-linux/',
+  '/pl/poradniki/sterowniki-po-instalacji/',
 ];
 
 const browser = await chromium.launch();

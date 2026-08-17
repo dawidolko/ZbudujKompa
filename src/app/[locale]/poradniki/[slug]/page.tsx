@@ -9,6 +9,7 @@ import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ClockIcon, WrenchIcon } from '@/components/ui/Icon';
 import { GuideChecklist } from '@/components/guides/GuideChecklist';
+import { StepDiagram } from '@/components/diagrams';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { getGuide, guides, readingTime } from '@/lib/guides';
@@ -165,6 +166,10 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
                     {t(step.body, typedLocale).map((paragraph, paragraphIndex) => (
                       <p key={paragraphIndex}>{paragraph}</p>
                     ))}
+                  </div>
+
+                  <div className="max-w-[46rem]">
+                    <StepDiagram guideSlug={guide.slug} stepId={step.id} locale={typedLocale} />
                   </div>
 
                   {step.warning ? (

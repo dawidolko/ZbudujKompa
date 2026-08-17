@@ -8,8 +8,6 @@ import type { Build } from './types';
  * price feed — a static site cannot promise current pricing, so it says so
  * rather than pretending otherwise.
  */
-const PRICED_ON = '2026-08-01';
-
 export const builds: Build[] = [
   {
     slug: 'budget-1080p',
@@ -40,8 +38,6 @@ export const builds: Build[] = [
       {
         kind: 'cpu',
         name: 'AMD Ryzen 5 5600',
-        price: 49900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Sześć rdzeni, które wciąż spokojnie wystarczają do grania. Najlepszy stosunek ceny do wydajności na AM4.',
           en: 'Six cores that remain entirely sufficient for gaming. The best price-to-performance option on AM4.',
@@ -50,8 +46,6 @@ export const builds: Build[] = [
       {
         kind: 'motherboard',
         name: 'MSI B550-A PRO',
-        price: 45900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'B550 daje PCIe 4.0 dla karty i dysku, bez wentylatora na mostku. Solidne zasilanie w tej cenie.',
           en: 'B550 provides PCIe 4.0 for the GPU and drive with no chipset fan. Solid power delivery at this price.',
@@ -60,8 +54,6 @@ export const builds: Build[] = [
       {
         kind: 'ram',
         name: 'Kingston Fury Beast 16 GB (2×8) DDR4-3200 CL16',
-        price: 22900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Dwa moduły zamiast jednego to wymóg, nie preferencja — dual channel daje realny wzrost wydajności.',
           en: 'Two modules rather than one is a requirement, not a preference — dual channel gives a real performance gain.',
@@ -70,8 +62,6 @@ export const builds: Build[] = [
       {
         kind: 'gpu',
         name: 'AMD Radeon RX 7600 8 GB',
-        price: 119900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Karta dobrana pod 1080p. 8 GB pamięci to dziś minimum, przy którym nowe gry nie zaczynają się zacinać.',
           en: 'Sized for 1080p. 8 GB of memory is the point below which newer games begin to stutter.',
@@ -80,8 +70,6 @@ export const builds: Build[] = [
       {
         kind: 'storage',
         name: 'Kingston NV3 1 TB NVMe PCIe 4.0',
-        price: 24900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: '1 TB to praktyczne minimum — dwie duże gry potrafią zająć połowę tej przestrzeni.',
           en: '1 TB is the practical minimum — two large games can fill half of it.',
@@ -90,8 +78,6 @@ export const builds: Build[] = [
       {
         kind: 'psu',
         name: 'be quiet! System Power 10 550 W 80+ Bronze',
-        price: 24900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Na zasilaczu nie oszczędzaj. 550 W daje zapas, a marka z certyfikatem chroni resztę podzespołów.',
           en: 'The power supply is not the place to economise. 550 W leaves headroom, and a certified unit protects everything else.',
@@ -100,8 +86,6 @@ export const builds: Build[] = [
       {
         kind: 'case',
         name: 'Fractal Design Focus 2',
-        price: 27900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Dobry przepływ powietrza i sensowne prowadzenie kabli. Przy pierwszym składaniu to realna różnica.',
           en: 'Good airflow and sensible cable routing. On a first build that makes a genuine difference.',
@@ -110,8 +94,6 @@ export const builds: Build[] = [
       {
         kind: 'cooler',
         name: 'Thermalright Assassin X 120 R SE',
-        price: 8900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Tańsze i cichsze od chłodzenia z zestawu, a montaż zajmuje kilka minut.',
           en: 'Cheaper and quieter than the boxed cooler, and it takes a few minutes to fit.',
@@ -148,8 +130,6 @@ export const builds: Build[] = [
       {
         kind: 'cpu',
         name: 'AMD Ryzen 7 7800X3D',
-        price: 159900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Dodatkowa pamięć podręczna 3D V-Cache daje w grach przewagę, której nie widać w testach syntetycznych.',
           en: 'The extra 3D V-Cache gives a gaming advantage that synthetic benchmarks do not show.',
@@ -158,8 +138,6 @@ export const builds: Build[] = [
       {
         kind: 'motherboard',
         name: 'ASUS TUF Gaming B650-PLUS WiFi',
-        price: 79900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'B650 z solidnym zasilaniem i Wi-Fi. Do zestawu bez ekstremalnego OC nie potrzeba droższego chipsetu.',
           en: 'B650 with solid power delivery and Wi-Fi. Without extreme overclocking, a pricier chipset adds nothing.',
@@ -168,8 +146,6 @@ export const builds: Build[] = [
       {
         kind: 'ram',
         name: 'G.Skill Flare X5 32 GB (2×16) DDR5-6000 CL30',
-        price: 44900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'DDR5-6000 CL30 to punkt, w którym Ryzen 7000 pracuje najefektywniej. Szybsze moduły dają już niewiele.',
           en: 'DDR5-6000 CL30 is where Ryzen 7000 runs most efficiently. Faster kits add very little beyond it.',
@@ -178,8 +154,6 @@ export const builds: Build[] = [
       {
         kind: 'gpu',
         name: 'NVIDIA GeForce RTX 5070 12 GB',
-        price: 279900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Dobrana pod 1440p z zapasem na ray tracing i skalowanie obrazu.',
           en: 'Sized for 1440p with headroom for ray tracing and upscaling.',
@@ -188,8 +162,6 @@ export const builds: Build[] = [
       {
         kind: 'storage',
         name: 'Samsung 990 EVO Plus 2 TB NVMe',
-        price: 59900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: '2 TB pozwala trzymać bibliotekę gier bez ciągłego odinstalowywania.',
           en: '2 TB is enough to keep a game library without constantly uninstalling things.',
@@ -198,8 +170,6 @@ export const builds: Build[] = [
       {
         kind: 'psu',
         name: 'be quiet! Pure Power 12 M 750 W 80+ Gold',
-        price: 44900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: '750 W z zapasem na chwilowe skoki poboru karty graficznej. Modularne kable ułatwiają montaż.',
           en: '750 W with headroom for the transient spikes modern GPUs produce. Modular cables ease assembly.',
@@ -208,8 +178,6 @@ export const builds: Build[] = [
       {
         kind: 'case',
         name: 'Fractal Design North',
-        price: 62900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Dobry przepływ powietrza w obudowie, która nie wygląda jak sprzęt gamingowy.',
           en: 'Good airflow in a case that does not look like gaming hardware.',
@@ -218,8 +186,6 @@ export const builds: Build[] = [
       {
         kind: 'cooler',
         name: 'Thermalright Peerless Assassin 120 SE',
-        price: 15900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Podwójna wieża, która dorównuje chłodnicom 240 mm za ułamek ceny.',
           en: 'A dual tower that matches 240 mm liquid coolers for a fraction of the price.',
@@ -256,8 +222,6 @@ export const builds: Build[] = [
       {
         kind: 'cpu',
         name: 'Intel Core Ultra 7 265K',
-        price: 169900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Dużo rdzeni do zadań wielowątkowych plus wbudowany NPU przydatny w narzędziach z funkcjami AI.',
           en: 'Plenty of cores for multi-threaded work, plus an on-package NPU useful in AI-assisted tools.',
@@ -266,8 +230,6 @@ export const builds: Build[] = [
       {
         kind: 'motherboard',
         name: 'MSI MAG Z890 TOMAHAWK WIFI',
-        price: 129900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Z890 daje pełne OC pamięci i dużo linii PCIe pod kilka dysków NVMe naraz.',
           en: 'Z890 allows full memory overclocking and provides lanes for several NVMe drives at once.',
@@ -276,8 +238,6 @@ export const builds: Build[] = [
       {
         kind: 'ram',
         name: 'Corsair Vengeance 64 GB (2×32) DDR5-6000 CL30',
-        price: 94900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: '64 GB to próg, powyżej którego montaż 4K i render przestają korzystać z pliku wymiany.',
           en: '64 GB is the threshold above which 4K editing and rendering stop hitting the swap file.',
@@ -286,8 +246,6 @@ export const builds: Build[] = [
       {
         kind: 'gpu',
         name: 'NVIDIA GeForce RTX 5070 Ti 16 GB',
-        price: 399900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: '16 GB pamięci karty to realne ograniczenie w renderze 3D — tu jest go wystarczająco.',
           en: 'GPU memory is a real ceiling in 3D rendering — 16 GB provides enough of it.',
@@ -296,8 +254,6 @@ export const builds: Build[] = [
       {
         kind: 'storage',
         name: 'Samsung 990 PRO 2 TB NVMe PCIe 4.0',
-        price: 79900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Wysoka prędkość zapisu ma znaczenie przy pracy na dużych plikach wideo.',
           en: 'Sustained write speed matters when working with large video files.',
@@ -306,8 +262,6 @@ export const builds: Build[] = [
       {
         kind: 'psu',
         name: 'Seasonic Focus GX-850 850 W 80+ Gold',
-        price: 64900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: '850 W daje zapas przy jednoczesnym obciążeniu procesora i karty przez wiele godzin.',
           en: '850 W leaves headroom when the CPU and GPU are both loaded for hours at a time.',
@@ -316,8 +270,6 @@ export const builds: Build[] = [
       {
         kind: 'case',
         name: 'Fractal Design Define 7',
-        price: 89900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Wyciszona obudowa z miejscem na wiele dysków — istotne przy archiwum materiałów.',
           en: 'A sound-dampened case with room for many drives — useful when archiving footage.',
@@ -326,8 +278,6 @@ export const builds: Build[] = [
       {
         kind: 'cooler',
         name: 'Arctic Liquid Freezer III 360',
-        price: 42900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Chłodnica 360 mm utrzymuje taktowania przy obciążeniu wszystkich rdzeni przez godziny.',
           en: 'A 360 mm radiator holds clocks through hours of all-core load.',
@@ -364,8 +314,6 @@ export const builds: Build[] = [
       {
         kind: 'cpu',
         name: 'AMD Ryzen 7 9700X',
-        price: 149900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Niski pobór mocy przy dobrej wydajności — kluczowe, gdy chłodzenie jest ograniczone wymiarami.',
           en: 'Low power draw with good performance — critical when cooling is constrained by dimensions.',
@@ -374,8 +322,6 @@ export const builds: Build[] = [
       {
         kind: 'motherboard',
         name: 'ASRock B650I Lightning WiFi',
-        price: 99900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Mini-ITX na AM5 z solidnym zasilaniem. Wybór w tym formacie jest wąski, więc płytę dobiera się pierwszą.',
           en: 'Mini-ITX on AM5 with solid power delivery. The choice in this form factor is narrow, so the board is picked first.',
@@ -384,8 +330,6 @@ export const builds: Build[] = [
       {
         kind: 'ram',
         name: 'G.Skill Flare X5 32 GB (2×16) DDR5-6000 CL30',
-        price: 44900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Niskie moduły bez wysokich radiatorów — w ITX każdy milimetr nad płytą jest zajęty.',
           en: 'Low-profile modules without tall heat spreaders — in ITX every millimetre above the board is spoken for.',
@@ -394,8 +338,6 @@ export const builds: Build[] = [
       {
         kind: 'gpu',
         name: 'NVIDIA GeForce RTX 5070 12 GB (wersja 2-slot)',
-        price: 289900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Wersja dwuslotowa jest tu wymogiem — sprawdź długość karty w specyfikacji obudowy przed zakupem.',
           en: 'A two-slot version is mandatory here — check the card length against the case specification before buying.',
@@ -404,8 +346,6 @@ export const builds: Build[] = [
       {
         kind: 'storage',
         name: 'Samsung 990 EVO Plus 2 TB NVMe',
-        price: 59900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'W tej obudowie nie ma miejsca na dyski 3,5 cala — cała przestrzeń to NVMe.',
           en: 'There is no room for 3.5-inch drives in this case — all storage is NVMe.',
@@ -414,8 +354,6 @@ export const builds: Build[] = [
       {
         kind: 'psu',
         name: 'Corsair SF750 750 W SFX 80+ Platinum',
-        price: 89900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Format SFX jest tu koniecznością. Zasilacze SFX są droższe od ATX o tej samej mocy.',
           en: 'The SFX form factor is mandatory here. SFX units cost more than ATX of the same wattage.',
@@ -424,8 +362,6 @@ export const builds: Build[] = [
       {
         kind: 'case',
         name: 'Fractal Design Terra',
-        price: 79900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Objętość poniżej 11 litrów przy zachowaniu miejsca na kartę dwuslotową.',
           en: 'Under 11 litres of volume while still fitting a two-slot graphics card.',
@@ -434,8 +370,6 @@ export const builds: Build[] = [
       {
         kind: 'cooler',
         name: 'Noctua NH-L12S',
-        price: 32900,
-        pricedOn: PRICED_ON,
         rationale: {
           pl: 'Niskoprofilowe chłodzenie zaprojektowane pod obudowy, w których wieża się nie mieści.',
           en: 'A low-profile cooler designed for cases where a tower simply will not fit.',
@@ -447,17 +381,4 @@ export const builds: Build[] = [
 
 export function getBuild(slug: string): Build | undefined {
   return builds.find((build) => build.slug === slug);
-}
-
-/** Sums the indicative part prices of a build, in grosz. */
-export function buildTotal(build: Build): number {
-  return build.parts.reduce((total, part) => total + part.price, 0);
-}
-
-/** The most recent date any part in the build was priced. */
-export function buildPricedOn(build: Build): string {
-  return build.parts.reduce(
-    (latest, part) => (part.pricedOn > latest ? part.pricedOn : latest),
-    build.parts[0]?.pricedOn ?? '',
-  );
 }

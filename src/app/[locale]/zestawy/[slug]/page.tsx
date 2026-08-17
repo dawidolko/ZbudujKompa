@@ -8,11 +8,11 @@ import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
-import { builds, buildPricedOn, buildTotal, getBuild } from '@/lib/builds';
+import { builds, getBuild } from '@/lib/builds';
 import { getSocket } from '@/lib/sockets';
 import { getOpinionsFor } from '@/lib/knowledge';
 import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
-import { formatDate, formatPrice, t } from '@/lib/utils';
+import { t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
 
@@ -54,7 +54,6 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
   const dict = getDictionary(typedLocale);
 
   const socket = getSocket(build.socketSlug);
-  const total = buildTotal(build);
   const buildOpinions = getOpinionsFor(build.slug);
 
   const difficultyLabel = {
@@ -92,9 +91,11 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
       <section className="container-page pb-12">
         <dl className="grid gap-px overflow-hidden rounded-lg border border-border-subtle bg-border-subtle sm:grid-cols-3">
           <div className="bg-surface p-4">
-            <dt className="text-xs tracking-wide text-text-muted uppercase">{dict.builds.total}</dt>
+            <dt className="text-xs tracking-wide text-text-muted uppercase">
+              {dict.platform.socket}
+            </dt>
             <dd className="mt-1 font-display text-2xl font-extrabold text-text-primary">
-              {formatPrice(total, typedLocale)}
+              {socket?.name ?? '—'}
             </dd>
           </div>
           <div className="bg-surface p-4">
@@ -142,9 +143,6 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
                 <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                   {dict.builds.why}
                 </th>
-                <th scope="col" className="px-4 py-3 text-right font-semibold text-text-primary">
-                  {dict.builds.price}
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -163,33 +161,11 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
                   <td className="px-4 py-3 text-text-secondary">
                     {t(part.rationale, typedLocale)}
                   </td>
-                  <td className="px-4 py-3 text-right font-medium whitespace-nowrap text-text-primary">
-                    {formatPrice(part.price, typedLocale)}
-                  </td>
                 </tr>
               ))}
             </tbody>
-            <tfoot>
-              <tr className="border-t-2 border-border-default bg-bg-muted">
-                <th
-                  scope="row"
-                  colSpan={3}
-                  className="px-4 py-3 text-left font-bold text-text-primary"
-                >
-                  {dict.builds.total}
-                </th>
-                <td className="px-4 py-3 text-right font-display text-lg font-extrabold whitespace-nowrap text-text-primary">
-                  {formatPrice(total, typedLocale)}
-                </td>
-              </tr>
-            </tfoot>
           </table>
         </div>
-
-        <p className="mt-4 max-w-3xl text-xs leading-relaxed text-text-muted">
-          {dict.builds.pricedOn(formatDate(buildPricedOn(build), typedLocale))} ·{' '}
-          {dict.builds.priceNote}
-        </p>
       </section>
 
       {/* ---- Platform cross-link ---- */}

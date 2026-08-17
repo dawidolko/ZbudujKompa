@@ -6,9 +6,9 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
-import { builds, buildTotal } from '@/lib/builds';
+import { builds } from '@/lib/builds';
 import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
-import { formatPrice, t } from '@/lib/utils';
+import { t } from '@/lib/utils';
 
 type Params = { locale: string };
 
@@ -68,22 +68,11 @@ export default async function BuildsPage({ params }: { params: Promise<Params> }
                 }
                 title={t(build.name, typedLocale)}
                 description={t(build.tagline, typedLocale)}
-                footer={
-                  <>
-                    <p className="font-display text-xl font-bold text-text-primary">
-                      {formatPrice(buildTotal(build), typedLocale)}
-                    </p>
-                    <p className="mt-1 text-xs text-text-muted">{t(build.useCase, typedLocale)}</p>
-                  </>
-                }
+                footer={<p className="text-xs text-text-muted">{t(build.useCase, typedLocale)}</p>}
               />
             </li>
           ))}
         </ul>
-
-        <p className="mt-6 max-w-3xl text-xs leading-relaxed text-text-muted">
-          {dict.builds.priceNote}
-        </p>
       </section>
     </>
   );

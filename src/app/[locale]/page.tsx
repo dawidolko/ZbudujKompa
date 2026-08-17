@@ -9,10 +9,10 @@ import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, type Locale } from '@/i18n/config';
 import { sockets } from '@/lib/sockets';
 import { coolingProfiles } from '@/lib/cooling';
-import { builds, buildTotal } from '@/lib/builds';
+import { builds } from '@/lib/builds';
 import { guides } from '@/lib/guides';
 import { faq, opinions } from '@/lib/knowledge';
-import { formatPrice, t } from '@/lib/utils';
+import { t } from '@/lib/utils';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -229,11 +229,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 }
                 title={t(build.name, typedLocale)}
                 description={t(build.tagline, typedLocale)}
-                footer={
-                  <p className="font-display text-lg font-bold text-text-primary">
-                    {formatPrice(buildTotal(build), typedLocale)}
-                  </p>
-                }
+                footer={<p className="text-xs text-text-muted">{t(build.useCase, typedLocale)}</p>}
               />
             </li>
           ))}
