@@ -167,9 +167,24 @@ The assistant in the bottom-right corner matches questions against a knowledge b
 compiled into the site ([`src/lib/chat/knowledge-base.ts`](src/lib/chat/knowledge-base.ts)).
 It works offline, costs nothing per message, and needs no API key.
 
-An optional LLM can be layered on top by setting three build-time variables — see
-[`.env.example`](.env.example). Local answers remain the fallback whenever a request
-fails, so the assistant never stops working.
+An optional LLM can be layered on top. Get a free key from
+[Groq](https://console.groq.com/keys), [OpenRouter](https://openrouter.ai/keys) or
+[Cerebras](https://cloud.cerebras.ai), then:
+
+```bash
+npm run chat:key -- gsk_your_key_here          # groq is the default
+npm run chat:key -- sk-or-your_key openrouter  # or another provider
+npm run dev                                    # restart to pick it up
+```
+
+The script verifies the key against the provider before writing anything, so a typo is
+reported immediately rather than showing up later as an assistant that has quietly
+fallen back to local answers. It writes `.env.local`, which is gitignored.
+
+Recent turns are sent as context so follow-up questions work, requests time out after
+15 seconds, and **any failure falls back to the local answer** — the assistant never
+stops working. Links attached to an answer always come from the local knowledge base,
+so the model cannot invent URLs.
 
 > **On API keys:** this is a static export. There is no server to hold a secret, so a
 > key set at build time is readable by anyone who opens the JavaScript bundle. Only use

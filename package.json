@@ -34,7 +34,8 @@
     "docker:logs": "docker compose -f .tools/docker/docker-compose.yml logs -f",
     "docker:dev": "docker compose -f .tools/docker/docker-compose.yml --profile dev up",
     "test:interaction": "node tests/interaction.spec.mjs",
-    "brand:assets": "node .tools/scripts/generate-brand-assets.mjs"
+    "brand:assets": "node .tools/scripts/generate-brand-assets.mjs",
+    "chat:key": "node .tools/scripts/setup-chat-key.mjs"
   },
   "dependencies": {
     "next": "16.3.0",
