@@ -38,12 +38,13 @@ files and served by GitHub Pages.
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Platforms** | Five sockets across AMD and Intel, each with chipset tables, memory and PCIe support, and an honest verdict on whether it is still worth buying |
 | **Cooling**   | Five cooling classes compared on heat handled, noise and price, with the trade-offs stated plainly                                              |
-| **Builds**    | Four complete reference builds with per-part reasoning and dated indicative prices                                                              |
-| **Guides**    | Seven step-by-step guides with anchored steps, timings, tool lists and printable checklists                                                     |
+| **Builds**    | Six reference builds — gaming, creator, ITX, HTPC and home server — each with the reasoning for every part                                      |
+| **Guides**    | Fourteen step-by-step guides covering assembly, Windows and Linux installation, BIOS, tuning and maintenance                                    |
 | **Tools**     | A compatibility checker and a PSU calculator, both computing live in the browser                                                                |
-| **Assistant** | A docked chat assistant answering from a local knowledge base — no API key required                                                             |
+| **Assistant** | A docked chat assistant answering from a local knowledge base — no API key required, optional LLM on top                                        |
 | **Bilingual** | Every route exists in both languages with correct `hreflang`, `lang` and canonical URLs                                                         |
 | **Themes**    | Light and dark, persisted across navigation and language changes, applied before first paint                                                    |
+| **Visuals**   | Technical SVG diagrams, licensed photography, background patterns and scroll animations that degrade to nothing without JavaScript              |
 
 ## Quick start
 
@@ -77,8 +78,8 @@ with a read-only root filesystem. See [`.tools/docker/`](.tools/docker/).
 ├── .github/workflows/     CI: verify → test → build → deploy to Pages
 ├── .tools/
 │   ├── docker/            Dockerfile, compose, nginx config, security headers
-│   └── scripts/           Brand asset generation
-├── public/                Icons, OG image, manifest, CNAME
+│   └── scripts/           Brand assets, photo pipeline, secret scanning
+├── public/                Icons, OG image, photos, manifest, CNAME
 ├── src/
 │   ├── app/
 │   │   ├── [locale]/      Every content route, both languages
@@ -88,7 +89,9 @@ with a read-only root filesystem. See [`.tools/docker/`](.tools/docker/).
 │   ├── components/
 │   │   ├── brand/         Logo and mark
 │   │   ├── chat/          Build assistant
+│   │   ├── diagrams/      Technical SVG drawings
 │   │   ├── glossary/      Filterable glossary
+│   │   ├── motion/        Scroll-reveal wrapper
 │   │   ├── guides/        Downloadable checklist
 │   │   ├── layout/        Header, footer, breadcrumbs, theme
 │   │   ├── seo/           JSON-LD
@@ -186,10 +189,34 @@ Recent turns are sent as context so follow-up questions work, requests time out 
 stops working. Links attached to an answer always come from the local knowledge base,
 so the model cannot invent URLs.
 
-> **On API keys:** this is a static export. There is no server to hold a secret, so a
-> key set at build time is readable by anyone who opens the JavaScript bundle. Only use
-> a free-tier key you are willing to treat as public and can rotate, and set a spending
-> limit on it. Never put a paid key here.
+### Enabling the chat on GitHub Pages
+
+**Read this before adding a key.** This is a static export on a public repository.
+A GitHub Secret is secret in the _Actions log_, not in the _built site_ — the value is
+compiled into the JavaScript bundle and served to every visitor. Anyone who opens
+DevTools can read it. There is no way around this on static hosting; the only way to
+truly hide a key is a server or proxy to hold it.
+
+That makes exactly one configuration acceptable here:
+
+1. A **free-tier key** from [Groq](https://console.groq.com/keys),
+   [OpenRouter](https://openrouter.ai/keys) or [Cerebras](https://cloud.cerebras.ai).
+2. With a **hard spending limit** set in the provider dashboard.
+3. That you are **prepared to rotate** if it gets abused.
+
+Then add three repository secrets under **Settings → Secrets and variables → Actions**:
+
+| Secret         | Value (Groq example)                              |
+| -------------- | ------------------------------------------------- |
+| `CHAT_API_URL` | `https://api.groq.com/openai/v1/chat/completions` |
+| `CHAT_API_KEY` | your key, e.g. `gsk_…`                            |
+| `CHAT_MODEL`   | `llama-3.3-70b-versatile`                         |
+
+Push to `main` and the deploy workflow picks them up. Leaving them unset is fully
+supported — the assistant falls back to its built-in knowledge base and works normally.
+
+`npm run check:secrets` scans tracked files for keys and runs first in CI, so a key
+pasted into a committed file fails the build instead of being published.
 
 ## Data and sourcing
 

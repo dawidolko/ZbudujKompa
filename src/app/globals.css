@@ -482,6 +482,14 @@
     margin-inline: auto;
   }
 
+  /* =========================================================================
+     Background patterns
+
+     All are drawn with gradients rather than images: they cost no request,
+     scale to any size, and follow the theme because they reference the same
+     border and accent tokens as everything else.
+     ========================================================================= */
+
   /* Subtle circuit-board texture used behind hero and section headers */
   .bg-circuit-grid {
     background-image:
@@ -490,6 +498,183 @@
     background-size: 44px 44px;
     background-position: center;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
+  }
+
+  /* Circuit traces: right-angled paths with junction dots, echoing a PCB.
+     Used behind large headers where a plain grid reads as too plain. */
+  .bg-circuit-traces {
+    background-image:
+      linear-gradient(var(--border-subtle) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px),
+      radial-gradient(circle at 0 0, var(--accent) 2px, transparent 2.5px),
+      radial-gradient(circle at 88px 88px, var(--accent) 2px, transparent 2.5px);
+    background-size:
+      88px 88px,
+      88px 88px,
+      88px 88px,
+      88px 88px;
+    opacity: 0.5;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 30%, transparent 100%);
+  }
+
+  /* Diagonal hatch, for callout and quote surfaces that need texture without
+     competing with the text on top of them. */
+  .bg-hatch {
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--border-subtle) 0,
+      var(--border-subtle) 1px,
+      transparent 1px,
+      transparent 10px
+    );
+    opacity: 0.4;
+  }
+
+  /* Dot matrix, a lighter alternative to the grid for full-width sections. */
+  .bg-dots {
+    background-image: radial-gradient(circle, var(--border-default) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(to bottom, #000, transparent);
+  }
+
+  /* Soft accent glow anchored behind a hero. Two offset radial gradients read
+     as depth without the banding a single large one produces. */
+  .bg-accent-glow {
+    background-image:
+      radial-gradient(ellipse 50% 40% at 20% 0%, var(--accent-subtle), transparent 70%),
+      radial-gradient(ellipse 40% 50% at 85% 20%, var(--accent-subtle), transparent 70%);
+  }
+
+  /* =========================================================================
+     Animation
+
+     Every animation here is an enhancement layered on content that is already
+     visible and readable without it. The reduced-motion block at the end of
+     the base layer neutralises all of them, so nothing below is load-bearing.
+     ========================================================================= */
+
+  /* Reveal on scroll. The element starts shifted and transparent, and the
+     `is-visible` class — added by an IntersectionObserver — animates it in.
+     Content is fully readable before the script runs, and the no-JS fallback
+     at the end of this block guarantees it stays that way. */
+  /* Gated on `.js`, which the head script adds. Without scripting the hidden
+     state is never applied at all, so the content simply renders — rather
+     than starting invisible and waiting for an observer that will never run. */
+  .js .reveal {
+    opacity: 0;
+    translate: 0 1.25rem;
+    transition:
+      opacity 600ms var(--ease-out-quint),
+      translate 600ms var(--ease-out-quint);
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* Staggering. Applied as a small per-item delay so a grid resolves in
+     sequence rather than snapping in as one block. Capped at six because
+     beyond that the last item feels like it is lagging rather than flowing. */
+  .reveal-delay-1 {
+    transition-delay: 60ms;
+  }
+  .reveal-delay-2 {
+    transition-delay: 120ms;
+  }
+  .reveal-delay-3 {
+    transition-delay: 180ms;
+  }
+  .reveal-delay-4 {
+    transition-delay: 240ms;
+  }
+  .reveal-delay-5 {
+    transition-delay: 300ms;
+  }
+  .reveal-delay-6 {
+    transition-delay: 360ms;
+  }
+
+  /* Lift on hover, for cards. Kept small — 2px and a shadow — because a large
+     movement under the pointer makes a grid feel unstable. */
+  .hover-lift {
+    transition:
+      translate 220ms var(--ease-out-quint),
+      box-shadow 220ms var(--ease-out-quint),
+      border-color 220ms var(--ease-out-quint);
+  }
+  @media (hover: hover) {
+    .hover-lift:hover {
+      translate: 0 -2px;
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  /* Accent underline that grows from the left on hover. */
+  .link-underline {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 260ms var(--ease-out-quint);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 2px;
+  }
+
+  /* Slow drift for hero background patterns. The movement is deliberately
+     small and very slow: enough to feel alive, not enough to distract from
+     the text sitting on top of it. */
+  @keyframes drift {
+    from {
+      background-position:
+        0 0,
+        0 0;
+    }
+    to {
+      background-position:
+        88px 88px,
+        88px 88px;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-drift {
+      animation: drift 90s linear infinite;
+    }
+  }
+
+  /* Pulse for the assistant launcher, drawing the eye once on arrival. */
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 var(--accent-ring);
+    }
+    70% {
+      box-shadow: 0 0 0 14px transparent;
+    }
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-pulse-ring {
+      animation: pulse-ring 2.4s var(--ease-out-quint) 3;
+    }
+  }
+
+  /* Counting bar used in comparison visualisations. */
+  @keyframes grow-bar {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-grow-bar {
+      transform-origin: left center;
+      animation: grow-bar 800ms var(--ease-out-quint) both;
+    }
   }
 
   /* Long-form article typography. Written as explicit rules rather than a

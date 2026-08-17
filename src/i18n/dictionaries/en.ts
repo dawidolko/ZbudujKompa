@@ -68,6 +68,7 @@ export const en = {
     opinionsTitle: 'What builders say',
     opinionsLead:
       'Collected from public forums, each with its source and the date it was gathered so you can check the original.',
+    finishedCaption: 'The end result: a machine you assembled and understand.',
   },
 
   platform: {
