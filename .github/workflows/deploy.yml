@@ -1,0 +1,140 @@
+name: Deploy to GitHub Pages
+
+# =============================================================================
+# Builds the static export and publishes it to GitHub Pages.
+#
+# Quality gates run before the deploy job, and the deploy depends on them, so a
+# build that fails typecheck, lint, formatting or accessibility never reaches
+# production.
+# =============================================================================
+
+on:
+  push:
+    branches: [main]
+  # Allows a manual redeploy from the Actions tab without an empty commit.
+  workflow_dispatch:
+
+# Least privilege: the deploy needs to write Pages and mint an OIDC token to
+# prove which workflow produced the artefact. It needs nothing else.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. `cancel-in-progress: false` because cancelling a
+# half-finished Pages deployment can leave the site in an inconsistent state.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  # ---- Static analysis ------------------------------------------------------
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+  # ---- Build and behavioural tests -----------------------------------------
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+      - name: Serve the export
+        # Backgrounded, then waited on — the tests need the server listening
+        # before they start, and a fixed sleep would be a race either way.
+        run: |
+          npx --yes serve@latest out -l 3000 &
+          npx --yes wait-on@latest http://localhost:3000/en/ --timeout 60000
+
+      - name: Theme persistence tests
+        run: node tests/theme.spec.mjs
+        env:
+          TEST_BASE_URL: http://localhost:3000
+
+      - name: Accessibility audit
+        run: node tests/a11y.spec.mjs
+        env:
+          TEST_BASE_URL: http://localhost:3000
+
+  # ---- Build the artefact that is actually published -----------------------
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build
+        run: npm run build
+        env:
+          # The custom domain in CNAME, so absolute URLs in metadata and the
+          # sitemap point at the real site rather than at localhost.
+          NEXT_PUBLIC_SITE_URL: https://zbudujkompa.dawidolko.pl
+          NEXT_PUBLIC_BASE_PATH: ''
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  # ---- Publish --------------------------------------------------------------
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

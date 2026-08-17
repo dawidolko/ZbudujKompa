@@ -1,0 +1,23 @@
+# Build output and dependencies are recreated inside the image.
+node_modules
+.next
+out
+coverage
+
+# Version control and CI metadata are not needed to build.
+.git
+.github
+
+# Local environment files must never reach the image.
+.env
+.env.*
+!.env.example
+
+# Editor and OS noise
+.DS_Store
+.idea
+.vscode
+
+# Test artefacts
+playwright-report
+test-results
