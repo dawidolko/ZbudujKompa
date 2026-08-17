@@ -127,29 +127,57 @@ export function Header({ locale }: { locale: Locale }) {
               const expanded = openSection === section.id;
 
               return (
-                <li key={section.id} className="relative">
-                  <button
-                    type="button"
-                    ref={(node) => {
-                      if (node) triggerRefs.current.set(section.id, node);
-                      else triggerRefs.current.delete(section.id);
-                    }}
-                    aria-expanded={expanded}
-                    aria-controls={panelId}
-                    onClick={() => setOpenSection(expanded ? null : section.id)}
+                <li
+                  key={section.id}
+                  className="relative"
+                  /* Hover opens the panel, which is what a pointer user
+                     expects from a menu bar. It is only an enhancement: the
+                     link works on click and the button works on keyboard, so
+                     nothing here depends on hovering. */
+                  onMouseEnter={() => setOpenSection(section.id)}
+                  onMouseLeave={() => setOpenSection(null)}
+                >
+                  <div
                     className={cn(
-                      'inline-flex h-10 items-center gap-1 rounded-sm px-3 text-sm font-semibold',
-                      'transition-colors focus-ring',
+                      'flex items-center rounded-sm transition-colors',
                       isCurrent(section.href)
                         ? 'text-text-brand'
                         : 'text-text-secondary hover:bg-bg-muted hover:text-text-primary',
                     )}
                   >
-                    {t(section.label, locale)}
-                    <ChevronDownIcon
-                      className={cn('size-4 transition-transform', expanded && 'rotate-180')}
-                    />
-                  </button>
+                    {/* The section label is a real link, so the overview page
+                        is reachable in one click instead of only through the
+                        panel — the top level was previously a dead end. */}
+                    <Link
+                      href={localePath(locale, section.href)}
+                      aria-current={isCurrent(section.href) ? 'page' : undefined}
+                      className="inline-flex h-10 items-center rounded-sm pr-1 pl-3 text-sm font-semibold focus-ring"
+                    >
+                      {t(section.label, locale)}
+                    </Link>
+
+                    {/* Expanding is a separate control from navigating: one
+                        button that did both could not be operated by keyboard
+                        without choosing which action to sacrifice. */}
+                    <button
+                      type="button"
+                      ref={(node) => {
+                        if (node) triggerRefs.current.set(section.id, node);
+                        else triggerRefs.current.delete(section.id);
+                      }}
+                      aria-expanded={expanded}
+                      aria-controls={panelId}
+                      aria-label={`${t(section.label, locale)} — ${
+                        expanded ? dict.nav.closeMenu : dict.nav.openMenu
+                      }`}
+                      onClick={() => setOpenSection(expanded ? null : section.id)}
+                      className="inline-flex h-10 items-center rounded-sm pr-2 pl-1 focus-ring"
+                    >
+                      <ChevronDownIcon
+                        className={cn('size-4 transition-transform', expanded && 'rotate-180')}
+                      />
+                    </button>
+                  </div>
 
                   <div
                     id={panelId}
@@ -158,8 +186,13 @@ export function Header({ locale }: { locale: Locale }) {
                        while the panel is closed. */
                     hidden={!expanded}
                     className={cn(
-                      'absolute top-full left-0 mt-1 w-80 rounded-lg border border-border-subtle',
+                      'absolute top-full left-0 w-80 rounded-lg border border-border-subtle',
                       'bg-surface-raised p-2 shadow-lg',
+                      /* The panel sits flush against the trigger rather than
+                         offset by a margin: a visual gap would drop the hover
+                         and close the menu as the pointer crossed it. Padding
+                         supplies the spacing instead. */
+                      'mt-0',
                     )}
                   >
                     <ul className="flex flex-col">
