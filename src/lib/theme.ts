@@ -85,6 +85,12 @@ export const themeInitScript = `
 
   root.setAttribute('data-theme', theme);
   root.style.colorScheme = theme;
+
+  /* Scroll-reveal animations start their elements transparent, which would
+     leave the page blank if scripting were unavailable. The class is added
+     here — in a script that only runs when scripting works — so the reveal
+     styles apply only when something exists to undo them. */
+  root.classList.add('js');
 })();
 `.trim();
 

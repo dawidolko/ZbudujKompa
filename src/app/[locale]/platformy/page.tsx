@@ -49,7 +49,12 @@ export default async function PlatformsPage({ params }: { params: Promise<Params
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.platform.title }]} />
-      <PageHeader title={dict.platform.title} lead={dict.platform.lead} />
+      <PageHeader
+        photo="motherboard-closeup"
+        locale={typedLocale}
+        title={dict.platform.title}
+        lead={dict.platform.lead}
+      />
 
       {vendors.map((vendor) => (
         <section key={vendor.key} className="container-page pb-14">

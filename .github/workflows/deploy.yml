@@ -46,6 +46,11 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      # The repository is public, so a leaked key would be world-readable.
+      # This runs before anything else, so a bad push fails fast.
+      - name: Scan for committed credentials
+        run: npm run check:secrets
+
       - name: Typecheck
         run: npm run typecheck
 
@@ -86,6 +91,10 @@ jobs:
           npx --yes serve@latest out -l 3000 &
           npx --yes wait-on@latest http://localhost:3000/en/ --timeout 60000
 
+      # Pure logic, so it needs no browser and runs before the slow suites.
+      - name: Chat matcher tests
+        run: npm run test:chat
+
       - name: Theme persistence tests
         run: node tests/theme.spec.mjs
         env:
@@ -120,6 +129,22 @@ jobs:
           # The custom domain in CNAME, so absolute URLs in metadata and the
           # sitemap point at the real site rather than at localhost.
           NEXT_PUBLIC_SITE_URL: https://zbudujkompa.dawidolko.pl
+
+          # Optional chat provider.
+          #
+          # READ THIS BEFORE SETTING THESE SECRETS. This is a static export.
+          # Anything passed here is compiled into the JavaScript bundle and
+          # served publicly — a GitHub Secret is secret in the Actions log, not
+          # in the built site. Anyone who opens the page can read the key.
+          #
+          # Only ever put a free-tier key here, with a hard spending limit,
+          # that you are prepared to rotate if it is abused. Never a paid key.
+          #
+          # Leaving these unset is a supported configuration: the assistant
+          # falls back to its built-in knowledge base and works normally.
+          NEXT_PUBLIC_CHAT_API_URL: ${{ secrets.CHAT_API_URL }}
+          NEXT_PUBLIC_CHAT_API_KEY: ${{ secrets.CHAT_API_KEY }}
+          NEXT_PUBLIC_CHAT_MODEL: ${{ secrets.CHAT_MODEL }}
           NEXT_PUBLIC_BASE_PATH: ''
 
       - name: Upload artifact

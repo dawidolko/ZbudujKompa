@@ -42,7 +42,12 @@ export default async function FaqPage({ params }: { params: Promise<Params> }) {
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.faq.title }]} />
-      <PageHeader title={dict.faq.title} lead={dict.faq.lead} />
+      <PageHeader
+        photo="memory-modules"
+        locale={typedLocale}
+        title={dict.faq.title}
+        lead={dict.faq.lead}
+      />
 
       <section className="container-page pb-14">
         <ul className="container-prose mx-0 space-y-3">

@@ -100,7 +100,12 @@ export default async function AccessibilityPage({ params }: { params: Promise<Pa
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.accessibility.title }]} />
-      <PageHeader title={dict.accessibility.title} lead={dict.accessibility.lead} />
+      <PageHeader
+        photo="memory-modules"
+        locale={typedLocale}
+        title={dict.accessibility.title}
+        lead={dict.accessibility.lead}
+      />
 
       <section className="container-page pb-14">
         <div className="container-prose mx-0 prose-guide">

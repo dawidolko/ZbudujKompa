@@ -53,7 +53,12 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.sitemap.title }]} />
-      <PageHeader title={dict.sitemap.title} lead={dict.sitemap.lead} />
+      <PageHeader
+        photo="workstation"
+        locale={typedLocale}
+        title={dict.sitemap.title}
+        lead={dict.sitemap.lead}
+      />
 
       <section className="container-page pb-14">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

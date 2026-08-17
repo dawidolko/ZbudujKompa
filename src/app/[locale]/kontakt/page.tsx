@@ -63,7 +63,12 @@ export default async function ContactPage({ params }: { params: Promise<Params> 
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.contact.title }]} />
-      <PageHeader title={dict.contact.title} lead={dict.contact.lead} />
+      <PageHeader
+        photo="workstation"
+        locale={typedLocale}
+        title={dict.contact.title}
+        lead={dict.contact.lead}
+      />
 
       <section className="container-page pb-14">
         <ul className="grid max-w-3xl gap-4 sm:grid-cols-2">

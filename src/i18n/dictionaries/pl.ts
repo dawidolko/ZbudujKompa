@@ -70,6 +70,7 @@ export const pl: Dictionary = {
     opinionsTitle: 'Co mówią składający',
     opinionsLead:
       'Zebrane z publicznych forów, każda opinia ze źródłem i datą zebrania, żebyś mógł sprawdzić oryginał.',
+    finishedCaption: 'Efekt końcowy: komputer, który sam złożyłeś i rozumiesz.',
   },
 
   platform: {

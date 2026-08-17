@@ -49,7 +49,12 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.cooling.title }]} />
-      <PageHeader title={dict.cooling.title} lead={dict.cooling.lead} />
+      <PageHeader
+        photo="cooling-fans"
+        locale={typedLocale}
+        title={dict.cooling.title}
+        lead={dict.cooling.lead}
+      />
 
       {/* ---- Comparison table ---- */}
       <section className="container-page pb-12">

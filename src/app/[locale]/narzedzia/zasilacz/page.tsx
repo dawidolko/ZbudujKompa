@@ -47,6 +47,8 @@ export default async function PsuPage({ params }: { params: Promise<Params> }) {
         ]}
       />
       <PageHeader
+        photo="cables-tidy"
+        locale={typedLocale}
         eyebrow={dict.tools.title}
         title={dict.tools.psu.title}
         lead={dict.tools.psu.lead}

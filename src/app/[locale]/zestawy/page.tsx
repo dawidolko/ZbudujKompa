@@ -49,7 +49,12 @@ export default async function BuildsPage({ params }: { params: Promise<Params> }
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.builds.title }]} />
-      <PageHeader title={dict.builds.title} lead={dict.builds.lead} />
+      <PageHeader
+        photo="workstation"
+        locale={typedLocale}
+        title={dict.builds.title}
+        lead={dict.builds.lead}
+      />
 
       <section className="container-page pb-14">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

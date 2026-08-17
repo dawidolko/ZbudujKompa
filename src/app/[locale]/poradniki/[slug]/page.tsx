@@ -85,6 +85,8 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
       />
 
       <PageHeader
+        photo="hero-workbench"
+        locale={typedLocale}
         eyebrow={dict.guides.category[guide.category]}
         title={t(guide.title, typedLocale)}
         lead={t(guide.summary, typedLocale)}

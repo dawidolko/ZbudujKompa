@@ -50,6 +50,8 @@ export default async function CompatibilityPage({ params }: { params: Promise<Pa
         ]}
       />
       <PageHeader
+        photo="motherboard-closeup"
+        locale={typedLocale}
         eyebrow={dict.tools.title}
         title={dict.tools.compatibility.title}
         lead={dict.tools.compatibility.lead}

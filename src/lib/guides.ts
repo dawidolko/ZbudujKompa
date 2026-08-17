@@ -1,5 +1,6 @@
 import type { Guide, GuideCategory } from './types';
 import { osGuides } from './guides/windows';
+import { tuningGuides } from './guides/tuning';
 
 /**
  * Guide catalogue.
@@ -590,7 +591,7 @@ const hardwareGuides: Guide[] = [
  * installer flow can change with a single feature update — but they are one
  * list to every consumer.
  */
-export const guides: Guide[] = [...hardwareGuides, ...osGuides];
+export const guides: Guide[] = [...hardwareGuides, ...osGuides, ...tuningGuides];
 
 export function getGuide(slug: string): Guide | undefined {
   return guides.find((guide) => guide.slug === slug);

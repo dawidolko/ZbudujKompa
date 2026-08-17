@@ -73,6 +73,8 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
       />
 
       <PageHeader
+        photo="cables-tidy"
+        locale={typedLocale}
         eyebrow={build.vendor === 'amd' ? 'AMD' : 'Intel'}
         title={t(build.name, typedLocale)}
         lead={t(build.description, typedLocale)}

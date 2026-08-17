@@ -1,10 +1,13 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ButtonLink } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { StarIcon } from '@/components/ui/Icon';
+import { ArrowRightIcon, StarIcon } from '@/components/ui/Icon';
+import { Photo, PhotoFigure } from '@/components/ui/Photo';
+import { Reveal } from '@/components/motion/Reveal';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, type Locale } from '@/i18n/config';
 import { sockets } from '@/lib/sockets';
@@ -32,7 +35,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       {/* ---- Hero ---- */}
       <section className="relative overflow-hidden border-b border-border-subtle">
-        <div className="bg-circuit-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        {/* Three stacked layers build the depth: a photograph held well back so
+            it never competes with the text, a soft accent glow, and the circuit
+            trace pattern drifting slowly across the top. */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <Photo
+            slug="hero-workbench"
+            locale={typedLocale}
+            priority
+            sizes="100vw"
+            ratio="auto"
+            className="absolute inset-0 h-full opacity-[0.14]"
+            imgClassName="object-cover"
+          />
+          <div className="bg-accent-glow absolute inset-0" />
+          <div className="bg-circuit-traces animate-drift absolute inset-0" />
+        </div>
 
         <div className="container-page relative py-16 md:py-24 lg:py-28">
           <div className="max-w-3xl">
@@ -83,6 +101,44 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </dl>
           </div>
         </div>
+      </section>
+
+      {/* ---- What the site covers ----
+           A visual break between the hero and the card grids, and the one
+           place on the home page where photographs carry real weight rather
+           than sitting behind text. */}
+      <section className="container-page py-16 md:py-20">
+        <ul className="grid gap-5 md:grid-cols-3">
+          {(
+            [
+              { slug: 'cpu-in-hand', href: '/platformy', label: dict.platform.title, delay: 1 },
+              { slug: 'cooling-fans', href: '/chlodzenie', label: dict.cooling.title, delay: 2 },
+              { slug: 'cables-tidy', href: '/poradniki', label: dict.guides.title, delay: 3 },
+            ] as const
+          ).map((item) => (
+            <Reveal as="li" key={item.slug} delay={item.delay}>
+              <Link
+                href={localePath(typedLocale, item.href)}
+                className="hover-lift group block overflow-hidden rounded-lg border border-border-subtle bg-surface focus-ring"
+              >
+                <Photo
+                  slug={item.slug}
+                  locale={typedLocale}
+                  ratio="16/10"
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  imgClassName="transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+                <span className="font-display flex items-center justify-between gap-2 px-5 py-4 text-lg font-bold text-text-primary">
+                  {item.label}
+                  <ArrowRightIcon
+                    className="size-5 text-accent-fg transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </ul>
       </section>
 
       {/* ---- Platforms ---- */}
@@ -148,8 +204,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* ---- Cooling ---- */}
-      <section className="border-y border-border-subtle bg-bg-subtle">
-        <div className="container-page py-16 md:py-20">
+      <section className="relative border-y border-border-subtle bg-bg-subtle">
+        <div
+          className="bg-dots pointer-events-none absolute inset-0 opacity-40"
+          aria-hidden="true"
+        />
+
+        <div className="container-page relative py-16 md:py-20">
           <SectionHeading
             title={dict.home.coolingTitle}
             lead={dict.home.coolingLead}
@@ -267,6 +328,20 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             ))}
           </ul>
         </div>
+      </section>
+
+      {/* ---- Finished machine ----
+           Closes the page on the thing all of it is aimed at producing. */}
+      <section className="container-page pb-4">
+        <Reveal>
+          <PhotoFigure
+            slug="workstation"
+            locale={typedLocale}
+            ratio="21/9"
+            sizes="100vw"
+            caption={dict.home.finishedCaption}
+          />
+        </Reveal>
       </section>
 
       {/* ---- Opinions ---- */}

@@ -43,7 +43,12 @@ export default async function GlossaryPage({ params }: { params: Promise<Params>
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.glossary.title }]} />
-      <PageHeader title={dict.glossary.title} lead={dict.glossary.lead} />
+      <PageHeader
+        photo="motherboard-closeup"
+        locale={typedLocale}
+        title={dict.glossary.title}
+        lead={dict.glossary.lead}
+      />
 
       <section className="container-page pb-14">
         <GlossarySearch locale={typedLocale} />
