@@ -72,6 +72,8 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
       />
 
       <PageHeader
+        photo="cooling-fans"
+        locale={typedLocale}
         eyebrow={typeLabel[profile.type]}
         title={t(profile.name, typedLocale)}
         lead={t(profile.tagline, typedLocale)}

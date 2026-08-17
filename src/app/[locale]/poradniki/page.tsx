@@ -48,7 +48,12 @@ export default async function GuidesPage({ params }: { params: Promise<Params> }
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.guides.title }]} />
-      <PageHeader title={dict.guides.title} lead={dict.guides.lead} />
+      <PageHeader
+        photo="hero-workbench"
+        locale={typedLocale}
+        title={dict.guides.title}
+        lead={dict.guides.lead}
+      />
 
       {categories.map((category) => {
         const categoryGuides = guides.filter((guide) => guide.category === category);

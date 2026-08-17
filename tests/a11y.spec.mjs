@@ -44,6 +44,11 @@ const PAGES = [
   '/pl/poradniki/instalacja-windows/',
   '/pl/poradniki/instalacja-linux/',
   '/pl/poradniki/sterowniki-po-instalacji/',
+  '/pl/poradniki/ustawienia-bios/',
+  '/pl/poradniki/cichy-komputer/',
+  '/pl/zestawy/htpc-salon/',
+  '/pl/zestawy/serwer-domowy/',
+  '/en/poradniki/ustawienia-bios/',
 ];
 
 const browser = await chromium.launch();

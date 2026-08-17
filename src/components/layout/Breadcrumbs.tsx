@@ -26,7 +26,13 @@ export function Breadcrumbs({ locale, items }: { locale: Locale; items: Crumb[] 
 
   return (
     <>
-      <nav aria-label={dict.nav.breadcrumb} className="container-page pt-6">
+      {/* Negative bottom margin pulls the following PageHeader up so its
+          backdrop starts behind this trail rather than below it — otherwise the
+          hero reads as a detached band with the breadcrumb floating above. */}
+      <nav
+        aria-label={dict.nav.breadcrumb}
+        className="container-page relative z-10 -mb-11 pt-6 md:-mb-14"
+      >
         <ol className="flex flex-wrap items-center gap-1.5 text-sm">
           {trail.map((crumb, index) => {
             const isLast = index === trail.length - 1;

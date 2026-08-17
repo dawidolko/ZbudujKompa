@@ -102,7 +102,12 @@ export default async function AboutPage({ params }: { params: Promise<Params> })
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.about.title }]} />
-      <PageHeader title={dict.about.title} lead={dict.about.lead} />
+      <PageHeader
+        photo="hero-workbench"
+        locale={typedLocale}
+        title={dict.about.title}
+        lead={dict.about.lead}
+      />
 
       <section className="container-page pb-12">
         <dl className="grid gap-px overflow-hidden rounded-lg border border-border-subtle bg-border-subtle sm:grid-cols-3">

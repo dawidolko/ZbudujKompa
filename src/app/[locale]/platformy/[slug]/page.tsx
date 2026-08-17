@@ -77,6 +77,8 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
       />
 
       <PageHeader
+        photo="cpu-in-hand"
+        locale={typedLocale}
         eyebrow={socket.vendor === 'amd' ? 'AMD' : 'Intel'}
         title={socket.name}
         lead={t(socket.tagline, typedLocale)}

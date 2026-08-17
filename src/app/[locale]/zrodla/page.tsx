@@ -51,7 +51,12 @@ export default async function ResourcesPage({ params }: { params: Promise<Params
   return (
     <>
       <Breadcrumbs locale={typedLocale} items={[{ label: dict.resources.title }]} />
-      <PageHeader title={dict.resources.title} lead={dict.resources.lead} />
+      <PageHeader
+        photo="gpu-card"
+        locale={typedLocale}
+        title={dict.resources.title}
+        lead={dict.resources.lead}
+      />
 
       {resourceCategoryOrder.map((category) => {
         const items = getResourcesByCategory(category);
