@@ -377,6 +377,174 @@ export const builds: Build[] = [
       },
     ],
   },
+  {
+    slug: 'htpc-salon',
+    vendor: 'amd',
+    socketSlug: 'am5',
+    difficulty: 'intermediate',
+    name: {
+      pl: 'Komputer do salonu (HTPC)',
+      en: 'Living-room PC (HTPC)',
+    },
+    tagline: {
+      pl: 'Cichy, mały, pod telewizor',
+      en: 'Quiet, small, built for the television',
+    },
+    description: {
+      pl: 'Zestaw obliczony na odtwarzanie filmów w 4K i granie z kanapy, przy poziomie hałasu, który nie przeszkadza w cichych scenach. Priorytetem jest cisza i wymiary, nie surowa wydajność — dlatego procesor z mocną grafiką zintegrowaną i brak osobnej karty graficznej.',
+      en: 'A build for 4K video and couch gaming at a noise level that does not intrude during quiet scenes. Silence and dimensions come before raw performance, hence a processor with strong integrated graphics and no discrete card.',
+    },
+    useCase: {
+      pl: 'Filmy w 4K, granie z kanapy, przeglądanie internetu na telewizorze',
+      en: '4K video, couch gaming, browsing on the television',
+    },
+    expectation: {
+      pl: 'Płynne odtwarzanie każdego materiału 4K wraz z HDR i lekkie granie w 1080p. Do wymagających tytułów trzeba będzie dołożyć kartę graficzną, na którą obudowa ma miejsce.',
+      en: 'Smooth playback of any 4K material including HDR, plus light 1080p gaming. Demanding titles would need a graphics card, for which the case has room.',
+    },
+    parts: [
+      {
+        kind: 'cpu',
+        name: 'AMD Ryzen 7 8700G',
+        rationale: {
+          pl: 'Najmocniejsza grafika zintegrowana na rynku desktopowym. Odtwarza 4K z akceleracją sprzętową i pozwala grać w 1080p bez osobnej karty.',
+          en: 'The strongest integrated graphics available on desktop. It decodes 4K in hardware and games at 1080p with no discrete card at all.',
+        },
+      },
+      {
+        kind: 'motherboard',
+        name: 'ASRock B650M Pro RS',
+        rationale: {
+          pl: 'Micro-ATX z wyjściem HDMI 2.1, które jest tu wymogiem — starsze HDMI nie przepuści 4K przy 120 Hz.',
+          en: 'Micro-ATX with an HDMI 2.1 output, which is mandatory here — older HDMI cannot carry 4K at 120 Hz.',
+        },
+      },
+      {
+        kind: 'ram',
+        name: 'Kingston Fury Beast 32 GB (2×16) DDR5-6000',
+        rationale: {
+          pl: 'Grafika zintegrowana korzysta z pamięci systemowej, więc szybsza pamięć przekłada się tu wprost na klatki — inaczej niż w zestawie z osobną kartą.',
+          en: 'Integrated graphics use system memory, so faster memory translates directly into frame rate here — unlike in a build with a discrete card.',
+        },
+      },
+      {
+        kind: 'storage',
+        name: 'Samsung 990 EVO Plus 2 TB NVMe',
+        rationale: {
+          pl: 'Bez ruchomych części, więc nic nie buczy w cichych scenach filmu.',
+          en: 'No moving parts, so nothing hums during a quiet scene.',
+        },
+      },
+      {
+        kind: 'psu',
+        name: 'be quiet! Pure Power 12 M 550 W 80+ Gold',
+        rationale: {
+          pl: 'Bez osobnej karty graficznej 550 W to duży zapas, a zasilacz pracujący przy jednej trzeciej obciążenia ma wentylator zatrzymany.',
+          en: 'With no discrete card 550 W is ample headroom, and a supply running at a third of its rating keeps its fan stopped.',
+        },
+      },
+      {
+        kind: 'case',
+        name: 'Fractal Design Node 304',
+        rationale: {
+          pl: 'Kompaktowa obudowa, która nie wygląda jak komputer, gdy stoi pod telewizorem.',
+          en: 'A compact case that does not look like a computer when it sits under a television.',
+        },
+      },
+      {
+        kind: 'cooler',
+        name: 'Noctua NH-L12S',
+        rationale: {
+          pl: 'Niskoprofilowe chłodzenie o bardzo dobrej kulturze pracy. Przy 65 W procesora nigdy nie musi się rozkręcić.',
+          en: 'A low-profile cooler with excellent acoustics. Against a 65 W processor it never has to spin up.',
+        },
+      },
+    ],
+  },
+  {
+    slug: 'serwer-domowy',
+    vendor: 'intel',
+    socketSlug: 'lga1700',
+    difficulty: 'intermediate',
+    name: {
+      pl: 'Serwer domowy i NAS',
+      en: 'Home server and NAS',
+    },
+    tagline: {
+      pl: 'Kopie zapasowe, media i usługi, całą dobę',
+      en: 'Backups, media and services, around the clock',
+    },
+    description: {
+      pl: 'Maszyna zaprojektowana pod pracę ciągłą: niski pobór mocy w spoczynku, dużo miejsca na dyski i procesor ze sprzętowym kodowaniem wideo. Wydajność szczytowa nie ma tu znaczenia — liczy się to, ile prądu zużyje przez rok i ile dysków pomieści.',
+      en: 'A machine designed to run continuously: low idle power, room for many drives and a processor with hardware video encoding. Peak performance is irrelevant here — what matters is the yearly electricity bill and how many drives it holds.',
+    },
+    useCase: {
+      pl: 'Kopie zapasowe, serwer plików, serwer mediów, usługi w kontenerach',
+      en: 'Backups, file server, media server, containerised services',
+    },
+    expectation: {
+      pl: 'Kilka jednoczesnych strumieni wideo z transkodowaniem sprzętowym i pobór około 25–35 W w spoczynku, co przy pracy ciągłej daje sensowny rachunek za prąd.',
+      en: 'Several simultaneous video streams with hardware transcoding, at roughly 25–35 W idle — which keeps the electricity bill reasonable for a machine that never turns off.',
+    },
+    parts: [
+      {
+        kind: 'cpu',
+        name: 'Intel Core i5-14400',
+        rationale: {
+          pl: 'Quick Sync koduje i dekoduje wideo sprzętowo, obciążając procesor w minimalnym stopniu. Do serwera mediów to najważniejsza cecha, ważniejsza od liczby rdzeni.',
+          en: 'Quick Sync encodes and decodes video in hardware with minimal CPU load. For a media server that matters more than core count.',
+        },
+      },
+      {
+        kind: 'motherboard',
+        name: 'ASUS PRIME B760M-A',
+        rationale: {
+          pl: 'Sześć portów SATA plus dwa gniazda M.2 — kluczowe, gdy dysków ma być więcej niż dwa.',
+          en: 'Six SATA ports plus two M.2 sockets — the deciding factor once you need more than two drives.',
+        },
+      },
+      {
+        kind: 'ram',
+        name: 'Crucial 32 GB (2×16) DDR5-5600',
+        rationale: {
+          pl: '32 GB to komfortowy zapas na kilka usług naraz i cache systemu plików. Przy ZFS pamięć jest najtańszym sposobem na wydajność.',
+          en: '32 GB is comfortable headroom for several services and filesystem cache. With ZFS, memory is the cheapest performance you can buy.',
+        },
+      },
+      {
+        kind: 'storage',
+        name: 'Kingston NV3 1 TB NVMe + 2× 8 TB HDD',
+        rationale: {
+          pl: 'NVMe na system i kontenery, talerzowe na dane. Dwa dyski pozwalają zrobić lustro, więc awaria jednego nie oznacza utraty danych.',
+          en: 'NVMe for the system and containers, spinning drives for data. Two drives allow a mirror, so one failing does not mean losing anything.',
+        },
+      },
+      {
+        kind: 'psu',
+        name: 'be quiet! Pure Power 12 M 550 W 80+ Gold',
+        rationale: {
+          pl: 'Przy pracy ciągłej sprawność zasilacza przekłada się wprost na rachunek. Certyfikat Gold zwraca się w ciągu kilku lat.',
+          en: 'With a machine that never switches off, PSU efficiency shows up directly on the bill. A Gold rating pays for itself over a few years.',
+        },
+      },
+      {
+        kind: 'case',
+        name: 'Fractal Design Define 7',
+        rationale: {
+          pl: 'Mieści do czternastu dysków i jest wyciszona — istotne, jeśli serwer stoi w mieszkaniu, a nie w piwnicy.',
+          en: 'Holds up to fourteen drives and is sound-dampened — which matters if the server lives in a flat rather than a basement.',
+        },
+      },
+      {
+        kind: 'cooler',
+        name: 'be quiet! Pure Rock 2',
+        rationale: {
+          pl: 'Ciche chłodzenie z dużym zapasem względem 65 W procesora, więc wentylator pracuje na najniższych obrotach.',
+          en: 'A quiet cooler with generous headroom over the 65 W processor, so the fan sits at its lowest speed.',
+        },
+      },
+    ],
+  },
 ];
 
 export function getBuild(slug: string): Build | undefined {
