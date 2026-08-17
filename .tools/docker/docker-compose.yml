@@ -1,0 +1,76 @@
+# =============================================================================
+# ZbudujKompa — Docker Compose
+#
+# Two profiles, because building and developing want different things:
+#
+#   default  — builds the production image and serves the static export,
+#              exactly as it will be served in production.
+#   dev      — runs the Next.js dev server with the source bind-mounted, so
+#              edits appear without rebuilding the image.
+#
+#   docker compose -f .tools/docker/docker-compose.yml up
+#   docker compose -f .tools/docker/docker-compose.yml --profile dev up
+# =============================================================================
+
+name: zbudujkompa
+
+services:
+  # ---- Production: the exported site behind nginx --------------------------
+  web:
+    build:
+      # The context is the repository root, not this directory, because the
+      # build needs the source tree.
+      context: ../..
+      dockerfile: .tools/docker/Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:8080}
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-}
+        # Left empty by default: with no key the assistant runs on its local
+        # knowledge base, which is the intended behaviour.
+        NEXT_PUBLIC_CHAT_API_URL: ${NEXT_PUBLIC_CHAT_API_URL:-}
+        NEXT_PUBLIC_CHAT_API_KEY: ${NEXT_PUBLIC_CHAT_API_KEY:-}
+        NEXT_PUBLIC_CHAT_MODEL: ${NEXT_PUBLIC_CHAT_MODEL:-}
+    image: zbudujkompa:latest
+    container_name: zbudujkompa-web
+    ports:
+      - '${WEB_PORT:-8080}:8080'
+    restart: unless-stopped
+    # The site is static: nothing is written at runtime, so the filesystem can
+    # be read-only. tmpfs covers the few paths nginx needs to write.
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ['CMD', 'wget', '--quiet', '--tries=1', '--spider', 'http://localhost:8080/']
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # ---- Development: hot-reloading dev server -------------------------------
+  dev:
+    profiles: ['dev']
+    image: node:22-alpine
+    container_name: zbudujkompa-dev
+    working_dir: /app
+    command: sh -c "npm ci --no-audit --no-fund && npm run dev -- --hostname 0.0.0.0"
+    ports:
+      - '${DEV_PORT:-3000}:3000'
+    volumes:
+      - ../..:/app
+      # A named volume keeps the container's node_modules separate from the
+      # host's. Without it, a macOS or Windows host would overwrite the Linux
+      # binaries the container just installed.
+      - dev_node_modules:/app/node_modules
+      - dev_next_cache:/app/.next
+    environment:
+      NEXT_TELEMETRY_DISABLED: '1'
+      WATCHPACK_POLLING: 'true' # file events do not cross the bind mount reliably
+
+volumes:
+  dev_node_modules:
+  dev_next_cache:
