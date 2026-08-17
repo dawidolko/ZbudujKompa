@@ -31,6 +31,18 @@ const MODEL = process.env.NEXT_PUBLIC_CHAT_MODEL ?? 'llama-3.3-70b-versatile';
 
 export const remoteChatEnabled = Boolean(API_URL && API_KEY);
 
+/** How long to wait before giving up and answering locally instead. */
+const REQUEST_TIMEOUT_MS = 15_000;
+
+/** How many prior turns to send as context. */
+const HISTORY_TURNS = 6;
+
+/** One prior turn of the conversation, in the shape the API expects. */
+export type ChatTurn = {
+  role: 'user' | 'assistant';
+  content: string;
+};
+
 export type ChatAnswer = {
   text: string;
   links: { href: string; label: string }[];
@@ -94,15 +106,24 @@ export async function answerRemotely(
   locale: Locale,
   fallback: string,
   signal?: AbortSignal,
+  /** Prior turns, oldest first, so follow-up questions keep their context. */
+  history: ChatTurn[] = [],
 ): Promise<ChatAnswer> {
   if (!remoteChatEnabled) {
     return answerLocally(question, locale, fallback);
   }
 
+  /* A request that never settles would leave the assistant showing its
+     "thinking" state forever. The timeout is combined with the caller's own
+     signal, so either can end the request. */
+  const timeout = new AbortController();
+  const timer = setTimeout(() => timeout.abort(), REQUEST_TIMEOUT_MS);
+  const combined = signal ? AbortSignal.any([signal, timeout.signal]) : timeout.signal;
+
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
-      signal,
+      signal: combined,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${API_KEY}`,
@@ -113,6 +134,9 @@ export async function answerRemotely(
         max_tokens: 400,
         messages: [
           { role: 'system', content: buildSystemPrompt(locale) },
+          /* Only the last few turns are sent. The whole transcript would grow
+             without bound and push the grounding material out of context. */
+          ...history.slice(-HISTORY_TURNS),
           { role: 'user', content: question },
         ],
       }),
@@ -139,6 +163,8 @@ export async function answerRemotely(
     };
   } catch {
     return answerLocally(question, locale, fallback);
+  } finally {
+    clearTimeout(timer);
   }
 }
 

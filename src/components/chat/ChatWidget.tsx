@@ -10,6 +10,7 @@ import {
   answerRemotely,
   remoteChatEnabled,
   type ChatAnswer,
+  type ChatTurn,
 } from '@/lib/chat/provider';
 import { suggestedQuestions } from '@/lib/chat/knowledge-base';
 import { cn } from '@/lib/utils';
@@ -52,6 +53,15 @@ export function ChatWidget({ locale }: { locale: Locale }) {
   const transcriptRef = useRef<HTMLDivElement>(null);
   const nextId = useRef(1);
   const abortRef = useRef<AbortController | null>(null);
+
+  /* Mirrors `messages` so `ask` can read the latest transcript without taking
+     it as a dependency, which would otherwise capture a stale copy. Synced in
+     an effect rather than during render, because writing a ref while
+     rendering is not safe under concurrent rendering. */
+  const messagesRef = useRef(messages);
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -119,11 +129,31 @@ export function ChatWidget({ locale }: { locale: Locale }) {
       const controller = new AbortController();
       abortRef.current = controller;
 
+      /* History is read from a ref rather than from `messages`, so `ask` does
+         not need the transcript in its dependency list — closing over the
+         state would send a stale history on every turn after the first.
+
+         The greeting is dropped: it is UI copy the assistant never said, and
+         feeding it back as an assistant turn would have the model treat its
+         own greeting as prior context. */
+      const history: ChatTurn[] = messagesRef.current
+        .filter((message) => message.id !== 0)
+        .map((message) => ({
+          role: message.role,
+          content: message.text,
+        }));
+
       /* The remote path already falls back to the local answer internally, so
          a single call covers both configurations. */
       let answer: ChatAnswer;
       if (remoteChatEnabled) {
-        answer = await answerRemotely(trimmed, locale, dict.chat.noAnswer, controller.signal);
+        answer = await answerRemotely(
+          trimmed,
+          locale,
+          dict.chat.noAnswer,
+          controller.signal,
+          history,
+        );
       } else {
         answer = answerLocally(trimmed, locale, dict.chat.noAnswer);
       }
@@ -180,14 +210,31 @@ export function ChatWidget({ locale }: { locale: Locale }) {
       >
         <div className="flex items-center justify-between border-b border-border-subtle px-4 py-3">
           <h2 className="font-display text-sm font-bold text-text-primary">{dict.chat.title}</h2>
-          <button
-            type="button"
-            onClick={close}
-            aria-label={dict.chat.close}
-            className="inline-flex size-9 items-center justify-center rounded-sm text-text-secondary transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring"
-          >
-            <CloseIcon className="size-5" />
-          </button>
+          <div className="flex items-center gap-1">
+            {/* Only offered once there is something to clear. */}
+            {messages.length > 1 ? (
+              <button
+                type="button"
+                onClick={() => {
+                  abortRef.current?.abort();
+                  setPending(false);
+                  setMessages([{ id: 0, role: 'assistant', text: dict.chat.greeting }]);
+                  inputRef.current?.focus();
+                }}
+                className="rounded-sm px-2 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring"
+              >
+                {dict.chat.reset}
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={close}
+              aria-label={dict.chat.close}
+              className="inline-flex size-9 items-center justify-center rounded-sm text-text-secondary transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring"
+            >
+              <CloseIcon className="size-5" />
+            </button>
+          </div>
         </div>
 
         <div
