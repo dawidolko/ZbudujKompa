@@ -188,6 +188,12 @@ export function Header({ locale }: { locale: Locale }) {
                     className={cn(
                       'absolute top-full left-0 w-80 rounded-lg border border-border-subtle',
                       'bg-surface-raised p-2 shadow-lg',
+                      /* Sections grow — guides alone are already eleven items —
+                         so the panel is capped to the space between the header
+                         and the bottom of the viewport and scrolls inside that.
+                         Without the cap the last entries render off-screen with
+                         no way to reach them. */
+                      'max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain',
                       /* The panel sits flush against the trigger rather than
                          offset by a margin: a visual gap would drop the hover
                          and close the menu as the pointer crossed it. Padding
