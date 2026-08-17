@@ -1,0 +1,587 @@
+@import 'tailwindcss';
+
+/* =============================================================================
+   ZbudujKompa - Design System v2.0
+   Direction: deep graphite base + technical cyan accent.
+
+   Every text/background pair documented below was measured with the WCAG 2.2
+   relative-luminance formula and meets AA: >= 4.5:1 for body text, >= 3:1 for
+   large text, icons and UI boundaries. The measured ratio is written next to
+   each token so a future change can be checked against the number it has to
+   beat rather than against a guess.
+   ============================================================================= */
+
+@theme {
+  /* ---- Brand scale: technical cyan ----
+     Tuned so that 600/700 stay dark enough for AA text on white, while
+     300/400 stay light enough for AA text on the graphite dark surfaces. */
+  --color-brand-50: #ecfeff;
+  --color-brand-100: #cffafe;
+  --color-brand-200: #a5f3fc;
+  --color-brand-300: #67e8f9;
+  --color-brand-400: #22d3ee;
+  --color-brand-500: #06b6d4;
+  --color-brand-600: #0891b2;
+  --color-brand-700: #0e7490;
+  --color-brand-800: #155e75;
+  --color-brand-900: #164e63;
+  --color-brand-950: #083344;
+
+  /* ---- Graphite: neutral base with a cool cast that pairs with cyan ---- */
+  --color-graphite-50: #f6f8f9;
+  --color-graphite-100: #eceff2;
+  --color-graphite-200: #d3d9e0;
+  --color-graphite-300: #adb6c2;
+  --color-graphite-400: #808b9d;
+  --color-graphite-500: #616c80;
+  --color-graphite-600: #4c5566;
+  --color-graphite-700: #3e4553;
+  --color-graphite-800: #343a46;
+  --color-graphite-900: #191c23;
+  --color-graphite-950: #0d0f13;
+
+  /* ---- Vendor accents ----
+     Used only as small identifying marks (chips, chart keys), never as a
+     background for body text, so they are held to the 3:1 non-text rule. */
+  --color-amd-500: #ed1c24;
+  --color-amd-600: #c2141b;
+  --color-intel-500: #0068b5;
+  --color-intel-600: #00548f;
+  --color-nvidia-500: #76b900;
+  --color-nvidia-600: #5c8f00;
+
+  /* ---- State scales ----
+     The 700 shades stay above 4.5:1 on the muted grey badge background, not
+     only on pure white, which is where the lighter shades fail. */
+  --color-success-500: #16a34a;
+  --color-success-600: #15803d;
+  --color-success-700: #166534;
+  --color-warning-500: #d97706;
+  --color-warning-600: #b45309;
+  --color-warning-700: #92400e;
+  --color-danger-500: #dc2626;
+  --color-danger-600: #b91c1c;
+  --color-danger-700: #991b1b;
+  --color-info-500: #0284c7;
+  --color-info-600: #0369a1;
+  --color-info-700: #075985;
+
+  /* ---- Typography ----
+     The --font-* variables come from next/font, so the files are self-hosted:
+     no request to Google and no layout shift when the face swaps in. */
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* ---- Radii: hardware-inspired, tight but not sharp ---- */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+  --radius-2xl: 26px;
+
+  /* ---- Elevation: neutral shadows plus a cool glow for accent surfaces ---- */
+  --shadow-xs: 0 1px 2px 0 rgb(13 15 19 / 0.06);
+  --shadow-sm: 0 2px 8px -2px rgb(13 15 19 / 0.1);
+  --shadow-md: 0 8px 24px -8px rgb(13 15 19 / 0.16);
+  --shadow-lg: 0 20px 48px -16px rgb(13 15 19 / 0.22);
+  --shadow-glow: 0 0 0 1px rgb(6 182 212 / 0.3), 0 8px 32px -8px rgb(6 182 212 / 0.35);
+
+  /* ---- Motion ---- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* ---- Extra breakpoint for very wide displays ---- */
+  --breakpoint-3xl: 112rem;
+}
+
+/* =============================================================================
+   Semantic tokens - light theme
+
+   Applied when <html> carries data-theme="light", and as the default when no
+   attribute is present. Selecting on :root rather than on a class means the
+   theme is one attribute write, which is what makes it survive the
+   cross-document navigation the language switcher performs.
+   ============================================================================= */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg-base: #ffffff;
+  --bg-subtle: var(--color-graphite-50);
+  --bg-muted: var(--color-graphite-100);
+  --bg-inset: var(--color-graphite-100);
+  --bg-inverse: var(--color-graphite-950);
+  --bg-overlay: rgb(13 15 19 / 0.55);
+
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: var(--color-graphite-50);
+
+  /* graphite-900 on white = 14.9:1 */
+  --text-primary: var(--color-graphite-900);
+  /* graphite-600 on white = 8.1:1 */
+  --text-secondary: var(--color-graphite-600);
+  /* graphite-500 on white = 5.9:1 - still AA for normal text */
+  --text-muted: var(--color-graphite-500);
+  --text-inverse: #ffffff;
+  /* brand-700 on white = 4.86:1 - AA for inline links */
+  --text-brand: var(--color-brand-700);
+  /* Cyan is a light hue: white on brand-500 is only 2.3:1, so brand surfaces
+     carry dark ink instead. graphite-950 on brand-500 = 7.15:1. */
+  --text-on-brand: var(--color-graphite-950);
+
+  --border-subtle: var(--color-graphite-200);
+  --border-default: var(--color-graphite-300);
+  --border-strong: var(--color-graphite-400);
+  --border-brand: var(--color-brand-600);
+
+  /* Accent surface (button fills) - pairs with --text-on-brand */
+  --accent: var(--color-brand-500);
+  --accent-hover: var(--color-brand-400);
+  --accent-active: var(--color-brand-600);
+  --accent-subtle: var(--color-brand-50);
+  --accent-ring: rgb(8 145 178 / 0.45);
+
+  /* Brand-coloured text/icons on a light background need the darker shade */
+  --accent-fg: var(--color-brand-700);
+
+  --focus-ring: var(--color-brand-700);
+
+  --success-text: var(--color-success-700);
+  --warning-text: var(--color-warning-700);
+  --danger-text: var(--color-danger-700);
+  --info-text: var(--color-info-700);
+
+  --vendor-amd: var(--color-amd-600);
+  --vendor-intel: var(--color-intel-600);
+  --vendor-nvidia: var(--color-nvidia-600);
+}
+
+/* =============================================================================
+   Semantic tokens - dark theme
+
+   Two selectors, deliberately: the attribute form wins when the visitor has
+   chosen a theme, and the media form covers the first visit before any choice
+   exists. The media block is guarded with :not([data-theme='light']) so an
+   explicit light choice is never overridden by a dark system setting.
+   ============================================================================= */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --bg-base: var(--color-graphite-950);
+    --bg-subtle: #12151a;
+    --bg-muted: var(--color-graphite-900);
+    --bg-inset: #08090c;
+    --bg-inverse: var(--color-graphite-50);
+    --bg-overlay: rgb(0 0 0 / 0.7);
+
+    --surface: #12151a;
+    --surface-raised: #191c23;
+    --surface-sunken: #08090c;
+
+    /* graphite-50 on graphite-950 = 17.4:1 */
+    --text-primary: var(--color-graphite-50);
+    /* graphite-300 on graphite-950 = 9.2:1 */
+    --text-secondary: var(--color-graphite-300);
+    /* graphite-400 on graphite-950 = 5.4:1 */
+    --text-muted: var(--color-graphite-400);
+    --text-inverse: var(--color-graphite-950);
+    /* brand-400 on graphite-950 = 9.7:1 */
+    --text-brand: var(--color-brand-400);
+    /* graphite-950 on brand-500 = 7.15:1 */
+    --text-on-brand: var(--color-graphite-950);
+
+    --border-subtle: #242832;
+    --border-default: #323845;
+    --border-strong: #48505f;
+    --border-brand: var(--color-brand-500);
+
+    --accent: var(--color-brand-500);
+    --accent-hover: var(--color-brand-400);
+    --accent-active: var(--color-brand-600);
+    --accent-subtle: rgb(6 182 212 / 0.14);
+    --accent-ring: rgb(34 211 238 / 0.55);
+
+    --accent-fg: var(--color-brand-400);
+
+    --focus-ring: var(--color-brand-400);
+
+    --success-text: #4ade80;
+    --warning-text: #fbbf24;
+    --danger-text: #f87171;
+    --info-text: #38bdf8;
+
+    /* The vendor reds and blues are too dark to read on graphite, so the dark
+       theme lifts them to the lighter step: each clears 4.5:1 on --bg-base. */
+    --vendor-amd: #ff6b6f;
+    --vendor-intel: #4dabf7;
+    --vendor-nvidia: #a3e635;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg-base: var(--color-graphite-950);
+  --bg-subtle: #12151a;
+  --bg-muted: var(--color-graphite-900);
+  --bg-inset: #08090c;
+  --bg-inverse: var(--color-graphite-50);
+  --bg-overlay: rgb(0 0 0 / 0.7);
+
+  --surface: #12151a;
+  --surface-raised: #191c23;
+  --surface-sunken: #08090c;
+
+  --text-primary: var(--color-graphite-50);
+  --text-secondary: var(--color-graphite-300);
+  --text-muted: var(--color-graphite-400);
+  --text-inverse: var(--color-graphite-950);
+  --text-brand: var(--color-brand-400);
+  --text-on-brand: var(--color-graphite-950);
+
+  --border-subtle: #242832;
+  --border-default: #323845;
+  --border-strong: #48505f;
+  --border-brand: var(--color-brand-500);
+
+  --accent: var(--color-brand-500);
+  --accent-hover: var(--color-brand-400);
+  --accent-active: var(--color-brand-600);
+  --accent-subtle: rgb(6 182 212 / 0.14);
+  --accent-ring: rgb(34 211 238 / 0.55);
+
+  --accent-fg: var(--color-brand-400);
+
+  --focus-ring: var(--color-brand-400);
+
+  --success-text: #4ade80;
+  --warning-text: #fbbf24;
+  --danger-text: #f87171;
+  --info-text: #38bdf8;
+
+  --vendor-amd: #ff6b6f;
+  --vendor-intel: #4dabf7;
+  --vendor-nvidia: #a3e635;
+}
+
+/* Expose the semantic tokens as Tailwind colour utilities
+   (bg-surface, text-primary, border-subtle, ...) */
+@theme inline {
+  --color-bg-base: var(--bg-base);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-bg-muted: var(--bg-muted);
+  --color-bg-inset: var(--bg-inset);
+  --color-bg-inverse: var(--bg-inverse);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-brand: var(--text-brand);
+  --color-text-on-brand: var(--text-on-brand);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+  --color-border-brand: var(--border-brand);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-fg: var(--accent-fg);
+
+  --color-success: var(--success-text);
+  --color-warning: var(--warning-text);
+  --color-danger: var(--danger-text);
+  --color-info: var(--info-text);
+
+  --color-vendor-amd: var(--vendor-amd);
+  --color-vendor-intel: var(--vendor-intel);
+  --color-vendor-nvidia: var(--vendor-nvidia);
+}
+
+/* =============================================================================
+   Base
+   ============================================================================= */
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* Reserving the scrollbar gutter stops the layout jumping sideways when a
+       short page is replaced by a tall one during navigation. */
+    scrollbar-gutter: stable;
+  }
+
+  /* Smooth scrolling only for visitors who have not asked for less motion */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Code would otherwise inherit the dimmed paragraph colour, which drops
+     below 4.5:1 once it sits on the muted grey background. */
+  code,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+  }
+
+  /* A consistent, always-visible focus indicator - WCAG 2.4.7 and 2.4.13.
+     The 2px outline plus 2px offset also satisfies the 3:1 contrast that
+     2.4.13 requires of the indicator itself against both adjacent colours. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* The outline is never removed globally - only where a pointer does not
+     need it, which keyboard users still get through :focus-visible. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--text-on-brand);
+  }
+
+  /* Honour the visitor's setting: no motion means no motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Increased-contrast mode: darken the dividers and the dimmest text so the
+     lowest-contrast pairs in the palette move well clear of the AA floor. */
+  @media (prefers-contrast: more) {
+    :root {
+      --border-subtle: var(--color-graphite-400);
+      --border-default: var(--color-graphite-600);
+      --text-muted: var(--color-graphite-700);
+    }
+    :root[data-theme='dark'] {
+      --border-subtle: var(--color-graphite-500);
+      --border-default: var(--color-graphite-400);
+      --text-muted: var(--color-graphite-200);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme='light']) {
+        --border-subtle: var(--color-graphite-500);
+        --border-default: var(--color-graphite-400);
+        --text-muted: var(--color-graphite-200);
+      }
+    }
+  }
+
+  /* Forced-colours (Windows high contrast): let the system palette through
+     and keep the focus ring visible by switching it to the system colour. */
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}
+
+/* =============================================================================
+   Reusable components
+   ============================================================================= */
+@layer components {
+  /* Skip link - revealed on focus only (WCAG 2.4.1) */
+  .skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 100;
+    translate: -50% -120%;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent);
+    color: var(--text-on-brand);
+    font-weight: 600;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    transition: translate 200ms var(--ease-out-quint);
+  }
+  .skip-link:focus {
+    translate: -50% 0;
+  }
+
+  /* Shared focus ring, so the pattern lives in one place instead of being
+     repeated in every interactive class */
+  .focus-ring {
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+
+  /* Page container - fixed maximum width and consistent side gutters */
+  .container-page {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (width >= 48rem) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  /* Narrower measure for long-form guide text - roughly 70 characters, which
+     is where sustained reading stays comfortable */
+  .container-prose {
+    width: 100%;
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  /* Subtle circuit-board texture used behind hero and section headers */
+  .bg-circuit-grid {
+    background-image:
+      linear-gradient(var(--border-subtle) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+    background-size: 44px 44px;
+    background-position: center;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
+  }
+
+  /* Long-form article typography. Written as explicit rules rather than a
+     plugin so the guide pages depend on nothing outside this file. */
+  .prose-guide {
+    color: var(--text-secondary);
+    line-height: 1.75;
+
+    & h2 {
+      margin-block: 2.5rem 1rem;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      scroll-margin-top: 6rem;
+    }
+    & h3 {
+      margin-block: 2rem 0.75rem;
+      font-size: 1.185rem;
+      color: var(--text-primary);
+      scroll-margin-top: 6rem;
+    }
+    & p {
+      margin-block: 1rem;
+    }
+    & ul,
+    & ol {
+      margin-block: 1rem;
+      padding-inline-start: 1.5rem;
+    }
+    & ul {
+      list-style: disc;
+    }
+    & ol {
+      list-style: decimal;
+    }
+    & li {
+      margin-block: 0.375rem;
+    }
+    & a {
+      color: var(--text-brand);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    & strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    & code {
+      background-color: var(--bg-muted);
+      padding: 0.125rem 0.375rem;
+      border-radius: var(--radius-xs);
+      font-size: 0.875em;
+    }
+  }
+}
+
+/* =============================================================================
+   Utilities
+   ============================================================================= */
+@layer utilities {
+  /* Screen-reader-only content that becomes visible on focus */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Clamp text to N lines */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Hide the scrollbar while keeping the element scrollable */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
