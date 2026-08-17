@@ -81,18 +81,14 @@ export type ComponentKind =
 /**
  * A part in a reference build.
  *
- * Prices are indicative and carry the date they were checked, because a price
- * without a date is worse than no price at all — it silently goes stale and
- * the reader has no way to tell.
+ * Deliberately carries no price. Hardware pricing moves weekly, and a figure
+ * baked into a static build goes stale without any signal to the reader — the
+ * rationale for choosing the part is what stays true.
  */
 export type BuildPart = {
   kind: ComponentKind;
   /** Manufacturer and model. Brand names are not translated. */
   name: string;
-  /** Indicative price in grosz — integers avoid floating point drift. */
-  price: number;
-  /** ISO date the price was last verified. */
-  pricedOn: string;
   /** Why this specific part, in one or two sentences. */
   rationale: Localized;
 };
@@ -121,7 +117,7 @@ export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
    ============================================================================= */
 
 export type GuideCategory =
-  'basics' | 'assembly' | 'cooling' | 'platform' | 'troubleshooting' | 'optimisation';
+  'basics' | 'assembly' | 'cooling' | 'platform' | 'software' | 'troubleshooting' | 'optimisation';
 
 /** One step of a step-by-step assembly guide. */
 export type GuideStep = {

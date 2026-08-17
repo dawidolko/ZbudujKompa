@@ -127,14 +127,10 @@ export const pl: Dictionary = {
     component: 'Podzespół',
     price: 'Cena orientacyjna',
     why: 'Dlaczego ta część',
-    total: 'Suma orientacyjna',
     difficulty: 'Trudność montażu',
     difficultyBeginner: 'Początkujący',
     difficultyIntermediate: 'Średnio zaawansowany',
     difficultyAdvanced: 'Zaawansowany',
-    pricedOn: (date: string) => `Ceny sprawdzone ${date}`,
-    priceNote:
-      'Orientacyjne ceny detaliczne w Polsce, sprawdzone w podanym dniu. To punkt wyjścia do listy zakupów, a nie aktualny cennik — zweryfikuj je przed zakupem.',
     kind: {
       cpu: 'Procesor',
       motherboard: 'Płyta główna',
@@ -166,6 +162,7 @@ export const pl: Dictionary = {
       assembly: 'Montaż',
       cooling: 'Chłodzenie',
       platform: 'Platformy',
+      software: 'Oprogramowanie',
       troubleshooting: 'Diagnostyka',
       optimisation: 'Optymalizacja',
     },
@@ -255,6 +252,34 @@ export const pl: Dictionary = {
     botLabel: 'Asystent',
     reset: 'Wyczyść rozmowę',
     offlineNote: 'Odpowiedzi pochodzą z treści tego serwisu, nie z usługi zewnętrznej.',
+  },
+
+  sitemap: {
+    title: 'Mapa serwisu',
+    lead: 'Wszystkie strony serwisu w jednym miejscu, pogrupowane tak samo jak w nawigacji.',
+    other: 'O serwisie i informacje',
+  },
+
+  resources: {
+    title: 'Źródła i linki',
+    lead: 'Oficjalna dokumentacja producentów, narzędzia diagnostyczne i niezależne testy — źródła, na których opierają się poradniki w tym serwisie.',
+    official: 'Oficjalne',
+    independent: 'Niezależne',
+    disclaimer:
+      'Żaden z tych linków nie jest linkiem afiliacyjnym i serwis nic na nich nie zarabia. Strony producentów są tu dlatego, że ich specyfikacje są źródłem rozstrzygającym; serwisy niezależne dlatego, że publikują metodykę swoich testów. Linki się psują — jeśli któryś nie działa, daj znać.',
+    category: {
+      cpu: 'Procesory',
+      motherboard: 'Płyty główne',
+      memory: 'Pamięć',
+      gpu: 'Karty graficzne',
+      cooling: 'Chłodzenie',
+      psu: 'Zasilacze',
+      case: 'Obudowy',
+      storage: 'Dyski',
+      os: 'Systemy operacyjne',
+      tools: 'Narzędzia diagnostyczne',
+      testing: 'Niezależne testy',
+    },
   },
 
   about: {

@@ -1,4 +1,5 @@
 import type { Guide, GuideCategory } from './types';
+import { osGuides } from './guides/windows';
 
 /**
  * Guide catalogue.
@@ -7,7 +8,7 @@ import type { Guide, GuideCategory } from './types';
  * the table of contents, the deep links and the HowTo structured data can all
  * be generated from the same source instead of being maintained separately.
  */
-export const guides: Guide[] = [
+const hardwareGuides: Guide[] = [
   {
     slug: 'assembly-step-by-step',
     category: 'assembly',
@@ -54,14 +55,20 @@ export const guides: Guide[] = [
         },
         body: {
           pl: [
-            'Wykonaj ten krok przy płycie głównej leżącej poza obudową, na pudełku, w którym przyszła. Będziesz miał znacznie lepszy dostęp niż po jej przykręceniu.',
-            'Podnieś dźwignię gniazda. Na procesorze i na gnieździe znajdziesz mały trójkąt — muszą się pokrywać. W przypadku AMD AM5 i wszystkich podstawek Intela piny są w gnieździe, nie na procesorze, więc największym zagrożeniem jest upuszczenie procesora na gniazdo.',
-            'Ułóż procesor prosto nad gniazdem i opuść pionowo. Nie przesuwaj go na boki. Następnie opuść ramkę i dociśnij dźwignię — opór przy zamykaniu jest normalny i bywa zaskakująco duży.',
+            'Wykonaj ten krok przy płycie głównej leżącej poza obudową, na pudełku, w którym przyszła. Piankowa wyściółka pudełka podpiera płytę równomiernie, a dostęp do gniazda masz z każdej strony — po przykręceniu płyty do obudowy jedno i drugie znika.',
+            'Podnieś dźwignię gniazda: naciśnij ją lekko w dół i odsuń w bok spod zaczepu, dopiero potem unieś do pionu. Na płytach Intela razem z dźwignią podniesie się metalowa ramka dociskowa, a plastikowa zaślepka albo wypadnie sama, albo zostanie wypchnięta przy zamykaniu — nie wyjmuj jej palcami i zachowaj ją, bo przy reklamacji płyty bywa wymagana.',
+            'Orientacja: na jednym rogu procesora jest wytrawiony mały trójkąt, taki sam znajdziesz na rogu gniazda albo na ramce. Muszą się pokrywać. To jedyny wyznacznik, na którym warto polegać — napisy na pokrywie procesora bywają obrócone względem gniazda i wprowadzają w błąd.',
+            'Różnica między platformami, którą warto znać: w AMD AM4 delikatne piny są na spodzie procesora, więc zgięcie ich przy upuszczeniu oznacza zwykle koniec procesora. W AMD AM5 i we wszystkich podstawkach Intela piny przeniesiono do gniazda — teraz to płyta jest wrażliwa, a upuszczony na gniazdo procesor potrafi zgiąć kilkadziesiąt styków naraz. W obu przypadkach zasada jest ta sama: trzymaj procesor za krawędzie i opuszczaj go pionowo.',
+            'Ułóż procesor prosto nad gniazdem i opuść pionowo. Nie przesuwaj go na boki po osadzeniu. Prawidłowo ułożony leży płasko i nie kołysze się przy delikatnym dotknięciu — jeśli którykolwiek róg wystaje, podnieś go i ułóż od nowa.',
+            'Opuść ramkę i dociśnij dźwignię pod zaczep. Opór jest normalny i bywa zaskakująco duży, szczególnie przy Intelu, gdzie ramka dociska procesor siłą kilkudziesięciu niutonów. Chrzęst przy zamykaniu to zwykle sama ramka, nie procesor. Jeśli jednak dźwignia stawia opór od samego początku, a nie dopiero w połowie drogi, otwórz gniazdo i sprawdź ułożenie.',
           ],
           en: [
-            'Do this with the motherboard outside the case, resting on the box it came in. Access is far better than it will be once the board is screwed down.',
-            'Lift the socket lever. There is a small triangle on both the CPU and the socket — they must line up. On AMD AM5 and every Intel socket the pins are in the socket rather than on the chip, so the main hazard is dropping the CPU onto the socket.',
-            'Hold the CPU flat above the socket and lower it straight down. Do not slide it sideways. Then close the retention frame and press the lever home — resistance while closing is normal and can be surprisingly firm.',
+            'Do this with the motherboard outside the case, resting on the box it came in. The foam insert supports the board evenly and you have access to the socket from every side — both of which disappear once the board is screwed into the case.',
+            'Lift the socket lever: press it down slightly, move it sideways out from under its retaining tab, and only then raise it upright. On Intel boards a metal load plate lifts with the lever, and the plastic cover either falls out on its own or is pushed out as you close it — do not pull it out by hand, and keep it, because a warranty return often requires it.',
+            'Orientation: one corner of the CPU carries a small etched triangle, and a matching one is on the corner of the socket or its frame. They must line up. It is the only marker worth trusting — the printing on the CPU lid is sometimes rotated relative to the socket and misleads.',
+            'A platform difference worth knowing: on AMD AM4 the delicate pins are on the underside of the CPU, so bending them in a drop usually ends that processor. On AMD AM5 and every Intel socket the pins moved into the socket — now the board is the fragile part, and a CPU dropped onto it can bend dozens of contacts at once. Either way the rule is the same: hold the CPU by its edges and lower it straight down.',
+            'Hold the CPU flat above the socket and lower it vertically. Do not slide it sideways once seated. Correctly placed it lies flat and does not rock when touched gently — if any corner stands proud, lift it out and place it again.',
+            'Close the load plate and press the lever back under its tab. The resistance is normal and can be surprisingly firm, particularly on Intel, where the frame clamps the CPU with tens of newtons. A grinding sound while closing is usually the frame itself, not the processor. If the lever resists from the very start rather than halfway through its travel, open the socket and check the alignment.',
           ],
         },
       },
@@ -75,14 +82,20 @@ export const guides: Guide[] = [
         },
         body: {
           pl: [
-            'To najczęściej mylony krok w całym montażu i jednocześnie najłatwiejszy do naprawienia. Instrukcja płyty głównej podaje właściwe sloty wprost — zwykle są to A2 i B2.',
-            'Otwórz zatrzaski na końcach slotów. Część płyt ma zatrzask tylko z jednej strony, co jest normalne. Wycięcie w module pasuje tylko w jednej orientacji.',
-            'Dociskaj moduł równomiernie z obu końców, aż zatrzaski same zaskoczą. Wymagana siła jest wyraźnie większa, niż podpowiada intuicja — moduł, który nie kliknął, jest modułem, którego komputer nie zobaczy.',
+            'To najczęściej mylony krok w całym montażu i jednocześnie najłatwiejszy do naprawienia. Instrukcja płyty głównej podaje właściwe sloty wprost — zwykle są to A2 i B2, czyli drugi i czwarty licząc od procesora.',
+            'Dlaczego akurat te dwa: procesor rozmawia z pamięcią dwoma niezależnymi kanałami. Moduły w slotach 2 i 4 trafiają po jednym na kanał, więc obie drogi pracują równolegle i przepustowość się podwaja. Dwa moduły w sąsiadujących slotach lądują na tym samym kanale, drugi zostaje pusty i tracisz połowę przepustowości. W grach to zwykle od 10 do 20 procent klatek, a w zintegrowanej grafice nawet dwukrotna różnica.',
+            'Otwórz zatrzaski na końcach slotów. Część płyt, zwłaszcza tańszych i Mini-ITX, ma zatrzask tylko z jednej strony — to normalne i nie oznacza wady. Wycięcie w dolnej krawędzi modułu jest przesunięte względem środka i pasuje tylko w jednej orientacji, więc odwrotnie modułu nie włożysz.',
+            'Ustaw moduł nad slotem tak, żeby wycięcie pokryło się z wypustką, i dociskaj równomiernie z obu końców naraz. Wymagana siła jest wyraźnie większa, niż podpowiada intuicja — spokojnie kilkanaście kilogramów nacisku. Docisk pojedynczego końca przekrzywia moduł i zwykle kończy się tym, że jeden bok wchodzi, a drugi zostaje uniesiony.',
+            'Zatrzaski muszą zaskoczyć same i słychać wyraźne kliknięcie. Jeśli musisz je domykać palcem, moduł nie wszedł do końca. Po zamontowaniu spójrz na moduły z boku: złote styki powinny zniknąć całkowicie w slocie, równo na całej długości. Widoczny pasek styków z jednej strony to najczęstsza przyczyna komputera, który nie daje obrazu przy pierwszym uruchomieniu.',
+            'Cztery moduły zamiast dwóch to nie zawsze lepiej. Kontroler pamięci obciążony czterema kośćmi często nie utrzymuje deklarowanego profilu EXPO ani XMP i trzeba zejść z częstotliwości. Jeśli planujesz 32 GB, dwa moduły po 16 GB są pewniejsze niż cztery po 8 GB.',
           ],
           en: [
-            'This is the most commonly mistaken step in the whole build, and also the easiest to correct. The motherboard manual states the correct slots explicitly — usually A2 and B2.',
-            'Open the clips at the ends of the slots. Some boards have a clip on one side only, which is normal. The notch in the module fits one orientation only.',
-            'Press down evenly at both ends until the clips snap shut by themselves. The force needed is noticeably more than intuition suggests — a module that has not clicked is a module the computer will not see.',
+            'This is the most commonly mistaken step in the whole build, and also the easiest to correct. The motherboard manual states the correct slots explicitly — usually A2 and B2, meaning the second and fourth counting from the CPU.',
+            'Why those two: the processor talks to memory over two independent channels. Modules in slots 2 and 4 land one per channel, so both paths work in parallel and bandwidth doubles. Two modules in adjacent slots share a single channel, leaving the other empty and costing half the bandwidth. In games that is typically 10 to 20 per cent of the frame rate, and on integrated graphics it can be a factor of two.',
+            'Open the clips at the ends of the slots. Some boards, particularly cheaper ones and Mini-ITX, have a clip on one side only — that is normal and not a defect. The notch in the bottom edge of the module is off-centre and fits one orientation only, so it cannot go in backwards.',
+            'Line the notch up with the key in the slot and press down evenly at both ends at once. The force needed is noticeably more than intuition suggests — comfortably ten kilograms of pressure. Pushing one end first tilts the module and usually ends with one side seated and the other standing proud.',
+            'The clips must snap shut on their own with an audible click. If you have to close them with a finger, the module is not fully in. Once fitted, look along the modules from the side: the gold contacts should disappear completely into the slot, evenly along their whole length. A visible strip of contacts at one end is the single most common cause of a machine that gives no display on first boot.',
+            'Four modules instead of two is not automatically better. A memory controller loaded with four sticks often cannot hold the rated EXPO or XMP profile, forcing a drop in frequency. If you are planning 32 GB, two 16 GB modules are a safer bet than four 8 GB ones.',
           ],
         },
       },
@@ -568,6 +581,16 @@ export const guides: Guide[] = [
     ],
   },
 ];
+
+/**
+ * The full guide catalogue.
+ *
+ * Hardware and software guides are authored in separate modules because they
+ * age at different rates — assembly advice changes over years, while an
+ * installer flow can change with a single feature update — but they are one
+ * list to every consumer.
+ */
+export const guides: Guide[] = [...hardwareGuides, ...osGuides];
 
 export function getGuide(slug: string): Guide | undefined {
   return guides.find((guide) => guide.slug === slug);

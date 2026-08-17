@@ -125,14 +125,10 @@ export const en = {
     component: 'Component',
     price: 'Indicative price',
     why: 'Why this part',
-    total: 'Indicative total',
     difficulty: 'Assembly difficulty',
     difficultyBeginner: 'Beginner',
     difficultyIntermediate: 'Intermediate',
     difficultyAdvanced: 'Advanced',
-    pricedOn: (date: string) => `Prices checked on ${date}`,
-    priceNote:
-      'Indicative Polish retail prices, checked on the date shown. They are a starting point for a shopping list, not a live feed — verify before you buy.',
     kind: {
       cpu: 'Processor',
       motherboard: 'Motherboard',
@@ -164,6 +160,7 @@ export const en = {
       assembly: 'Assembly',
       cooling: 'Cooling',
       platform: 'Platforms',
+      software: 'Software',
       troubleshooting: 'Troubleshooting',
       optimisation: 'Optimisation',
     },
@@ -242,6 +239,34 @@ export const en = {
     botLabel: 'Assistant',
     reset: 'Clear conversation',
     offlineNote: 'Answers come from this site content, not from a live service.',
+  },
+
+  sitemap: {
+    title: 'Site map',
+    lead: 'Every page on this site in one place, grouped the way the navigation groups them.',
+    other: 'About and information',
+  },
+
+  resources: {
+    title: 'Sources and links',
+    lead: 'Official manufacturer documentation, support tools and independent testing — the primary sources behind the guides on this site.',
+    official: 'Official',
+    independent: 'Independent',
+    disclaimer:
+      'None of these links are affiliate links and this site earns nothing from them. Manufacturer pages are listed because their specifications are authoritative; independent outlets because they publish their testing methodology. Links do rot — if one is dead, please report it.',
+    category: {
+      cpu: 'Processors',
+      motherboard: 'Motherboards',
+      memory: 'Memory',
+      gpu: 'Graphics cards',
+      cooling: 'Cooling',
+      psu: 'Power supplies',
+      case: 'Cases',
+      storage: 'Storage',
+      os: 'Operating systems',
+      tools: 'Diagnostic tools',
+      testing: 'Independent testing',
+    },
   },
 
   about: {
