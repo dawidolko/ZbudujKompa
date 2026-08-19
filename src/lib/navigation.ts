@@ -256,6 +256,7 @@ export function allContentRoutes(): string[] {
     '/mapa-serwisu',
     '/o-serwisie',
     '/kontakt',
+    '/zloz-u-mnie',
   ];
 }
 
@@ -272,6 +273,10 @@ export const footerNavigation: { label: Localized; links: NavLink[] }[] = [
   {
     label: { pl: 'Poradniki', en: 'Guides' },
     links: guideLinks.slice(0, 6),
+  },
+  {
+    label: { pl: 'Usługi', en: 'Services' },
+    links: [{ href: '/zloz-u-mnie', label: { pl: 'Złóż komputer u mnie', en: 'Build it for me' } }],
   },
   {
     label: { pl: 'Serwis', en: 'Site' },

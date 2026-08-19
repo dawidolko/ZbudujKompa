@@ -690,13 +690,86 @@ export const en = {
     note: 'These settings are stored in your browser and stay in place as you move around the site or switch language.',
   },
 
+  services: {
+    title: 'Build quote and assembly',
+    lead: 'I will pick parts for your budget and use case, and if you want, assemble and set up the finished machine.',
+    badge: 'Service',
+    navLabel: 'Build it for me',
+    ctaPrimary: 'Email me',
+    ctaSecondary: 'See my workstation',
+
+    introTitle: 'What this is',
+    introBody:
+      'This site exists so you can build a PC yourself, and I still recommend that you do. Not everyone wants to spend an evening with a motherboard manual, though. If you would rather hand it over, I can take care of it.',
+
+    offerTitle: 'What I can do',
+    offer: [
+      {
+        title: 'Quote and part selection',
+        body: 'Tell me your budget and what the machine is for. You get a specific parts list with the reasoning for each choice, and no push towards expensive parts you would never use.',
+      },
+      {
+        title: 'Checking your own list',
+        body: 'Already picked your parts and want to be sure they fit together? I will check compatibility, supply headroom and physical clearances before you spend anything.',
+      },
+      {
+        title: 'Assembly',
+        body: 'Build, cable routing, operating system, drivers and a BIOS update. It arrives ready to use rather than as a box of parts.',
+      },
+      {
+        title: 'Upgrades and diagnostics',
+        body: 'Machine slowing down, running loud or shutting off? I will find the cause and tell you honestly whether an upgrade is worth it or a new build is cheaper.',
+      },
+    ],
+
+    howTitle: 'How it works',
+    how: [
+      {
+        title: 'You get in touch',
+        body: 'An email with your budget and what the machine is for. Mention any brand or case size preferences too.',
+      },
+      {
+        title: 'You get a proposal',
+        body: 'A parts list with price bands and the reasoning behind every choice. You are welcome to take it and buy everything yourself.',
+      },
+      {
+        title: 'We agree the scope',
+        body: 'Selection only, selection with assembly, or assembly from parts you already own. The price depends on which, and we settle it before anything starts.',
+      },
+      {
+        title: 'You get the finished machine',
+        body: 'Tested under load, with the operating system and drivers installed.',
+      },
+    ],
+
+    honestTitle: 'Before you write',
+    honestBody:
+      'I am not a shop or a company — this is a service I carry out personally, so timing depends on what else I have on. You buy the parts yourself, from a retailer you choose, and the warranty stays with you. I take no commission from any shop, which is exactly why I can recommend what I actually think makes sense.',
+
+    contactTitle: 'Contact',
+    contactLead: 'Email is fastest — I usually reply the same day.',
+    emailLabel: 'Email',
+    portfolioLabel: 'Portfolio',
+    workstationLabel: 'My workstation',
+    workstationNote: 'A look at what I work on day to day.',
+    instagramLabel: 'Instagram',
+    facebookLabel: 'Facebook',
+
+    widgetTitle: 'Would rather not build it yourself?',
+    widgetLead:
+      'I can quote a build for your budget or assemble the finished machine. Advice with no shop commission.',
+    widgetCta: 'See the details',
+  },
   shopping: {
     title: 'Shopping list',
     listTitle: 'PC build shopping list',
     copy: 'Copy the list',
     copied: 'Copied',
     download: 'Download as a file',
-    openAt: (shop: string) => `Search at ${shop}`,
+    openAt: (shop: string) => `Open all at ${shop}`,
+    openAtHint: (shop: string, count: number) =>
+      `Opens ${count} search tabs at ${shop} — one per component`,
+    openedTabs: (count: number, shop: string) => `Opened ${count} search tabs at ${shop}.`,
     searchAt: (shop: string, part: string) => `Search for ${part} at ${shop} (opens in a new tab)`,
     priceDisclaimer:
       'Prices are indicative bands for budgeting, not a live feed. Verify before buying.',

@@ -710,13 +710,87 @@ export const pl: Dictionary = {
     note: 'Te ustawienia zapisują się w twojej przeglądarce i pozostają aktywne przy przechodzeniu po serwisie oraz przy zmianie języka.',
   },
 
+  services: {
+    title: 'Wycena i złożenie komputera',
+    lead: 'Dobiorę podzespoły pod Twój budżet i zastosowanie, a jeśli chcesz — złożę i skonfiguruję gotowy komputer.',
+    badge: 'Usługa',
+    navLabel: 'Złóż u mnie',
+    ctaPrimary: 'Napisz do mnie',
+    ctaSecondary: 'Zobacz stanowisko',
+
+    introTitle: 'Na czym to polega',
+    introBody:
+      'Ten serwis powstał po to, żebyś mógł złożyć komputer samodzielnie — i nadal do tego zachęcam. Nie każdy ma jednak czas albo ochotę spędzić wieczór z instrukcją płyty głównej. Jeśli wolisz to komuś zlecić, zajmę się tym.',
+
+    offerTitle: 'Co mogę zrobić',
+    offer: [
+      {
+        title: 'Wycena i dobór podzespołów',
+        body: 'Podajesz budżet i to, do czego komputer ma służyć. Dostajesz konkretną listę części z uzasadnieniem, dlaczego akurat te — bez naciągania na droższe rzeczy, których nie wykorzystasz.',
+      },
+      {
+        title: 'Weryfikacja Twojej listy',
+        body: 'Masz już wybrane części i chcesz mieć pewność, że wszystko do siebie pasuje? Sprawdzę zgodność, zapas mocy zasilacza i wymiary — zanim wydasz pieniądze.',
+      },
+      {
+        title: 'Złożenie komputera',
+        body: 'Montaż, prowadzenie kabli, instalacja systemu, sterowniki i aktualizacja BIOS-u. Komputer trafia do Ciebie gotowy do pracy, nie jako pudełko z częściami.',
+      },
+      {
+        title: 'Modernizacja i diagnostyka',
+        body: 'Komputer zwalnia, głośno pracuje albo się wyłącza? Sprawdzę, co jest przyczyną, i powiem, czy warto go modernizować, czy taniej wyjdzie nowy.',
+      },
+    ],
+
+    howTitle: 'Jak to wygląda krok po kroku',
+    how: [
+      {
+        title: 'Piszesz',
+        body: 'Mail z budżetem i tym, do czego komputer ma służyć. Jeśli masz preferencje co do marek albo rozmiaru obudowy — też napisz.',
+      },
+      {
+        title: 'Dostajesz propozycję',
+        body: 'Lista części z widełkami cenowymi i wyjaśnieniem każdego wyboru. Możesz ją wziąć i kupić wszystko sam — to w porządku.',
+      },
+      {
+        title: 'Ustalamy zakres',
+        body: 'Sam dobór, dobór ze złożeniem, albo złożenie z Twoich części. Cena zależy od tego, co wybierzesz, i ustalamy ją przed startem.',
+      },
+      {
+        title: 'Odbierasz gotowy komputer',
+        body: 'Przetestowany pod obciążeniem, z zainstalowanym systemem i sterownikami.',
+      },
+    ],
+
+    honestTitle: 'Zanim napiszesz',
+    honestBody:
+      'Nie jestem sklepem ani firmą — to usługa realizowana przeze mnie osobiście, więc terminy zależą od tego, ile mam akurat na głowie. Części kupujesz na siebie, w wybranym przez siebie sklepie, i to Ty masz na nie gwarancję. Nie pośredniczę w sprzedaży i nie mam prowizji od żadnego sklepu, dzięki czemu doradzam to, co faktycznie uważam za sensowne.',
+
+    contactTitle: 'Kontakt',
+    contactLead: 'Najszybciej mailem — piszę zwykle tego samego dnia.',
+    emailLabel: 'E-mail',
+    portfolioLabel: 'Portfolio',
+    workstationLabel: 'Moje stanowisko',
+    workstationNote: 'Zobacz, na czym pracuję na co dzień.',
+    instagramLabel: 'Instagram',
+    facebookLabel: 'Facebook',
+
+    widgetTitle: 'Nie chcesz składać sam?',
+    widgetLead:
+      'Wycenię zestaw pod Twój budżet albo złożę gotowy komputer. Doradztwo bez prowizji od sklepów.',
+    widgetCta: 'Sprawdź szczegóły',
+  },
   shopping: {
     title: 'Lista zakupowa',
     listTitle: 'Lista zakupowa zestawu PC',
     copy: 'Skopiuj listę',
     copied: 'Skopiowano',
     download: 'Pobierz jako plik',
-    openAt: (shop: string) => `Szukaj w ${shop}`,
+    openAt: (shop: string) => `Otwórz wszystko w ${shop}`,
+    openAtHint: (shop: string, count: number) =>
+      `Otwiera ${count} kart wyszukiwania w sklepie ${shop} — po jednej na podzespół`,
+    openedTabs: (count: number, shop: string) =>
+      `Otwarto ${count} kart wyszukiwania w sklepie ${shop}.`,
     searchAt: (shop: string, part: string) =>
       `Szukaj ${part} w sklepie ${shop} (otwiera się w nowej karcie)`,
     priceDisclaimer:

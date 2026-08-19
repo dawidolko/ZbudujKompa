@@ -76,6 +76,16 @@
   --font-mono:
     var(--font-jetbrains-mono), ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 
+  /* ---- Service accent -------------------------------------------------
+     Amber, used only by the build-service pages. Complementary to cyan, so
+     the service reads as a different kind of thing without leaving the
+     palette. Shades are chosen per theme below against measured ratios. */
+  --color-service-300: #fcd34d;
+  --color-service-400: #fbbf24;
+  --color-service-500: #f59e0b;
+  --color-service-600: #d97706;
+  --color-service-700: #b45309;
+
   /* ---- Radii: hardware-inspired, tight but not sharp ---- */
   --radius-xs: 3px;
   --radius-sm: 5px;
@@ -151,6 +161,15 @@
   --accent-fg: var(--color-brand-700);
 
   --focus-ring: var(--color-brand-700);
+  /* ---- Service accent (build service) ----
+  service-700 on the light background = 5.02:1, safe for text and icons.
+  graphite-950 on the service-500 fill = 8.93:1. */
+  --service: var(--color-service-500);
+  --service-hover: var(--color-service-400);
+  --service-fg: var(--color-service-700);
+  --service-border: var(--color-service-600);
+  --service-subtle: rgb(245 158 11 / 0.12);
+  --service-on: var(--color-graphite-950);
 
   --success-text: var(--color-success-700);
   --warning-text: var(--color-warning-700);
@@ -211,6 +230,24 @@
     --accent-fg: var(--color-brand-400);
 
     --focus-ring: var(--color-brand-400);
+    /* ---- Service accent (build service) ----
+  service-400 on graphite-950 = 11.49:1 for text and icons.
+  graphite-950 on the service-500 fill = 8.93:1. */
+    --service: var(--color-service-500);
+    --service-hover: var(--color-service-400);
+    --service-fg: var(--color-service-400);
+    --service-border: var(--color-service-500);
+    --service-subtle: rgb(245 158 11 / 0.16);
+    --service-on: var(--color-graphite-950);
+    /* ---- Service accent (build service) ----
+    service-400 on graphite-950 = 11.49:1 for text and icons.
+    graphite-950 on the service-500 fill = 8.93:1. */
+    --service: var(--color-service-500);
+    --service-hover: var(--color-service-400);
+    --service-fg: var(--color-service-400);
+    --service-border: var(--color-service-500);
+    --service-subtle: rgb(245 158 11 / 0.16);
+    --service-on: var(--color-graphite-950);
 
     --success-text: #4ade80;
     --warning-text: #fbbf24;
@@ -300,6 +337,14 @@
   --color-accent-active: var(--accent-active);
   --color-accent-subtle: var(--accent-subtle);
   --color-accent-fg: var(--accent-fg);
+
+  /* Build-service accent, so the pages can use bg-service / text-service-fg. */
+  --color-service: var(--service);
+  --color-service-hover: var(--service-hover);
+  --color-service-fg: var(--service-fg);
+  --color-service-border: var(--service-border);
+  --color-service-subtle: var(--service-subtle);
+  --color-service-on: var(--service-on);
 
   --color-success: var(--success-text);
   --color-warning: var(--warning-text);

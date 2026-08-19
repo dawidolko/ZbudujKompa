@@ -15,6 +15,23 @@ export const site = {
   locale: 'pl-PL',
 } as const;
 
+/**
+ * Where to reach the person behind the site, for the build-service page.
+ *
+ * Separate from `site` above, which is about the site itself: this is personal
+ * contact detail, and keeping the two apart makes it obvious which is which.
+ * No phone number by choice — email and social reach the same person without
+ * publishing a number that cannot be unpublished.
+ */
+export const contact = {
+  email: 'dawid_olko@outlook.com',
+  portfolio: 'https://dawidolko.pl',
+  workstation: 'https://workstation.dawidolko.pl',
+  instagram: 'https://instagram.com/dawid_olko',
+  instagramHandle: '@dawid_olko',
+  facebook: 'https://www.facebook.com/dawid.olko',
+} as const;
+
 /** Builds an absolute URL — required in Open Graph tags and structured data. */
 export function absoluteUrl(path = '/'): string {
   const base = site.url.replace(/\/$/, '');

@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { ArrowRightIcon, StarIcon } from '@/components/ui/Icon';
+import { ArrowRightIcon, SparkIcon, StarIcon } from '@/components/ui/Icon';
 import { Photo, PhotoFigure } from '@/components/ui/Photo';
 import { Reveal } from '@/components/motion/Reveal';
 import { QuickPicker } from '@/components/tools/QuickPicker';
@@ -560,6 +560,35 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* ---- Build service ----
+           Last, after every piece of free reference material, so the site
+           reads as help first and an offer second. Amber marks it as a
+           different kind of block from the cyan reference sections. */}
+      <section className="border-t border-border-subtle bg-service-subtle">
+        <div className="container-page py-14 md:py-16">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <p className="inline-flex items-center gap-1.5 rounded-xs bg-service px-2 py-0.5 text-xs font-bold tracking-wide text-service-on uppercase">
+                <SparkIcon className="size-3.5 shrink-0" aria-hidden="true" />
+                {dict.services.badge}
+              </p>
+              <h2 className="font-display mt-3 text-2xl font-bold text-text-primary md:text-3xl">
+                {dict.services.widgetTitle}
+              </h2>
+              <p className="mt-2 leading-relaxed text-text-secondary">{dict.services.widgetLead}</p>
+            </div>
+
+            <Link
+              href={localePath(typedLocale, '/zloz-u-mnie')}
+              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-sm bg-service px-6 text-sm font-semibold tracking-wide text-service-on uppercase transition-colors hover:bg-service-hover focus-ring"
+            >
+              {dict.services.widgetCta}
+              <ArrowRightIcon className="size-4 shrink-0" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </section>
 

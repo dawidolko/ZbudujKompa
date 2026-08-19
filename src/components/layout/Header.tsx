@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Logo } from '@/components/brand/Logo';
-import { ChevronDownIcon, CloseIcon, MenuIcon } from '@/components/ui/Icon';
+import { ChevronDownIcon, CloseIcon, MenuIcon, SparkIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import { localePath, type Locale } from '@/i18n/config';
 import { navigation } from '@/lib/navigation';
@@ -227,7 +227,24 @@ export function Header({ locale }: { locale: Locale }) {
           </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-1 lg:ml-0">
+        {/* The one commercial link on the site, so it is styled as an offer
+            rather than as another reference section. Amber separates it from
+            the cyan navigation without leaving the palette. */}
+        <Link
+          href={localePath(locale, '/zloz-u-mnie')}
+          aria-current={isCurrent('/zloz-u-mnie') ? 'page' : undefined}
+          className={cn(
+            'ml-3 hidden h-9 items-center gap-1.5 rounded-sm border px-3 text-sm font-semibold transition-colors focus-ring lg:inline-flex',
+            isCurrent('/zloz-u-mnie')
+              ? 'border-service-border bg-service text-service-on'
+              : 'border-service-border text-service-fg hover:bg-service-subtle',
+          )}
+        >
+          <SparkIcon className="size-4 shrink-0" aria-hidden="true" />
+          {dict.services.navLabel}
+        </Link>
+
+        <div className="ml-auto flex items-center gap-1 lg:ml-2">
           <LanguageSwitcher locale={locale} />
           <ThemeToggle locale={locale} />
 
@@ -251,6 +268,17 @@ export function Header({ locale }: { locale: Locale }) {
         className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border-subtle bg-bg-base lg:hidden"
       >
         <nav aria-label={dict.nav.mainNavigation} className="container-page py-4">
+          {/* First, and visually distinct: the desktop header shows this
+              beside the menu, and it would otherwise vanish on mobile. */}
+          <Link
+            href={localePath(locale, '/zloz-u-mnie')}
+            aria-current={isCurrent('/zloz-u-mnie') ? 'page' : undefined}
+            className="mb-5 flex h-11 items-center justify-center gap-2 rounded-sm bg-service px-4 text-sm font-semibold tracking-wide text-service-on uppercase focus-ring"
+          >
+            <SparkIcon className="size-4 shrink-0" aria-hidden="true" />
+            {dict.services.navLabel}
+          </Link>
+
           <ul className="flex flex-col gap-5">
             {navigation.map((section) => (
               <li key={section.id}>
