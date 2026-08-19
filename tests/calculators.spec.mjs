@@ -25,7 +25,9 @@ function check(label, actual, expected, tolerance = 0.02) {
       Math.abs(actual - expected) <= tolerance);
   if (ok) passed++;
   else failed++;
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok ? '' : `  — got ${actual}, wanted ${expected}`}`);
+  console.log(
+    `${ok ? 'PASS' : 'FAIL'}  ${label}${ok ? '' : `  — got ${actual}, wanted ${expected}`}`,
+  );
 }
 
 /* ---- Acoustics: decibels are logarithmic and cannot be added ---- */
@@ -66,7 +68,11 @@ check('100 W for 8 h a day is 292 kWh a year', c.annualEnergyCost(100, 8, 1).kwh
 check('and costs 292 at 1 per kWh', c.annualEnergyCost(100, 8, 1).cost, 292);
 
 /* ---- Airflow ---- */
-check('400 W at 50 CFM raises air by 4.49 °C', c.airflowDeltaT(400, 50), 4.49);
+/* Derived from Q = m_dot * cp * deltaT rather than copied from the
+   implementation, so the test would catch the constant being misplaced —
+   which it previously was, understating the rise threefold. */
+check('400 W at 50 CFM raises air by 14.06 °C', c.airflowDeltaT(400, 50), 14.06);
+check('300 W at 60 CFM raises air by 8.78 °C', c.airflowDeltaT(300, 60), 8.78);
 check('no airflow means an unbounded rise', c.airflowDeltaT(400, 0), Infinity);
 
 /* ---- Connectors: wattage alone does not tell you the cables ---- */
@@ -92,6 +98,65 @@ check(
   c.estimateBottleneck(80, 80, '1440p').limitedBy,
   'balanced',
 );
+
+/* ---- Fan laws: the biggest lever for a quiet machine ---- */
+const slowed = c.fanAtSpeed(1500, 60, 30, 1050);
+check('70% speed keeps 70% of the airflow', slowed.cfm, 42);
+check('but costs about 8 dB', 30 - slowed.noise, 7.75, 0.05);
+check('and a third of the power', slowed.relativePower, 0.343, 0.005);
+check('a fan at rated speed is unchanged', c.fanAtSpeed(1500, 60, 30, 1500).noise, 30);
+
+/* ---- Distance: vendors rate at different distances, which explains much
+       of the disagreement between spec sheets ---- */
+check('halving the distance adds 6 dB', c.noiseAtDistance(25, 1, 0.5), 31.02);
+check('doubling the distance removes 6 dB', c.noiseAtDistance(25, 1, 2), 18.98);
+
+/* ---- Interface bandwidth ---- */
+check('PCIe 4.0 x4 is 7.88 GB/s', c.pcieBandwidth(4, 4), 7.877, 0.01);
+check('PCIe 5.0 x16 is 63 GB/s', c.pcieBandwidth(5, 16), 63.01, 0.01);
+
+/* The known real-world result: 4K at 144 Hz needs compression on
+   DisplayPort 1.4 but fits uncompressed over HDMI 2.1. */
+const uhd144 = c.displayBandwidth(3840, 2160, 144, 8);
+check('4K 144 Hz needs about 29 Gbps', uhd144, 29.24, 0.05);
+check(
+  'which does not fit DisplayPort 1.4',
+  c.checkDisplayLink(uhd144, c.DISPLAY_INTERFACES['dp-1.4'].effective).fits,
+  false,
+);
+check(
+  'but is within reach of DSC',
+  c.checkDisplayLink(uhd144, c.DISPLAY_INTERFACES['dp-1.4'].effective).withDsc,
+  true,
+);
+check(
+  'and fits HDMI 2.1 uncompressed',
+  c.checkDisplayLink(uhd144, c.DISPLAY_INTERFACES['hdmi-2.1'].effective).fits,
+  true,
+);
+
+/* ---- Supply efficiency: the meter reads the wall, not the components ---- */
+check('400 W DC through a 90% supply is 444 W at the wall', c.wallPower(400, 0.9), 444.44, 0.01);
+check(
+  'ignoring efficiency understates the bill by about a tenth',
+  c.splitEnergyCost(60, 400, 3, 5, 1, 0.9).cost / c.splitEnergyCost(60, 400, 3, 5, 1, 1).cost,
+  1.111,
+  0.002,
+);
+
+/* ---- Memory: the quoted CAS figure is the best case, not the usual one ---- */
+const detail = c.memoryLatencyDetail(6000, 30, 38, 38);
+check('a DDR5-6000 clock is 0.333 ns', detail.clockNs, 0.333, 0.001);
+check('a page hit costs the CAS figure', detail.pageHit, 10);
+check(
+  'a page miss costs three and a half times as much',
+  detail.pageMiss / detail.pageHit,
+  3.53,
+  0.02,
+);
+
+/* ---- Drive endurance: the worry is usually misplaced ---- */
+check('600 TBW at 50 GB a day lasts 33 years', c.driveLifespanYears(600, 50), 32.88, 0.02);
 
 console.log(`\n${passed}/${passed + failed} passed`);
 process.exit(failed > 0 ? 1 : 0);

@@ -15,6 +15,20 @@
    ============================================================================= */
 
 /**
+ * Power drawn at the wall, given the supply's efficiency.
+ *
+ *   wall = dc / efficiency
+ *
+ * This is what the electricity meter records and the bill charges for. A build
+ * pulling 400 W of DC through a 92 per cent supply costs as though it were
+ * 435 W, and calculators that skip this step understate the running cost.
+ */
+export function wallPower(dcWatts: number, efficiency: number): number {
+  if (efficiency <= 0) return dcWatts;
+  return dcWatts / efficiency;
+}
+
+/**
  * Annual running cost.
  *
  *   cost = watts / 1000 * hours per day * days per year * price per kWh
@@ -44,11 +58,28 @@ export function splitEnergyCost(
   loadHoursPerDay: number,
   idleHoursPerDay: number,
   pricePerKwh: number,
-): { idleKwh: number; loadKwh: number; totalKwh: number; cost: number } {
-  const idleKwh = (idleWatts / 1000) * idleHoursPerDay * 365;
-  const loadKwh = (loadWatts / 1000) * loadHoursPerDay * 365;
+  /* Supply efficiency, as a fraction. The meter records what enters the power
+     supply, not what leaves it, so the bill is for the DC draw divided by
+     efficiency — a 400 W build on a 90 per cent unit is charged as 444 W.
+     Most calculators of this kind skip this step and understate the cost by
+     around a tenth. */
+  efficiency = 0.9,
+): {
+  idleKwh: number;
+  loadKwh: number;
+  totalKwh: number;
+  cost: number;
+  wallIdle: number;
+  wallLoad: number;
+} {
+  const wallIdle = wallPower(idleWatts, efficiency);
+  const wallLoad = wallPower(loadWatts, efficiency);
+
+  const idleKwh = (wallIdle / 1000) * idleHoursPerDay * 365;
+  const loadKwh = (wallLoad / 1000) * loadHoursPerDay * 365;
   const totalKwh = idleKwh + loadKwh;
-  return { idleKwh, loadKwh, totalKwh, cost: totalKwh * pricePerKwh };
+
+  return { idleKwh, loadKwh, totalKwh, cost: totalKwh * pricePerKwh, wallIdle, wallLoad };
 }
 
 /* =============================================================================
@@ -186,15 +217,23 @@ export function requiredAirflow(volumeLitres: number, changesPerMinute: number):
 /**
  * Air temperature rise across a case, from the heat it has to carry away.
  *
- *   deltaT (°C) = watts / (1.78 * CFM)
+ *   deltaT (°C) = watts / (0.5692 * CFM)
  *
- * The constant comes from the specific heat and density of air at room
- * temperature. It gives the rise in the exhaust air, not component
- * temperatures — those depend on each cooler as well.
+ * Derived from Q = m_dot * cp * deltaT. One CFM is 4.719e-4 m³/s; at an air
+ * density of 1.2 kg/m³ and a specific heat of 1005 J/(kg·K), one CFM carries
+ * 0.5692 W for each degree of rise.
+ *
+ * The result is the rise in the exhaust air, not a component temperature —
+ * those depend on each cooler as well. It is also a floor rather than a
+ * prediction: fan CFM ratings are measured with no restriction at all, and
+ * filters, radiators and the components themselves all reduce real flow well
+ * below the rated figure.
  */
+const WATTS_PER_CFM_PER_KELVIN = 0.5692;
+
 export function airflowDeltaT(watts: number, cfm: number): number {
   if (cfm <= 0) return Infinity;
-  return watts / (1.78 * cfm);
+  return watts / (WATTS_PER_CFM_PER_KELVIN * cfm);
 }
 
 /* =============================================================================
@@ -232,21 +271,22 @@ export function transferTime(sizeGb: number, speedMbs: number): number {
    ============================================================================= */
 
 /**
- * CPU temperature estimated from cooler thermal resistance.
+ * CPU temperature from a cooler's thermal resistance.
  *
  *   temperature = ambient + watts * °C/W
  *
- * Thermal resistance is rarely published, so it is derived here from the
- * cooler's rated wattage against a nominal 60 °C rise. That makes this a
- * comparison between coolers rather than a prediction of a specific reading.
+ * Thermal resistance is the input rather than something derived from a
+ * cooler's "TDP rating": those ratings have no standard behind them, and
+ * turning one into a °C/W figure would invent a number and present it as
+ * physics. Where a manufacturer publishes °C/W, or a review measures it, this
+ * gives a real answer; without one it should not be used at all.
  */
-export function estimateCpuTemp(
+export function cpuTempFromResistance(
   watts: number,
-  coolerRatedWatts: number,
+  thermalResistanceCPerW: number,
   ambientC: number,
 ): number {
-  const thermalResistance = 60 / coolerRatedWatts;
-  return ambientC + watts * thermalResistance;
+  return ambientC + watts * thermalResistanceCPerW;
 }
 
 /**
@@ -280,7 +320,10 @@ export function estimateBottleneck(
   const effectiveGpu = gpuScore / gpuWeight;
 
   const difference = cpuScore - effectiveGpu;
-  const severity = Math.min(100, Math.round((Math.abs(difference) / Math.max(cpuScore, effectiveGpu)) * 100));
+  const severity = Math.min(
+    100,
+    Math.round((Math.abs(difference) / Math.max(cpuScore, effectiveGpu)) * 100),
+  );
 
   if (severity < 12) return { limitedBy: 'balanced', severity };
   return { limitedBy: difference > 0 ? 'gpu' : 'cpu', severity };
@@ -311,5 +354,194 @@ export function requiredConnectors(gpuWatts: number, driveCount: number, fanCoun
     sata: driveCount,
     /* Fan headers on a board are limited; beyond four, a hub is usually needed. */
     needsFanHub: fanCount > 4,
+  };
+}
+
+/* =============================================================================
+   Fan laws
+   ============================================================================= */
+
+/**
+ * How a fan behaves at a different speed.
+ *
+ * The affinity laws, which hold well for a fan in a fixed system:
+ *   airflow    ∝ rpm
+ *   pressure   ∝ rpm²
+ *   power      ∝ rpm³
+ *   noise      ≈ 50 · log10(rpm ratio) dB
+ *
+ * This is the most actionable relationship in fan selection: dropping to 70 per
+ * cent speed keeps 70 per cent of the airflow while cutting noise by about
+ * 7.7 dB — a change that is clearly audible where the airflow loss usually is
+ * not.
+ */
+export function fanAtSpeed(
+  ratedRpm: number,
+  ratedCfm: number,
+  ratedNoise: number,
+  targetRpm: number,
+): { cfm: number; noise: number; relativePower: number } {
+  if (ratedRpm <= 0) return { cfm: 0, noise: 0, relativePower: 0 };
+  const ratio = targetRpm / ratedRpm;
+
+  return {
+    cfm: ratedCfm * ratio,
+    /* log10(0) is -Infinity, so a stopped fan is reported as silent rather
+       than as a nonsensical negative level. */
+    noise: ratio <= 0 ? 0 : Math.max(0, ratedNoise + 50 * Math.log10(ratio)),
+    relativePower: ratio ** 3,
+  };
+}
+
+/**
+ * Sound level at a different distance, in free field.
+ *
+ *   L2 = L1 − 20 · log10(d2 / d1)
+ *
+ * Worth knowing because manufacturers rate fans at different distances — one
+ * at 1 m, another at 0.5 m — and that difference alone accounts for much of
+ * the disagreement between spec sheets. Free field is an idealisation; a real
+ * room reflects some sound back.
+ */
+export function noiseAtDistance(level: number, fromMetres: number, toMetres: number): number {
+  if (fromMetres <= 0 || toMetres <= 0) return level;
+  return level - 20 * Math.log10(toMetres / fromMetres);
+}
+
+/* =============================================================================
+   Interface bandwidth
+   ============================================================================= */
+
+/** Usable bandwidth per PCIe lane, in GB/s, after line coding. */
+const PCIE_LANE_GBPS: Record<3 | 4 | 5, number> = {
+  /* Gen 3 onwards use 128b/130b encoding, so the overhead is about 1.5 per
+     cent rather than the 20 per cent of the older 8b/10b scheme. */
+  3: 0.985,
+  4: 1.969,
+  5: 3.938,
+};
+
+export function pcieBandwidth(generation: 3 | 4 | 5, lanes: number): number {
+  return PCIE_LANE_GBPS[generation] * lanes;
+}
+
+/**
+ * Data rate a display mode requires, in Gbps.
+ *
+ *   rate = width · height · refresh · bits per pixel · blanking overhead
+ *
+ * The 1.02 factor covers CVT reduced blanking. The result is the payload, so
+ * it is compared against a cable's *effective* rate rather than its headline
+ * signalling rate — the difference between the two is exactly why 4K at 144 Hz
+ * needs compression on DisplayPort 1.4.
+ */
+export function displayBandwidth(
+  width: number,
+  height: number,
+  refreshHz: number,
+  bitsPerChannel: number,
+): number {
+  const bitsPerPixel = bitsPerChannel * 3;
+  return (width * height * refreshHz * bitsPerPixel * 1.02) / 1_000_000_000;
+}
+
+/** Effective payload rates of the common display interfaces, in Gbps. */
+export const DISPLAY_INTERFACES = {
+  'hdmi-2.0': { label: 'HDMI 2.0', effective: 14.4 },
+  'hdmi-2.1': { label: 'HDMI 2.1 (FRL6)', effective: 42.67 },
+  'dp-1.2': { label: 'DisplayPort 1.2', effective: 17.28 },
+  'dp-1.4': { label: 'DisplayPort 1.4 (HBR3)', effective: 25.92 },
+  'dp-2.1': { label: 'DisplayPort 2.1 (UHBR20)', effective: 77.37 },
+} as const;
+
+/* =============================================================================
+   Power supply behaviour
+   ============================================================================= */
+
+/**
+ * Typical efficiency of each 80 Plus grade at about half load.
+ *
+ * Half load is where these units are most efficient and where a desktop
+ * spends most of its time, so it is the fairest single figure to compare.
+ */
+export const PSU_EFFICIENCY = {
+  Bronze: 0.85,
+  Gold: 0.9,
+  Platinum: 0.92,
+  Titanium: 0.94,
+} as const;
+
+/* =============================================================================
+   Drive endurance
+   ============================================================================= */
+
+/**
+ * How long a drive's write endurance lasts at a given daily write rate.
+ *
+ * Included mainly because the worry is usually misplaced: a 600 TBW drive
+ * written at 50 GB a day lasts about 33 years, which is far longer than anyone
+ * keeps a drive.
+ */
+export function driveLifespanYears(tbw: number, gbPerDay: number): number {
+  if (gbPerDay <= 0) return Infinity;
+  return (tbw * 1000) / gbPerDay / 365;
+}
+
+/**
+ * Memory access latency for the three row states.
+ *
+ * The CAS figure everyone quotes is the *best* case — the row is already open
+ * and only the column access is paid for. Random access, which is what games
+ * do, frequently lands on a different row and pays two or three times as much:
+ *
+ *   page hit    CL                 the row is already open
+ *   page empty  tRCD + CL          no row is open, one must be activated
+ *   page miss   tRP + tRCD + CL    the wrong row is open and must be closed
+ *
+ * tRAS is deliberately absent. It constrains how soon a row may be closed
+ * again, not how long a read waits, and adding it — as many calculators do —
+ * inflates the figure for no reason.
+ *
+ * None of these is the latency a program actually sees: caches, the memory
+ * controller queue and the interconnect add far more, which is why a measured
+ * figure is 60–90 ns where the first word arrives in 10.
+ */
+export function memoryLatencyDetail(
+  speedMts: number,
+  cl: number,
+  trcd: number,
+  trp: number,
+): { clockNs: number; pageHit: number; pageEmpty: number; pageMiss: number } {
+  const clockNs = 2000 / speedMts;
+  return {
+    clockNs,
+    pageHit: cl * clockNs,
+    pageEmpty: (trcd + cl) * clockNs,
+    pageMiss: (trp + trcd + cl) * clockNs,
+  };
+}
+
+/**
+ * Whether a display mode fits an interface, and what compression would be
+ * needed if it does not.
+ *
+ * Compares against the *effective* payload rate rather than the headline
+ * signalling rate. The gap between the two is exactly why 4K at 144 Hz needs
+ * compression on DisplayPort 1.4 but not on HDMI 2.1 — a result that surprises
+ * people looking only at the marketing numbers.
+ *
+ * DSC is capped at 3:1 here. VESA describes it as visually lossless, which is
+ * a claim validated by subjective testing rather than a mathematical
+ * guarantee — it is still lossy compression.
+ */
+export function checkDisplayLink(
+  required: number,
+  interfaceGbps: number,
+): { fits: boolean; withDsc: boolean; ratioNeeded: number } {
+  const ratioNeeded = required / interfaceGbps;
+  return {
+    fits: required <= interfaceGbps,
+    withDsc: ratioNeeded <= 3,
+    ratioNeeded,
   };
 }
