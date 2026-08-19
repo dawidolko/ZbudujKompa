@@ -68,6 +68,13 @@ export const en = {
     opinionsTitle: 'What builders say',
     opinionsLead:
       'Collected from public forums, each with its source and the date it was gathered so you can check the original.',
+    libraryTitle: 'What is here',
+    libraryLead:
+      'The site is a reference rather than a blog with a shop attached — here is what that amounts to in numbers.',
+    statParts: 'components with the specifications that decide a build',
+    statGuides: 'step-by-step guides, assembly through to maintenance',
+    statArticles: 'articles, with perishable ones flagged by age',
+    statCalculators: 'calculators, each showing its working',
     finishedCaption: 'The end result: a machine you assembled and understand.',
   },
 
@@ -720,13 +727,23 @@ export const en = {
     videosLead:
       'Videos from channels that publish their methodology, chosen because they show working rather than conclusions.',
     videoLength: (minutes: number) => `${minutes} min`,
+    videoDated: 'older, still sound',
     watchOn: (channel: string) => `Watch on YouTube — ${channel}`,
+    videoCount: (count: number) => `${count} videos, each checked to still exist.`,
     videoNote:
       'These open on YouTube rather than playing here: an embedded player loads Google tracking on every visit, and a site with no analytics has no business doing that on your behalf.',
     latestTitle: 'Recently published',
     latestLead: 'The newest analysis and guides.',
     popularTitle: 'Most useful right now',
     factTitle: 'Worth knowing',
+  },
+
+  videoCategory: {
+    assembly: 'Building',
+    cooling: 'Cooling',
+    components: 'Components',
+    testing: 'Testing and methodology',
+    troubleshooting: 'Troubleshooting',
   },
 
   sitemap: {

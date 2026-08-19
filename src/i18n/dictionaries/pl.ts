@@ -70,6 +70,13 @@ export const pl: Dictionary = {
     opinionsTitle: 'Co mówią składający',
     opinionsLead:
       'Zebrane z publicznych forów, każda opinia ze źródłem i datą zebrania, żebyś mógł sprawdzić oryginał.',
+    libraryTitle: 'Co tu jest',
+    libraryLead:
+      'Ten serwis to źródło wiedzy, a nie blog z doklejonym sklepem — oto ile tego jest w liczbach.',
+    statParts: 'podzespołów ze specyfikacją decydującą o zestawie',
+    statGuides: 'poradników krok po kroku, od montażu po konserwację',
+    statArticles: 'artykułów, z oznaczeniem wieku tych nietrwałych',
+    statCalculators: 'kalkulatorów, każdy z pokazanym rozumowaniem',
     finishedCaption: 'Efekt końcowy: komputer, który sam złożyłeś i rozumiesz.',
   },
 
@@ -741,13 +748,24 @@ export const pl: Dictionary = {
     videosLead:
       'Materiały z kanałów, które publikują swoją metodykę — wybrane dlatego, że pokazują pomiary, a nie same wnioski.',
     videoLength: (minutes: number) => `${minutes} min`,
+    videoDated: 'starsze, wciąż aktualne',
     watchOn: (channel: string) => `Obejrzyj na YouTube — ${channel}`,
+    videoCount: (count: number) =>
+      `${count} filmów, każdy sprawdzony pod kątem tego, czy nadal istnieje.`,
     videoNote:
       'Te odnośniki otwierają YouTube zamiast odtwarzać film tutaj: osadzony odtwarzacz ładuje skrypty śledzące Google przy każdej wizycie, a serwis bez analityki nie ma powodu robić tego w twoim imieniu.',
     latestTitle: 'Ostatnio opublikowane',
     latestLead: 'Najnowsze analizy i poradniki.',
     popularTitle: 'Najbardziej przydatne teraz',
     factTitle: 'Warto wiedzieć',
+  },
+
+  videoCategory: {
+    assembly: 'Montaż',
+    cooling: 'Chłodzenie',
+    components: 'Podzespoły',
+    testing: 'Testy i metodyka',
+    troubleshooting: 'Diagnostyka',
   },
 
   sitemap: {

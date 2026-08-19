@@ -238,6 +238,7 @@ export function allContentRoutes(): string[] {
     '/zestawy',
     ...builds.map((build) => `/zestawy/${build.slug}`),
     '/artykuly',
+    '/filmy',
     ...articles.map((article) => `/artykuly/${article.slug}`),
     '/poradniki',
     ...guides.map((guide) => `/poradniki/${guide.slug}`),

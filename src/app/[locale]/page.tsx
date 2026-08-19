@@ -9,6 +9,13 @@ import { ArrowRightIcon, StarIcon } from '@/components/ui/Icon';
 import { Photo, PhotoFigure } from '@/components/ui/Photo';
 import { Reveal } from '@/components/motion/Reveal';
 import { QuickPicker } from '@/components/tools/QuickPicker';
+import { Carousel } from '@/components/widgets/Carousel';
+import { VideoCard } from '@/components/widgets/VideoCard';
+import { videosForLocale } from '@/lib/videos';
+import { StatBand } from '@/components/widgets/StatBand';
+import { articleReadingTime, articles } from '@/lib/blog';
+import { allParts } from '@/lib/parts';
+import { formatDate } from '@/lib/utils';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, type Locale } from '@/i18n/config';
 import { sockets } from '@/lib/sockets';
@@ -341,6 +348,126 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* ---- What the site holds ----
+           Concrete counts rather than claims, so the scale is verifiable
+           rather than asserted. */}
+      <section className="relative border-y border-border-subtle bg-bg-subtle">
+        <div className="bg-iso-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="container-page relative py-16 md:py-20">
+          <SectionHeading title={dict.home.libraryTitle} lead={dict.home.libraryLead} />
+          <Reveal>
+            <StatBand
+              stats={[
+                {
+                  value: allParts.length,
+                  label: dict.parts.title,
+                  note: dict.home.statParts,
+                },
+                {
+                  value: guides.length,
+                  label: dict.guides.title,
+                  note: dict.home.statGuides,
+                },
+                {
+                  value: articles.length,
+                  label: dict.blog.title,
+                  note: dict.home.statArticles,
+                },
+                {
+                  value: 14,
+                  label: dict.calc.title,
+                  note: dict.home.statCalculators,
+                },
+              ]}
+            />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---- Recent articles, as a scrolling row ---- */}
+      <section className="container-page py-16 md:py-20">
+        <SectionHeading
+          title={dict.widgets.latestTitle}
+          lead={dict.widgets.latestLead}
+          action={
+            <ButtonLink href={localePath(typedLocale, '/artykuly')} variant="secondary" size="sm">
+              {dict.common.viewAll}
+            </ButtonLink>
+          }
+        />
+        <Carousel label={dict.widgets.latestTitle} locale={typedLocale}>
+          {articles.slice(0, 6).map((article) => (
+            <Link
+              key={article.slug}
+              href={localePath(typedLocale, `/artykuly/${article.slug}`)}
+              className="hover-lift group flex w-72 shrink-0 flex-col overflow-hidden rounded-lg border border-border-subtle bg-surface focus-ring sm:w-80"
+            >
+              {article.photo ? (
+                <Photo
+                  slug={article.photo}
+                  locale={typedLocale}
+                  ratio="16/10"
+                  sizes="20rem"
+                  imgClassName="transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              ) : (
+                <span className="bg-circuit-grid block h-32 w-full" aria-hidden="true" />
+              )}
+              <span className="flex flex-1 flex-col p-4">
+                <span className="flex flex-wrap items-center gap-2">
+                  <Badge tone="brand">{dict.blog.category[article.category]}</Badge>
+                  <span className="text-xs text-text-muted">
+                    {formatDate(article.published, typedLocale)}
+                  </span>
+                </span>
+                <span className="font-display mt-2 block font-bold text-text-primary">
+                  {t(article.title, typedLocale)}
+                </span>
+                <span className="mt-1 line-clamp-3 text-sm leading-relaxed text-text-secondary">
+                  {t(article.summary, typedLocale)}
+                </span>
+                <span className="mt-auto pt-3 text-xs text-text-muted">
+                  {dict.blog.readingTime(articleReadingTime(article, typedLocale))}
+                </span>
+              </span>
+            </Link>
+          ))}
+        </Carousel>
+      </section>
+
+      {/* ---- Recommended videos ----
+           Placed after the written content, since this site is the reference
+           and these are a companion to it rather than a replacement. */}
+      <section className="relative border-y border-border-subtle bg-bg-subtle">
+        <div className="bg-datalines pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="container-page relative py-16 md:py-20">
+          <SectionHeading
+            title={dict.widgets.videosTitle}
+            lead={dict.widgets.videosLead}
+            action={
+              <ButtonLink href={localePath(typedLocale, '/filmy')} variant="secondary" size="sm">
+                {dict.common.viewAll}
+              </ButtonLink>
+            }
+          />
+          <Carousel label={dict.widgets.videosTitle} locale={typedLocale}>
+            {videosForLocale(typedLocale)
+              .slice(0, 6)
+              .map((video) => (
+                <VideoCard
+                  key={video.id}
+                  video={video}
+                  locale={typedLocale}
+                  className="w-72 shrink-0 sm:w-80"
+                />
+              ))}
+          </Carousel>
+          <p className="mt-4 max-w-3xl text-xs leading-relaxed text-text-muted">
+            {dict.widgets.videoNote}
+          </p>
         </div>
       </section>
 

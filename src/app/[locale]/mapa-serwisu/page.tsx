@@ -9,8 +9,11 @@ import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/c
 import { navigation } from '@/lib/navigation';
 import { guides, readingTime } from '@/lib/guides';
 import { glossary, faq } from '@/lib/knowledge';
+import { articles } from '@/lib/blog';
+import { categoryOrder, getBrands } from '@/lib/parts';
+import { videos } from '@/lib/videos';
 import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
-import { t } from '@/lib/utils';
+import { slugify, t } from '@/lib/utils';
 
 type Params = { locale: string };
 
@@ -102,6 +105,12 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
             <ul className="space-y-1.5">
               {[
                 { href: '/', label: dict.nav.home },
+                { href: '/artykuly', label: dict.blog.title },
+                { href: '/filmy', label: dict.widgets.videosTitle },
+                { href: '/kalkulatory', label: dict.calc.title },
+                { href: '/konfigurator', label: dict.configurator.title },
+                { href: '/porownanie', label: dict.comparison.title },
+                { href: '/podzespoly', label: dict.parts.title },
                 { href: '/o-serwisie', label: dict.about.title },
                 { href: '/zrodla', label: dict.resources.title },
                 { href: '/kontakt', label: dict.contact.title },
@@ -120,6 +129,69 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
             </ul>
           </nav>
         </div>
+      </section>
+
+      {/* ---- Component categories and brands ---- */}
+      <section className="container-page pb-14">
+        <SectionHeading title={dict.parts.browseBy} id="parts-index" />
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
+              {dict.parts.filterCategory}
+            </h3>
+            <ul className="flex flex-wrap gap-2">
+              {categoryOrder.map((category) => (
+                <li key={category}>
+                  <Link
+                    href={localePath(typedLocale, `/podzespoly/${category}`)}
+                    className="inline-flex rounded-sm border border-border-default px-3 py-1.5 text-sm text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary focus-ring"
+                  >
+                    {dict.configurator.category[category]}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
+              {dict.parts.filterBrand}
+            </h3>
+            <ul className="flex flex-wrap gap-2">
+              {getBrands().map(({ brand }) => (
+                <li key={brand}>
+                  <Link
+                    href={localePath(typedLocale, `/podzespoly/marka/${slugify(brand)}`)}
+                    className="inline-flex rounded-sm border border-border-default px-3 py-1.5 text-sm text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary focus-ring"
+                  >
+                    {brand}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- Articles ---- */}
+      <section className="container-page pb-14">
+        <SectionHeading title={dict.blog.title} id="all-articles" />
+        <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {articles.map((article) => (
+            <li key={article.slug}>
+              <Link
+                href={localePath(typedLocale, `/artykuly/${article.slug}`)}
+                className="flex items-start justify-between gap-3 rounded-md border border-border-subtle bg-surface px-4 py-3 transition-colors hover:border-border-brand focus-ring"
+              >
+                <span className="text-sm font-medium text-text-primary">
+                  {t(article.title, typedLocale)}
+                </span>
+                <Badge tone="neutral" className="shrink-0">
+                  {dict.blog.category[article.category]}
+                </Badge>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* ---- Every guide, with its length, so the depth is visible up front ---- */}
@@ -146,11 +218,13 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
 
       {/* ---- Counts, so the reader can gauge the size of each reference section ---- */}
       <section className="container-page pb-14">
-        <dl className="grid gap-px overflow-hidden rounded-lg border border-border-subtle bg-border-subtle sm:grid-cols-3">
+        <dl className="grid gap-px overflow-hidden rounded-lg border border-border-subtle bg-border-subtle sm:grid-cols-3 lg:grid-cols-5">
           {[
             { term: dict.guides.title, value: guides.length, href: '/poradniki' },
             { term: dict.glossary.title, value: glossary.length, href: '/slownik' },
             { term: dict.faq.title, value: faq.length, href: '/faq' },
+            { term: dict.blog.title, value: articles.length, href: '/artykuly' },
+            { term: dict.widgets.videosTitle, value: videos.length, href: '/filmy' },
           ].map((item) => (
             <div key={item.term} className="bg-surface p-4">
               <dt className="text-xs tracking-wide text-text-muted uppercase">

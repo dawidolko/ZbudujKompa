@@ -41,6 +41,7 @@ const PAGES = [
   '/pl/konfigurator/',
   '/pl/kalkulatory/',
   '/pl/artykuly/',
+  '/pl/filmy/',
   '/pl/artykuly/ile-naprawde-potrzeba-vram/',
   '/pl/artykuly/tag/analiza/',
   '/en/artykuly/',
