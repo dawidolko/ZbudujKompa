@@ -39,6 +39,7 @@ the recommendation rather than just the recommendation.
 - [Architecture](#architecture)
 - [Testing](#testing)
 - [Deployment](#deployment)
+- [Learning the stack](#learning-the-stack)
 - [Contributing](#contributing)
 
 ## What this is
@@ -260,6 +261,17 @@ formatting or accessibility never reaches production.
 For a project site at `https://<user>.github.io/<repo>/`, set
 `NEXT_PUBLIC_BASE_PATH=/<repo>`. On a custom domain — as here, via `public/CNAME` —
 leave it empty.
+
+## Learning the stack
+
+[`docs/NAUKA.md`](docs/NAUKA.md) is a beginner's guide, in Polish, to the technologies
+this project is built on — and several it is not. It explains how Next.js routes through
+directories and why the folders are named `[locale]` and `[slug]`, how Server and Client
+Components divide the work, what Tailwind 4's CSS-based configuration replaces, and how
+`clamp()` scales without breakpoints. It then compares React against Vue, Next against
+Nuxt, TypeScript against JavaScript, and .NET/C# against Laravel, with Prisma covered as
+the typed-database counterpart. Examples marked **„z tego projektu"** are quoted verbatim
+from this codebase.
 
 ## Contributing
 
