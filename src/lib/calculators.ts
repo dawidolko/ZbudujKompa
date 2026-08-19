@@ -655,3 +655,152 @@ export function sizePowerSupply(input: {
     reason: input.atx3x || withHeadroom >= transientPeak ? 'headroom' : 'transient',
   };
 }
+
+/* =============================================================================
+   Upgrade and value
+   ============================================================================= */
+
+/**
+ * Performance gained per złoty for an upgrade.
+ *
+ * The point is the comparison, not the absolute figure. Upgrading a part that
+ * is not the limiting one buys almost nothing regardless of its price, and
+ * expressing the gain per złoty makes that visible where a raw performance
+ * number does not.
+ */
+export function upgradeValue(
+  currentScore: number,
+  newScore: number,
+  cost: number,
+): { gainPercent: number; pointsPerHundred: number; worthwhile: boolean } {
+  const gainPercent = currentScore > 0 ? ((newScore - currentScore) / currentScore) * 100 : 0;
+  const pointsPerHundred = cost > 0 ? ((newScore - currentScore) / cost) * 100 : 0;
+
+  return {
+    gainPercent,
+    pointsPerHundred,
+    /* Below about 15 per cent an upgrade is rarely perceptible in use, which
+       is the honest threshold rather than any gain at all being worth paying
+       for. */
+    worthwhile: gainPercent >= 15,
+  };
+}
+
+/**
+ * Frames per second a monitor can actually show.
+ *
+ * Rendering above the refresh rate is not wasted — it lowers latency, because
+ * the frame being scanned out is more recent — but the extra frames are not
+ * seen. Worth showing because it is the reason a 240 Hz panel with a card
+ * managing 90 frames is a poor pairing.
+ */
+export function displayedFrames(
+  renderedFps: number,
+  refreshHz: number,
+): {
+  shown: number;
+  wasted: number;
+  utilisation: number;
+} {
+  const shown = Math.min(renderedFps, refreshHz);
+  return {
+    shown,
+    wasted: Math.max(0, renderedFps - refreshHz),
+    utilisation: Math.min(100, (renderedFps / refreshHz) * 100),
+  };
+}
+
+/* =============================================================================
+   Thermals
+   ============================================================================= */
+
+/**
+ * Estimated CPU temperature under sustained load.
+ *
+ *   temperature = room + case rise + power × thermal resistance
+ *
+ * The case rise is a tiered figure rather than a computed one: real airflow in
+ * a case cannot be measured by the reader, so a lookup by airflow quality is
+ * the honest implementation. The cooler term uses a class-typical thermal
+ * resistance, which makes this a comparison between cooler classes rather than
+ * a prediction of a specific reading.
+ */
+export const CASE_AIRFLOW_RISE = {
+  good: 5,
+  typical: 9,
+  restricted: 14,
+} as const;
+
+export const COOLER_RESISTANCE = {
+  boxed: 0.45,
+  singleTower: 0.22,
+  dualTower: 0.16,
+  aio240: 0.16,
+  aio360: 0.13,
+} as const;
+
+export function estimateLoadTemp(input: {
+  watts: number;
+  roomC: number;
+  airflow: keyof typeof CASE_AIRFLOW_RISE;
+  cooler: keyof typeof COOLER_RESISTANCE;
+}): { temperature: number; caseRise: number; coolerRise: number; throttles: boolean } {
+  const caseRise = CASE_AIRFLOW_RISE[input.airflow];
+  const coolerRise = input.watts * COOLER_RESISTANCE[input.cooler];
+  const temperature = input.roomC + caseRise + coolerRise;
+
+  return {
+    temperature,
+    caseRise,
+    coolerRise,
+    /* 95 °C is where Ryzen holds by design and Intel begins reducing clocks.
+       Reaching it is not a fault — modern boost algorithms treat it as a
+       target — but it does mean the cooler is the limit on performance. */
+    throttles: temperature >= 95,
+  };
+}
+
+/* =============================================================================
+   Network and interfaces
+   ============================================================================= */
+
+/**
+ * Time to transfer a file over a network link.
+ *
+ * Uses 80 per cent of the nominal rate, which is roughly what TCP over
+ * Ethernet achieves in practice once framing and acknowledgements are
+ * accounted for. Quoting the nominal figure would understate the time by a
+ * fifth.
+ */
+export function networkTransferTime(
+  sizeGb: number,
+  linkMbps: number,
+): { seconds: number; effectiveMbps: number } {
+  const effectiveMbps = linkMbps * 0.8;
+  if (effectiveMbps <= 0) return { seconds: Infinity, effectiveMbps: 0 };
+  return { seconds: (sizeGb * 8 * 1024) / effectiveMbps, effectiveMbps };
+}
+
+/**
+ * Whether an M.2 drive is limited by the slot it is in.
+ *
+ * A common and invisible mistake: the second and third M.2 slots on a board
+ * frequently run at a lower PCIe generation or fewer lanes than the first, so
+ * a fast drive in the wrong slot runs at a fraction of its rated speed with no
+ * warning anywhere.
+ */
+export function m2SlotCheck(
+  driveGen: 3 | 4 | 5,
+  slotGen: 3 | 4 | 5,
+  slotLanes: number,
+): { limited: boolean; maxSpeedMbs: number; drivePotentialMbs: number } {
+  const perLane = { 3: 985, 4: 1969, 5: 3938 };
+  const maxSpeedMbs = perLane[slotGen] * slotLanes;
+  const drivePotentialMbs = perLane[driveGen] * 4;
+
+  return {
+    limited: maxSpeedMbs < drivePotentialMbs,
+    maxSpeedMbs,
+    drivePotentialMbs,
+  };
+}

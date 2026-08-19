@@ -12,6 +12,10 @@ import { FanCalculator } from '@/components/tools/calculators/FanCalculator';
 import { CableCalculator } from '@/components/tools/calculators/CableCalculator';
 import { ClearanceCalculator } from '@/components/tools/calculators/ClearanceCalculator';
 import { BottleneckCalculator } from '@/components/tools/calculators/BottleneckCalculator';
+import { ThermalCalculator } from '@/components/tools/calculators/ThermalCalculator';
+import { UpgradeCalculator } from '@/components/tools/calculators/UpgradeCalculator';
+import { FramesCalculator } from '@/components/tools/calculators/FramesCalculator';
+import { M2Calculator } from '@/components/tools/calculators/M2Calculator';
 import { PsuCalculator } from '@/components/tools/PsuCalculator';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
@@ -109,6 +113,30 @@ export default async function CalculatorsPage({ params }: { params: Promise<Para
       title: dict.calc.storage.title,
       lead: dict.calc.storage.lead,
       render: <StorageCalculator locale={typedLocale} />,
+    },
+    {
+      id: 'temperatura',
+      title: dict.calc.thermal.title,
+      lead: dict.calc.thermal.lead,
+      render: <ThermalCalculator locale={typedLocale} />,
+    },
+    {
+      id: 'klatki',
+      title: dict.calc.frames.title,
+      lead: dict.calc.frames.lead,
+      render: <FramesCalculator locale={typedLocale} />,
+    },
+    {
+      id: 'slot-m2',
+      title: dict.calc.m2.title,
+      lead: dict.calc.m2.lead,
+      render: <M2Calculator locale={typedLocale} />,
+    },
+    {
+      id: 'wymiana',
+      title: dict.calc.upgrade.title,
+      lead: dict.calc.upgrade.lead,
+      render: <UpgradeCalculator locale={typedLocale} />,
     },
     {
       id: 'balans',

@@ -200,5 +200,35 @@ check(
   'transient',
 );
 
+/* ---- Thermals: the two contributions are separable ---- */
+const warm = c.estimateLoadTemp({ watts: 150, roomC: 22, airflow: 'typical', cooler: 'dualTower' });
+check('150 W on a dual tower sits at 55 °C', Math.round(warm.temperature), 55);
+check('and does not throttle', warm.throttles, false);
+const cooked = c.estimateLoadTemp({
+  watts: 250,
+  roomC: 25,
+  airflow: 'restricted',
+  cooler: 'boxed',
+});
+check('250 W on a boxed cooler throttles', cooked.throttles, true);
+
+/* ---- Frames against refresh rate ---- */
+check('90 fps on a 240 Hz panel shows 90', c.displayedFrames(90, 240).shown, 90);
+check('and uses 37.5% of the panel', c.displayedFrames(90, 240).utilisation, 37.5);
+check('300 fps on 144 Hz shows 144', c.displayedFrames(300, 144).shown, 144);
+check('and discards 156', c.displayedFrames(300, 144).wasted, 156);
+
+/* ---- M.2 slots: the silent mistake ---- */
+check('a Gen 5 drive in a Gen 3 slot is limited', c.m2SlotCheck(5, 3, 4).limited, true);
+check('a Gen 4 drive in a Gen 4 slot is not', c.m2SlotCheck(4, 4, 4).limited, false);
+check('a Gen 4 drive on two lanes is limited', c.m2SlotCheck(4, 4, 2).limited, true);
+
+/* ---- Upgrade value ---- */
+check('a 15% gain counts as worthwhile', c.upgradeValue(100, 115, 1000).worthwhile, true);
+check('a 10% gain does not', c.upgradeValue(100, 110, 1000).worthwhile, false);
+
+/* ---- Network transfer uses effective, not nominal, throughput ---- */
+check('50 GB over gigabit takes 512 s', Math.round(c.networkTransferTime(50, 1000).seconds), 512);
+
 console.log(`\n${passed}/${passed + failed} passed`);
 process.exit(failed > 0 ? 1 : 0);
