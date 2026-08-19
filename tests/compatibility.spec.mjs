@@ -107,5 +107,44 @@ report(
   `${power.recommended} vs ${power.estimated}`,
 );
 
+/* ---- Automatic selection ----
+   The button's whole value is that it cannot produce a broken build, so every
+   purpose and budget combination is checked rather than a sample. */
+const { autoPick, selectionParts } = await import('../src/lib/parts/autopick.ts');
+
+for (const purpose of ['gaming', 'work', 'office', 'compact']) {
+  for (const budget of [3000, 6000, 10000, 20000]) {
+    const result = autoPick({ budget, purpose });
+    report(
+      checkCompatibility(result.selection).buildable,
+      `auto-pick builds a valid ${purpose} machine at ${budget}`,
+      'the generated build did not pass the compatibility check',
+    );
+  }
+}
+
+report(
+  !selectionParts(autoPick({ budget: 6000, purpose: 'office' }).selection).some(
+    (part) => part.category === 'gpu',
+  ),
+  'an office build includes no graphics card',
+  'a graphics card was selected for an office build',
+);
+
+report(
+  JSON.stringify(autoPick({ budget: 8000, purpose: 'gaming', seed: 7 }).selection) ===
+    JSON.stringify(autoPick({ budget: 8000, purpose: 'gaming', seed: 7 }).selection),
+  'the same seed reproduces the same build',
+  'two runs with one seed produced different builds',
+);
+
+/* Successive presses must differ, or the button is pointless. */
+const distinct = new Set(
+  Array.from({ length: 10 }, () =>
+    JSON.stringify(autoPick({ budget: 8000, purpose: 'gaming' }).selection),
+  ),
+);
+report(distinct.size > 5, 'successive picks differ', `only ${distinct.size} distinct in 10`);
+
 console.log(`\n${passed}/${passed + failed} passed`);
 process.exit(failed > 0 ? 1 : 0);

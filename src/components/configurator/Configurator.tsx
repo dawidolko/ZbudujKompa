@@ -1,13 +1,15 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
-import { AlertIcon, CheckIcon, InfoIcon } from '@/components/ui/Icon';
+import { useCallback, useId, useMemo, useState } from 'react';
+import { AlertIcon, CheckIcon, InfoIcon, SparkIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { categoryOrder, checkCompatibility, formatPriceRange, selectionPrice } from '@/lib/parts';
 import type { BuildSelection, PartCategory } from '@/lib/parts';
 import { cn } from '@/lib/utils';
 import { PartPicker } from './PartPicker';
+import { ShoppingList } from './ShoppingList';
+import { autoPick } from '@/lib/parts/autopick';
 
 /**
  * Build configurator.
@@ -23,7 +25,21 @@ import { PartPicker } from './PartPicker';
  */
 export function Configurator({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
+  const pickerId = useId();
   const [selection, setSelection] = useState<BuildSelection>({});
+
+  const [budget, setBudget] = useState(8000);
+  const [purpose, setPurpose] = useState<'gaming' | 'work' | 'office' | 'compact'>('gaming');
+
+  /* Announced separately from the selection, because filling eight pickers at
+     once produces no focus movement and would otherwise be silent. */
+  const [announcement, setAnnouncement] = useState('');
+
+  const pickForMe = useCallback(() => {
+    const result = autoPick({ budget, purpose });
+    setSelection(result.selection);
+    setAnnouncement(dict.autoPick.resultTitle);
+  }, [budget, purpose, dict.autoPick.resultTitle]);
 
   const select = useCallback((category: PartCategory, id: string | undefined) => {
     setSelection((current) => {
@@ -56,6 +72,74 @@ export function Configurator({ locale }: { locale: Locale }) {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
       {/* ---- Pickers ---- */}
       <div className="grid gap-3">
+        {/* Automatic selection, placed above the pickers because it is the
+            shortcut for someone who does not want to make eight decisions. */}
+        <section className="rounded-lg border border-border-brand bg-accent-subtle p-4 md:p-5">
+          <h3 className="font-display text-base font-bold text-text-primary">
+            {dict.autoPick.title}
+          </h3>
+          <p className="mt-1 text-sm leading-relaxed text-text-secondary">{dict.autoPick.lead}</p>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div>
+              <label
+                htmlFor={`${pickerId}-budget`}
+                className="mb-1.5 block text-sm font-semibold text-text-primary"
+              >
+                {dict.autoPick.budget}
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  id={`${pickerId}-budget`}
+                  type="number"
+                  min={2500}
+                  max={30000}
+                  step={500}
+                  value={budget}
+                  onChange={(event) =>
+                    setBudget(Math.min(30000, Math.max(2500, Number(event.target.value) || 2500)))
+                  }
+                  className="h-11 w-full rounded-sm border border-border-default bg-bg-base px-3 text-sm text-text-primary focus-ring"
+                />
+                <span className="text-sm text-text-muted">zł</span>
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor={`${pickerId}-purpose`}
+                className="mb-1.5 block text-sm font-semibold text-text-primary"
+              >
+                {dict.autoPick.purpose}
+              </label>
+              <select
+                id={`${pickerId}-purpose`}
+                value={purpose}
+                onChange={(event) =>
+                  setPurpose(event.target.value as 'gaming' | 'work' | 'office' | 'compact')
+                }
+                className="h-11 w-full rounded-sm border border-border-default bg-bg-base px-3 text-sm text-text-primary focus-ring"
+              >
+                <option value="gaming">{dict.autoPick.gaming}</option>
+                <option value="work">{dict.autoPick.work}</option>
+                <option value="office">{dict.autoPick.office}</option>
+                <option value="compact">{dict.autoPick.compact}</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={pickForMe}
+            className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-sm bg-accent px-5 text-sm font-semibold tracking-wide text-text-on-brand uppercase transition-colors hover:bg-accent-hover focus-ring sm:w-auto"
+          >
+            <SparkIcon className="size-4" aria-hidden="true" />
+            {chosenCount > 0 ? dict.autoPick.regenerate : dict.autoPick.generate}
+          </button>
+
+          <p className="mt-3 text-xs leading-relaxed text-text-muted">{dict.autoPick.note}</p>
+        </section>
+
         {categoryOrder.map((category) => (
           <PartPicker
             key={category}
@@ -66,6 +150,8 @@ export function Configurator({ locale }: { locale: Locale }) {
             conflicting={conflicting.has(category)}
           />
         ))}
+
+        {chosenCount > 0 ? <ShoppingList selection={selection} locale={locale} /> : null}
 
         {chosenCount > 0 ? (
           <button
@@ -154,6 +240,12 @@ export function Configurator({ locale }: { locale: Locale }) {
           </p>
         </div>
       </aside>
+
+      {/* Filling every picker at once moves no focus, so the result is
+          announced rather than left silent. */}
+      <div role="status" aria-live="polite" className="sr-only">
+        {announcement}
+      </div>
     </div>
   );
 }

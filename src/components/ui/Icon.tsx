@@ -234,3 +234,13 @@ export function ClockIcon({ className }: IconProps) {
     </Svg>
   );
 }
+
+/** Sparkle, used on the automatic-selection control. */
+export function SparkIcon({ className }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8" />
+      <circle cx="12" cy="12" r="2.5" />
+    </Svg>
+  );
+}

@@ -703,6 +703,37 @@ export const pl: Dictionary = {
     note: 'Te ustawienia zapisują się w twojej przeglądarce i pozostają aktywne przy przechodzeniu po serwisie oraz przy zmianie języka.',
   },
 
+  shopping: {
+    title: 'Lista zakupowa',
+    listTitle: 'Lista zakupowa zestawu PC',
+    copy: 'Skopiuj listę',
+    copied: 'Skopiowano',
+    download: 'Pobierz jako plik',
+    openAt: (shop: string) => `Szukaj w ${shop}`,
+    searchAt: (shop: string, part: string) =>
+      `Szukaj ${part} w sklepie ${shop} (otwiera się w nowej karcie)`,
+    priceDisclaimer:
+      'Ceny to orientacyjne widełki do planowania budżetu, a nie aktualny cennik. Zweryfikuj przed zakupem.',
+    disclaimer:
+      'Te odnośniki otwierają wyszukiwanie w sklepie z wpisaną nazwą części — żaden z tych sklepów nie udostępnia API, które strona statyczna mogłaby odczytać, więc realne wyszukiwanie jest uczciwym odpowiednikiem koszyka. Żaden z linków nie jest afiliacyjny i serwis nic na nich nie zarabia. Przed zamówieniem zawsze sprawdź dokładny model i jego aktualną cenę w sklepie.',
+  },
+
+  autoPick: {
+    title: 'Dobierz za mnie',
+    lead: 'Wybierz budżet i przeznaczenie, a dostaniesz kompletny zestaw, który z założenia jest zgodny.',
+    budget: 'Budżet',
+    purpose: 'Przeznaczenie',
+    gaming: 'Granie',
+    work: 'Render i montaż',
+    office: 'Biuro i internet',
+    compact: 'Mała obudowa',
+    generate: 'Dobierz zestaw',
+    regenerate: 'Spróbuj innego',
+    apply: 'Wczytaj do konfiguratora',
+    resultTitle: 'Proponowany zestaw',
+    note: 'Części losowane są spośród tych, które do siebie pasują i mieszczą się blisko twojego budżetu — więc kolejne kliknięcie da inny sensowny zestaw, a nigdy niedziałający.',
+  },
+
   sitemap: {
     title: 'Mapa serwisu',
     lead: 'Wszystkie strony serwisu w jednym miejscu, pogrupowane tak samo jak w nawigacji.',

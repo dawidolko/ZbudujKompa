@@ -683,6 +683,36 @@ export const en = {
     note: 'These settings are stored in your browser and stay in place as you move around the site or switch language.',
   },
 
+  shopping: {
+    title: 'Shopping list',
+    listTitle: 'PC build shopping list',
+    copy: 'Copy the list',
+    copied: 'Copied',
+    download: 'Download as a file',
+    openAt: (shop: string) => `Search at ${shop}`,
+    searchAt: (shop: string, part: string) => `Search for ${part} at ${shop} (opens in a new tab)`,
+    priceDisclaimer:
+      'Prices are indicative bands for budgeting, not a live feed. Verify before buying.',
+    disclaimer:
+      'These links open a search at the retailer with the part name already entered — no shop here publishes an API a static site could read, so a real search is the honest equivalent of a basket. None of them are affiliate links and this site earns nothing from them. Always check the exact model and its current price at the retailer before ordering.',
+  },
+
+  autoPick: {
+    title: 'Pick one for me',
+    lead: 'Choose a budget and a purpose, and get a complete build that is compatible by construction.',
+    budget: 'Budget',
+    purpose: 'Purpose',
+    gaming: 'Gaming',
+    work: 'Rendering and editing',
+    office: 'Office and browsing',
+    compact: 'Compact build',
+    generate: 'Pick a build',
+    regenerate: 'Try another',
+    apply: 'Load into the configurator',
+    resultTitle: 'Suggested build',
+    note: 'Parts are chosen at random from among those that fit together and land near your budget — so pressing again gives a different sensible build, never a broken one.',
+  },
+
   sitemap: {
     title: 'Site map',
     lead: 'Every page on this site in one place, grouped the way the navigation groups them.',
