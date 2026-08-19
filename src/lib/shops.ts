@@ -106,14 +106,3 @@ export function shopsFor(locale: Locale): Shop[] {
 export function partQuery(part: Part): string {
   return `${part.brand} ${part.name}`;
 }
-
-/**
- * A single query covering a whole build.
- *
- * Retailers have no concept of an imported basket, so the honest equivalent is
- * one search per part. This joins the names for the shops whose search handles
- * multiple terms, and the per-part links remain available alongside.
- */
-export function buildQuery(parts: Part[]): string {
-  return parts.map((part) => part.name).join(' ');
-}

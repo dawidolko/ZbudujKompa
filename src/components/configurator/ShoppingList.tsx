@@ -8,7 +8,7 @@ import type { Locale } from '@/i18n/config';
 import { formatPriceRange, selectionPrice } from '@/lib/parts';
 import type { BuildSelection } from '@/lib/parts';
 import { selectionParts } from '@/lib/parts/autopick';
-import { buildQuery, partQuery, shopsFor } from '@/lib/shops';
+import { partQuery, shopsFor } from '@/lib/shops';
 import { site } from '@/lib/site';
 import { cn, t } from '@/lib/utils';
 
@@ -24,10 +24,33 @@ import { cn, t } from '@/lib/utils';
 export function ShoppingList({ selection, locale }: { selection: BuildSelection; locale: Locale }) {
   const dict = getDictionary(locale);
   const [copied, setCopied] = useState(false);
+  const [announcement, setAnnouncement] = useState('');
 
   const parts = useMemo(() => selectionParts(selection), [selection]);
   const price = useMemo(() => selectionPrice(selection), [selection]);
   const availableShops = useMemo(() => shopsFor(locale), [locale]);
+
+  /**
+   * Opens one search tab per part.
+   *
+   * Retailers match a search against a single product, so joining eight part
+   * names into one query returned nothing at all. One tab per part is what a
+   * shopper would otherwise do by hand.
+   *
+   * The first tab is opened synchronously inside the click so it inherits the
+   * user gesture; the rest follow immediately after. A blocker that stops the
+   * others still lets the first through, which degrades to the old behaviour
+   * rather than to nothing.
+   */
+  const openAll = useCallback(
+    (shop: (typeof availableShops)[number]) => {
+      for (const part of parts) {
+        window.open(shop.search(partQuery(part)), '_blank', 'noopener,noreferrer');
+      }
+      setAnnouncement(dict.shopping.openedTabs(parts.length, shop.name));
+    },
+    [parts, dict.shopping],
+  );
 
   /** The list as plain text, for pasting into a note or a message. */
   const asText = useMemo(() => {
@@ -149,21 +172,26 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
         </button>
 
         {availableShops.slice(0, 2).map((shop) => (
-          <a
+          <button
             key={shop.id}
-            href={shop.search(buildQuery(parts))}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
+            type="button"
+            onClick={() => openAll(shop)}
+            title={dict.shopping.openAtHint(shop.name, parts.length)}
             className="inline-flex h-11 items-center gap-2 rounded-sm bg-accent px-4 text-sm font-semibold tracking-wide text-text-on-brand uppercase transition-colors hover:bg-accent-hover focus-ring"
           >
             {dict.shopping.openAt(shop.name)}
             <ExternalIcon className="size-4" aria-hidden="true" />
             <span className="sr-only">({dict.common.externalLink})</span>
-          </a>
+          </button>
         ))}
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-text-muted">{dict.shopping.disclaimer}</p>
+
+      {/* Opening tabs is otherwise silent for a screen reader. */}
+      <p aria-live="polite" className="sr-only">
+        {announcement}
+      </p>
     </section>
   );
 }
