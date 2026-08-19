@@ -89,7 +89,7 @@ jobs:
         # before they start, and a fixed sleep would be a race either way.
         run: |
           npx --yes serve@latest out -l 3000 &
-          npx --yes wait-on@latest http://localhost:3000/en/ --timeout 60000
+          npx --yes wait-on@latest http://localhost:3000/pl/ --timeout 60000
 
       # Pure logic, so it needs no browser and runs before the slow suites.
       - name: Chat matcher tests
