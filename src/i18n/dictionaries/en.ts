@@ -713,6 +713,22 @@ export const en = {
     note: 'Parts are chosen at random from among those that fit together and land near your budget — so pressing again gives a different sensible build, never a broken one.',
   },
 
+  widgets: {
+    swipeHint: 'Swipe to see more',
+    loading: 'Loading…',
+    videosTitle: 'Worth watching',
+    videosLead:
+      'Videos from channels that publish their methodology, chosen because they show working rather than conclusions.',
+    videoLength: (minutes: number) => `${minutes} min`,
+    watchOn: (channel: string) => `Watch on YouTube — ${channel}`,
+    videoNote:
+      'These open on YouTube rather than playing here: an embedded player loads Google tracking on every visit, and a site with no analytics has no business doing that on your behalf.',
+    latestTitle: 'Recently published',
+    latestLead: 'The newest analysis and guides.',
+    popularTitle: 'Most useful right now',
+    factTitle: 'Worth knowing',
+  },
+
   sitemap: {
     title: 'Site map',
     lead: 'Every page on this site in one place, grouped the way the navigation groups them.',

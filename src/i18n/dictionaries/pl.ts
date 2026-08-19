@@ -734,6 +734,22 @@ export const pl: Dictionary = {
     note: 'Części losowane są spośród tych, które do siebie pasują i mieszczą się blisko twojego budżetu — więc kolejne kliknięcie da inny sensowny zestaw, a nigdy niedziałający.',
   },
 
+  widgets: {
+    swipeHint: 'Przesuń, aby zobaczyć więcej',
+    loading: 'Wczytywanie…',
+    videosTitle: 'Warto obejrzeć',
+    videosLead:
+      'Materiały z kanałów, które publikują swoją metodykę — wybrane dlatego, że pokazują pomiary, a nie same wnioski.',
+    videoLength: (minutes: number) => `${minutes} min`,
+    watchOn: (channel: string) => `Obejrzyj na YouTube — ${channel}`,
+    videoNote:
+      'Te odnośniki otwierają YouTube zamiast odtwarzać film tutaj: osadzony odtwarzacz ładuje skrypty śledzące Google przy każdej wizycie, a serwis bez analityki nie ma powodu robić tego w twoim imieniu.',
+    latestTitle: 'Ostatnio opublikowane',
+    latestLead: 'Najnowsze analizy i poradniki.',
+    popularTitle: 'Najbardziej przydatne teraz',
+    factTitle: 'Warto wiedzieć',
+  },
+
   sitemap: {
     title: 'Mapa serwisu',
     lead: 'Wszystkie strony serwisu w jednym miejscu, pogrupowane tak samo jak w nawigacji.',
