@@ -52,8 +52,21 @@ check(
 );
 
 /* The settings have to outlive both a reload and the full document swap the
-   language switcher performs — the case that previously broke the theme. */
+   language switcher performs — the case that previously broke the theme.
+
+   Waiting for the attribute rather than for a lifecycle event: reload()
+   resolves against the new document, and sampling immediately can race the
+   head script that writes it. The attribute appearing is the actual condition
+   under test. */
 await page.reload({ waitUntil: 'domcontentloaded' });
+await page
+  .waitForFunction(() => document.documentElement.hasAttribute('data-a11y-filter'), null, {
+    timeout: 5000,
+  })
+  .catch(() => {
+    /* Swallowed so the assertion below reports the failure with context,
+       rather than the run dying on an opaque timeout. */
+  });
 check(
   'settings survive a reload',
   (await page.getAttribute('html', 'data-a11y-filter')) === 'high-contrast',
