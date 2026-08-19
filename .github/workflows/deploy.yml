@@ -159,6 +159,31 @@ jobs:
           NEXT_PUBLIC_CHAT_MODEL: ${{ secrets.CHAT_MODEL }}
           NEXT_PUBLIC_BASE_PATH: ''
 
+      # Guards against the two failure modes that produce a live 404 while the
+      # build itself reports success.
+      - name: Verify the export
+        run: |
+          # Jekyll strips underscore-prefixed paths, which would remove _next/
+          # and with it every script and stylesheet the site needs.
+          test -f out/.nojekyll || {
+            echo "::error::out/.nojekyll is missing - Jekyll would strip out/_next/"
+            exit 1
+          }
+
+          # The custom domain is served from the artefact, not from repo settings.
+          test -f out/CNAME || {
+            echo "::error::out/CNAME is missing - the custom domain would be dropped"
+            exit 1
+          }
+
+          # A localised entry point must exist, otherwise every route 404s.
+          test -f out/pl/index.html || {
+            echo "::error::out/pl/index.html is missing - the export is incomplete"
+            exit 1
+          }
+
+          echo "Exported $(find out -name '*.html' | wc -l | tr -d ' ') HTML pages."
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
