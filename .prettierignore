@@ -9,3 +9,6 @@ public/images
 # and are not part of the application source.
 .github/ISSUE_TEMPLATE
 .github/FUNDING.yml
+
+# Generated screenshots
+docs/screenshots

@@ -1,50 +1,95 @@
 <div align="center">
 
-<img src="public/icon-192.png" alt="" width="88" height="88">
+<img src="public/icon-192.png" alt="" width="84" height="84">
 
 # ZbudujKompa
 
-**Złóż komputer bez zgadywania** · _Build your PC without guessing_
+**Build your PC without guessing**
 
-Dwujęzyczny przewodnik po składaniu komputerów: platformy AMD i Intel, chłodzenie,
-gotowe zestawy i instrukcje krok po kroku.
+A bilingual, fully static reference site about building a PC — platforms, cooling,
+components, reference builds and step-by-step guides, each with the reasoning behind
+the recommendation rather than just the recommendation.
 
 [![Deploy](https://github.com/dawidolko/ZbudujKompa/actions/workflows/deploy.yml/badge.svg)](https://github.com/dawidolko/ZbudujKompa/actions/workflows/deploy.yml)
-[![Next.js](https://img.shields.io/badge/Next.js-16-000)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19-087ea4)](https://react.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06b6d4)](https://tailwindcss.com)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-000)](https://nextjs.org)
+[![React 19](https://img.shields.io/badge/React-19-087ea4)](https://react.dev)
+[![Tailwind 4](https://img.shields.io/badge/Tailwind-4-06b6d4)](https://tailwindcss.com)
 [![WCAG 2.2 AA](https://img.shields.io/badge/WCAG_2.2-AA-16a34a)](#accessibility)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-[zbudujkompa.dawidolko.pl](https://zbudujkompa.dawidolko.pl)
+**[zbudujkompa.dawidolko.pl](https://zbudujkompa.dawidolko.pl)**
+
+<a href="https://zbudujkompa.dawidolko.pl">
+  <img src="docs/screenshots/home-dark.png" alt="The ZbudujKompa home page in dark mode" width="820">
+</a>
 
 </div>
 
 ---
 
+## Contents
+
+- [What this is](#what-this-is)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Quick start](#quick-start)
+- [The build configurator](#the-build-configurator)
+- [The chat assistant](#the-chat-assistant)
+- [Accessibility](#accessibility)
+- [Architecture](#architecture)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+
 ## What this is
 
-A fully static, bilingual (Polish and English) reference site about building a PC.
-It covers CPU platforms and sockets, cooling classes, complete reference builds and
-step-by-step assembly guides — each with the reasoning behind the recommendation, not
-just the recommendation itself.
+A reference site for anyone assembling a computer, in Polish and English. It covers
+CPU platforms and sockets, cooling classes, a catalogue of real components, complete
+reference builds and step-by-step assembly guides — including installing Windows and
+Linux, which most build guides skip entirely.
 
-There is no backend, no database and no tracking. The whole site is prerendered to
-files and served by GitHub Pages.
+There is no backend, no database and no tracking. Everything is prerendered to files
+and served by GitHub Pages. The interactive parts — the configurator, the calculators,
+the assistant — all run in the browser.
+
+## Screenshots
+
+<table>
+<tr>
+<td width="50%">
+<a href="https://zbudujkompa.dawidolko.pl/pl/konfigurator/">
+  <img src="docs/screenshots/configurator.png" alt="The build configurator, showing selected parts and a live compatibility summary">
+</a>
+<p align="center"><strong>Build configurator</strong><br><sub>Live compatibility checks, power draw and price bands</sub></p>
+</td>
+<td width="50%">
+<a href="https://zbudujkompa.dawidolko.pl/pl/poradniki/assembly-step-by-step/">
+  <img src="docs/screenshots/guide.png" alt="An assembly guide with a sticky table of contents and technical diagrams">
+</a>
+<p align="center"><strong>Assembly guides</strong><br><sub>Anchored steps, timings and technical diagrams</sub></p>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<img src="docs/screenshots/home-light.png" alt="The home page in light mode">
+<p align="center"><strong>Light and dark themes</strong><br><sub>Both meet WCAG 2.2 AA, and the choice survives a language switch</sub></p>
+</td>
+</tr>
+</table>
 
 ## Features
 
-|               |                                                                                                                                                 |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Platforms** | Five sockets across AMD and Intel, each with chipset tables, memory and PCIe support, and an honest verdict on whether it is still worth buying |
-| **Cooling**   | Five cooling classes compared on heat handled, noise and price, with the trade-offs stated plainly                                              |
-| **Builds**    | Six reference builds — gaming, creator, ITX, HTPC and home server — each with the reasoning for every part                                      |
-| **Guides**    | Fourteen step-by-step guides covering assembly, Windows and Linux installation, BIOS, tuning and maintenance                                    |
-| **Tools**     | A compatibility checker and a PSU calculator, both computing live in the browser                                                                |
-| **Assistant** | A docked chat assistant answering from a local knowledge base — no API key required, optional LLM on top                                        |
-| **Bilingual** | Every route exists in both languages with correct `hreflang`, `lang` and canonical URLs                                                         |
-| **Themes**    | Light and dark, persisted across navigation and language changes, applied before first paint                                                    |
-| **Visuals**   | Technical SVG diagrams, licensed photography, background patterns and scroll animations that degrade to nothing without JavaScript              |
+|                  |                                                                                                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Configurator** | Pick parts from a catalogue of 58 components and get live compatibility checks — socket, memory generation, VRM capacity, physical clearances and supply headroom — each explaining its reasoning |
+| **Components**   | Every part carries a price band rather than a price, with the specifications that actually decide a build: cooler height, card length, module height                                              |
+| **Platforms**    | Five AMD and Intel sockets with chipset tables and an honest verdict on which are still worth buying into                                                                                         |
+| **Cooling**      | Five cooling classes compared on heat handled, noise and price, with the trade-offs stated plainly                                                                                                |
+| **Guides**       | Fourteen step-by-step guides: assembly, first boot, BIOS, Windows and Linux installation, overclocking, quiet builds, diagnostics and maintenance                                                 |
+| **Tools**        | A compatibility checker and a PSU calculator, both computing live in the browser                                                                                                                  |
+| **Assistant**    | A docked chat assistant answering from a local knowledge base — no API key required, with an optional LLM layered on top                                                                          |
+| **Bilingual**    | Every route exists in Polish and English with correct `hreflang`, `lang` and canonical URLs. Polish is the default                                                                                |
+| **Visuals**      | Technical SVG diagrams, licensed photography, gradient background patterns and scroll animations that degrade to nothing without JavaScript                                                       |
 
 ## Quick start
 
@@ -64,193 +109,149 @@ npm run serve   # http://localhost:3000
 
 ```bash
 npm run docker:up      # production image on http://localhost:8080
-npm run docker:dev     # dev server with hot reload on http://localhost:3000
+npm run docker:dev     # dev server with hot reload
 npm run docker:down
 ```
 
-The production image is a three-stage build: dependencies, Next.js build, then an
-nginx runtime containing only the exported files. It runs as an unprivileged user
-with a read-only root filesystem. See [`.tools/docker/`](.tools/docker/).
+The production image is a three-stage build — dependencies, Next.js build, then an
+nginx runtime containing only the exported files. It runs as an unprivileged user with
+a read-only root filesystem. See [`.tools/docker/`](.tools/docker/).
 
-## Project structure
+## The build configurator
 
-```
-├── .github/workflows/     CI: verify → test → build → deploy to Pages
-├── .tools/
-│   ├── docker/            Dockerfile, compose, nginx config, security headers
-│   └── scripts/           Brand assets, photo pipeline, secret scanning
-├── public/                Icons, OG image, photos, manifest, CNAME
-├── src/
-│   ├── app/
-│   │   ├── [locale]/      Every content route, both languages
-│   │   ├── layout.tsx     Root metadata (no document shell — see below)
-│   │   ├── sitemap.ts     Generated from the same list as the navigation
-│   │   └── robots.ts
-│   ├── components/
-│   │   ├── brand/         Logo and mark
-│   │   ├── chat/          Build assistant
-│   │   ├── diagrams/      Technical SVG drawings
-│   │   ├── glossary/      Filterable glossary
-│   │   ├── motion/        Scroll-reveal wrapper
-│   │   ├── guides/        Downloadable checklist
-│   │   ├── layout/        Header, footer, breadcrumbs, theme
-│   │   ├── seo/           JSON-LD
-│   │   ├── tools/         Compatibility checker, PSU calculator
-│   │   └── ui/            Button, badge, card, callout, icons
-│   ├── i18n/              Locale config and PL/EN dictionaries
-│   └── lib/
-│       ├── chat/          Knowledge base and provider
-│       ├── sockets.ts     Platform catalogue
-│       ├── cooling.ts     Cooling classes
-│       ├── builds.ts      Reference builds
-│       ├── guides.ts      Step-by-step guides
-│       ├── knowledge.ts   Glossary, FAQ, sourced opinions
-│       ├── navigation.ts  Derived from the data modules
-│       └── theme.ts       Theme resolution and persistence
-└── tests/                 Theme, interaction and accessibility suites
+The [configurator](https://zbudujkompa.dawidolko.pl/pl/konfigurator/) is the piece with
+the most logic behind it. It re-checks on every change rather than behind a submit
+button, so a conflict appears while the choice that caused it is still on screen.
+
+Findings come in three grades, and the middle one is the point:
+
+- **Error** — the build cannot work. A DDR4 kit will not enter a DDR5 slot.
+- **Warning** — it works, but something is compromised. A board whose VRM is below the
+  CPU's peak draw does not fail; it quietly reduces clocks under sustained load, which
+  is exactly the kind of problem nobody notices.
+- **Pass** — checked and fine, stated explicitly so the reader knows it was considered.
+
+Every message explains itself. `Incompatible` on its own sends someone back to a forum;
+_"this board takes DDR5 and that kit is DDR4"_ tells them what to change.
+
+The engine lives in [`src/lib/parts/compatibility.ts`](src/lib/parts/compatibility.ts)
+and is covered by [15 tests](tests/compatibility.spec.mjs).
+
+## The chat assistant
+
+The assistant in the bottom-right corner matches questions against a knowledge base
+compiled into the site. **It works offline, costs nothing per message, and needs no API
+key.**
+
+An optional LLM can be layered on top with a free-tier key from
+[Groq](https://console.groq.com/keys), [OpenRouter](https://openrouter.ai/keys) or
+[Cerebras](https://cloud.cerebras.ai):
+
+```bash
+npm run chat:key -- gsk_your_key_here    # verifies the key, then writes .env.local
+npm run dev
 ```
 
-### Two architectural decisions worth knowing
+**Any failure falls back to the local answer** — rate limit, bad key, no network, or a
+15-second timeout. The assistant never stops answering.
 
-**The document shell lives in `[locale]/layout.tsx`, not in the root layout.** The
-`lang` attribute has to be correct in the _served_ HTML, and the locale segment is
-the only place that knows the language. Setting it client-side would leave crawlers
-and assistive technology reading the page as the wrong language.
+> **Before adding a key to a public deployment.** This is a static export. A GitHub
+> Secret is secret in the Actions log, not in the built site: the value is compiled
+> into the JavaScript bundle and served to every visitor. Only use a free-tier key,
+> with a hard spending limit, that you are prepared to rotate. `npm run check:secrets`
+> scans tracked files for keys and runs first in CI.
 
-**Navigation, sitemap and routes are derived from the data modules.** Adding a socket
-to `src/lib/sockets.ts` puts it in the menu, the sitemap, the footer and its own
-generated page. There is no second list to keep in step.
+To enable it on Pages, add `CHAT_API_URL`, `CHAT_API_KEY` and `CHAT_MODEL` as
+repository secrets. Leaving them unset is fully supported.
 
 ## Accessibility
 
-The site targets WCAG 2.2 Level AA, and [`tests/a11y.spec.mjs`](tests/a11y.spec.mjs)
-runs axe against a page from every section **in both themes** — a contrast failure can
-exist in one theme and not the other, so a single-theme audit misses half of them.
+The site targets WCAG 2.2 Level AA. [`tests/a11y.spec.mjs`](tests/a11y.spec.mjs) runs
+axe against a page from every section **in both themes** — a contrast failure can exist
+in one theme and not the other, so a single-theme audit misses half of them.
 
 - Every text/background pair is documented with its measured contrast ratio in
   [`globals.css`](src/app/globals.css), so a future change can be checked against the
   number it has to beat.
 - Colour is never the sole carrier of meaning: every status pairs colour with an icon
   and a text label.
-- Focus is always visible, meets the 3:1 indicator contrast of SC 2.4.13, and is
-  returned to the triggering control when a panel closes.
+- Focus is always visible, meets the 3:1 indicator contrast of SC 2.4.13, and returns
+  to the triggering control when a panel closes.
 - `prefers-reduced-motion`, `prefers-contrast` and `forced-colors` are all honoured.
+  Scroll animations are gated on JavaScript being available, so content is never left
+  invisible.
 - Interactive targets meet the 44×44 minimum of SC 2.5.8.
 
 Automated testing catches roughly a third of accessibility problems. Passing the suite
 is a floor, not a certificate — known gaps are listed on the site's own
 [accessibility page](https://zbudujkompa.dawidolko.pl/pl/dostepnosc/).
 
-## The theme, and the bug it was built around
+## Architecture
 
-Switching language used to reset the site to light mode. The cause was subtle and
-worth recording: each locale renders its own `<html>`, Next.js treats the link between
-them as a client-side navigation, so the new document's blocking `<head>` script never
-runs — and React reconciles `<html>` against markup with no `data-theme`, dropping the
-attribute entirely.
-
-The fix has two halves, and both are needed:
-
-1. **A blocking script in `<head>`** applies the theme before first paint on a cold
-   load, which is what prevents a flash of the wrong theme.
-2. **[`ThemeScript`](src/components/layout/ThemeScript.tsx)** re-applies it after
-   client-side navigation, which is where the head script does not run.
-
-The resolved theme is also persisted on first visit, not only when the toggle is
-pressed — otherwise a visitor who simply inherited their OS preference has nothing
-stored for the next document to read.
-
-[`tests/theme.spec.mjs`](tests/theme.spec.mjs) covers all five scenarios, including
-the one the original implementation got wrong: an explicit _light_ choice on a machine
-whose OS is set to dark.
-
-## The build assistant
-
-The assistant in the bottom-right corner matches questions against a knowledge base
-compiled into the site ([`src/lib/chat/knowledge-base.ts`](src/lib/chat/knowledge-base.ts)).
-It works offline, costs nothing per message, and needs no API key.
-
-An optional LLM can be layered on top. Get a free key from
-[Groq](https://console.groq.com/keys), [OpenRouter](https://openrouter.ai/keys) or
-[Cerebras](https://cloud.cerebras.ai), then:
-
-```bash
-npm run chat:key -- gsk_your_key_here          # groq is the default
-npm run chat:key -- sk-or-your_key openrouter  # or another provider
-npm run dev                                    # restart to pick it up
+```
+├── .github/workflows/     CI: verify → test → build → deploy
+├── .tools/
+│   ├── docker/            Dockerfile, compose, nginx, security headers
+│   └── scripts/           Brand assets, photo pipeline, secret scanning
+├── docs/screenshots/      README imagery
+├── public/                Icons, OG image, photos, manifest, CNAME
+├── src/
+│   ├── app/[locale]/      Every content route, both languages
+│   ├── components/
+│   │   ├── configurator/  Part pickers and the component browser
+│   │   ├── diagrams/      Technical SVG drawings
+│   │   ├── chat/          Build assistant
+│   │   ├── motion/        Scroll-reveal wrapper
+│   │   └── ui/            Buttons, badges, cards, photos, icons
+│   ├── i18n/              Locale config and PL/EN dictionaries
+│   └── lib/
+│       ├── parts/         Component catalogue and compatibility engine
+│       ├── chat/          Knowledge base and provider
+│       ├── guides/        Guide content, split by subject
+│       └── theme.ts       Theme resolution and persistence
+└── tests/                 Chat, compatibility, theme, interaction, a11y
 ```
 
-The script verifies the key against the provider before writing anything, so a typo is
-reported immediately rather than showing up later as an assistant that has quietly
-fallen back to local answers. It writes `.env.local`, which is gitignored.
+### Three decisions worth knowing
 
-Recent turns are sent as context so follow-up questions work, requests time out after
-15 seconds, and **any failure falls back to the local answer** — the assistant never
-stops working. Links attached to an answer always come from the local knowledge base,
-so the model cannot invent URLs.
+**The document shell lives in `[locale]/layout.tsx`, not the root layout.** The `lang`
+attribute has to be correct in the _served_ HTML, and the locale segment is the only
+place that knows the language.
 
-### Enabling the chat on GitHub Pages
+**Navigation, sitemap and routes derive from the data modules.** Adding a socket to
+`src/lib/sockets.ts` puts it in the menu, the footer, the sitemap and its own generated
+page. There is no second list to keep in step.
 
-**Read this before adding a key.** This is a static export on a public repository.
-A GitHub Secret is secret in the _Actions log_, not in the _built site_ — the value is
-compiled into the JavaScript bundle and served to every visitor. Anyone who opens
-DevTools can read it. There is no way around this on static hosting; the only way to
-truly hide a key is a server or proxy to hold it.
+**The theme is an attribute, re-applied after navigation.** Each locale renders its own
+`<html>`, and Next.js treats a link between them as a client-side navigation — so the
+new document's `<head>` script never runs and React drops the attribute. A blocking
+script handles the cold load and [`ThemeScript`](src/components/layout/ThemeScript.tsx)
+handles the soft navigation. Both halves are needed; [five tests](tests/theme.spec.mjs)
+cover the combinations.
 
-That makes exactly one configuration acceptable here:
+## Testing
 
-1. A **free-tier key** from [Groq](https://console.groq.com/keys),
-   [OpenRouter](https://openrouter.ai/keys) or [Cerebras](https://cloud.cerebras.ai).
-2. With a **hard spending limit** set in the provider dashboard.
-3. That you are **prepared to rotate** if it gets abused.
+```bash
+npm run verify   # secrets, typecheck, lint, formatting, build
+npm run test     # chat, compatibility, theme, interaction, accessibility
+```
 
-Then add three repository secrets under **Settings → Secrets and variables → Actions**:
+The browser suites need a built site running — `npm run build && npm run serve` first,
+or point them elsewhere with `TEST_BASE_URL`.
 
-| Secret         | Value (Groq example)                              |
-| -------------- | ------------------------------------------------- |
-| `CHAT_API_URL` | `https://api.groq.com/openai/v1/chat/completions` |
-| `CHAT_API_KEY` | your key, e.g. `gsk_…`                            |
-| `CHAT_MODEL`   | `llama-3.3-70b-versatile`                         |
-
-Push to `main` and the deploy workflow picks them up. Leaving them unset is fully
-supported — the assistant falls back to its built-in knowledge base and works normally.
-
-`npm run check:secrets` scans tracked files for keys and runs first in CI, so a key
-pasted into a committed file fails the build instead of being published.
-
-## Data and sourcing
-
-- **Specifications** come from published vendor documentation.
-- **Cooling figures** are realistic bands for a whole class of design, not headline
-  numbers from a single product's marketing page.
-- **Prices** are indicative Polish retail figures and each carries the date it was
-  checked. A price without a date goes stale silently, which is worse than no price.
-- **Opinions** are quoted with their source and collection date. They are individual
-  voices from public forums, not verified reviews.
-
-## Scripts
-
-| Script                 | Purpose                                     |
-| ---------------------- | ------------------------------------------- |
-| `npm run dev`          | Development server                          |
-| `npm run build`        | Static export to `./out`                    |
-| `npm run serve`        | Serve the export locally                    |
-| `npm run typecheck`    | TypeScript, no emit                         |
-| `npm run lint`         | ESLint                                      |
-| `npm run format`       | Prettier, write                             |
-| `npm run verify`       | typecheck + lint + format check + build     |
-| `npm run test`         | Theme, interaction and accessibility suites |
-| `npm run brand:assets` | Regenerate icons and the OG image           |
-| `npm run docker:*`     | Build, up, down, logs, dev                  |
-
-Tests need a built site running — `npm run build && npm run serve` first, or point
-them elsewhere with `TEST_BASE_URL`.
+| Suite                    | Covers                                                                                  |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `chat.spec.mjs`          | Question matching in both languages, including off-topic questions that must be refused |
+| `compatibility.spec.mjs` | The configurator engine: sockets, memory, power, physical fit                           |
+| `theme.spec.mjs`         | Theme persistence across language switches, and no flash on load                        |
+| `interaction.spec.mjs`   | Menu, assistant, calculators, glossary filter                                           |
+| `a11y.spec.mjs`          | axe against every section, in both themes                                               |
 
 ## Deployment
 
-Pushing to `main` triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
-verify → test → build → deploy. The deploy job depends on the tests, so a build that
-fails typecheck, lint, formatting or accessibility never reaches production.
+Pushing to `main` runs [`deploy.yml`](.github/workflows/deploy.yml): verify → test →
+build → deploy. The deploy depends on the tests, so a build that fails typecheck, lint,
+formatting or accessibility never reaches production.
 
 For a project site at `https://<user>.github.io/<repo>/`, set
 `NEXT_PUBLIC_BASE_PATH=/<repo>`. On a custom domain — as here, via `public/CNAME` —
@@ -262,6 +263,9 @@ Corrections to the technical content are especially welcome; hardware advice age
 an issue pointing at something now wrong is genuinely useful. Please keep commits
 following [Conventional Commits](https://www.conventionalcommits.org/) and run
 `npm run verify` before opening a pull request.
+
+Photographs are credited in [`public/photos/CREDITS.md`](public/photos/CREDITS.md) and
+used under the [Unsplash Licence](https://unsplash.com/license).
 
 ## License
 
