@@ -95,6 +95,10 @@ jobs:
       - name: Chat matcher tests
         run: npm run test:chat
 
+      # Pure logic, so no browser is needed and it runs before the slow suites.
+      - name: Compatibility engine tests
+        run: npm run test:compat
+
       - name: Theme persistence tests
         run: node tests/theme.spec.mjs
         env:

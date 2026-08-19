@@ -134,6 +134,14 @@ export const navigation: NavSection[] = [
         },
       },
       {
+        href: '/porownanie',
+        label: { pl: 'Porównywarka', en: 'Comparison' },
+        description: {
+          pl: 'Zestaw podzespoły obok siebie',
+          en: 'Put components side by side',
+        },
+      },
+      {
         href: '/podzespoly',
         label: { pl: 'Przeglądarka podzespołów', en: 'Component browser' },
         description: {
@@ -199,6 +207,7 @@ export function allContentRoutes(): string[] {
     ...guides.map((guide) => `/poradniki/${guide.slug}`),
     '/konfigurator',
     '/podzespoly',
+    '/porownanie',
     '/narzedzia/kompatybilnosc',
     '/narzedzia/zasilacz',
     '/slownik',
