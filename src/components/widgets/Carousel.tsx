@@ -91,15 +91,18 @@ export function Carousel({
         {children}
       </div>
 
-      {/* Pointer-only affordance; the row itself is already operable. */}
-      <div className="pointer-events-none absolute -top-12 right-0 hidden gap-1 md:flex">
+      {/* Pointer-only affordance; the row itself is already operable.
+
+           Below the track rather than above it: the heading's own "view all"
+           control sits top-right, and an overlay there covered it. */}
+      <div className="mt-3 hidden justify-end gap-1 md:flex">
         <button
           type="button"
           onClick={() => scrollBy(-1)}
           disabled={!canScrollLeft}
           aria-hidden="true"
           tabIndex={-1}
-          className="pointer-events-auto inline-flex size-9 items-center justify-center rounded-sm border border-border-default text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
+          className="inline-flex size-9 items-center justify-center rounded-sm border border-border-default text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
         >
           <ChevronRightIcon className="size-4 rotate-180" />
         </button>
@@ -109,7 +112,7 @@ export function Carousel({
           disabled={!canScrollRight}
           aria-hidden="true"
           tabIndex={-1}
-          className="pointer-events-auto inline-flex size-9 items-center justify-center rounded-sm border border-border-default text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
+          className="inline-flex size-9 items-center justify-center rounded-sm border border-border-default text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
         >
           <ChevronRightIcon className="size-4" />
         </button>
