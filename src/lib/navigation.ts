@@ -126,6 +126,22 @@ export const navigation: NavSection[] = [
     label: { pl: 'Narzędzia', en: 'Tools' },
     children: [
       {
+        href: '/konfigurator',
+        label: { pl: 'Konfigurator zestawu', en: 'Build configurator' },
+        description: {
+          pl: 'Dobierz podzespoły i sprawdź, czy do siebie pasują',
+          en: 'Pick your parts and check they work together',
+        },
+      },
+      {
+        href: '/podzespoly',
+        label: { pl: 'Przeglądarka podzespołów', en: 'Component browser' },
+        description: {
+          pl: 'Katalog części z filtrami i przedziałami cenowymi',
+          en: 'The parts catalogue with filters and price ranges',
+        },
+      },
+      {
         href: '/narzedzia/kompatybilnosc',
         label: { pl: 'Sprawdzarka zgodności', en: 'Compatibility checker' },
         description: {
@@ -181,6 +197,8 @@ export function allContentRoutes(): string[] {
     ...builds.map((build) => `/zestawy/${build.slug}`),
     '/poradniki',
     ...guides.map((guide) => `/poradniki/${guide.slug}`),
+    '/konfigurator',
+    '/podzespoly',
     '/narzedzia/kompatybilnosc',
     '/narzedzia/zasilacz',
     '/slownik',

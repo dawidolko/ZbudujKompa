@@ -1,0 +1,205 @@
+import type { Motherboard } from './types.ts';
+
+/**
+ * Motherboard catalogue.
+ *
+ * `vrmRating` is an estimate of the sustained CPU power the board's power
+ * delivery handles comfortably, not a published specification — manufacturers
+ * do not print one. It exists so the configurator can warn about the pairing
+ * that actually causes trouble: a cheap A620 or H610 board under a 200 W
+ * processor, which throttles rather than failing outright and so is easy to
+ * miss.
+ *
+ * `memoryType` is a single value, never a list. No board takes both DDR4 and
+ * DDR5 — the choice is fixed the moment you buy it, and modelling it as a list
+ * would let the checker approve a combination that cannot exist.
+ */
+export const motherboards: Motherboard[] = [
+  /* ---------------------------------------------------------------- AM5 --- */
+  {
+    id: 'b650m-pro-rs',
+    category: 'motherboard',
+    name: 'B650M Pro RS',
+    brand: 'ASRock',
+    socket: 'am5',
+    chipset: 'B650',
+    formFactor: 'Micro-ATX',
+    memoryType: 'ddr5',
+    memorySlots: 4,
+    m2Slots: 2,
+    vrmRating: 130,
+    wifi: false,
+    tier: 'budget',
+    price: { min: 550, max: 700 },
+    url: 'https://www.asrock.com/support/',
+    note: {
+      pl: 'Tania płyta Micro-ATX na AM5 z sensownym zasilaniem. Do procesorów do 120 W w zupełności wystarczy.',
+      en: 'An inexpensive Micro-ATX AM5 board with sensible power delivery. Ample for processors up to 120 W.',
+    },
+  },
+  {
+    id: 'tuf-b650-plus-wifi',
+    category: 'motherboard',
+    name: 'TUF Gaming B650-PLUS WiFi',
+    brand: 'ASUS',
+    socket: 'am5',
+    chipset: 'B650',
+    formFactor: 'ATX',
+    memoryType: 'ddr5',
+    memorySlots: 4,
+    m2Slots: 3,
+    vrmRating: 180,
+    wifi: true,
+    tier: 'midrange',
+    price: { min: 850, max: 1100 },
+    url: 'https://www.asus.com/support/',
+    note: {
+      pl: 'Solidne zasilanie, Wi-Fi i trzy gniazda M.2. Najrozsądniejszy wybór do większości zestawów AM5.',
+      en: 'Solid power delivery, Wi-Fi and three M.2 slots. The most sensible choice for most AM5 builds.',
+    },
+  },
+  {
+    id: 'x870e-tomahawk',
+    category: 'motherboard',
+    name: 'MAG X870E TOMAHAWK WIFI',
+    brand: 'MSI',
+    socket: 'am5',
+    chipset: 'X870E',
+    formFactor: 'ATX',
+    memoryType: 'ddr5',
+    memorySlots: 4,
+    m2Slots: 4,
+    vrmRating: 260,
+    wifi: true,
+    tier: 'high',
+    price: { min: 1500, max: 1900 },
+    url: 'https://www.msi.com/support',
+    note: {
+      pl: 'Flagowy chipset z USB4 i czterema gniazdami M.2. Sensowny tylko przy wielu dyskach albo procesorze 170 W i wyżej.',
+      en: 'The flagship chipset with USB4 and four M.2 slots. Only worth it with many drives or a 170 W and above processor.',
+    },
+  },
+  {
+    id: 'b650i-lightning',
+    category: 'motherboard',
+    name: 'B650I Lightning WiFi',
+    brand: 'ASRock',
+    socket: 'am5',
+    chipset: 'B650',
+    formFactor: 'Mini-ITX',
+    memoryType: 'ddr5',
+    memorySlots: 2,
+    m2Slots: 2,
+    vrmRating: 150,
+    wifi: true,
+    tier: 'midrange',
+    price: { min: 950, max: 1200 },
+    note: {
+      pl: 'Mini-ITX na AM5 z dobrym zasilaniem. W tym formacie wybór jest wąski, więc płytę dobiera się pierwszą.',
+      en: 'Mini-ITX on AM5 with good power delivery. The choice in this form factor is narrow, so the board is picked first.',
+    },
+  },
+  /* ---------------------------------------------------------------- AM4 --- */
+  {
+    id: 'b550-a-pro',
+    category: 'motherboard',
+    name: 'B550-A PRO',
+    brand: 'MSI',
+    socket: 'am4',
+    chipset: 'B550',
+    formFactor: 'ATX',
+    memoryType: 'ddr4',
+    memorySlots: 4,
+    m2Slots: 2,
+    vrmRating: 140,
+    wifi: false,
+    tier: 'budget',
+    price: { min: 400, max: 550 },
+    note: {
+      pl: 'Sprawdzony średniak na AM4 z PCIe 4.0 dla karty i głównego dysku, bez wentylatora na mostku.',
+      en: 'A proven AM4 mid-range board with PCIe 4.0 for the GPU and primary drive, and no chipset fan.',
+    },
+  },
+  /* ------------------------------------------------------------ LGA1851 --- */
+  {
+    id: 'z890-tomahawk',
+    category: 'motherboard',
+    name: 'MAG Z890 TOMAHAWK WIFI',
+    brand: 'MSI',
+    socket: 'lga1851',
+    chipset: 'Z890',
+    formFactor: 'ATX',
+    memoryType: 'ddr5',
+    memorySlots: 4,
+    m2Slots: 4,
+    vrmRating: 280,
+    wifi: true,
+    tier: 'high',
+    price: { min: 1400, max: 1800 },
+    note: {
+      pl: 'Pełne podkręcanie pamięci i mocne zasilanie — potrzebne przy Core Ultra 7 i wyżej, które pod obciążeniem pobierają 250 W.',
+      en: 'Full memory overclocking and strong power delivery — needed for Core Ultra 7 and above, which draw 250 W under load.',
+    },
+  },
+  {
+    id: 'b860m-pro',
+    category: 'motherboard',
+    name: 'PRO B860M-A WIFI',
+    brand: 'MSI',
+    socket: 'lga1851',
+    chipset: 'B860',
+    formFactor: 'Micro-ATX',
+    memoryType: 'ddr5',
+    memorySlots: 4,
+    m2Slots: 2,
+    vrmRating: 160,
+    wifi: true,
+    tier: 'value',
+    price: { min: 750, max: 950 },
+    note: {
+      pl: 'Rozsądna płyta pod Core Ultra 5. Podkręcanie pamięci bez OC procesora, co przy modelach nie-K niczego nie odbiera.',
+      en: 'A sensible board for Core Ultra 5. Memory overclocking without CPU overclocking, which costs nothing on non-K models.',
+    },
+  },
+  /* ------------------------------------------------------------ LGA1700 --- */
+  {
+    id: 'prime-b760m-a',
+    category: 'motherboard',
+    name: 'PRIME B760M-A',
+    brand: 'ASUS',
+    socket: 'lga1700',
+    chipset: 'B760',
+    formFactor: 'Micro-ATX',
+    memoryType: 'ddr5',
+    memorySlots: 4,
+    m2Slots: 2,
+    vrmRating: 150,
+    wifi: false,
+    tier: 'budget',
+    price: { min: 450, max: 620 },
+    note: {
+      pl: 'Tania płyta pod Intela z sześcioma portami SATA — dobra podstawa serwera domowego.',
+      en: 'An inexpensive Intel board with six SATA ports — a good foundation for a home server.',
+    },
+  },
+  {
+    id: 'b760m-ddr4',
+    category: 'motherboard',
+    name: 'PRO B760M-P DDR4',
+    brand: 'MSI',
+    socket: 'lga1700',
+    chipset: 'B760',
+    formFactor: 'Micro-ATX',
+    memoryType: 'ddr4',
+    memorySlots: 4,
+    m2Slots: 2,
+    vrmRating: 140,
+    wifi: false,
+    tier: 'budget',
+    price: { min: 400, max: 550 },
+    note: {
+      pl: 'Wersja DDR4 tej samej płyty. Sensowna wyłącznie wtedy, gdy masz już moduły DDR4 i chcesz je przenieść.',
+      en: 'The DDR4 version of the same board. Only sensible if you already own DDR4 modules and want to carry them over.',
+    },
+  },
+];

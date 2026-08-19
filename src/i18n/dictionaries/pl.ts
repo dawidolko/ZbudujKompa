@@ -255,6 +255,77 @@ export const pl: Dictionary = {
     offlineNote: 'Odpowiedzi pochodzą z treści tego serwisu, nie z usługi zewnętrznej.',
   },
 
+  configurator: {
+    title: 'Konfigurator zestawu',
+    lead: 'Wybierz podzespoły i od razu zobacz, co do siebie pasuje, co nie i dlaczego. Każde sprawdzenie podaje uzasadnienie, a nie samo „pasuje” lub „nie pasuje”.',
+    summary: 'Podsumowanie',
+    empty:
+      'Zacznij od wybrania podzespołu. Procesor to naturalny pierwszy krok — ustala podstawkę, a podstawka decyduje o płycie.',
+    notChosen: 'Nie wybrano',
+    choose: 'Wybierz',
+    change: 'Zmień',
+    clear: 'Wyczyść',
+    reset: 'Zacznij od nowa',
+    allTiers: 'Wszystkie',
+    noneInTier: 'Brak podzespołów w tym przedziale cenowym.',
+    estimatedPrice: 'Szacowana suma',
+    powerDraw: 'Pobór mocy',
+    suggestedPsu: 'Zalecany zasilacz',
+    compatible: 'Te części do siebie pasują',
+    incompatible: 'Te części do siebie nie pasują',
+    problems: 'Problemy',
+    worthKnowing: 'Warto wiedzieć',
+    checksPassed: 'Sprawdzone poprawnie',
+    priceNote:
+      'Ceny to orientacyjne widełki do planowania budżetu, a nie aktualny cennik. Ceny sprzętu zmieniają się co tydzień — zweryfikuj przed zakupem.',
+    comparison: 'Porównaj',
+    presets: 'Zacznij od gotowego zestawu',
+    presetsLead: 'Wczytaj kompletną konfigurację i dostosuj ją, zamiast zaczynać od pustej listy.',
+    loadPreset: 'Wczytaj',
+    category: {
+      cpu: 'Procesor',
+      motherboard: 'Płyta główna',
+      ram: 'Pamięć',
+      gpu: 'Karta graficzna',
+      storage: 'Dysk',
+      psu: 'Zasilacz',
+      case: 'Obudowa',
+      cooler: 'Chłodzenie procesora',
+    },
+    tier: {
+      budget: 'Budżetowy',
+      value: 'Opłacalny',
+      midrange: 'Średni',
+      high: 'Wysoki',
+      flagship: 'Flagowy',
+    },
+  },
+
+  parts: {
+    title: 'Przeglądarka podzespołów',
+    lead: 'Wszystkie podzespoły z katalogu, z filtrowaniem po kategorii i przedziale cenowym oraz specyfikacją, która faktycznie decyduje o zestawie.',
+    filterCategory: 'Kategoria',
+    filterTier: 'Przedział cenowy',
+    filterBrand: 'Producent',
+    all: 'Wszystkie',
+    resultCount: (count: number) => {
+      /* Polish has three plural forms; the rule is the standard one. */
+      if (count === 1) return '1 podzespół';
+      const lastTwo = count % 100;
+      const last = count % 10;
+      if (lastTwo >= 12 && lastTwo <= 14) return `${count} podzespołów`;
+      if (last >= 2 && last <= 4) return `${count} podzespoły`;
+      return `${count} podzespołów`;
+    },
+    noResults: 'Żaden podzespół nie pasuje do tych filtrów.',
+    sortBy: 'Sortuj',
+    sortName: 'Nazwa',
+    sortPriceAsc: 'Cena rosnąco',
+    sortPriceDesc: 'Cena malejąco',
+    compare: 'Porównanie',
+    performance: 'Wydajność względna',
+  },
+
   sitemap: {
     title: 'Mapa serwisu',
     lead: 'Wszystkie strony serwisu w jednym miejscu, pogrupowane tak samo jak w nawigacji.',

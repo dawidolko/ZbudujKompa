@@ -13,6 +13,9 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    /* Explicit .ts specifiers in src/lib/parts let the Node-based test scripts
+       import those modules directly, without a build step. */
+    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
