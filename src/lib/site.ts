@@ -29,7 +29,7 @@ export const contact = {
   workstation: 'https://workstation.dawidolko.pl',
   instagram: 'https://instagram.com/dawid_olko',
   instagramHandle: '@dawid_olko',
-  facebook: 'https://www.facebook.com/dawid.olko',
+  facebook: 'https://www.facebook.com/olkodawid/',
 } as const;
 
 /** Builds an absolute URL — required in Open Graph tags and structured data. */
