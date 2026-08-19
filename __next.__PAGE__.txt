@@ -1,0 +1,67 @@
+1:"$Sreact.fragment"
+3:I[22016,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/22i43cg4l4-dq.js"],""]
+4:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+9:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"ViewportBoundary"]
+a:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"MetadataBoundary"]
+:HL["/_next/static/chunks/41jiza6ue2p4w.css","style"]
+2:T503,(function () {
+  var KEY = "zbudujkompa-theme";
+  var root = document.documentElement;
+  var stored = null;
+
+  try {
+    stored = localStorage.getItem(KEY);
+  } catch (e) {
+    /* Storage can throw in private mode or when cookies are blocked. The
+       visitor still gets a correct theme, it just will not outlive the tab. */
+  }
+
+  var prefersDark =
+    typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches;
+
+  var theme;
+  if (stored === 'light' || stored === 'dark') {
+    theme = stored;
+  } else {
+    theme = prefersDark ? 'dark' : 'light';
+    /* Persist the resolved value on the very first visit too. Without this,
+       a visitor who never touches the toggle has nothing stored, and any
+       later navigation has to guess again. */
+    try {
+      if (stored !== 'system') localStorage.setItem(KEY, theme);
+    } catch (e) {}
+  }
+
+  root.setAttribute('data-theme', theme);
+  root.style.colorScheme = theme;
+
+  /* Scroll-reveal animations start their elements transparent, which would
+     leave the page blank if scripting were unavailable. The class is added
+     here — in a script that only runs when scripting works — so the reveal
+     styles apply only when something exists to undo them. */
+  root.classList.add('js');
+})();8:X
+0:{"buildId":"EGoPmdRwfo7Mr7bRZV0hG","data":[{"rsc":["$","$1","c",{"children":[["$","html",null,{"lang":"pl-PL","suppressHydrationWarning":true,"children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"refresh","content":"0; url=/pl/"}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"location.replace(\"/pl/\")"}}]]}],["$","body",null,{"children":["$","main",null,{"className":"container-page flex min-h-dvh flex-col items-center justify-center gap-6 py-20 text-center","children":[["$","h1",null,{"className":"font-display text-2xl font-extrabold tracking-tight","children":"ZbudujKompa"}],["$","p",null,{"className":"text-sm text-text-secondary","children":"Choose your language · Wybierz język"}],["$","nav",null,{"aria-label":"Language","children":["$","ul",null,{"className":"flex gap-3","children":[["$","li","pl",{"children":["$","$L3",null,{"href":"/pl/","hrefLang":"pl","className":"inline-flex h-11 items-center rounded-sm border border-border-default px-6 text-sm font-semibold tracking-wide text-text-primary uppercase transition-colors hover:border-border-brand hover:text-text-brand focus-ring","children":"Polski"}]}],["$","li","en",{"children":["$","$L3",null,{"href":"/en/","hrefLang":"en","className":"inline-flex h-11 items-center rounded-sm border border-border-default px-6 text-sm font-semibold tracking-wide text-text-primary uppercase transition-colors hover:border-border-brand hover:text-text-brand focus-ring","children":"English"}]}]]}]}]]}]}]]}],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/41jiza6ue2p4w.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/22i43cg4l4-dq.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":"$@7","staleTime":"$8","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L9",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#ffffff","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"#0d0f13","media":"(prefers-color-scheme: dark)"}],["$","meta","4",{"name":"color-scheme","content":"light dark"}]]}],["$","div",null,{"hidden":true,"children":["$","$La",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"ZbudujKompa"}],["$","meta","1",{"name":"description","content":"Poradniki składania komputera krok po kroku, porównanie platform AMD i Intel, dobór chłodzenia i gotowe zestawy. Konkretnie, bez marketingu."}],"$Lb","$Lc","$Ld","$Le","$Lf","$L10","$L11","$L12","$L13","$L14","$L15","$L16","$L17"]}]}]}],"$L18"]}],"isPartial":"$@19","staleTime":"$8","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@1a","rootVaryParams":null,"needsRuntimeRequest":"$@1b"}
+1c:I[27201,["/_next/static/chunks/3fntmmi971322.js"],"IconMark"]
+6:null
+b:["$","meta","2",{"name":"application-name","content":"ZbudujKompa"}]
+c:["$","link","3",{"rel":"author","href":"https://dawidolko.pl"}]
+d:["$","meta","4",{"name":"author","content":"Dawid Olko"}]
+e:["$","link","5",{"rel":"manifest","href":"/site.webmanifest"}]
+f:["$","meta","6",{"name":"generator","content":"Next.js"}]
+10:["$","meta","7",{"name":"creator","content":"Dawid Olko"}]
+11:["$","meta","8",{"name":"robots","content":"noindex, follow"}]
+12:["$","link","9",{"rel":"canonical","href":"https://zbudujkompa.dawidolko.pl/pl/"}]
+13:["$","meta","10",{"name":"format-detection","content":"telephone=no"}]
+14:["$","link","11",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}]
+15:["$","link","12",{"rel":"icon","href":"/favicon-96.png","sizes":"96x96","type":"image/png"}]
+16:["$","link","13",{"rel":"apple-touch-icon","href":"/apple-touch-icon.png","sizes":"180x180"}]
+17:["$","$L1c","14",{}]
+18:["$","meta",null,{"name":"next-size-adjust","content":""}]
+1b:true
+8:300
+8:C
+1a:0
+19:"$undefined"
+7:"$undefined"
