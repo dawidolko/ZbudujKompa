@@ -770,3 +770,243 @@
     display: none;
   }
 }
+
+/* =============================================================================
+   Accessibility preferences
+
+   Driven entirely by attributes on <html>, written by the panel and by the
+   blocking init script. Nothing here rewrites the DOM, so no setting can
+   change the page structure or what a screen reader sees.
+   ============================================================================= */
+
+/* Font scaling. Applied to the root font size so every rem-based measurement
+   in the design scales with it — spacing and line height included, which is
+   what keeps the layout coherent rather than merely bigger. */
+:root {
+  --font-scale: 1;
+}
+html {
+  font-size: calc(100% * var(--font-scale));
+}
+
+/* Greyscale. Applied to the whole document so nothing is left in colour and
+   inconsistent with the rest. */
+:root[data-a11y-filter='grayscale'] body {
+  filter: grayscale(1);
+}
+
+/* Negative. Rotating the hue after inverting keeps photographs recognisable —
+   a plain inversion turns skin and sky into their complements. */
+:root[data-a11y-filter='negative'] body {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Forcing the light palette, for readers who find dark text on dark
+   uncomfortable regardless of the theme setting. */
+:root[data-a11y-filter='light'] {
+  color-scheme: light;
+  --bg-base: #ffffff;
+  --bg-subtle: #f6f8f9;
+  --bg-muted: #eceff2;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --text-primary: #191c23;
+  --text-secondary: #4c5566;
+  --text-muted: #616c80;
+  --border-subtle: #d3d9e0;
+  --border-default: #adb6c2;
+  --accent-fg: #0e7490;
+  --text-brand: #0e7490;
+}
+
+/* High contrast. Pushes every pair to the extremes rather than merely
+   darkening them, which is what readers asking for this setting need. */
+:root[data-a11y-filter='high-contrast'] {
+  --bg-base: #000000;
+  --bg-subtle: #000000;
+  --bg-muted: #1a1a1a;
+  --surface: #000000;
+  --surface-raised: #0d0d0d;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-muted: #e8e8e8;
+  --text-brand: #4fe3ff;
+  --accent-fg: #4fe3ff;
+  --accent: #4fe3ff;
+  --text-on-brand: #000000;
+  --border-subtle: #ffffff;
+  --border-default: #ffffff;
+  --border-strong: #ffffff;
+  --focus-ring: #ffff00;
+}
+/* Background images would defeat a high-contrast palette, so they go. */
+:root[data-a11y-filter='high-contrast'] .bg-circuit-grid,
+:root[data-a11y-filter='high-contrast'] .bg-circuit-traces,
+:root[data-a11y-filter='high-contrast'] .bg-dots,
+:root[data-a11y-filter='high-contrast'] .bg-hatch,
+:root[data-a11y-filter='high-contrast'] .bg-accent-glow {
+  display: none;
+}
+:root[data-a11y-filter='high-contrast'] img {
+  /* Photographs are dimmed rather than hidden: they still convey what the page
+     is about, without competing with text that now needs maximum contrast. */
+  opacity: 0.75;
+}
+
+/* Always-underlined links, for readers who cannot rely on colour to find
+   them — colour alone never identifies a link (WCAG 1.4.1). */
+:root[data-a11y-underline] a {
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+/* A face with wider apertures and more distinct letterforms, which helps
+   readers with dyslexia and low vision. Verdana and Tahoma are chosen because
+   they are near-universally installed, so the setting works offline. */
+:root[data-a11y-readable] body,
+:root[data-a11y-readable] h1,
+:root[data-a11y-readable] h2,
+:root[data-a11y-readable] h3,
+:root[data-a11y-readable] h4,
+:root[data-a11y-readable] button,
+:root[data-a11y-readable] input,
+:root[data-a11y-readable] select {
+  font-family: Verdana, Tahoma, 'DejaVu Sans', sans-serif !important;
+  letter-spacing: 0.01em;
+  word-spacing: 0.05em;
+}
+:root[data-a11y-readable] p,
+:root[data-a11y-readable] li {
+  line-height: 1.9;
+}
+
+/* =============================================================================
+   Additional background patterns
+   ============================================================================= */
+
+/* Isometric grid, for section dividers that need more presence than dots. */
+.bg-iso-grid {
+  background-image:
+    linear-gradient(30deg, var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(150deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 40px 70px;
+  opacity: 0.35;
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+}
+
+/* Concentric rings, echoing a fan. Used behind cooling content. */
+.bg-rings {
+  background-image: repeating-radial-gradient(
+    circle at 50% 50%,
+    transparent 0,
+    transparent 28px,
+    var(--border-subtle) 28px,
+    var(--border-subtle) 29px
+  );
+  opacity: 0.25;
+  mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 70%);
+}
+
+/* Vertical data lines, suggesting a bus. */
+.bg-datalines {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--border-subtle) 0,
+    var(--border-subtle) 1px,
+    transparent 1px,
+    transparent 24px
+  );
+  opacity: 0.3;
+  mask-image: linear-gradient(to right, transparent, #000 20%, #000 80%, transparent);
+}
+
+/* Soft topographic contours, for long-form pages that need texture without
+   any suggestion of structure. */
+.bg-contours {
+  background-image:
+    radial-gradient(ellipse 60% 30% at 20% 30%, var(--accent-subtle) 0, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, var(--accent-subtle) 0, transparent 60%),
+    radial-gradient(ellipse 40% 20% at 50% 10%, var(--accent-subtle) 0, transparent 60%);
+  opacity: 0.6;
+}
+
+/* =============================================================================
+   Additional animation
+   ============================================================================= */
+
+/* Scanning line, used on loaders to suggest a diagnostic in progress. */
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
+
+/* Fan blade rotation for the loading indicator. */
+@keyframes spin-slow {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* A pulse that travels along a trace, for the circuit loader. */
+@keyframes trace-pulse {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Gentle float, for decorative elements that should feel alive at rest. */
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+/* Counting bars sweeping in, used in statistics blocks. */
+@keyframes sweep-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-scan {
+    animation: scan 2s var(--ease-in-out-quart) infinite;
+  }
+  .animate-spin-slow {
+    animation: spin-slow 3s linear infinite;
+  }
+  .animate-trace-pulse {
+    animation: trace-pulse 1.6s ease-in-out infinite;
+  }
+  .animate-float {
+    animation: float 5s ease-in-out infinite;
+  }
+  .animate-sweep-in {
+    animation: sweep-in 900ms var(--ease-out-quint) both;
+  }
+}
+
+/* Horizontal scroll container used by the sliders. Snap points make a swipe
+   land on a card rather than between two. */
+.snap-row {
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1rem;
+}
+.snap-row > * {
+  scroll-snap-align: start;
+}

@@ -3,7 +3,10 @@ import { notFound } from 'next/navigation';
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import '../globals.css';
 import { themeInitScript } from '@/lib/theme';
+import { a11yInitScript } from '@/lib/accessibility';
 import { ThemeScript } from '@/components/layout/ThemeScript';
+import { AccessibilityPanel } from '@/components/layout/AccessibilityPanel';
+import { A11yScript } from '@/components/layout/A11yScript';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ChatWidget } from '@/components/chat/ChatWidget';
@@ -139,11 +142,16 @@ export default async function LocaleLayout({
             keeps the chosen theme stable across the full document swap the
             language switcher performs. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Applies stored accessibility preferences before first paint, so a
+            reader who has enlarged the text never sees it at the default size
+            first — the flash matters most to exactly those readers. */}
+        <script dangerouslySetInnerHTML={{ __html: a11yInitScript }} />
       </head>
       <body className="flex min-h-dvh flex-col">
         {/* Re-applies the theme after a client-side navigation, which is where
             the <head> script above does not run. */}
         <ThemeScript />
+        <A11yScript />
 
         <a href="#main-content" className="skip-link">
           {dict.nav.skipToContent}
@@ -157,6 +165,7 @@ export default async function LocaleLayout({
 
         <Footer locale={typedLocale} dict={dict} />
         <ChatWidget locale={typedLocale} />
+        <AccessibilityPanel locale={typedLocale} />
 
         {/* Site-level identity, emitted once rather than per page. */}
         <JsonLd
