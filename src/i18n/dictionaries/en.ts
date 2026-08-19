@@ -300,9 +300,13 @@ export const en = {
   parts: {
     title: 'Component browser',
     lead: 'Every component in the catalogue, filterable by category and price range, with the specifications that actually decide a build.',
+    browseBy: 'Browse by',
     filterCategory: 'Category',
     filterTier: 'Price range',
     filterBrand: 'Brand',
+    categoryLead: (category: string) =>
+      `Every ${category.toLowerCase()} in the catalogue, grouped by price range, with the specifications that decide a build.`,
+    brandLead: (brand: string) => `Everything from ${brand} in the catalogue.`,
     all: 'All',
     resultCount: (count: number) => (count === 1 ? '1 component' : `${count} components`),
     noResults: 'No component matches these filters.',

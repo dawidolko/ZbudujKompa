@@ -4,6 +4,8 @@ import { coolingProfiles } from './cooling';
 import { builds } from './builds';
 import { guides } from './guides';
 import { articles } from './blog';
+import { categoryOrder, getBrands } from './parts';
+import { slugify } from './utils';
 
 /**
  * Site navigation.
@@ -241,6 +243,8 @@ export function allContentRoutes(): string[] {
     ...guides.map((guide) => `/poradniki/${guide.slug}`),
     '/konfigurator',
     '/podzespoly',
+    ...categoryOrder.map((category) => `/podzespoly/${category}`),
+    ...getBrands().map(({ brand }) => `/podzespoly/marka/${slugify(brand)}`),
     '/porownanie',
     '/kalkulatory',
     '/narzedzia/kompatybilnosc',

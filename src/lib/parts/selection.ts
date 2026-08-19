@@ -75,3 +75,18 @@ export function selectionPower(selection: BuildSelection): number {
 
   return watts;
 }
+
+/** Every brand in the catalogue, with how many parts each has. */
+export function getBrands(): { brand: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const part of allParts) {
+    counts.set(part.brand, (counts.get(part.brand) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .map(([brand, count]) => ({ brand, count }))
+    .sort((a, b) => b.count - a.count || a.brand.localeCompare(b.brand));
+}
+
+export function getPartsByBrand(brand: string): Part[] {
+  return allParts.filter((part) => part.brand === brand);
+}

@@ -46,6 +46,8 @@ const PAGES = [
   '/en/artykuly/',
   '/en/kalkulatory/',
   '/pl/podzespoly/',
+  '/pl/podzespoly/gpu/',
+  '/pl/podzespoly/marka/amd/',
   '/pl/porownanie/',
   '/en/konfigurator/',
   '/pl/mapa-serwisu/',

@@ -312,9 +312,13 @@ export const pl: Dictionary = {
   parts: {
     title: 'Przeglądarka podzespołów',
     lead: 'Wszystkie podzespoły z katalogu, z filtrowaniem po kategorii i przedziale cenowym oraz specyfikacją, która faktycznie decyduje o zestawie.',
+    browseBy: 'Przeglądaj według',
     filterCategory: 'Kategoria',
     filterTier: 'Przedział cenowy',
     filterBrand: 'Producent',
+    categoryLead: (category: string) =>
+      `Wszystkie pozycje z kategorii „${category}” w katalogu, pogrupowane według przedziału cenowego, ze specyfikacją decydującą o zestawie.`,
+    brandLead: (brand: string) => `Wszystko od marki ${brand} w katalogu.`,
     all: 'Wszystkie',
     resultCount: (count: number) => {
       /* Polish has three plural forms; the rule is the standard one. */
