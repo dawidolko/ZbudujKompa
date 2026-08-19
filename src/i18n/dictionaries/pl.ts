@@ -583,6 +583,30 @@ export const pl: Dictionary = {
     },
   },
 
+  blog: {
+    title: 'Artykuły',
+    lead: 'Analizy, porady zakupowe i wyjaśnienia pytań, które pojawiają się przy planowaniu zestawu — z pokazanym uzasadnieniem, nie samym wnioskiem.',
+    readingTime: (minutes: number) => `${minutes} min czytania`,
+    publishedOn: (date: string) => `Opublikowano ${date}`,
+    updatedOn: (date: string) => `Aktualizacja ${date}`,
+    topics: 'Tematy',
+    tags: 'Tagi',
+    related: 'Powiązane lektury',
+    taggedWith: (tag: string) => `Artykuły o: ${tag}`,
+    tagLead: (tag: string) => `Wszystko opublikowane pod tagiem ${tag}.`,
+    staleLabel: 'To mogło się zdezaktualizować',
+    staleNote: (months: number) =>
+      `Ten tekst ma około ${months} miesięcy i dotyczy szybko zmieniającego się tematu. Rozumowanie powinno pozostać aktualne; konkretne liczby niekoniecznie.`,
+    category: {
+      news: 'Aktualności',
+      analysis: 'Analizy',
+      buying: 'Porady zakupowe',
+      testing: 'Testy',
+      opinion: 'Opinie',
+      explainer: 'Wyjaśnienia',
+    },
+  },
+
   sitemap: {
     title: 'Mapa serwisu',
     lead: 'Wszystkie strony serwisu w jednym miejscu, pogrupowane tak samo jak w nawigacji.',

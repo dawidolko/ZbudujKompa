@@ -3,6 +3,7 @@ import { sockets } from './sockets';
 import { coolingProfiles } from './cooling';
 import { builds } from './builds';
 import { guides } from './guides';
+import { articles } from './blog';
 
 /**
  * Site navigation.
@@ -54,6 +55,23 @@ const guideLinks: NavLink[] = guides.map((guide) => ({
   label: guide.title,
   description: guide.summary,
 }));
+
+/** Recent articles, plus a link to each category that has any. */
+const articleLinks: NavLink[] = [
+  {
+    href: '/artykuly',
+    label: { pl: 'Wszystkie artykuły', en: 'All articles' },
+    description: {
+      pl: 'Analizy, porady i wyjaśnienia',
+      en: 'Analysis, advice and explainers',
+    },
+  },
+  ...articles.slice(0, 6).map((article) => ({
+    href: `/artykuly/${article.slug}`,
+    label: article.title,
+    description: article.summary,
+  })),
+];
 
 export const navigation: NavSection[] = [
   {
@@ -119,6 +137,12 @@ export const navigation: NavSection[] = [
       },
       ...guideLinks,
     ],
+  },
+  {
+    id: 'articles',
+    href: '/artykuly',
+    label: { pl: 'Artykuły', en: 'Articles' },
+    children: articleLinks,
   },
   {
     id: 'tools',
@@ -211,6 +235,8 @@ export function allContentRoutes(): string[] {
     ...coolingProfiles.map((profile) => `/chlodzenie/${profile.slug}`),
     '/zestawy',
     ...builds.map((build) => `/zestawy/${build.slug}`),
+    '/artykuly',
+    ...articles.map((article) => `/artykuly/${article.slug}`),
     '/poradniki',
     ...guides.map((guide) => `/poradniki/${guide.slug}`),
     '/konfigurator',

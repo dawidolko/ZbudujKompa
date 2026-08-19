@@ -563,6 +563,30 @@ export const en = {
     },
   },
 
+  blog: {
+    title: 'Articles',
+    lead: 'Analysis, buying advice and explainers on the questions that come up while planning a build — with the reasoning shown, not just the conclusion.',
+    readingTime: (minutes: number) => `${minutes} min read`,
+    publishedOn: (date: string) => `Published ${date}`,
+    updatedOn: (date: string) => `Updated ${date}`,
+    topics: 'Topics',
+    tags: 'Tags',
+    related: 'Related reading',
+    taggedWith: (tag: string) => `Articles on ${tag}`,
+    tagLead: (tag: string) => `Everything published under ${tag}.`,
+    staleLabel: 'This may have aged',
+    staleNote: (months: number) =>
+      `This piece is about ${months} months old and covers a fast-moving topic. The reasoning should still hold; the specific figures may not.`,
+    category: {
+      news: 'News',
+      analysis: 'Analysis',
+      buying: 'Buying advice',
+      testing: 'Testing',
+      opinion: 'Opinion',
+      explainer: 'Explainers',
+    },
+  },
+
   sitemap: {
     title: 'Site map',
     lead: 'Every page on this site in one place, grouped the way the navigation groups them.',
