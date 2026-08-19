@@ -81,12 +81,13 @@ the assistant — all run in the browser.
 
 |                  |                                                                                                                                                                                                   |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Configurator** | Pick parts from a catalogue of 58 components and get live compatibility checks — socket, memory generation, VRM capacity, physical clearances and supply headroom — each explaining its reasoning |
+| **Configurator** | Pick parts from a catalogue of 96 components and get live compatibility checks — socket, memory generation, VRM capacity, physical clearances and supply headroom — each explaining its reasoning |
 | **Components**   | Every part carries a price band rather than a price, with the specifications that actually decide a build: cooler height, card length, module height                                              |
 | **Platforms**    | Five AMD and Intel sockets with chipset tables and an honest verdict on which are still worth buying into                                                                                         |
 | **Cooling**      | Five cooling classes compared on heat handled, noise and price, with the trade-offs stated plainly                                                                                                |
 | **Guides**       | Fourteen step-by-step guides: assembly, first boot, BIOS, Windows and Linux installation, overclocking, quiet builds, diagnostics and maintenance                                                 |
-| **Tools**        | A compatibility checker and a PSU calculator, both computing live in the browser                                                                                                                  |
+| **Calculators**  | Fourteen calculators — supply sizing with ATX 3.x transients, physical clearance, running cost, acoustics, thermals, display bandwidth, memory latency and more — each showing its working        |
+| **Articles**     | Analysis, buying advice, news and explainers, with perishable pieces flagged by age rather than presented as current indefinitely                                                                 |
 | **Assistant**    | A docked chat assistant answering from a local knowledge base — no API key required, with an optional LLM layered on top                                                                          |
 | **Bilingual**    | Every route exists in Polish and English with correct `hreflang`, `lang` and canonical URLs. Polish is the default                                                                                |
 | **Visuals**      | Technical SVG diagrams, licensed photography, gradient background patterns and scroll animations that degrade to nothing without JavaScript                                                       |
@@ -198,7 +199,8 @@ is a floor, not a certificate — known gaps are listed on the site's own
 ├── src/
 │   ├── app/[locale]/      Every content route, both languages
 │   ├── components/
-│   │   ├── configurator/  Part pickers and the component browser
+│   │   ├── blog/          Article rendering
+│   │   ├── configurator/  Part pickers, browser and comparison
 │   │   ├── diagrams/      Technical SVG drawings
 │   │   ├── chat/          Build assistant
 │   │   ├── motion/        Scroll-reveal wrapper
@@ -206,6 +208,8 @@ is a floor, not a certificate — known gaps are listed on the site's own
 │   ├── i18n/              Locale config and PL/EN dictionaries
 │   └── lib/
 │       ├── parts/         Component catalogue and compatibility engine
+│       ├── blog/          Articles and news
+│       ├── calculators.ts  Every formula, testable without a browser
 │       ├── chat/          Knowledge base and provider
 │       ├── guides/        Guide content, split by subject
 │       └── theme.ts       Theme resolution and persistence
