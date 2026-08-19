@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { ArrowRightIcon, StarIcon } from '@/components/ui/Icon';
 import { Photo, PhotoFigure } from '@/components/ui/Photo';
 import { Reveal } from '@/components/motion/Reveal';
+import { QuickPicker } from '@/components/tools/QuickPicker';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, type Locale } from '@/i18n/config';
 import { sockets } from '@/lib/sockets';
@@ -139,6 +140,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </Reveal>
           ))}
         </ul>
+      </section>
+
+      {/* ---- Where to start ----
+           Placed high because an undecided reader is the one most likely to
+           bounce, and three questions is a lower barrier than a configurator. */}
+      <section className="relative border-y border-border-subtle bg-bg-subtle">
+        <div className="bg-hatch pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="container-page relative py-16 md:py-20">
+          <SectionHeading title={dict.quickPicker.title} lead={dict.quickPicker.lead} />
+          <Reveal>
+            <QuickPicker locale={typedLocale} />
+          </Reveal>
+        </div>
       </section>
 
       {/* ---- Platforms ---- */}

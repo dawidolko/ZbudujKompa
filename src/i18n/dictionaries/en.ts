@@ -347,6 +347,28 @@ export const en = {
     no: 'No',
   },
 
+  quickPicker: {
+    title: 'Where do I start?',
+    lead: 'Three questions and a starting point. Not a finished build — a place to begin, with the reasoning shown so you can disagree with it.',
+    useCase: 'What will you use it for?',
+    gaming1080: 'Gaming, 1080p',
+    gaming1440: 'Gaming, 1440p',
+    gaming4k: 'Gaming, 4K',
+    work: 'Rendering, editing, compiling',
+    office: 'Office and browsing',
+    budget: 'Budget',
+    budgetLow: 'Tight',
+    budgetMedium: 'Moderate',
+    budgetHigh: 'Generous',
+    priority: 'What matters most?',
+    priorityPerformance: 'Performance',
+    priorityQuiet: 'Quiet running',
+    prioritySmall: 'Small case',
+    suggestion: 'Starting point',
+    total: 'Approximate',
+    openConfigurator: 'Open the configurator',
+  },
+
   sitemap: {
     title: 'Site map',
     lead: 'Every page on this site in one place, grouped the way the navigation groups them.',

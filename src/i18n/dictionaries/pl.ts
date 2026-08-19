@@ -367,6 +367,28 @@ export const pl: Dictionary = {
     no: 'Nie',
   },
 
+  quickPicker: {
+    title: 'Od czego zacząć?',
+    lead: 'Trzy pytania i punkt wyjścia. Nie gotowy zestaw — miejsce, od którego zacząć, z pokazanym uzasadnieniem, żebyś mógł się z nim nie zgodzić.',
+    useCase: 'Do czego będzie służył?',
+    gaming1080: 'Granie w 1080p',
+    gaming1440: 'Granie w 1440p',
+    gaming4k: 'Granie w 4K',
+    work: 'Render, montaż, kompilacja',
+    office: 'Biuro i przeglądanie internetu',
+    budget: 'Budżet',
+    budgetLow: 'Ograniczony',
+    budgetMedium: 'Umiarkowany',
+    budgetHigh: 'Swobodny',
+    priority: 'Co jest najważniejsze?',
+    priorityPerformance: 'Wydajność',
+    priorityQuiet: 'Cicha praca',
+    prioritySmall: 'Mała obudowa',
+    suggestion: 'Punkt wyjścia',
+    total: 'Orientacyjnie',
+    openConfigurator: 'Otwórz konfigurator',
+  },
+
   sitemap: {
     title: 'Mapa serwisu',
     lead: 'Wszystkie strony serwisu w jednym miejscu, pogrupowane tak samo jak w nawigacji.',
