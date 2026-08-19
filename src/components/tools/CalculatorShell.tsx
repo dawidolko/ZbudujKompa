@@ -205,7 +205,12 @@ export function ResultRow({
   return (
     <div className="flex items-baseline justify-between gap-3 border-t border-border-subtle py-2 text-sm first:border-t-0">
       <span className="text-text-muted">{label}</span>
-      <span className={cn('text-right', emphasis ? 'font-bold text-text-primary' : 'text-text-secondary')}>
+      <span
+        className={cn(
+          'text-right',
+          emphasis ? 'font-bold text-text-primary' : 'text-text-secondary',
+        )}
+      >
         {value}
       </span>
     </div>

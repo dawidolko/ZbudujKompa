@@ -545,3 +545,113 @@ export function checkDisplayLink(
     ratioNeeded,
   };
 }
+
+/* =============================================================================
+   Physical clearance
+   ============================================================================= */
+
+/**
+ * Whether a set of parts physically fits a case.
+ *
+ * Case specifications list maximum graphics card length and maximum cooler
+ * height as independent figures, which is how people end up buying parts that
+ * each fit on paper and do not fit together. A front-mounted radiator eats into
+ * the length available for the card, and that interaction is printed nowhere.
+ *
+ * The radiator allowance is the thickness of the radiator plus its fans —
+ * around 55 mm for a 30 mm core with 25 mm fans, which is the usual
+ * combination.
+ */
+export function checkClearance(input: {
+  maxGpuLength: number;
+  maxCoolerHeight: number;
+  gpuLength: number;
+  coolerHeight: number;
+  /** Set when a radiator is mounted at the front, where it takes card length. */
+  frontRadiator: boolean;
+  radiatorThickness?: number;
+}): {
+  gpuFits: boolean;
+  coolerFits: boolean;
+  effectiveGpuLimit: number;
+  gpuMargin: number;
+  coolerMargin: number;
+} {
+  const radiatorAllowance = input.frontRadiator ? (input.radiatorThickness ?? 55) : 0;
+  const effectiveGpuLimit = input.maxGpuLength - radiatorAllowance;
+
+  return {
+    effectiveGpuLimit,
+    gpuFits: input.gpuLength <= effectiveGpuLimit,
+    coolerFits: input.coolerHeight <= input.maxCoolerHeight,
+    gpuMargin: effectiveGpuLimit - input.gpuLength,
+    coolerMargin: input.maxCoolerHeight - input.coolerHeight,
+  };
+}
+
+/**
+ * Fan headers needed, and whether a hub or splitters are required.
+ *
+ * A frequent and avoidable surprise: a board has four or five headers, and a
+ * case with three intakes, two exhausts and a radiator needs more than that.
+ * Splitters share one header's control signal, so every fan on a splitter runs
+ * the same curve — which is usually fine, and worth saying.
+ */
+export function fanHeaderPlan(
+  fanCount: number,
+  availableHeaders: number,
+): { needsHelp: boolean; shortfall: number; splittersNeeded: number } {
+  const shortfall = Math.max(0, fanCount - availableHeaders);
+  return {
+    needsHelp: shortfall > 0,
+    shortfall,
+    /* A Y-splitter turns one header into two, so each covers one extra fan. */
+    splittersNeeded: shortfall,
+  };
+}
+
+/**
+ * Power supply sizing, accounting for transient spikes.
+ *
+ * The reason a flat "sum the parts and add 30 per cent" rule is no longer
+ * enough: modern graphics cards draw brief excursions far above their rated
+ * power — an RTX 5090 rated at 575 W has been measured spiking past 900 W for
+ * under a millisecond. A supply's protection circuitry trips on the spike, not
+ * on the average, so a machine reboots under load even though the arithmetic
+ * said the supply was large enough.
+ *
+ * ATX 3.x supplies are required to ride out those excursions: 200 per cent of
+ * rated power for 100 µs, 180 per cent for 1 ms, 160 per cent for 10 ms. On a
+ * compliant unit the ordinary margin is therefore sufficient. On an older
+ * supply it is not, and the sizing has to cover the spike itself.
+ */
+export function sizePowerSupply(input: {
+  cpuPeakWatts: number;
+  gpuWatts: number;
+  otherWatts?: number;
+  atx3x: boolean;
+}): {
+  estimated: number;
+  recommended: number;
+  transientPeak: number;
+  reason: 'headroom' | 'transient';
+} {
+  const other = input.otherWatts ?? 90;
+  const estimated = input.cpuPeakWatts + input.gpuWatts + other;
+
+  /* Measured excursions on recent cards run around 1.6 times board power. */
+  const transientPeak = Math.round(input.gpuWatts * 1.6 + input.cpuPeakWatts + other);
+
+  const withHeadroom = Math.ceil(estimated * 1.3);
+  const target = input.atx3x ? withHeadroom : Math.max(withHeadroom, transientPeak);
+
+  const steps = [450, 550, 650, 750, 850, 1000, 1200, 1500];
+  const recommended = steps.find((step) => step >= target) ?? steps.at(-1)!;
+
+  return {
+    estimated,
+    recommended,
+    transientPeak,
+    reason: input.atx3x || withHeadroom >= transientPeak ? 'headroom' : 'transient',
+  };
+}

@@ -99,6 +99,9 @@ jobs:
       - name: Compatibility engine tests
         run: npm run test:compat
 
+      - name: Calculator formula tests
+        run: npm run test:calc
+
       - name: Theme persistence tests
         run: node tests/theme.spec.mjs
         env:

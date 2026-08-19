@@ -134,6 +134,14 @@ export const navigation: NavSection[] = [
         },
       },
       {
+        href: '/kalkulatory',
+        label: { pl: 'Kalkulatory', en: 'Calculators' },
+        description: {
+          pl: 'Dziesięć przeliczników do planowania zestawu',
+          en: 'Ten calculators for planning a build',
+        },
+      },
+      {
         href: '/porownanie',
         label: { pl: 'Porównywarka', en: 'Comparison' },
         description: {
@@ -208,6 +216,7 @@ export function allContentRoutes(): string[] {
     '/konfigurator',
     '/podzespoly',
     '/porownanie',
+    '/kalkulatory',
     '/narzedzia/kompatybilnosc',
     '/narzedzia/zasilacz',
     '/slownik',

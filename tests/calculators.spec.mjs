@@ -158,5 +158,47 @@ check(
 /* ---- Drive endurance: the worry is usually misplaced ---- */
 check('600 TBW at 50 GB a day lasts 33 years', c.driveLifespanYears(600, 50), 32.88, 0.02);
 
+/* ---- Clearance: parts that each fit can still fail together ---- */
+const clear = { maxGpuLength: 330, maxCoolerHeight: 170, gpuLength: 304, coolerHeight: 160 };
+check(
+  'a 304 mm card fits a 330 mm case',
+  c.checkClearance({ ...clear, frontRadiator: false }).gpuFits,
+  true,
+);
+check(
+  'but not once a front radiator takes 55 mm',
+  c.checkClearance({ ...clear, frontRadiator: true }).gpuFits,
+  false,
+);
+check(
+  'which drops the usable length to 275 mm',
+  c.checkClearance({ ...clear, frontRadiator: true }).effectiveGpuLimit,
+  275,
+);
+
+/* ---- Fan headers ---- */
+check('seven fans on four headers is three short', c.fanHeaderPlan(7, 4).shortfall, 3);
+check('four fans on four headers needs nothing', c.fanHeaderPlan(4, 4).needsHelp, false);
+
+/* ---- Supply sizing: the standard changes the answer ---- */
+const big = { cpuPeakWatts: 230, gpuWatts: 575, otherWatts: 90 };
+check('a 5090 build estimates at 895 W', c.sizePowerSupply({ ...big, atx3x: true }).estimated, 895);
+check(
+  'with a transient peak near 1240 W',
+  c.sizePowerSupply({ ...big, atx3x: true }).transientPeak,
+  1240,
+);
+check(
+  'an ATX 3.x supply needs 1200 W',
+  c.sizePowerSupply({ ...big, atx3x: true }).recommended,
+  1200,
+);
+check('an older one needs 1500 W', c.sizePowerSupply({ ...big, atx3x: false }).recommended, 1500);
+check(
+  'and says the transient is why',
+  c.sizePowerSupply({ ...big, atx3x: false }).reason,
+  'transient',
+);
+
 console.log(`\n${passed}/${passed + failed} passed`);
 process.exit(failed > 0 ? 1 : 0);

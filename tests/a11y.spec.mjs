@@ -39,6 +39,8 @@ const PAGES = [
   '/pl/kontakt/',
   '/pl/dostepnosc/',
   '/pl/konfigurator/',
+  '/pl/kalkulatory/',
+  '/en/kalkulatory/',
   '/pl/podzespoly/',
   '/pl/porownanie/',
   '/en/konfigurator/',
