@@ -1,14 +1,20 @@
-/** Supported locales. English is the default and lives at /en/. */
-export const locales = ['en', 'pl'] as const;
+/**
+ * Supported locales.
+ *
+ * Polish is first and is the default: the site is written for a Polish
+ * audience, and the ordering here also drives the language switcher, so the
+ * primary language should lead there too.
+ */
+export const locales = ['pl', 'en'] as const;
 
 export type Locale = (typeof locales)[number];
 
-export const defaultLocale: Locale = 'en';
+export const defaultLocale: Locale = 'pl';
 
 /** Native language names, used in the language switcher. */
 export const localeNames: Record<Locale, string> = {
-  en: 'English',
   pl: 'Polski',
+  en: 'English',
 };
 
 /** BCP 47 tags for the `lang` attribute and `Intl` formatters. */

@@ -10,7 +10,14 @@ import { ChatWidget } from '@/components/chat/ChatWidget';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { site, absoluteLocaleUrl, absoluteUrl, canonicalUrl } from '@/lib/site';
 import { getDictionary } from '@/i18n';
-import { isLocale, locales, localeTags, ogLocales, type Locale } from '@/i18n/config';
+import {
+  defaultLocale,
+  isLocale,
+  locales,
+  localeTags,
+  ogLocales,
+  type Locale,
+} from '@/i18n/config';
 
 /* Fonts are self-hosted by next/font: no request to Google, and the metrics
    are inlined so swapping in the real face causes no layout shift. */
@@ -66,8 +73,10 @@ export async function generateMetadata({
           locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/')]),
         ),
         /* x-default tells search engines which variant to serve when none of
-           the visitor's languages match one we publish. */
-        'x-default': absoluteLocaleUrl('en', '/'),
+           the visitor's languages match one we publish. It follows
+           defaultLocale rather than being hard-coded, so changing the default
+           language cannot leave this pointing at the old one. */
+        'x-default': absoluteLocaleUrl(defaultLocale, '/'),
       },
     },
     openGraph: {
