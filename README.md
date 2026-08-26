@@ -34,12 +34,12 @@ There is no backend, no database and no tracking. Everything is prerendered to f
 
 ## 🖼️ Screenshots
 
-| Home page — dark theme | Home page — light theme |
-|---|---|
+| Home page — dark theme                                                     | Home page — light theme                                                      |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | ![The ZbudujKompa home page in dark mode](docs/screenshots/home-dark.webp) | ![The ZbudujKompa home page in light mode](docs/screenshots/home-light.webp) |
 
-| Build configurator | Assembly guides |
-|---|---|
+| Build configurator                                                                                                     | Assembly guides                                                                                          |
+| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | ![The build configurator, showing selected parts and a live compatibility summary](docs/screenshots/configurator.webp) | ![An assembly guide with a sticky table of contents and technical diagrams](docs/screenshots/guide.webp) |
 
 Both themes meet WCAG 2.2 AA, and the choice survives a language switch.
@@ -48,15 +48,15 @@ Both themes meet WCAG 2.2 AA, and the choice survives a language switch.
 
 ## 🧩 Modules
 
-| Module | Description | Stack |
-| --- | --- | --- |
-| **Configurator** | Part pickers, browser and comparison view, backed by the compatibility engine in `src/lib/parts/compatibility.ts` | React 19 client components, TypeScript |
-| **Calculators** | Fourteen pure formula modules in `src/lib/calculators.ts`, testable without a browser | TypeScript |
-| **Chat assistant** | Local knowledge base with an optional OpenAI-compatible provider on top | `src/lib/chat`, `src/components/chat` |
-| **Guides & articles** | Guide and blog content split by subject, rendered with anchored steps and diagrams | `src/lib/guides`, `src/lib/blog` |
-| **Diagrams** | Hand-authored technical SVG drawings | `src/components/diagrams` |
-| **i18n** | Locale config plus PL/EN dictionaries driving every route | `src/i18n` |
-| **Accessibility panel** | In-page preference panel with its own test suite | `src/components/layout/AccessibilityPanel.tsx` |
+| Module                  | Description                                                                                                       | Stack                                          |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **Configurator**        | Part pickers, browser and comparison view, backed by the compatibility engine in `src/lib/parts/compatibility.ts` | React 19 client components, TypeScript         |
+| **Calculators**         | Fourteen pure formula modules in `src/lib/calculators.ts`, testable without a browser                             | TypeScript                                     |
+| **Chat assistant**      | Local knowledge base with an optional OpenAI-compatible provider on top                                           | `src/lib/chat`, `src/components/chat`          |
+| **Guides & articles**   | Guide and blog content split by subject, rendered with anchored steps and diagrams                                | `src/lib/guides`, `src/lib/blog`               |
+| **Diagrams**            | Hand-authored technical SVG drawings                                                                              | `src/components/diagrams`                      |
+| **i18n**                | Locale config plus PL/EN dictionaries driving every route                                                         | `src/i18n`                                     |
+| **Accessibility panel** | In-page preference panel with its own test suite                                                                  | `src/components/layout/AccessibilityPanel.tsx` |
 
 ---
 
@@ -134,13 +134,13 @@ The production image is a three-stage build — dependencies, Next.js build, the
 
 Copy [`.env.example`](.env.example) to `.env.local`. Every variable is compiled into the static output, so treat all of them as public.
 
-| Variable | Purpose |
-| --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical address used for metadata, Open Graph, structured data and the sitemap |
-| `NEXT_PUBLIC_BASE_PATH` | Sub-path prefix; empty for a custom domain, `/<repo>` for a project Pages site |
-| `NEXT_PUBLIC_CHAT_API_URL` | Optional OpenAI-compatible chat endpoint |
-| `NEXT_PUBLIC_CHAT_API_KEY` | Optional API key — see the warning below |
-| `NEXT_PUBLIC_CHAT_MODEL` | Optional model name |
+| Variable                   | Purpose                                                                          |
+| -------------------------- | -------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`     | Canonical address used for metadata, Open Graph, structured data and the sitemap |
+| `NEXT_PUBLIC_BASE_PATH`    | Sub-path prefix; empty for a custom domain, `/<repo>` for a project Pages site   |
+| `NEXT_PUBLIC_CHAT_API_URL` | Optional OpenAI-compatible chat endpoint                                         |
+| `NEXT_PUBLIC_CHAT_API_KEY` | Optional API key — see the warning below                                         |
+| `NEXT_PUBLIC_CHAT_MODEL`   | Optional model name                                                              |
 
 ---
 
@@ -203,15 +203,15 @@ npm run test     # chat, compatibility, calculators, theme, a11y panel, interact
 
 The browser suites need a built site running — `npm run build && npm run serve` first, or point them elsewhere with `TEST_BASE_URL`.
 
-| Suite | Covers |
-| --- | --- |
-| `tests/chat.spec.mjs` | Question matching in both languages, including off-topic questions that must be refused |
-| `tests/compatibility.spec.mjs` | The configurator engine: sockets, memory, power, physical fit |
-| `tests/calculators.spec.mjs` | Every calculator formula, without a browser |
-| `tests/theme.spec.mjs` | Theme persistence across language switches, and no flash on load |
-| `tests/accessibility-panel.spec.mjs` | The in-page accessibility preferences panel |
-| `tests/interaction.spec.mjs` | Menu, assistant, calculators, glossary filter |
-| `tests/a11y.spec.mjs` | axe against every section, in both themes |
+| Suite                                | Covers                                                                                  |
+| ------------------------------------ | --------------------------------------------------------------------------------------- |
+| `tests/chat.spec.mjs`                | Question matching in both languages, including off-topic questions that must be refused |
+| `tests/compatibility.spec.mjs`       | The configurator engine: sockets, memory, power, physical fit                           |
+| `tests/calculators.spec.mjs`         | Every calculator formula, without a browser                                             |
+| `tests/theme.spec.mjs`               | Theme persistence across language switches, and no flash on load                        |
+| `tests/accessibility-panel.spec.mjs` | The in-page accessibility preferences panel                                             |
+| `tests/interaction.spec.mjs`         | Menu, assistant, calculators, glossary filter                                           |
+| `tests/a11y.spec.mjs`                | axe against every section, in both themes                                               |
 
 Individual suites are also available as `npm run test:chat`, `test:compat`, `test:calc`, `test:theme`, `test:a11ypanel`, `test:interaction` and `test:a11y`.
 
