@@ -7,11 +7,12 @@
 There is no backend, no database and no tracking. Everything is prerendered to files and served by GitHub Pages. The interactive parts — the configurator, the calculators, the assistant — all run in the browser.
 
 [![Deploy](https://github.com/dawidolko/ZbudujKompa/actions/workflows/deploy.yml/badge.svg)](https://github.com/dawidolko/ZbudujKompa/actions/workflows/deploy.yml)
-[![Next.js 16](https://img.shields.io/badge/Next.js-16-000)](https://nextjs.org)
-[![React 19](https://img.shields.io/badge/React-19-087ea4)](https://react.dev)
-[![Tailwind 4](https://img.shields.io/badge/Tailwind-4-06b6d4)](https://tailwindcss.com)
-[![WCAG 2.2 AA](https://img.shields.io/badge/WCAG_2.2-AA-16a34a)](#-accessibility)
-[![MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+![WCAG](https://img.shields.io/badge/WCAG%202.2-AA-16A34A?logo=accessibleicon&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
