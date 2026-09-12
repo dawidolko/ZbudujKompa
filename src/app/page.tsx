@@ -9,9 +9,17 @@ import { asset } from '@/lib/utils';
 export const metadata: Metadata = {
   title: site.name,
   alternates: { canonical: defaultCanonicalUrl('/') },
-  /* The root is only a redirect stop; the localized pages carry the content
-     that should be indexed. */
-  robots: { index: false, follow: true },
+  /*
+   * No `robots: { index: false }` here, deliberately.
+   *
+   * The root is a redirect stop and must not be indexed in its own right, but
+   * the canonical above already says so — it points at the default locale, so
+   * Google folds this URL into that page instead of treating it as a separate
+   * one. Declaring `noindex` as well is the combination Google documents as
+   * conflicting: the directive can travel along the canonical and take the
+   * page it points at down with it. Search Console reported this URL as
+   * "excluded by noindex tag", which is the first half of that going wrong.
+   */
 };
 
 const target = asset(localePath(defaultLocale));
