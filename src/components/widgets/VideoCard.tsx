@@ -43,7 +43,7 @@ export function VideoCard({
           alt=""
           loading="lazy"
           decoding="async"
-          className="size-full object-cover mix-blend-luminosity"
+          className="size-full object-cover"
         />
         <span
           aria-hidden="true"

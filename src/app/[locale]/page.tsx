@@ -422,7 +422,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               className="footprint group flex w-72 shrink-0 flex-col overflow-hidden focus-ring"
             >
               {article.photo ? (
-                <span className="block bg-[var(--color-mask-600)] [&_img]:mix-blend-luminosity">
+                <span className="block bg-[var(--color-mask-600)]">
                   <Photo
                     slug={article.photo}
                     locale={typedLocale}

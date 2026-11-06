@@ -64,7 +64,7 @@ export default async function ArticlesPage({ params }: { params: Promise<Params>
             className="footprint group grid overflow-hidden focus-ring md:grid-cols-2"
           >
             {featured.photo ? (
-              <div className="bg-[var(--color-mask-600)] [&_img]:mix-blend-luminosity">
+              <div className="bg-[var(--color-mask-600)]">
                 <Photo
                   slug={featured.photo}
                   locale={typedLocale}

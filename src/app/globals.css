@@ -658,7 +658,6 @@
     outline-offset: 3px;
   }
   .plate img {
-    mix-blend-mode: luminosity;
   }
 
   /* Table of a datasheet. The header row carries `.mask`. */
