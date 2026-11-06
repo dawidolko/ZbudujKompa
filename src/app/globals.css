@@ -651,15 +651,12 @@
       100% 10px;
   }
 
-  /* A photograph printed in the board's own green, as a manual would print it. */
+  /* A framed photograph, shown in its natural colours. */
   .plate {
     background-color: var(--color-mask-600);
     outline: 1px solid var(--border-default);
     outline-offset: 3px;
   }
-  .plate img {
-  }
-
   /* Table of a datasheet. The header row carries `.mask`. */
   .datasheet {
     font-variant-numeric: tabular-nums;
