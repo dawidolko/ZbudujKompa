@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { Callout } from '@/components/ui/Callout';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { CheckIcon, AlertIcon } from '@/components/ui/Icon';
@@ -10,8 +11,9 @@ import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles, getCoolingProfile } from '@/lib/cooling';
 import { getOpinionsFor } from '@/lib/knowledge';
+import { formatPriceRange, priceRecord } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
-import { formatPrice, t } from '@/lib/utils';
+import { t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
 
@@ -115,11 +117,15 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
               {dict.cooling.price}
             </dt>
             <dd className="mt-1 font-display text-xl font-bold text-text-primary">
-              {formatPrice(profile.price.min * 100, typedLocale)} –{' '}
-              {formatPrice(profile.price.max * 100, typedLocale)}
+              {formatPriceRange(profile.price, typedLocale)}
             </dd>
           </div>
         </dl>
+        <PriceChecked
+          locale={typedLocale}
+          checkedAt={priceRecord(`class:${profile.slug}`).checkedAt}
+          className="mt-3"
+        />
       </section>
 
       {/* ---- Description ---- */}

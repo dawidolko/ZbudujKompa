@@ -279,7 +279,7 @@ export const en = {
     worthKnowing: 'Worth knowing',
     checksPassed: 'Checks passed',
     priceNote:
-      'Prices are indicative bands for budgeting, not a live feed. Hardware pricing moves weekly, so verify before buying.',
+      'Ranges from Polish shops: from the lowest sensible price for a new unit to the typical price at a large shop. We check them by hand, so this is not a live price list. Follow a shop link to see current offers.',
     comparison: 'Compare',
     presets: 'Start from a reference build',
     presetsLead:
@@ -773,12 +773,29 @@ export const en = {
     openedTabs: (count: number, shop: string) => `Opened ${count} search tabs at ${shop}.`,
     searchAt: (shop: string, part: string) => `Search for ${part} at ${shop} (opens in a new tab)`,
     priceDisclaimer:
-      'Prices are indicative bands for budgeting, not a live feed. Verify before buying.',
+      'Ranges from Polish shops, checked by hand, not a live price list. Check the current price at the shop before buying.',
     disclaimer:
       'These links open a search at the retailer with the part name already entered — no shop here publishes an API a static site could read, so a real search is the honest equivalent of a basket. None of them are affiliate links and this site earns nothing from them. Always check the exact model and its current price at the retailer before ordering.',
   },
 
+  prices: {
+    checked: (date: string) => `Prices checked ${date}`,
+    stale: (date: string) =>
+      `Prices checked ${date}. They may be out of date, so check them at the shop.`,
+    liveLabel: 'Current offers',
+    linkLabel: (shop: string, part: string) =>
+      `Current offers for ${part} on ${shop} (opens in a new tab)`,
+    unpriced: (count: number) =>
+      count === 1 ? 'Excludes 1 part with no price' : `Excludes ${count} parts with no price`,
+    reason: {
+      discontinued: 'Withdrawn from sale, and Polish shops no longer carry it.',
+      unreleased: 'Never went on sale, so it has no price.',
+      'no-offer': 'We found no credible offer in Polish shops.',
+    },
+  },
   autoPick: {
+    overBudget: (cost: string) =>
+      `This build comes to about ${cost}, above your budget. Raise the budget or swap the pricier parts by hand.`,
     title: 'Pick one for me',
     lead: 'Choose a budget and a purpose, and get a complete build that is compatible by construction.',
     budget: 'Budget',

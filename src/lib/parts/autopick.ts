@@ -1,4 +1,4 @@
-import type { BuildSelection, Part, PartCategory } from './types.ts';
+import type { BuildSelection, Part, PartCategory, PriceTotal } from './types.ts';
 import { allParts, selectionPrice } from './selection.ts';
 import { checkCompatibility } from './compatibility.ts';
 
@@ -53,51 +53,58 @@ function shuffle<T>(items: T[], random: () => number): T[] {
   return copy;
 }
 
-/** How much of the budget each purpose spends on each category. */
+/**
+ * How much of the budget each purpose spends on each category.
+ *
+ * Memory takes far more than it used to: since the 2026 DRAM shortage a 32 GB
+ * DDR5 kit costs about as much as a mid-range graphics card. These shares follow
+ * the checked prices in `prices.ts`, so a large market move has to be reflected
+ * here as well.
+ */
 const BUDGET_SPLIT: Record<AutoPickOptions['purpose'], Partial<Record<PartCategory, number>>> = {
   /* A gaming build concentrates on the graphics card, which determines frame
      rate more than anything else. */
   gaming: {
-    gpu: 0.38,
-    cpu: 0.18,
-    motherboard: 0.1,
-    ram: 0.07,
-    storage: 0.08,
-    psu: 0.08,
-    case: 0.07,
-    cooler: 0.04,
+    gpu: 0.34,
+    cpu: 0.14,
+    motherboard: 0.08,
+    ram: 0.2,
+    storage: 0.09,
+    psu: 0.06,
+    case: 0.06,
+    cooler: 0.03,
   },
   /* Work loads scale with cores and memory rather than with the card. */
   work: {
-    cpu: 0.28,
-    gpu: 0.22,
-    motherboard: 0.12,
-    ram: 0.14,
-    storage: 0.1,
-    psu: 0.07,
-    case: 0.05,
-    cooler: 0.05,
+    cpu: 0.24,
+    gpu: 0.2,
+    motherboard: 0.09,
+    ram: 0.26,
+    storage: 0.09,
+    psu: 0.05,
+    case: 0.04,
+    cooler: 0.03,
   },
   /* An office machine has no discrete card at all; the share is redistributed. */
   office: {
-    cpu: 0.34,
-    motherboard: 0.16,
-    ram: 0.14,
-    storage: 0.14,
-    psu: 0.1,
+    cpu: 0.27,
+    motherboard: 0.13,
+    ram: 0.26,
+    storage: 0.15,
+    psu: 0.08,
     case: 0.08,
-    cooler: 0.04,
+    cooler: 0.03,
   },
   /* A compact build pays a premium for small parts — SFX supplies above all. */
   compact: {
-    gpu: 0.32,
-    cpu: 0.18,
-    motherboard: 0.12,
-    ram: 0.07,
-    storage: 0.07,
-    psu: 0.13,
+    gpu: 0.3,
+    cpu: 0.14,
+    motherboard: 0.09,
+    ram: 0.19,
+    storage: 0.09,
+    psu: 0.09,
     case: 0.07,
-    cooler: 0.04,
+    cooler: 0.03,
   },
 };
 
@@ -123,7 +130,7 @@ const PICK_ORDER: PartCategory[] = [
  */
 export function autoPick(options: AutoPickOptions): {
   selection: BuildSelection;
-  price: { min: number; max: number };
+  price: PriceTotal;
   seed: number;
 } {
   const seed = options.seed ?? Math.floor(Math.random() * 2 ** 31);
@@ -132,16 +139,26 @@ export function autoPick(options: AutoPickOptions): {
 
   const selection: BuildSelection = {};
 
+  /* Each target comes from what is left rather than from the whole budget, so
+     a part that lands above its share is paid for by the ones chosen after it.
+     With independent targets every overrun simply adds up. */
+  let remaining = options.budget;
+  let shareLeft = Object.values(split).reduce((sum, share) => sum + share, 0);
+
   for (const category of PICK_ORDER) {
     const share = split[category];
     /* No share means the purpose does not use this category — an office build
        skips the graphics card entirely rather than buying the cheapest one. */
     if (share === undefined) continue;
 
-    const target = options.budget * share;
+    const target = Math.max(0, remaining) * (share / shareLeft);
+    shareLeft -= share;
 
     const candidates = allParts.filter((part) => {
       if (part.category !== category) return false;
+      /* A part nobody can buy is no help in a build, and without a price it
+         cannot be placed against the budget either. */
+      if (part.price.unavailable) return false;
       /* Only parts that keep the build valid are considered, which is what
          makes the result compatible by construction rather than by luck. */
       const trial = { ...selection, [category]: part.id };
@@ -159,7 +176,10 @@ export function autoPick(options: AutoPickOptions): {
        different answer each press, little enough that it stays near budget. */
     const pool = scored.slice(0, Math.min(3, scored.length)).map((entry) => entry.part);
     const chosen = shuffle(pool, random)[0];
-    if (chosen) selection[category] = chosen.id;
+    if (chosen) {
+      selection[category] = chosen.id;
+      remaining -= (chosen.price.min + chosen.price.max) / 2;
+    }
   }
 
   return { selection, price: selectionPrice(selection), seed };

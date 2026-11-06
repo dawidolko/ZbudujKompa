@@ -292,7 +292,7 @@ export const pl: Dictionary = {
     worthKnowing: 'Warto wiedzieć',
     checksPassed: 'Sprawdzone poprawnie',
     priceNote:
-      'Ceny to orientacyjne widełki do planowania budżetu, a nie aktualny cennik. Ceny sprzętu zmieniają się co tydzień — zweryfikuj przed zakupem.',
+      'Widełki z polskich sklepów: od najniższej rozsądnej ceny nowej sztuki do typowej ceny w dużym sklepie. Sprawdzamy je ręcznie, więc to nie jest cennik na żywo. Aktualne oferty zobaczysz po kliknięciu linku do sklepu.',
     comparison: 'Porównaj',
     presets: 'Zacznij od gotowego zestawu',
     presetsLead: 'Wczytaj kompletną konfigurację i dostosuj ją, zamiast zaczynać od pustej listy.',
@@ -795,12 +795,29 @@ export const pl: Dictionary = {
     searchAt: (shop: string, part: string) =>
       `Szukaj ${part} w sklepie ${shop} (otwiera się w nowej karcie)`,
     priceDisclaimer:
-      'Ceny to orientacyjne widełki do planowania budżetu, a nie aktualny cennik. Zweryfikuj przed zakupem.',
+      'Widełki z polskich sklepów sprawdzane ręcznie, a nie cennik na żywo. Przed zakupem sprawdź aktualną cenę w sklepie.',
     disclaimer:
       'Te odnośniki otwierają wyszukiwanie w sklepie z wpisaną nazwą części — żaden z tych sklepów nie udostępnia API, które strona statyczna mogłaby odczytać, więc realne wyszukiwanie jest uczciwym odpowiednikiem koszyka. Żaden z linków nie jest afiliacyjny i serwis nic na nich nie zarabia. Przed zamówieniem zawsze sprawdź dokładny model i jego aktualną cenę w sklepie.',
   },
 
+  prices: {
+    checked: (date: string) => `Ceny sprawdzone ${date}`,
+    stale: (date: string) =>
+      `Ceny sprawdzone ${date}. Mogą być już nieaktualne, więc sprawdź je w sklepie.`,
+    liveLabel: 'Aktualne oferty',
+    linkLabel: (shop: string, part: string) =>
+      `Aktualne oferty na ${part} w serwisie ${shop} (otwiera się w nowej karcie)`,
+    unpriced: (count: number) =>
+      count === 1 ? 'Bez 1 części, która nie ma ceny' : `Bez ${count} części, które nie mają ceny`,
+    reason: {
+      discontinued: 'Wycofana ze sprzedaży, polskie sklepy już jej nie mają.',
+      unreleased: 'Nie trafiła do sprzedaży, więc nie ma ceny.',
+      'no-offer': 'Nie znaleźliśmy wiarygodnej oferty w polskich sklepach.',
+    },
+  },
   autoPick: {
+    overBudget: (cost: string) =>
+      `Ten zestaw kosztuje około ${cost}, czyli więcej niż podany budżet. Zwiększ budżet albo wymień droższe części ręcznie.`,
     title: 'Dobierz za mnie',
     lead: 'Wybierz budżet i przeznaczenie, a dostaniesz kompletny zestaw, który z założenia jest zgodny.',
     budget: 'Budżet',

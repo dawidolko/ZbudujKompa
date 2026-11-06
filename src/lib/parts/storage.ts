@@ -1,4 +1,5 @@
 import type { Storage } from './types.ts';
+import { priceOf } from './pricing.ts';
 
 /**
  * Storage catalogue.
@@ -21,7 +22,7 @@ export const storage: Storage[] = [
     pcieGen: 4,
     tbw: 320,
     tier: 'budget',
-    price: { min: 200, max: 280 },
+    price: priceOf('nv3-1tb'),
     note: {
       pl: '1 TB to praktyczne minimum — dwie duże gry potrafią zająć połowę tej przestrzeni.',
       en: '1 TB is the practical minimum — two large games can fill half of it.',
@@ -38,7 +39,7 @@ export const storage: Storage[] = [
     pcieGen: 4,
     tbw: 1200,
     tier: 'midrange',
-    price: { min: 480, max: 620 },
+    price: priceOf('990-evo-plus-2tb'),
     url: 'https://semiconductor.samsung.com/consumer-storage/internal-ssd/',
     note: {
       pl: '2 TB pozwala trzymać bibliotekę gier bez ciągłego odinstalowywania. Najrozsądniejsza pojemność na dziś.',
@@ -56,7 +57,7 @@ export const storage: Storage[] = [
     pcieGen: 4,
     tbw: 1200,
     tier: 'high',
-    price: { min: 650, max: 850 },
+    price: priceOf('990-pro-2tb'),
     note: {
       pl: 'Wysoka prędkość zapisu ciągłego ma znaczenie przy pracy na dużych plikach wideo. Do grania to nadpłata.',
       en: 'High sustained write speed matters when working with large video files. For gaming it is overpaying.',
@@ -71,7 +72,7 @@ export const storage: Storage[] = [
     capacity: 4000,
     readSpeed: 180,
     tier: 'value',
-    price: { min: 380, max: 480 },
+    price: priceOf('wd-blue-4tb-hdd'),
     note: {
       pl: 'Talerzowy dysk do archiwum i kopii zapasowych. Nie instaluj na nim systemu — różnica w płynności jest ogromna.',
       en: 'A spinning drive for archives and backups. Do not install the system on it — the responsiveness difference is enormous.',
@@ -87,8 +88,8 @@ export const storage: Storage[] = [
     readSpeed: 14500,
     pcieGen: 5,
     tbw: 1200,
-    tier: 'flagship',
-    price: { min: 1100, max: 1450 },
+    tier: 'high',
+    price: priceOf('t705-2tb'),
     note: {
       pl: 'Najszybszy odczyt sekwencyjny na rynku. W grach różnica wobec dysku PCIe 4.0 jest w granicach dziesiątych części sekundy.',
       en: 'The fastest sequential read available. In games the difference against a PCIe 4.0 drive is within tenths of a second.',
@@ -105,7 +106,7 @@ export const storage: Storage[] = [
     pcieGen: 4,
     tbw: 640,
     tier: 'value',
-    price: { min: 380, max: 500 },
+    price: priceOf('nv3-2tb'),
     note: {
       pl: 'Rozsądne 2 TB bez dopłaty za rekordowe prędkości. Do grania i codziennej pracy nie odczujesz różnicy wobec droższych.',
       en: 'A sensible 2 TB without paying for record speeds. For gaming and daily work you will not feel the difference against pricier drives.',
@@ -121,8 +122,8 @@ export const storage: Storage[] = [
     readSpeed: 7300,
     pcieGen: 4,
     tbw: 2400,
-    tier: 'high',
-    price: { min: 1200, max: 1550 },
+    tier: 'flagship',
+    price: priceOf('sn850x-4tb'),
     note: {
       pl: '4 TB dla dużych bibliotek gier. Wysoka wytrzymałość zapisu, przydatna przy pracy z materiałem wideo.',
       en: '4 TB for large game libraries. High write endurance, useful when working with video footage.',
@@ -136,8 +137,8 @@ export const storage: Storage[] = [
     kind: 'hdd',
     capacity: 8000,
     readSpeed: 210,
-    tier: 'high',
-    price: { min: 900, max: 1150 },
+    tier: 'midrange',
+    price: priceOf('ironwolf-8tb'),
     note: {
       pl: 'Dysk przeznaczony do pracy ciągłej w serwerze domowym. Odporny na wibracje przy wielu dyskach w jednej obudowie.',
       en: 'A drive intended for continuous operation in a home server. Rated for the vibration of several drives in one enclosure.',

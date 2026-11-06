@@ -1,4 +1,5 @@
 import type { Cooler } from './types.ts';
+import { priceOf } from './pricing.ts';
 
 /**
  * Cooler catalogue.
@@ -26,11 +27,11 @@ export const coolers: Cooler[] = [
     noise: 28,
     ramClearance: 38,
     tier: 'budget',
-    price: { min: 70, max: 110 },
+    price: priceOf('assassin-x-120'),
     url: 'https://www.thermalright.com/',
     note: {
-      pl: 'Tańsze i cichsze od chłodzenia z zestawu, a montaż zajmuje kilka minut. Do procesorów 65 W w zupełności wystarczy.',
-      en: 'Cheaper and quieter than a boxed cooler, and it fits in minutes. Entirely sufficient for 65 W processors.',
+      pl: 'Cichsze od chłodzenia z zestawu, a montaż zajmuje kilka minut. Do procesorów 65 W w zupełności wystarczy.',
+      en: 'Quieter than a boxed cooler, and it fits in minutes. Entirely sufficient for 65 W processors.',
     },
   },
   {
@@ -45,7 +46,7 @@ export const coolers: Cooler[] = [
     noise: 31,
     ramClearance: 43,
     tier: 'value',
-    price: { min: 140, max: 200 },
+    price: priceOf('peerless-assassin-120'),
     note: {
       pl: 'Podwójna wieża dorównująca chłodnicom 240 mm za ułamek ceny. Najlepszy stosunek wydajności do ceny na rynku.',
       en: 'A dual tower matching 240 mm liquid coolers for a fraction of the price. The best performance per złoty available.',
@@ -63,7 +64,7 @@ export const coolers: Cooler[] = [
     noise: 30,
     ramClearance: 32,
     tier: 'high',
-    price: { min: 650, max: 800 },
+    price: priceOf('nh-d15-g2'),
     url: 'https://noctua.at/en/products/cpu-cooler-retail',
     note: {
       pl: 'Najmocniejsze chłodzenie powietrzne na rynku. Waży 1,5 kg i zasłania pierwszy slot pamięci — sprawdź wysokość modułów.',
@@ -82,7 +83,7 @@ export const coolers: Cooler[] = [
     noise: 26,
     ramClearance: 48,
     tier: 'midrange',
-    price: { min: 300, max: 380 },
+    price: priceOf('nh-l12s'),
     note: {
       pl: 'Niskoprofilowe chłodzenie zaprojektowane pod obudowy, w których wieża się nie mieści. 70 mm wysokości.',
       en: 'A low-profile cooler designed for cases where a tower will not fit. 70 mm tall.',
@@ -99,7 +100,7 @@ export const coolers: Cooler[] = [
     radiatorSize: 240,
     noise: 32,
     tier: 'midrange',
-    price: { min: 320, max: 420 },
+    price: priceOf('liquid-freezer-iii-240'),
     url: 'https://www.arctic.de/en/Cooling/CPU-Cooler',
     note: {
       pl: 'Chłodnica 240 mm w rozsądnej cenie. Uwalnia miejsce wokół gniazda procesora i wyrzuca ciepło poza obudowę.',
@@ -117,7 +118,7 @@ export const coolers: Cooler[] = [
     radiatorSize: 360,
     noise: 34,
     tier: 'high',
-    price: { min: 420, max: 550 },
+    price: priceOf('liquid-freezer-iii-360'),
     note: {
       pl: 'Chłodnica 360 mm utrzymuje taktowania przy godzinach obciążenia wszystkich rdzeni. Wymaga obudowy z miejscem na 360 mm.',
       en: 'A 360 mm radiator holds clocks through hours of all-core load. It needs a case with room for 360 mm.',
@@ -135,7 +136,7 @@ export const coolers: Cooler[] = [
     noise: 30,
     ramClearance: 42,
     tier: 'value',
-    price: { min: 160, max: 220 },
+    price: priceOf('phantom-spirit-120'),
     note: {
       pl: 'Siedem ciepłowodów i dwie wieże. Praktycznie dorównuje chłodzeniom trzykrotnie droższym.',
       en: 'Seven heat pipes and two towers. It effectively matches coolers costing three times as much.',
@@ -153,7 +154,7 @@ export const coolers: Cooler[] = [
     noise: 27,
     ramClearance: 45,
     tier: 'high',
-    price: { min: 480, max: 600 },
+    price: priceOf('nh-u12a'),
     note: {
       pl: 'Pojedyncza wieża o wydajności podwójnej, przy zachowaniu prześwitu nad pamięcią. Wybór, gdy duża wieża nie mieści się nad modułami.',
       en: 'A single tower performing like a dual, while keeping clearance over the memory. The choice when a large tower fouls the modules.',
@@ -171,7 +172,7 @@ export const coolers: Cooler[] = [
     noise: 32,
     ramClearance: 40,
     tier: 'midrange',
-    price: { min: 260, max: 340 },
+    price: priceOf('ak620'),
     note: {
       pl: 'Podwójna wieża z wyświetlaczem temperatury. Wyświetlacz to gadżet, ale samo chłodzenie jest solidne.',
       en: 'A dual tower with a temperature display. The display is a gimmick; the cooler underneath is solid.',
@@ -188,7 +189,7 @@ export const coolers: Cooler[] = [
     radiatorSize: 360,
     noise: 36,
     tier: 'high',
-    price: { min: 700, max: 900 },
+    price: priceOf('kraken-360'),
     note: {
       pl: 'Chłodnica 360 mm z podświetleniem i wyświetlaczem na pompie. Wydajnie, ale drożej niż odpowiedniki bez ozdób.',
       en: 'A 360 mm radiator with lighting and a pump display. Effective, though pricier than equivalents without the decoration.',
@@ -205,7 +206,7 @@ export const coolers: Cooler[] = [
     radiatorSize: 420,
     noise: 35,
     tier: 'high',
-    price: { min: 550, max: 700 },
+    price: priceOf('liquid-freezer-iii-420'),
     note: {
       pl: 'Największa gotowa chłodnica na rynku. Mieści się w niewielu obudowach — sprawdź specyfikację, zanim kupisz.',
       en: 'The largest off-the-shelf radiator available. It fits few cases — check the specification before buying.',
@@ -223,7 +224,7 @@ export const coolers: Cooler[] = [
     noise: 38,
     ramClearance: 60,
     tier: 'budget',
-    price: { min: 0, max: 60 },
+    price: priceOf('stock-wraith'),
     note: {
       pl: 'Chłodzenie dołączane do części procesorów. Wystarcza do 65 W, ale jest głośne — wymiana na tanią wieżę to jedna z najlepszych inwestycji.',
       en: 'The cooler bundled with some processors. Adequate to 65 W but loud — swapping it for a cheap tower is one of the best-value upgrades there is.',

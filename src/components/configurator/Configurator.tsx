@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useId, useMemo, useState } from 'react';
+import { PriceChecked } from '@/components/parts/PriceChecked';
 import { AlertIcon, CheckIcon, InfoIcon, SparkIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
@@ -35,11 +36,18 @@ export function Configurator({ locale }: { locale: Locale }) {
      once produces no focus movement and would otherwise be silent. */
   const [announcement, setAnnouncement] = useState('');
 
+  /* Set when the picked build costs more than was asked for. A complete PC has
+     a real floor, and a low budget should be told so rather than exceeded in
+     silence. */
+  const [overBudget, setOverBudget] = useState<string | null>(null);
+
   const pickForMe = useCallback(() => {
     const result = autoPick({ budget, purpose });
     setSelection(result.selection);
     setAnnouncement(dict.autoPick.resultTitle);
-  }, [budget, purpose, dict.autoPick.resultTitle]);
+    const cost = Math.round((result.price.min + result.price.max) / 2);
+    setOverBudget(cost > budget ? formatPriceRange({ min: cost, max: cost }, locale) : null);
+  }, [budget, purpose, locale, dict.autoPick.resultTitle]);
 
   const select = useCallback((category: PartCategory, id: string | undefined) => {
     setSelection((current) => {
@@ -137,6 +145,12 @@ export function Configurator({ locale }: { locale: Locale }) {
             {chosenCount > 0 ? dict.autoPick.regenerate : dict.autoPick.generate}
           </button>
 
+          {overBudget ? (
+            <p role="status" className="mt-3 text-sm font-semibold text-text-primary">
+              {dict.autoPick.overBudget(overBudget)}
+            </p>
+          ) : null}
+
           <p className="mt-3 text-xs leading-relaxed text-text-muted">{dict.autoPick.note}</p>
         </section>
 
@@ -186,6 +200,11 @@ export function Configurator({ locale }: { locale: Locale }) {
                     <dd className="font-display mt-0.5 text-xl font-bold text-text-primary">
                       {formatPriceRange(price, locale)}
                     </dd>
+                    {price.unpriced > 0 ? (
+                      <dd className="mt-0.5 text-xs text-text-muted">
+                        {dict.prices.unpriced(price.unpriced)}
+                      </dd>
+                    ) : null}
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
@@ -235,9 +254,10 @@ export function Configurator({ locale }: { locale: Locale }) {
             )}
           </div>
 
-          <p className="mt-5 border-t border-border-subtle pt-4 text-xs leading-relaxed text-text-muted">
-            {dict.configurator.priceNote}
-          </p>
+          <div className="mt-5 space-y-1 border-t border-border-subtle pt-4">
+            <PriceChecked locale={locale} />
+            <p className="text-xs leading-relaxed text-text-muted">{dict.configurator.priceNote}</p>
+          </div>
         </div>
       </aside>
 

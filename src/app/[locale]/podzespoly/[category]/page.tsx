@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { ComparisonTable } from '@/components/configurator/ComparisonTable';
+import { PriceChecked } from '@/components/parts/PriceChecked';
+import { PartPriceDetails } from '@/components/parts/PriceLinks';
 import { Badge } from '@/components/ui/Badge';
 import { ExternalIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
@@ -90,6 +92,10 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
         lead={dict.parts.categoryLead(dict.configurator.category[category])}
       />
 
+      <div className="container-page pb-6">
+        <PriceChecked locale={typedLocale} />
+      </div>
+
       {byTier.map((group) => (
         <section key={group.tier} className="container-page pb-12">
           <SectionHeading title={dict.configurator.tier[group.tier]} id={`tier-${group.tier}`} />
@@ -106,6 +112,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">
                     {t(part.note, typedLocale)}
                   </p>
+                  <PartPriceDetails part={part} locale={typedLocale} className="mt-3" />
                   {part.url ? (
                     <a
                       href={part.url}

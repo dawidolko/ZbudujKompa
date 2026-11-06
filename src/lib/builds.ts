@@ -1,12 +1,15 @@
-import type { Build } from './types';
+import { priceQueries } from './parts/price-queries.ts';
+import { priceOf, sumPrices } from './parts/pricing.ts';
+import type { PriceRange, PriceTotal } from './parts/types.ts';
+import type { Build, BuildPart } from './types';
 
 /**
  * Reference builds.
  *
- * Prices are indicative Polish retail figures in grosz, each carrying the date
- * it was checked. They are a starting point for a shopping list, not a live
- * price feed — a static site cannot promise current pricing, so it says so
- * rather than pretending otherwise.
+ * A build lists parts and the reasoning for them. Its prices come from the
+ * catalogue's dated records through `buildPartIds`, because a static site cannot
+ * promise current pricing and a second copy of the figures here would only
+ * drift away from the first.
  */
 export const builds: Build[] = [
   {
@@ -95,8 +98,8 @@ export const builds: Build[] = [
         kind: 'cooler',
         name: 'Thermalright Assassin X 120 R SE',
         rationale: {
-          pl: 'Tańsze i cichsze od chłodzenia z zestawu, a montaż zajmuje kilka minut.',
-          en: 'Cheaper and quieter than the boxed cooler, and it takes a few minutes to fit.',
+          pl: 'Cichsze od chłodzenia z zestawu, a montaż zajmuje kilka minut.',
+          en: 'Quieter than the boxed cooler, and it takes a few minutes to fit.',
         },
       },
     ],
@@ -549,4 +552,79 @@ export const builds: Build[] = [
 
 export function getBuild(slug: string): Build | undefined {
   return builds.find((build) => build.slug === slug);
+}
+
+/**
+ * The catalogue parts behind each build line, by its name.
+ *
+ * A line can stand for several parts, or for none: the few parts the builds name
+ * that are not in the catalogue are left out, and are reported as unpriced.
+ */
+const buildPartIds: Record<string, { id: string; quantity?: number }[]> = {
+  'AMD Ryzen 5 5600': [{ id: 'ryzen-5-5600' }],
+  'MSI B550-A PRO': [{ id: 'b550-a-pro' }],
+  'Kingston Fury Beast 16 GB (2×8) DDR4-3200 CL16': [{ id: 'fury-beast-16-3200' }],
+  'AMD Radeon RX 7600 8 GB': [{ id: 'rx-7600' }],
+  'Kingston NV3 1 TB NVMe PCIe 4.0': [{ id: 'nv3-1tb' }],
+  'be quiet! System Power 10 550 W 80+ Bronze': [{ id: 'system-power-10-550' }],
+  'Fractal Design Focus 2': [{ id: 'focus-2' }],
+  'Thermalright Assassin X 120 R SE': [{ id: 'assassin-x-120' }],
+  'AMD Ryzen 7 7800X3D': [{ id: 'ryzen-7-7800x3d' }],
+  'ASUS TUF Gaming B650-PLUS WiFi': [{ id: 'tuf-b650-plus-wifi' }],
+  'G.Skill Flare X5 32 GB (2×16) DDR5-6000 CL30': [{ id: 'flare-x5-32-6000' }],
+  'NVIDIA GeForce RTX 5070 12 GB': [{ id: 'rtx-5070' }],
+  'Samsung 990 EVO Plus 2 TB NVMe': [{ id: '990-evo-plus-2tb' }],
+  'be quiet! Pure Power 12 M 750 W 80+ Gold': [{ id: 'pure-power-12m-750' }],
+  'Fractal Design North': [{ id: 'north' }],
+  'Thermalright Peerless Assassin 120 SE': [{ id: 'peerless-assassin-120' }],
+  'Intel Core Ultra 7 265K': [{ id: 'core-ultra-7-265k' }],
+  'MSI MAG Z890 TOMAHAWK WIFI': [{ id: 'z890-tomahawk' }],
+  'Corsair Vengeance 64 GB (2×32) DDR5-6000 CL30': [{ id: 'vengeance-64-6000' }],
+  'NVIDIA GeForce RTX 5070 Ti 16 GB': [{ id: 'rtx-5070-ti' }],
+  'Samsung 990 PRO 2 TB NVMe PCIe 4.0': [{ id: '990-pro-2tb' }],
+  'Seasonic Focus GX-850 850 W 80+ Gold': [{ id: 'focus-gx-850' }],
+  'Fractal Design Define 7': [{ id: 'define-7' }],
+  'Arctic Liquid Freezer III 360': [{ id: 'liquid-freezer-iii-360' }],
+  'AMD Ryzen 7 9700X': [{ id: 'ryzen-7-9700x' }],
+  'ASRock B650I Lightning WiFi': [{ id: 'b650i-lightning' }],
+  'NVIDIA GeForce RTX 5070 12 GB (wersja 2-slot)': [{ id: 'rtx-5070' }],
+  'Corsair SF750 750 W SFX 80+ Platinum': [{ id: 'sf750' }],
+  'Fractal Design Terra': [{ id: 'terra' }],
+  'Noctua NH-L12S': [{ id: 'nh-l12s' }],
+  'AMD Ryzen 7 8700G': [{ id: 'ryzen-7-8700g' }],
+  'ASRock B650M Pro RS': [{ id: 'b650m-pro-rs' }],
+  'Kingston Fury Beast 32 GB (2×16) DDR5-6000': [{ id: 'fury-beast-32-6000' }],
+  'Fractal Design Node 304': [{ id: 'node-304' }],
+  'ASUS PRIME B760M-A': [{ id: 'prime-b760m-a' }],
+  'Crucial 32 GB (2×16) DDR5-5600': [{ id: 'crucial-32-5600' }],
+  'Kingston NV3 1 TB NVMe + 2× 8 TB HDD': [{ id: 'nv3-1tb' }, { id: 'ironwolf-8tb', quantity: 2 }],
+};
+
+/** The price of one build line. A line outside the catalogue has no price. */
+export function buildPartPrice(part: BuildPart): PriceRange {
+  const ids = buildPartIds[part.name];
+  if (!ids) return { min: 0, max: 0, unavailable: true };
+  return lineTotal(ids);
+}
+
+/** What to search for at a shop for one build line, one query per part. */
+export function buildPartQueries(part: BuildPart): string[] {
+  const ids = buildPartIds[part.name];
+  if (!ids) return [part.name];
+  return ids.map(({ id }) => priceQueries[id]?.q ?? part.name);
+}
+
+/** Sums one line, repeating a part as many times as the build uses it. */
+function lineTotal(ids: { id: string; quantity?: number }[]): PriceTotal {
+  return sumPrices(
+    ids.flatMap(({ id, quantity = 1 }) => Array.from({ length: quantity }, () => priceOf(id))),
+  );
+}
+
+/** The whole build, with a count of the parts that have no price. */
+export function buildTotal(build: Build): PriceTotal {
+  const lines = build.parts.map((part) => buildPartIds[part.name]);
+  const priced = sumPrices(lines.flatMap((ids) => (ids ? [lineTotal(ids)] : [])));
+  const missing = lines.reduce((count, ids) => count + (ids ? lineTotal(ids).unpriced : 1), 0);
+  return { min: priced.min, max: priced.max, unpriced: missing };
 }

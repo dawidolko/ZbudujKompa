@@ -1,12 +1,15 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { PriceChecked } from '@/components/parts/PriceChecked';
+import { PriceLinks } from '@/components/parts/PriceLinks';
 import { Badge } from '@/components/ui/Badge';
 import { CloseIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { formatPriceRange, getPartsByCategory } from '@/lib/parts';
 import type { Part, PartCategory } from '@/lib/parts';
+import { partQuery } from '@/lib/shops';
 import { cn, t } from '@/lib/utils';
 
 /** How many parts can be compared at once before the table stops being readable. */
@@ -149,6 +152,8 @@ export function ComparisonTable({
           </table>
         </div>
       )}
+
+      <PriceChecked locale={locale} className="mt-3" />
     </div>
   );
 }
@@ -173,6 +178,18 @@ function comparisonRows(
     {
       label: dict.comparison.price,
       values: parts.map((part) => formatPriceRange(part.price, locale)),
+    },
+    {
+      label: dict.prices.liveLabel,
+      values: parts.map((part) => (
+        <PriceLinks
+          key={part.id}
+          query={partQuery(part)}
+          name={`${part.brand} ${part.name}`}
+          locale={locale}
+          bare
+        />
+      )),
     },
     {
       label: dict.comparison.tier,

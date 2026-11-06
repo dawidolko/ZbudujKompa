@@ -65,7 +65,7 @@ const content = {
       heading: 'Skąd biorą się dane',
       body: [
         'Specyfikacje podstawek i chipsetów pochodzą z publicznej dokumentacji producentów. Zakresy wydajności chłodzenia to realistyczne widełki dla całej klasy konstrukcji, a nie liczby z materiałów marketingowych pojedynczego produktu.',
-        'Ceny są orientacyjne i każda ma przy sobie datę sprawdzenia. Cena bez daty jest gorsza niż brak ceny, bo po cichu się dezaktualizuje, a czytelnik nie ma jak tego zauważyć.',
+        'Ceny części pochodzą z polskich sklepów i porównywarek. Przy każdej zapisujemy źródła i dzień sprawdzenia, a strona pokazuje tę datę i ostrzega, gdy ma ponad 45 dni. Cena bez daty jest gorsza niż brak ceny, bo po cichu się dezaktualizuje, a czytelnik nie ma jak tego zauważyć. Gdy nie ma wiarygodnej ceny, piszemy to wprost zamiast zgadywać.',
         'Opinie społeczności są cytowane wraz ze źródłem i datą zebrania. Nie są zweryfikowanymi recenzjami — to pojedyncze głosy z publicznych forów i tak należy je traktować.',
       ],
     },
@@ -90,7 +90,7 @@ const content = {
       heading: 'Where the data comes from',
       body: [
         'Socket and chipset specifications come from published vendor documentation. Cooling performance ranges are realistic bands for a whole class of design, not headline figures from one product page.',
-        'Prices are indicative and each carries the date it was checked. A price without a date is worse than no price at all — it goes stale quietly and the reader has no way to tell.',
+        'Part prices come from Polish shops and comparison sites. Each one is stored with its sources and the day it was checked, and the site shows that date and warns once it is more than 45 days old. A price without a date is worse than no price at all — it goes stale quietly and the reader has no way to tell. Where there is no credible price, we say so instead of guessing.',
         'Community opinions are quoted with their source and collection date. They are not verified reviews; they are individual voices from public forums and should be read as such.',
       ],
     },

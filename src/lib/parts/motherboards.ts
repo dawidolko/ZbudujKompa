@@ -1,4 +1,5 @@
 import type { Motherboard } from './types.ts';
+import { priceOf } from './pricing.ts';
 
 /**
  * Motherboard catalogue.
@@ -30,7 +31,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 130,
     wifi: false,
     tier: 'budget',
-    price: { min: 550, max: 700 },
+    price: priceOf('b650m-pro-rs'),
     url: 'https://www.asrock.com/support/',
     note: {
       pl: 'Tania płyta Micro-ATX na AM5 z sensownym zasilaniem. Do procesorów do 120 W w zupełności wystarczy.',
@@ -50,8 +51,8 @@ export const motherboards: Motherboard[] = [
     m2Slots: 3,
     vrmRating: 180,
     wifi: true,
-    tier: 'midrange',
-    price: { min: 850, max: 1100 },
+    tier: 'value',
+    price: priceOf('tuf-b650-plus-wifi'),
     url: 'https://www.asus.com/support/',
     note: {
       pl: 'Solidne zasilanie, Wi-Fi i trzy gniazda M.2. Najrozsądniejszy wybór do większości zestawów AM5.',
@@ -72,7 +73,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 260,
     wifi: true,
     tier: 'high',
-    price: { min: 1500, max: 1900 },
+    price: priceOf('x870e-tomahawk'),
     url: 'https://www.msi.com/support',
     note: {
       pl: 'Flagowy chipset z USB4 i czterema gniazdami M.2. Sensowny tylko przy wielu dyskach albo procesorze 170 W i wyżej.',
@@ -92,8 +93,8 @@ export const motherboards: Motherboard[] = [
     m2Slots: 2,
     vrmRating: 150,
     wifi: true,
-    tier: 'midrange',
-    price: { min: 950, max: 1200 },
+    tier: 'value',
+    price: priceOf('b650i-lightning'),
     note: {
       pl: 'Mini-ITX na AM5 z dobrym zasilaniem. W tym formacie wybór jest wąski, więc płytę dobiera się pierwszą.',
       en: 'Mini-ITX on AM5 with good power delivery. The choice in this form factor is narrow, so the board is picked first.',
@@ -114,7 +115,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 140,
     wifi: false,
     tier: 'budget',
-    price: { min: 400, max: 550 },
+    price: priceOf('b550-a-pro'),
     note: {
       pl: 'Sprawdzony średniak na AM4 z PCIe 4.0 dla karty i głównego dysku, bez wentylatora na mostku.',
       en: 'A proven AM4 mid-range board with PCIe 4.0 for the GPU and primary drive, and no chipset fan.',
@@ -135,7 +136,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 280,
     wifi: true,
     tier: 'high',
-    price: { min: 1400, max: 1800 },
+    price: priceOf('z890-tomahawk'),
     note: {
       pl: 'Pełne podkręcanie pamięci i mocne zasilanie — potrzebne przy Core Ultra 7 i wyżej, które pod obciążeniem pobierają 250 W.',
       en: 'Full memory overclocking and strong power delivery — needed for Core Ultra 7 and above, which draw 250 W under load.',
@@ -155,7 +156,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 160,
     wifi: true,
     tier: 'value',
-    price: { min: 750, max: 950 },
+    price: priceOf('b860m-pro'),
     note: {
       pl: 'Rozsądna płyta pod Core Ultra 5. Podkręcanie pamięci bez OC procesora, co przy modelach nie-K niczego nie odbiera.',
       en: 'A sensible board for Core Ultra 5. Memory overclocking without CPU overclocking, which costs nothing on non-K models.',
@@ -176,7 +177,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 150,
     wifi: false,
     tier: 'budget',
-    price: { min: 450, max: 620 },
+    price: priceOf('prime-b760m-a'),
     note: {
       pl: 'Tania płyta pod Intela z sześcioma portami SATA — dobra podstawa serwera domowego.',
       en: 'An inexpensive Intel board with six SATA ports — a good foundation for a home server.',
@@ -196,7 +197,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 140,
     wifi: false,
     tier: 'budget',
-    price: { min: 400, max: 550 },
+    price: priceOf('b760m-ddr4'),
     note: {
       pl: 'Wersja DDR4 tej samej płyty. Sensowna wyłącznie wtedy, gdy masz już moduły DDR4 i chcesz je przenieść.',
       en: 'The DDR4 version of the same board. Only sensible if you already own DDR4 modules and want to carry them over.',
@@ -216,7 +217,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 300,
     wifi: true,
     tier: 'flagship',
-    price: { min: 2400, max: 3000 },
+    price: priceOf('x670e-hero'),
     note: {
       pl: 'Flagowa płyta z pięcioma gniazdami M.2 i bardzo mocnym zasilaniem. Sensowna wyłącznie przy ekstremalnym podkręcaniu.',
       en: 'A flagship board with five M.2 slots and very strong power delivery. Only sensible for extreme overclocking.',
@@ -236,7 +237,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 220,
     wifi: true,
     tier: 'midrange',
-    price: { min: 1000, max: 1250 },
+    price: priceOf('b850-tomahawk'),
     note: {
       pl: 'Nowszy chipset B850 z solidnym zasilaniem. Udźwignie nawet 9950X bez obniżania taktowań.',
       en: 'The newer B850 chipset with solid power delivery. It handles even a 9950X without reducing clocks.',
@@ -256,7 +257,7 @@ export const motherboards: Motherboard[] = [
     vrmRating: 90,
     wifi: false,
     tier: 'budget',
-    price: { min: 350, max: 460 },
+    price: priceOf('a620m-hdv'),
     note: {
       pl: 'Najtańsze wejście w AM5. Słabe zasilanie i dwa sloty pamięci — wyłącznie do procesorów 65 W.',
       en: 'The cheapest way onto AM5. Weak power delivery and two memory slots — for 65 W processors only.',
@@ -275,8 +276,8 @@ export const motherboards: Motherboard[] = [
     m2Slots: 4,
     vrmRating: 270,
     wifi: true,
-    tier: 'high',
-    price: { min: 1300, max: 1650 },
+    tier: 'midrange',
+    price: priceOf('z890-aorus-elite'),
     note: {
       pl: 'Alternatywa dla Tomahawka na tej samej podstawce. Cztery gniazda M.2 i Wi-Fi 7.',
       en: 'An alternative to the Tomahawk on the same socket. Four M.2 slots and Wi-Fi 7.',

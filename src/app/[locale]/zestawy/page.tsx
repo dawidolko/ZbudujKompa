@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
-import { builds } from '@/lib/builds';
+import { builds, buildTotal } from '@/lib/builds';
+import { formatPriceRange } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
@@ -75,11 +77,24 @@ export default async function BuildsPage({ params }: { params: Promise<Params> }
                 }
                 title={t(build.name, typedLocale)}
                 description={t(build.tagline, typedLocale)}
-                footer={<p className="text-xs text-text-muted">{t(build.useCase, typedLocale)}</p>}
+                footer={
+                  <>
+                    <p className="text-sm font-semibold text-accent-fg">
+                      {formatPriceRange(buildTotal(build), typedLocale)}
+                    </p>
+                    {buildTotal(build).unpriced > 0 ? (
+                      <p className="text-xs text-text-muted">
+                        {dict.prices.unpriced(buildTotal(build).unpriced)}
+                      </p>
+                    ) : null}
+                    <p className="mt-1 text-xs text-text-muted">{t(build.useCase, typedLocale)}</p>
+                  </>
+                }
               />
             </li>
           ))}
         </ul>
+        <PriceChecked locale={typedLocale} className="mt-4" />
       </section>
     </>
   );

@@ -1,16 +1,17 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
+import { PriceChecked } from '@/components/parts/PriceChecked';
 import { Badge } from '@/components/ui/Badge';
 import { CheckIcon, DownloadIcon, ExternalIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
-import { formatPriceRange, selectionPrice } from '@/lib/parts';
+import { catalogueCheckedAt, formatPriceRange, selectionPrice } from '@/lib/parts';
 import type { BuildSelection } from '@/lib/parts';
 import { selectionParts } from '@/lib/parts/autopick';
 import { partQuery, shopsFor } from '@/lib/shops';
 import { site } from '@/lib/site';
-import { cn, t } from '@/lib/utils';
+import { cn, formatCalendarDate, t } from '@/lib/utils';
 
 /**
  * Shopping list for a configured build.
@@ -64,7 +65,9 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
       ),
       '',
       `${dict.configurator.estimatedPrice}: ${formatPriceRange(price, locale)}`,
+      ...(price.unpriced > 0 ? [dict.prices.unpriced(price.unpriced)] : []),
       '',
+      dict.prices.checked(formatCalendarDate(catalogueCheckedAt(), locale)),
       dict.shopping.priceDisclaimer,
       site.url,
     ];
@@ -100,9 +103,14 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
     <section className="rounded-lg border border-border-subtle bg-surface p-5 md:p-6">
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="font-display text-lg font-bold text-text-primary">{dict.shopping.title}</h2>
-        <p className="font-display text-lg font-bold text-accent-fg">
-          {formatPriceRange(price, locale)}
-        </p>
+        <div className="text-right">
+          <p className="font-display text-lg font-bold text-accent-fg">
+            {formatPriceRange(price, locale)}
+          </p>
+          {price.unpriced > 0 ? (
+            <p className="text-xs text-text-muted">{dict.prices.unpriced(price.unpriced)}</p>
+          ) : null}
+        </div>
       </div>
 
       {/* ---- The parts, each with its own shop links ---- */}
@@ -186,7 +194,8 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
         ))}
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-text-muted">{dict.shopping.disclaimer}</p>
+      <PriceChecked locale={locale} className="mt-4" />
+      <p className="mt-1 text-xs leading-relaxed text-text-muted">{dict.shopping.disclaimer}</p>
 
       {/* Opening tabs is otherwise silent for a screen reader. */}
       <p aria-live="polite" className="sr-only">

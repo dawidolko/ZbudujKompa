@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { priceQueries } from './parts/price-queries.ts';
 import type { Part } from './parts/types.ts';
 
 /**
@@ -68,7 +69,7 @@ export const shops: Shop[] = [
   {
     id: 'ceneo',
     name: 'Ceneo',
-    locales: ['pl'],
+    locales: ['pl', 'en'],
     search: (query) => `https://www.ceneo.pl/;szukaj-${encodeURIComponent(query)}`,
     note: {
       pl: 'Porównywarka cen — pokazuje tę samą część w wielu sklepach naraz.',
@@ -76,8 +77,18 @@ export const shops: Shop[] = [
     },
   },
   {
+    id: 'allegro',
+    name: 'Allegro',
+    locales: ['pl', 'en'],
+    search: (query) => `https://allegro.pl/listing?string=${encodeURIComponent(query)}`,
+    note: {
+      pl: 'Największy polski serwis z ofertami, także od mniejszych sprzedawców.',
+      en: 'The largest Polish marketplace, including offers from smaller sellers.',
+    },
+  },
+  {
     id: 'amazon',
-    name: 'Amazon',
+    name: 'Amazon.pl',
     locales: ['pl', 'en'],
     search: (query) => `https://www.amazon.pl/s?k=${encodeURIComponent(query)}`,
     note: {
@@ -102,12 +113,18 @@ export function shopsFor(locale: Locale): Shop[] {
   return shops.filter((shop) => shop.locales.includes(locale));
 }
 
+/** The sites that show a part's current price, for the live price links. */
+export function priceShops(): Shop[] {
+  return shops.filter((shop) => ['ceneo', 'allegro', 'amazon'].includes(shop.id));
+}
+
 /**
  * The search query for a part.
  *
- * Brand and model together, because a model name alone is ambiguous across
- * manufacturers — several vendors sell something called "Pro B650M".
+ * Taken from the table the price refresh uses, so a shop link and an automated
+ * search look for the same thing. Brand and model together otherwise, because a
+ * model name alone is ambiguous across manufacturers.
  */
 export function partQuery(part: Part): string {
-  return `${part.brand} ${part.name}`;
+  return priceQueries[part.id]?.q ?? `${part.brand} ${part.name}`;
 }

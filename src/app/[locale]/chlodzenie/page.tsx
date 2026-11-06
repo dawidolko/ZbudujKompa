@@ -3,12 +3,14 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles } from '@/lib/cooling';
+import { formatPriceRange, priceRecord } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
-import { formatPrice, t } from '@/lib/utils';
+import { t } from '@/lib/utils';
 
 type Params = { locale: string };
 
@@ -105,14 +107,18 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
                     {profile.noise.min}–{profile.noise.max} dBA
                   </td>
                   <td className="px-4 py-3 text-text-secondary">
-                    {formatPrice(profile.price.min * 100, typedLocale)} –{' '}
-                    {formatPrice(profile.price.max * 100, typedLocale)}
+                    {formatPriceRange(profile.price, typedLocale)}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <PriceChecked
+          locale={typedLocale}
+          checkedAt={priceRecord('class:air-tower-single').checkedAt}
+          className="mt-3"
+        />
       </section>
 
       {/* ---- Cards ---- */}

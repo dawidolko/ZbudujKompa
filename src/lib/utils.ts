@@ -55,6 +55,23 @@ export function formatDate(iso: string, locale: Locale): string {
 }
 
 /**
+ * Formats a stored calendar day, e.g. "2026-11-06" -> "6 listopada 2026".
+ *
+ * UTC, because the value is a day rather than a moment: read in a local zone it
+ * would land on the day before for anyone west of Greenwich, and differ between
+ * the exported page and the browser that hydrates it. British English keeps the
+ * day first, where a bare "en" tag would write "November 6, 2026".
+ */
+export function formatCalendarDate(day: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(Date.parse(`${day}T00:00:00Z`));
+}
+
+/**
  * Turns arbitrary text into a URL-safe, anchor-safe slug.
  *
  * Polish diacritics are transliterated rather than stripped, so "chłodzenie"

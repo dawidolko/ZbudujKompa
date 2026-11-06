@@ -3,6 +3,8 @@
 import { useDeferredValue, useId, useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { ExternalIcon, SearchIcon } from '@/components/ui/Icon';
+import { PriceChecked } from '@/components/parts/PriceChecked';
+import { PartPriceDetails } from '@/components/parts/PriceLinks';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { allParts, categoryOrder, formatPriceRange, priceTiers } from '@/lib/parts';
@@ -49,6 +51,11 @@ export function PartBrowser({ locale }: { locale: Locale }) {
     /* Sorting by the lower bound of the band rather than a midpoint: it is the
        number a reader compares when asking "what can I afford". */
     return [...filtered].sort((a, b) => {
+      /* A part with no price has no place on a price scale, so it goes last
+         in either direction instead of leading as the cheapest thing listed. */
+      if (sort !== 'name' && Boolean(a.price.unavailable) !== Boolean(b.price.unavailable)) {
+        return a.price.unavailable ? 1 : -1;
+      }
       if (sort === 'price-asc') return a.price.min - b.price.min;
       if (sort === 'price-desc') return b.price.min - a.price.min;
       return `${a.brand} ${a.name}`.localeCompare(`${b.brand} ${b.name}`, locale);
@@ -146,6 +153,8 @@ export function PartBrowser({ locale }: { locale: Locale }) {
         </div>
       </div>
 
+      <PriceChecked locale={locale} className="mb-4" />
+
       {/* ---- Results ---- */}
       {results.length === 0 ? (
         <p className="text-sm text-text-secondary">{dict.parts.noResults}</p>
@@ -219,6 +228,8 @@ function PartCard({ part, locale }: { part: Part; locale: Locale }) {
       <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">
         {t(part.note, locale)}
       </p>
+
+      <PartPriceDetails part={part} locale={locale} className="mt-3" />
 
       {/* A visual bar for the categories that have a comparable score. Bars
           are paired with the number, because a bar alone cannot be read out. */}

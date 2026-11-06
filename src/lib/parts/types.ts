@@ -14,16 +14,30 @@ export type PartCategory =
   'cpu' | 'motherboard' | 'ram' | 'gpu' | 'storage' | 'psu' | 'case' | 'cooler';
 
 /**
- * Price band rather than a price.
+ * Where a part sits in its category's price range.
  *
- * Hardware pricing moves weekly and a static site cannot track it. A band
- * survives that: "this is a mid-range card" stays true far longer than any
- * figure, and it is what a reader actually needs when budgeting.
+ * Tiers compare parts within one category, so they are set by hand against the
+ * checked prices in `prices.ts` and have to be reassessed when those move.
  */
 export type PriceTier = 'budget' | 'value' | 'midrange' | 'high' | 'flagship';
 
-/** Approximate PLN range each tier represents, per category. */
-export type PriceRange = { min: number; max: number };
+/**
+ * A price band in PLN.
+ *
+ * The site has no server and no shop feed, so a band cannot be live. It runs
+ * from the lowest sensible new price to the typical price at a mainstream shop
+ * on the day in `prices.ts`, which is what the interface shows beside it. The
+ * figures come from `prices.ts` alone; `scripts/update-prices.mjs` can refresh
+ * them once a SerpApi key is configured.
+ *
+ * `unavailable` marks a part with no credible price. Its `min` and `max` are
+ * zero only to keep the shape, so anything that sums or compares has to check
+ * the flag first.
+ */
+export type PriceRange = { min: number; max: number; unavailable?: boolean };
+
+/** A sum of bands, with how many parts could not be included in it. */
+export type PriceTotal = PriceRange & { unpriced: number };
 
 /** Fields shared by every part. */
 type PartBase = {
@@ -32,7 +46,7 @@ type PartBase = {
   name: string;
   brand: string;
   tier: PriceTier;
-  /** Indicative street price band in PLN, for budget planning only. */
+  /** Checked Polish retail band in PLN, read from `prices.ts`. */
   price: PriceRange;
   /** One sentence on who this part is for. */
   note: Localized;

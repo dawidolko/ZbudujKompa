@@ -1,4 +1,5 @@
 import type { Ram } from './types.ts';
+import { priceOf } from './pricing.ts';
 
 /**
  * Memory catalogue.
@@ -26,7 +27,7 @@ export const ramKits: Ram[] = [
     casLatency: 30,
     height: 33,
     tier: 'midrange',
-    price: { min: 420, max: 560 },
+    price: priceOf('flare-x5-32-6000'),
     url: 'https://www.gskill.com/qvl',
     note: {
       pl: 'DDR5-6000 CL30 to punkt, w którym Ryzen pracuje najefektywniej — powyżej kontroler przechodzi w tryb dzielony i wydajność spada.',
@@ -45,7 +46,7 @@ export const ramKits: Ram[] = [
     casLatency: 36,
     height: 35,
     tier: 'value',
-    price: { min: 350, max: 470 },
+    price: priceOf('fury-beast-32-6000'),
     url: 'https://www.kingston.com/en/memory/search',
     note: {
       pl: 'Tańsza alternatywa o nieco wyższych opóźnieniach. Różnica w grach jest w granicach kilku procent.',
@@ -64,7 +65,7 @@ export const ramKits: Ram[] = [
     casLatency: 30,
     height: 34,
     tier: 'high',
-    price: { min: 850, max: 1150 },
+    price: priceOf('vengeance-64-6000'),
     url: 'https://www.corsair.com/memory-finder',
     note: {
       pl: '64 GB to próg, powyżej którego montaż 4K i render przestają korzystać z pliku wymiany. Do grania to nadmiar.',
@@ -83,7 +84,7 @@ export const ramKits: Ram[] = [
     casLatency: 36,
     height: 35,
     tier: 'budget',
-    price: { min: 200, max: 280 },
+    price: priceOf('fury-beast-16-5600'),
     note: {
       pl: '16 GB to dziś praktyczne minimum. Wystarczy do grania, ale przy przeglądarce w tle bywa ciasno.',
       en: '16 GB is the practical minimum today. Enough for gaming, though it gets tight with a browser open alongside.',
@@ -101,7 +102,7 @@ export const ramKits: Ram[] = [
     casLatency: 36,
     height: 22,
     tier: 'midrange',
-    price: { min: 400, max: 540 },
+    price: priceOf('lowprofile-32-6000'),
     note: {
       pl: 'Niskie moduły bez wysokich radiatorów — konieczne pod dużymi wieżami powietrznymi i w obudowach Mini-ITX.',
       en: 'Low-profile modules without tall heat spreaders — necessary under large air towers and in Mini-ITX cases.',
@@ -120,7 +121,7 @@ export const ramKits: Ram[] = [
     casLatency: 16,
     height: 35,
     tier: 'budget',
-    price: { min: 170, max: 250 },
+    price: priceOf('fury-beast-16-3200'),
     note: {
       pl: 'DDR4-3200 CL16 to najlepszy punkt cenowy dla Ryzenów na AM4 — szybsze moduły dają już niewiele.',
       en: 'DDR4-3200 CL16 is the sweet spot for Ryzen on AM4 — faster kits add very little beyond it.',
@@ -138,7 +139,7 @@ export const ramKits: Ram[] = [
     casLatency: 18,
     height: 34,
     tier: 'value',
-    price: { min: 300, max: 400 },
+    price: priceOf('vengeance-32-3600'),
     note: {
       pl: 'Rozsądne 32 GB na DDR4. Przy AM4 warto sprawdzić, czy płyta utrzyma 3600 MHz stabilnie.',
       en: 'A sensible 32 GB on DDR4. On AM4 it is worth checking the board holds 3600 MHz stably.',
@@ -156,7 +157,7 @@ export const ramKits: Ram[] = [
     casLatency: 32,
     height: 44,
     tier: 'high',
-    price: { min: 520, max: 680 },
+    price: priceOf('trident-z5-32-6400'),
     note: {
       pl: 'Wyższa częstotliwość przy tym samym opóźnieniu 10 ns. Wysokie radiatory — sprawdź prześwit pod chłodzeniem.',
       en: 'A higher frequency at the same 10 ns latency. Tall heat spreaders — check the clearance under your cooler.',
@@ -174,7 +175,7 @@ export const ramKits: Ram[] = [
     casLatency: 32,
     height: 40,
     tier: 'high',
-    price: { min: 900, max: 1200 },
+    price: priceOf('fury-renegade-64-6000'),
     note: {
       pl: 'Dwa moduły po 32 GB zamiast czterech po 16 — kontroler pamięci utrzyma profil znacznie łatwiej.',
       en: 'Two 32 GB modules rather than four 16 GB ones — the memory controller holds the profile far more easily.',
@@ -191,11 +192,11 @@ export const ramKits: Ram[] = [
     speed: 5600,
     casLatency: 46,
     height: 31,
-    tier: 'budget',
-    price: { min: 270, max: 360 },
+    tier: 'value',
+    price: priceOf('crucial-32-5600'),
     note: {
-      pl: 'Najtańsze 32 GB DDR5. Wysokie opóźnienia — 16,4 ns wobec 10 ns w zestawach z profilem — ale do pracy biurowej bez znaczenia.',
-      en: 'The cheapest 32 GB of DDR5. High latency — 16.4 ns against 10 ns for rated kits — but immaterial for office work.',
+      pl: 'Jedno z tańszych 32 GB DDR5. Wysokie opóźnienia — 16,4 ns wobec 10 ns w zestawach z profilem — ale do pracy biurowej bez znaczenia.',
+      en: 'One of the cheaper 32 GB DDR5 kits. High latency — 16.4 ns against 10 ns for rated kits — but immaterial for office work.',
     },
   },
 ];

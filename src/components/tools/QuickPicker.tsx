@@ -1,12 +1,14 @@
 'use client';
 
 import { useId, useMemo, useState } from 'react';
+import { PriceChecked } from '@/components/parts/PriceChecked';
 import { Badge } from '@/components/ui/Badge';
 import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { localePath } from '@/i18n/config';
-import { cpus, gpus, coolers, formatPriceRange } from '@/lib/parts';
+import { cpus, gpus, coolers, formatPriceRange, sumPrices } from '@/lib/parts';
+import type { PriceRange } from '@/lib/parts';
 import { cn, t } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -105,18 +107,10 @@ export function QuickPicker({ locale }: { locale: Locale }) {
           <p className="flex flex-wrap gap-2 border-t border-border-subtle pt-4">
             <Badge tone="brand">{dict.quickPicker.total}</Badge>
             <span className="font-display font-bold text-text-primary">
-              {formatPriceRange(
-                suggestion.parts.reduce(
-                  (total, part) => ({
-                    min: total.min + part.price.min,
-                    max: total.max + part.price.max,
-                  }),
-                  { min: 0, max: 0 },
-                ),
-                locale,
-              )}
+              {formatPriceRange(sumPrices(suggestion.parts.map((part) => part.price)), locale)}
             </span>
           </p>
+          <PriceChecked locale={locale} />
         </div>
 
         <Link
@@ -236,7 +230,7 @@ function suggest(useCase: UseCase, budget: Budget, priority: Priority) {
     id: string;
     brand: string;
     name: string;
-    price: { min: number; max: number };
+    price: PriceRange;
   }[];
 
   return { parts, reasoning: buildReasoning(useCase, budget, priority) };

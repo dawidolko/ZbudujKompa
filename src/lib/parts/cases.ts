@@ -1,4 +1,5 @@
 import type { Case } from './types.ts';
+import { priceOf } from './pricing.ts';
 
 /**
  * Case catalogue.
@@ -25,7 +26,7 @@ export const cases: Case[] = [
     volume: 45,
     driveBays: 4,
     tier: 'budget',
-    price: { min: 250, max: 330 },
+    price: priceOf('focus-2'),
     url: 'https://www.fractal-design.com/products/cases/',
     note: {
       pl: 'Dobry przepływ powietrza i sensowne prowadzenie kabli w niskiej cenie. Przy pierwszym składaniu to realna różnica.',
@@ -45,7 +46,7 @@ export const cases: Case[] = [
     volume: 47,
     driveBays: 4,
     tier: 'midrange',
-    price: { min: 550, max: 700 },
+    price: priceOf('north'),
     note: {
       pl: 'Dobry przepływ powietrza w obudowie, która nie wygląda jak sprzęt gamingowy. Front z drewna zamiast szkła i podświetlenia.',
       en: 'Good airflow in a case that does not look like gaming hardware. A wooden front instead of glass and lighting.',
@@ -64,7 +65,7 @@ export const cases: Case[] = [
     volume: 60,
     driveBays: 14,
     tier: 'high',
-    price: { min: 800, max: 1000 },
+    price: priceOf('define-7'),
     note: {
       pl: 'Wyciszona obudowa mieszcząca do czternastu dysków. Najlepszy wybór pod serwer domowy stojący w mieszkaniu.',
       en: 'A sound-dampened case holding up to fourteen drives. The best choice for a home server living in a flat.',
@@ -83,7 +84,7 @@ export const cases: Case[] = [
     volume: 11,
     driveBays: 2,
     tier: 'high',
-    price: { min: 750, max: 950 },
+    price: priceOf('terra'),
     note: {
       pl: 'Poniżej 11 litrów przy zachowaniu miejsca na kartę dwuslotową. Chłodzenie wyłącznie niskoprofilowe — maksymalnie 77 mm.',
       en: 'Under 11 litres while still fitting a two-slot card. Low-profile cooling only — 77 mm maximum.',
@@ -102,7 +103,7 @@ export const cases: Case[] = [
     volume: 19,
     driveBays: 6,
     tier: 'value',
-    price: { min: 400, max: 520 },
+    price: priceOf('node-304'),
     note: {
       pl: 'Kompaktowa obudowa mieszcząca sześć dysków i zwykły zasilacz ATX — rzadkie połączenie w tym formacie.',
       en: 'A compact case that holds six drives and a standard ATX supply — a rare combination in this form factor.',
@@ -120,8 +121,8 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 55,
     driveBays: 4,
-    tier: 'midrange',
-    price: { min: 480, max: 620 },
+    tier: 'value',
+    price: priceOf('lancool-216'),
     url: 'https://lian-li.com/product-category/pc-cases/',
     note: {
       pl: 'Dwa wentylatory 160 mm z przodu w zestawie. Mieści najdłuższe karty graficzne, łącznie z RTX 5090.',
@@ -141,7 +142,7 @@ export const cases: Case[] = [
     volume: 46,
     driveBays: 4,
     tier: 'budget',
-    price: { min: 300, max: 400 },
+    price: priceOf('pop-air'),
     note: {
       pl: 'Siatkowy front i miejsce na długie karty w niskiej cenie. Dobra baza dla pierwszego zestawu.',
       en: 'A mesh front and room for long cards at a low price. A good base for a first build.',
@@ -160,7 +161,7 @@ export const cases: Case[] = [
     volume: 58,
     driveBays: 4,
     tier: 'high',
-    price: { min: 700, max: 900 },
+    price: priceOf('o11-dynamic-evo'),
     note: {
       pl: 'Obudowa pokazowa z dwiema szybami. Mieści trzy chłodnice 360 mm, ale front bez wlotów oznacza gorszy przepływ na chłodzeniu powietrznym.',
       en: 'A showcase case with two glass panels. It fits three 360 mm radiators, though a front without intakes means poorer airflow on air cooling.',
@@ -179,7 +180,7 @@ export const cases: Case[] = [
     volume: 39,
     driveBays: 4,
     tier: 'midrange',
-    price: { min: 480, max: 620 },
+    price: priceOf('meshify-2-compact'),
     note: {
       pl: 'Mniejsza obudowa ATX z bardzo dobrym przepływem. Dobry kompromis, gdy pełna wieża jest za duża na biurko.',
       en: 'A smaller ATX case with very good airflow. A good compromise when a full tower is too much for a desk.',
@@ -198,7 +199,7 @@ export const cases: Case[] = [
     volume: 13,
     driveBays: 2,
     tier: 'flagship',
-    price: { min: 1100, max: 1400 },
+    price: priceOf('ncase-m1'),
     note: {
       pl: 'Kultowa obudowa Mini-ITX mieszcząca pełnowymiarową kartę i chłodnicę 240 mm w trzynastu litrach. Montaż wymaga cierpliwości.',
       en: 'A cult Mini-ITX case fitting a full-size card and a 240 mm radiator in thirteen litres. Assembly takes patience.',

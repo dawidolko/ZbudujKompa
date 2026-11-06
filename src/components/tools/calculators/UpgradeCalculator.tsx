@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { PriceChecked } from '@/components/parts/PriceChecked';
 import { Badge } from '@/components/ui/Badge';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
@@ -24,6 +25,10 @@ export function UpgradeCalculator({ locale }: { locale: Locale }) {
   const [toId, setToId] = useState('rtx-5070-ti');
 
   const pool = kind === 'gpu' ? gpus : cpus;
+
+  /* Any part can be the one you own, but the cost comes from the new part, so
+     the target has to be something with a price. */
+  const targets = pool.filter((part) => !part.price.unavailable);
 
   const result = useMemo(() => {
     const from = pool.find((part) => part.id === fromId);
@@ -74,7 +79,10 @@ export function UpgradeCalculator({ locale }: { locale: Locale }) {
             label={dict.calc.upgrade.to}
             value={toId}
             onChange={setToId}
-            options={pool.map((part) => ({ value: part.id, label: `${part.brand} ${part.name}` }))}
+            options={targets.map((part) => ({
+              value: part.id,
+              label: `${part.brand} ${part.name}`,
+            }))}
           />
         </>
       }
@@ -95,6 +103,7 @@ export function UpgradeCalculator({ locale }: { locale: Locale }) {
             value={`${result.pointsPerHundred.toFixed(2)} pkt`}
             emphasis
           />
+          <PriceChecked locale={locale} className="mt-3" />
         </>
       }
       explanation={dict.calc.upgrade.explanation}

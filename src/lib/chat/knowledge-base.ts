@@ -96,8 +96,8 @@ export const knowledgeBase: KnowledgeEntry[] = [
       en: ['ram', 'memory', 'ddr4', 'ddr5', 'expo', 'xmp', 'dual channel', 'gigabyte'],
     },
     answer: {
-      pl: '16 GB to dziś praktyczne minimum do grania, 32 GB to rozsądny standard. Zawsze montuj dwa moduły zamiast jednego — tryb dwukanałowy daje realny wzrost wydajności. Moduły wkładaj w sloty drugi i czwarty od procesora. Po złożeniu koniecznie włącz profil EXPO (AMD) lub XMP (Intel) w BIOS-ie, inaczej pamięć pracuje znacznie wolniej niż deklaruje opakowanie.',
-      en: '16 GB is the practical minimum for gaming today and 32 GB is a sensible standard. Always fit two modules rather than one — dual channel gives a real performance gain. Use the second and fourth slots from the CPU. Once built, enable the EXPO (AMD) or XMP (Intel) profile in the BIOS, or the memory will run far slower than the box claims.',
+      pl: '16 GB to dziś praktyczne minimum do grania, 32 GB to rozsądny standard, choć od 2026 roku pamięć bardzo zdrożała, więc przed wyborem pojemności sprawdź ceny. Zawsze montuj dwa moduły zamiast jednego — tryb dwukanałowy daje realny wzrost wydajności. Moduły wkładaj w sloty drugi i czwarty od procesora. Po złożeniu koniecznie włącz profil EXPO (AMD) lub XMP (Intel) w BIOS-ie, inaczej pamięć pracuje znacznie wolniej niż deklaruje opakowanie.',
+      en: '16 GB is the practical minimum for gaming today and 32 GB is a sensible standard, although memory has become far more expensive since 2026, so check prices before choosing a capacity. Always fit two modules rather than one — dual channel gives a real performance gain. Use the second and fourth slots from the CPU. Once built, enable the EXPO (AMD) or XMP (Intel) profile in the BIOS, or the memory will run far slower than the box claims.',
     },
     links: [
       {

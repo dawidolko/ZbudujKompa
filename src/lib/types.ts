@@ -1,3 +1,4 @@
+import type { PriceRange } from './parts/types.ts';
 import type { Locale } from '@/i18n/config';
 
 /** A string that exists in every supported locale. */
@@ -63,8 +64,8 @@ export type CoolingProfile = {
   wattage: { min: number; max: number };
   /** Typical noise level under load, in dBA. */
   noise: { min: number; max: number };
-  /** Approximate price band in PLN. */
-  price: { min: number; max: number };
+  /** Checked price band in PLN for the class, read from `parts/prices.ts`. */
+  price: PriceRange;
   pros: Localized<string[]>;
   cons: Localized<string[]>;
   /** Who should pick this, stated plainly. */
@@ -81,9 +82,9 @@ export type ComponentKind =
 /**
  * A part in a reference build.
  *
- * Deliberately carries no price. Hardware pricing moves weekly, and a figure
- * baked into a static build goes stale without any signal to the reader — the
- * rationale for choosing the part is what stays true.
+ * Deliberately carries no price. Hardware pricing moves weekly, so a build reads
+ * its figures from the catalogue's dated records instead of keeping its own
+ * copy, which would go stale without any signal to the reader.
  */
 export type BuildPart = {
   kind: ComponentKind;
@@ -99,7 +100,6 @@ export type Build = {
   name: Localized;
   tagline: Localized;
   description: Localized;
-  /** Total indicative cost in grosz, derived from the parts. */
   vendor: Vendor;
   socketSlug: string;
   /** Intended use, e.g. 1440p gaming or video editing. */

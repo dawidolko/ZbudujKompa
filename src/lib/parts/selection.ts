@@ -1,4 +1,5 @@
-import type { Part, PartCategory, BuildSelection } from './types.ts';
+import type { Part, PartCategory, BuildSelection, PriceTotal } from './types.ts';
+import { sumPrices } from './pricing.ts';
 import { cpus } from './cpus.ts';
 import { gpus } from './gpus.ts';
 import { motherboards } from './motherboards.ts';
@@ -48,14 +49,8 @@ export function resolveSelection(selection: BuildSelection): Partial<Record<Part
 }
 
 /** Sums the price bands of a selection into a total range. */
-export function selectionPrice(selection: BuildSelection): { min: number; max: number } {
-  let min = 0;
-  let max = 0;
-  for (const part of Object.values(resolveSelection(selection))) {
-    min += part.price.min;
-    max += part.price.max;
-  }
-  return { min, max };
+export function selectionPrice(selection: BuildSelection): PriceTotal {
+  return sumPrices(Object.values(resolveSelection(selection)).map((part) => part.price));
 }
 
 /**

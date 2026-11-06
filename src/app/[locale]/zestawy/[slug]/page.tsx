@@ -4,11 +4,14 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { Callout } from '@/components/ui/Callout';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { PriceChecked } from '@/components/parts/PriceChecked';
+import { PriceLinks } from '@/components/parts/PriceLinks';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
-import { builds, getBuild } from '@/lib/builds';
+import { builds, buildPartPrice, buildPartQueries, buildTotal, getBuild } from '@/lib/builds';
+import { formatPriceRange } from '@/lib/parts';
 import { getSocket } from '@/lib/sockets';
 import { getOpinionsFor } from '@/lib/knowledge';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
@@ -63,6 +66,7 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
 
   const typedLocale: Locale = locale;
   const dict = getDictionary(typedLocale);
+  const total = buildTotal(build);
 
   const socket = getSocket(build.socketSlug);
   const buildOpinions = getOpinionsFor(build.slug);
@@ -140,13 +144,26 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
       <section className="container-page pb-12">
         <SectionHeading title={dict.builds.parts} id="parts" />
 
+        <div className="mb-4">
+          <p className="text-xs tracking-wide text-text-muted uppercase">
+            {dict.configurator.estimatedPrice}
+          </p>
+          <p className="font-display text-xl font-bold text-text-primary">
+            {formatPriceRange(total, typedLocale)}
+          </p>
+          {total.unpriced > 0 ? (
+            <p className="text-xs text-text-muted">{dict.prices.unpriced(total.unpriced)}</p>
+          ) : null}
+          <PriceChecked locale={typedLocale} className="mt-1" />
+        </div>
+
         <div
           tabIndex={0}
           role="region"
           aria-label={dict.builds.parts}
           className="overflow-x-auto rounded-lg border border-border-subtle"
         >
-          <table className="w-full min-w-[48rem] border-collapse text-sm">
+          <table className="w-full min-w-[60rem] border-collapse text-sm">
             <caption className="sr-only">
               {dict.builds.parts} — {t(build.name, typedLocale)}
             </caption>
@@ -157,6 +174,9 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
                 </th>
                 <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                   {dict.builds.part}
+                </th>
+                <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
+                  {dict.builds.price}
                 </th>
                 <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                   {dict.builds.why}
@@ -176,6 +196,21 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
                     {dict.builds.kind[part.kind]}
                   </th>
                   <td className="px-4 py-3 font-medium text-text-primary">{part.name}</td>
+                  <td className="px-4 py-3 text-text-secondary">
+                    <p className="font-semibold whitespace-nowrap text-text-primary">
+                      {formatPriceRange(buildPartPrice(part), typedLocale)}
+                    </p>
+                    {buildPartQueries(part).map((query) => (
+                      <PriceLinks
+                        key={query}
+                        query={query}
+                        name={query}
+                        locale={typedLocale}
+                        className="mt-1"
+                        bare
+                      />
+                    ))}
+                  </td>
                   <td className="px-4 py-3 text-text-secondary">
                     {t(part.rationale, typedLocale)}
                   </td>

@@ -1,12 +1,13 @@
+import { priceOf } from './parts/pricing.ts';
 import type { CoolingProfile, CoolingType } from './types';
 
 /**
  * Cooling catalogue.
  *
  * Split by class rather than by product, because the choice a reader actually
- * faces is "air or AiO", not "which of these forty coolers". Wattage, noise and
- * price figures are realistic bands for the class, not headline numbers from a
- * single product's marketing page.
+ * faces is "air or AiO", not "which of these forty coolers". Wattage and noise
+ * figures are realistic bands for the class, not headline numbers from a single
+ * product's marketing page. Prices come from the dated records in `parts/prices.ts`.
  */
 export const coolingProfiles: CoolingProfile[] = [
   {
@@ -26,7 +27,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 95, max: 180 },
     noise: { min: 24, max: 34 },
-    price: { min: 120, max: 320 },
+    price: priceOf('class:air-tower-single'),
     pros: {
       pl: [
         'Brak pompy — nic nie może przeciec ani się zatrzeć',
@@ -75,7 +76,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 180, max: 280 },
     noise: { min: 26, max: 36 },
-    price: { min: 300, max: 600 },
+    price: priceOf('class:air-tower-dual'),
     pros: {
       pl: [
         'Wydajność porównywalna z chłodnicą 240 mm',
@@ -122,7 +123,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 150, max: 250 },
     noise: { min: 28, max: 38 },
-    price: { min: 350, max: 700 },
+    price: priceOf('class:aio-240'),
     pros: {
       pl: [
         'Wolna przestrzeń wokół gniazda procesora',
@@ -169,7 +170,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 220, max: 350 },
     noise: { min: 30, max: 40 },
-    price: { min: 550, max: 1200 },
+    price: priceOf('class:aio-360'),
     pros: {
       pl: [
         'Najwyższa wydajność wśród gotowych zestawów',
@@ -216,7 +217,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 300, max: 800 },
     noise: { min: 20, max: 32 },
-    price: { min: 1800, max: 6000 },
+    price: priceOf('class:custom-loop'),
     pros: {
       pl: [
         'Najwyższa możliwa wydajność chłodzenia',

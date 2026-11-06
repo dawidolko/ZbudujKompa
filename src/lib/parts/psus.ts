@@ -1,4 +1,5 @@
 import type { Psu } from './types.ts';
+import { priceOf } from './pricing.ts';
 
 /**
  * Power supply catalogue.
@@ -25,7 +26,7 @@ export const psus: Psu[] = [
     atx31: true,
     warranty: 3,
     tier: 'budget',
-    price: { min: 220, max: 300 },
+    price: priceOf('system-power-10-550'),
     url: 'https://www.bequiet.com/en/powersupply',
     note: {
       pl: 'Najtańszy zasilacz, który można polecić bez zastrzeżeń. Kable nieodłączane, więc nadmiar trzeba gdzieś schować.',
@@ -44,7 +45,7 @@ export const psus: Psu[] = [
     atx31: true,
     warranty: 10,
     tier: 'value',
-    price: { min: 380, max: 480 },
+    price: priceOf('pure-power-12m-650'),
     note: {
       pl: 'Dziesięcioletnia gwarancja i pełna modularność. Rozsądny wybór do zestawu ze średnią kartą graficzną.',
       en: 'A ten-year warranty and full modularity. A sensible choice for a build with a mid-range graphics card.',
@@ -62,7 +63,7 @@ export const psus: Psu[] = [
     atx31: true,
     warranty: 10,
     tier: 'midrange',
-    price: { min: 450, max: 570 },
+    price: priceOf('pure-power-12m-750'),
     note: {
       pl: '750 W z zapasem na skoki poboru współczesnych kart. Najczęściej wybierana moc do zestawów do 1440p.',
       en: '750 W with headroom for the transient spikes modern cards produce. The most commonly chosen wattage for 1440p builds.',
@@ -79,8 +80,8 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'high',
-    price: { min: 620, max: 780 },
+    tier: 'midrange',
+    price: priceOf('focus-gx-850'),
     url: 'https://seasonic.com/wattage-calculator/',
     note: {
       pl: 'Bardzo dobra jednostka do mocnych zestawów. 850 W daje zapas przy jednoczesnym obciążeniu procesora i karty.',
@@ -99,7 +100,7 @@ export const psus: Psu[] = [
     atx31: true,
     warranty: 12,
     tier: 'flagship',
-    price: { min: 1400, max: 1800 },
+    price: priceOf('prime-tx-1000'),
     note: {
       pl: 'Konieczny przy RTX 5090. Sprawność Titanium i dwunastoletnia gwarancja, ale cena odpowiada jakości.',
       en: 'Required for an RTX 5090. Titanium efficiency and a twelve-year warranty, though the price matches the quality.',
@@ -116,8 +117,8 @@ export const psus: Psu[] = [
     formFactor: 'SFX',
     atx31: true,
     warranty: 7,
-    tier: 'high',
-    price: { min: 850, max: 1050 },
+    tier: 'midrange',
+    price: priceOf('sf750'),
     note: {
       pl: 'Format SFX do obudów Mini-ITX. Zasilacze SFX są droższe od ATX o tej samej mocy — to koszt małych wymiarów.',
       en: 'The SFX form factor for Mini-ITX cases. SFX units cost more than ATX of the same wattage — that is the price of small.',
@@ -134,8 +135,8 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'high',
-    price: { min: 580, max: 730 },
+    tier: 'value',
+    price: priceOf('rm850x'),
     note: {
       pl: 'Cicha jednostka z wentylatorem zatrzymującym się przy niskim obciążeniu. Popularny wybór do zestawów z mocną kartą.',
       en: 'A quiet unit whose fan stops at low load. A popular choice for builds with a powerful card.',
@@ -152,8 +153,8 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'high',
-    price: { min: 780, max: 980 },
+    tier: 'value',
+    price: priceOf('mpg-a1000g'),
     note: {
       pl: 'Tysiąc watów ze złączem 12V-2x6 w zestawie. Sensowna podstawa pod najmocniejsze karty bez przepłacania za Titanium.',
       en: 'A thousand watts with a 12V-2x6 connector included. A sensible base for the fastest cards without paying for Titanium.',
@@ -170,8 +171,8 @@ export const psus: Psu[] = [
     formFactor: 'SFX',
     atx31: true,
     warranty: 10,
-    tier: 'flagship',
-    price: { min: 1000, max: 1250 },
+    tier: 'midrange',
+    price: priceOf('sf850l'),
     note: {
       pl: 'Format SFX-L jest nieco dłuższy od zwykłego SFX, więc mieści cichszy wentylator. Sprawdź, czy obudowa go przyjmie.',
       en: 'The SFX-L form factor is slightly longer than plain SFX, which makes room for a quieter fan. Check the case accepts it.',
@@ -189,7 +190,7 @@ export const psus: Psu[] = [
     atx31: true,
     warranty: 3,
     tier: 'budget',
-    price: { min: 300, max: 390 },
+    price: priceOf('system-power-11-750'),
     note: {
       pl: 'Tania jednostka o rozsądnej mocy. Kable nieodłączane i tylko trzyletnia gwarancja — to widać w cenie.',
       en: 'An inexpensive unit at a sensible wattage. Non-modular with a three-year warranty — and the price reflects it.',

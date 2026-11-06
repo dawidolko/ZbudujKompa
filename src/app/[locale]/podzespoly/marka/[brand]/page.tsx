@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { Badge } from '@/components/ui/Badge';
+import { PriceChecked } from '@/components/parts/PriceChecked';
+import { PartPriceDetails } from '@/components/parts/PriceLinks';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { categoryOrder, formatPriceRange, getBrands, getPartsByBrand } from '@/lib/parts';
@@ -84,6 +86,10 @@ export default async function BrandPage({ params }: { params: Promise<Params> })
       />
       <PageHeader eyebrow={dict.parts.filterBrand} title={name} lead={dict.parts.brandLead(name)} />
 
+      <div className="container-page pb-6">
+        <PriceChecked locale={typedLocale} />
+      </div>
+
       {byCategory.map((group) => (
         <section key={group.category} className="container-page pb-12">
           <SectionHeading
@@ -104,6 +110,7 @@ export default async function BrandPage({ params }: { params: Promise<Params> })
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">
                     {t(part.note, typedLocale)}
                   </p>
+                  <PartPriceDetails part={part} locale={typedLocale} className="mt-3" />
                 </article>
               </li>
             ))}
