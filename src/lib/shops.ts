@@ -46,8 +46,8 @@ export const shops: Shop[] = [
     locales: ['pl'],
     search: (query) =>
       /*
-       * Morele zmienilo format adresu wyszukiwarki — stara sciezka
-       * z filtrami pozycyjnymi (/0/0/,,,,/1/) zwraca dzis 404.
+       * Morele changed its search URL format: the old path with positional filters
+       * (/0/0/,,,,/1/) now returns 404.
        */
       `https://www.morele.net/wyszukiwarka/?q=${encodeURIComponent(query)}`,
     note: {
@@ -59,7 +59,9 @@ export const shops: Shop[] = [
     id: 'proline',
     name: 'Proline',
     locales: ['pl'],
-    /* Proline obsluguje wyszukiwanie parametrem `s` w korzeniu, a nie /szukaj. */
+    /*
+     * Proline handles search with the `s` parameter at the root, not at /szukaj.
+     */
     search: (query) => `https://www.proline.pl/?s=${encodeURIComponent(query)}`,
     note: {
       pl: 'Sklep skierowany do składających komputery, dobra dostępność części.',
