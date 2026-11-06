@@ -78,6 +78,14 @@ ZbudujKompa reads as a hardware service manual printed on a circuit board. That 
 
 ---
 
+## 🎬 Demo
+
+<p align="center">
+  <img src="docs/readme/demo.webp" alt="ZbudujKompa: a short scroll through the live site" width="80%">
+</p>
+
+---
+
 ## 🛠️ Technology Stack
 
 ### Frontend
