@@ -1,22 +1,12 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
-import { catalogueCheckedAt, isPriceStale } from '@/lib/parts';
+import { catalogueCheckedAt } from '@/lib/parts';
 import { cn, formatCalendarDate } from '@/lib/utils';
+import { usePriceStale } from './usePriceStale';
 
-/* The clock never notifies anyone, so there is nothing to subscribe to. */
-const subscribe = () => () => {};
-
-/**
- * The date prices were checked, and a warning once that date is too old.
- *
- * The page is exported at build time, so the age can only be judged in the
- * reader's browser: a value computed during the build would be frozen on the
- * day of the deploy. The server snapshot is "not stale", which keeps the markup
- * identical on hydration, and the warning appears straight after it.
- */
+/** The date prices were checked, and why they are hidden once it is too old. */
 export function PriceChecked({
   locale,
   checkedAt = catalogueCheckedAt(),
@@ -27,11 +17,7 @@ export function PriceChecked({
   className?: string;
 }) {
   const dict = getDictionary(locale);
-  const stale = useSyncExternalStore(
-    subscribe,
-    () => isPriceStale(checkedAt, Date.now()),
-    () => false,
-  );
+  const stale = usePriceStale(checkedAt);
 
   const date = formatCalendarDate(checkedAt, locale);
 

@@ -3,11 +3,12 @@ import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { Badge } from '@/components/ui/Badge';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PartPriceDetails } from '@/components/parts/PriceLinks';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { categoryOrder, formatPriceRange, getBrands, getPartsByBrand } from '@/lib/parts';
+import { categoryOrder, getBrands, getPartsByBrand } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { slugify, t } from '@/lib/utils';
 
@@ -104,9 +105,9 @@ export default async function BrandPage({ params }: { params: Promise<Params> })
                     <h3 className="font-display font-bold text-text-primary">{part.name}</h3>
                     <Badge tone="neutral">{dict.configurator.tier[part.tier]}</Badge>
                   </div>
-                  <p className="mt-1 text-sm font-semibold text-accent-fg">
-                    {formatPriceRange(part.price, typedLocale)}
-                  </p>
+                  <div className="mt-1 text-sm font-semibold text-accent-fg">
+                    <Price range={part.price} locale={typedLocale} />
+                  </div>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">
                     {t(part.note, typedLocale)}
                   </p>

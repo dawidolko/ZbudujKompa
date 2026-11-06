@@ -22,7 +22,13 @@ import { allParts } from '../src/lib/parts/selection.ts';
 import { autoPick } from '../src/lib/parts/autopick.ts';
 import { priceQueries } from '../src/lib/parts/price-queries.ts';
 import { priceRecords } from '../src/lib/parts/prices.ts';
-import { catalogueCheckedAt, isPriceStale, priceOf, sumPrices } from '../src/lib/parts/pricing.ts';
+import {
+  catalogueCheckedAt,
+  isPriceStale,
+  priceAgeScript,
+  priceOf,
+  sumPrices,
+} from '../src/lib/parts/pricing.ts';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -107,7 +113,7 @@ report(
   'the automatic build picked an unpriced part',
 );
 
-console.log('\nThe age warning');
+console.log('\nThe age limit');
 
 const day = 86_400_000;
 const checked = Date.parse('2026-11-06T00:00:00Z');
@@ -130,6 +136,27 @@ report(
       .sort()[0],
   'the catalogue date is the oldest automated one',
   'the catalogue date is not the oldest',
+);
+
+const summed = sumPrices([
+  { min: 1, max: 2, checkedAt: '2026-11-06' },
+  { min: 1, max: 2, checkedAt: '2026-09-01' },
+]);
+report(
+  summed.checkedAt === '2026-09-01',
+  'a total takes the oldest date among its parts',
+  `a total took ${summed.checkedAt}`,
+);
+report(
+  priceOf('rtx-5070').checkedAt === priceRecords['rtx-5070'].checkedAt,
+  'a price carries the date it was checked',
+  'a price lost its date',
+);
+report(
+  priceAgeScript().includes('data-price-date') &&
+    priceAgeScript().includes(`"${priceRecords['rtx-5070'].checkedAt}"`),
+  'the head script knows every check date',
+  'the head script is missing a check date',
 );
 
 console.log('\nReading a response');

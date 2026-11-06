@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { PriceChecked } from '@/components/parts/PriceChecked';
+import { usePriceStale } from '@/components/parts/usePriceStale';
 import { Badge } from '@/components/ui/Badge';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
@@ -25,6 +26,9 @@ export function UpgradeCalculator({ locale }: { locale: Locale }) {
   const [toId, setToId] = useState('rtx-5070-ti');
 
   const pool = kind === 'gpu' ? gpus : cpus;
+
+  /* The score still needs a cost once prices expire, so it stays, as an estimate. */
+  const stale = usePriceStale();
 
   /* Any part can be the one you own, but the cost comes from the new part, so
      the target has to be something with a price. */
@@ -97,7 +101,12 @@ export function UpgradeCalculator({ locale }: { locale: Locale }) {
               {result.worthwhile ? dict.calc.upgrade.worth : dict.calc.upgrade.notWorth}
             </Badge>
           </div>
-          <ResultRow label={dict.calc.upgrade.cost} value={`~${Math.round(result.cost)} zł`} />
+          <ResultRow
+            label={
+              stale ? `${dict.calc.upgrade.cost} (${dict.prices.estimate})` : dict.calc.upgrade.cost
+            }
+            value={`~${Math.round(result.cost)} zł`}
+          />
           <ResultRow
             label={dict.calc.upgrade.perHundred}
             value={`${result.pointsPerHundred.toFixed(2)} pkt`}

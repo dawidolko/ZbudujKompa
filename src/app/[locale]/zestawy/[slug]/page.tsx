@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { Callout } from '@/components/ui/Callout';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PriceLinks } from '@/components/parts/PriceLinks';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
@@ -11,7 +12,6 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { builds, buildPartPrice, buildPartQueries, buildTotal, getBuild } from '@/lib/builds';
-import { formatPriceRange } from '@/lib/parts';
 import { getSocket } from '@/lib/sockets';
 import { getOpinionsFor } from '@/lib/knowledge';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
@@ -148,9 +148,9 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
           <p className="text-xs tracking-wide text-text-muted uppercase">
             {dict.configurator.estimatedPrice}
           </p>
-          <p className="font-display text-xl font-bold text-text-primary">
-            {formatPriceRange(total, typedLocale)}
-          </p>
+          <div className="font-display text-xl font-bold text-text-primary">
+            <Price range={total} locale={typedLocale} />
+          </div>
           {total.unpriced > 0 ? (
             <p className="text-xs text-text-muted">{dict.prices.unpriced(total.unpriced)}</p>
           ) : null}
@@ -197,9 +197,9 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
                   </th>
                   <td className="px-4 py-3 font-medium text-text-primary">{part.name}</td>
                   <td className="px-4 py-3 text-text-secondary">
-                    <p className="font-semibold whitespace-nowrap text-text-primary">
-                      {formatPriceRange(buildPartPrice(part), typedLocale)}
-                    </p>
+                    <div className="font-semibold text-text-primary">
+                      <Price range={buildPartPrice(part)} locale={typedLocale} />
+                    </div>
                     {buildPartQueries(part).map((query) => (
                       <PriceLinks
                         key={query}

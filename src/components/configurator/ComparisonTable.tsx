@@ -1,13 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PriceLinks } from '@/components/parts/PriceLinks';
 import { Badge } from '@/components/ui/Badge';
 import { CloseIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
-import { formatPriceRange, getPartsByCategory } from '@/lib/parts';
+import { getPartsByCategory } from '@/lib/parts';
 import type { Part, PartCategory } from '@/lib/parts';
 import { partQuery } from '@/lib/shops';
 import { cn, t } from '@/lib/utils';
@@ -177,7 +178,7 @@ function comparisonRows(
   const rows: Row[] = [
     {
       label: dict.comparison.price,
-      values: parts.map((part) => formatPriceRange(part.price, locale)),
+      values: parts.map((part) => <Price key={part.id} range={part.price} locale={locale} />),
     },
     {
       label: dict.prices.liveLabel,

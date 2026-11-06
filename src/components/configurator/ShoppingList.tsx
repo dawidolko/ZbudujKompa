@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
-import { Badge } from '@/components/ui/Badge';
+import { usePriceStale } from '@/components/parts/usePriceStale';
 import { CheckIcon, DownloadIcon, ExternalIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
@@ -30,6 +31,7 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
   const parts = useMemo(() => selectionParts(selection), [selection]);
   const price = useMemo(() => selectionPrice(selection), [selection]);
   const availableShops = useMemo(() => shopsFor(locale), [locale]);
+  const stale = usePriceStale(price.checkedAt);
 
   /**
    * Opens one search tab per part.
@@ -59,20 +61,26 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
       dict.shopping.listTitle,
       '='.repeat(dict.shopping.listTitle.length),
       '',
-      ...parts.map(
-        (part) =>
-          `- ${dict.configurator.category[part.category]}: ${part.brand} ${part.name}  (${formatPriceRange(part.price, locale)})`,
-      ),
+      /* The list is a copy that outlives the page, so it follows the same rule
+         as the page: an expired figure does not get written into it. */
+      ...parts.map((part) => {
+        const line = `- ${dict.configurator.category[part.category]}: ${part.brand} ${part.name}`;
+        return stale ? line : `${line}  (${formatPriceRange(part.price, locale)})`;
+      }),
       '',
-      `${dict.configurator.estimatedPrice}: ${formatPriceRange(price, locale)}`,
-      ...(price.unpriced > 0 ? [dict.prices.unpriced(price.unpriced)] : []),
-      '',
-      dict.prices.checked(formatCalendarDate(catalogueCheckedAt(), locale)),
+      ...(stale
+        ? [dict.prices.checkCurrent]
+        : [
+            `${dict.configurator.estimatedPrice}: ${formatPriceRange(price, locale)}`,
+            ...(price.unpriced > 0 ? [dict.prices.unpriced(price.unpriced)] : []),
+            '',
+            dict.prices.checked(formatCalendarDate(catalogueCheckedAt(), locale)),
+          ]),
       dict.shopping.priceDisclaimer,
       site.url,
     ];
     return lines.join('\n');
-  }, [parts, price, locale, dict]);
+  }, [parts, price, locale, dict, stale]);
 
   const copy = useCallback(async () => {
     try {
@@ -104,10 +112,10 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="font-display text-lg font-bold text-text-primary">{dict.shopping.title}</h2>
         <div className="text-right">
-          <p className="font-display text-lg font-bold text-accent-fg">
-            {formatPriceRange(price, locale)}
-          </p>
-          {price.unpriced > 0 ? (
+          <div className="font-display text-lg font-bold text-accent-fg">
+            <Price range={price} locale={locale} />
+          </div>
+          {price.unpriced > 0 && !stale ? (
             <p className="text-xs text-text-muted">{dict.prices.unpriced(price.unpriced)}</p>
           ) : null}
         </div>
@@ -127,9 +135,14 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
                 </p>
                 <p className="text-xs text-text-muted">{t(part.note, locale)}</p>
               </div>
-              <Badge tone="neutral" className="shrink-0">
-                {formatPriceRange(part.price, locale)}
-              </Badge>
+              <div className="shrink-0 text-xs font-medium text-text-secondary">
+                <Price
+                  range={part.price}
+                  locale={locale}
+                  query={partQuery(part)}
+                  name={`${part.brand} ${part.name}`}
+                />
+              </div>
             </div>
 
             <ul className="mt-2 flex flex-wrap gap-1.5">

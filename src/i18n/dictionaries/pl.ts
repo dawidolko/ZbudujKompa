@@ -733,7 +733,9 @@ export const pl: Dictionary = {
   prices: {
     checked: (date: string) => `Ceny sprawdzone ${date}`,
     stale: (date: string) =>
-      `Ceny sprawdzone ${date}. Mogą być już nieaktualne, więc sprawdź je w sklepie.`,
+      `Ostatnie sprawdzenie cen: ${date}. To zbyt dawno, więc ukrywamy je, dopóki nie zostaną sprawdzone ponownie.`,
+    checkCurrent: 'Sprawdź aktualną cenę',
+    estimate: 'szacunek z zapisanych cen',
     liveLabel: 'Aktualne oferty',
     linkLabel: (shop: string, part: string) =>
       `Aktualne oferty na ${part} w serwisie ${shop} (otwiera się w nowej karcie)`,
@@ -745,6 +747,8 @@ export const pl: Dictionary = {
     },
   },
   autoPick: {
+    overBudgetStale:
+      'Według zapisanych, szacunkowych cen ten zestaw przekracza podany budżet. Sprawdź aktualne ceny, zanim coś kupisz.',
     overBudget: (cost: string) =>
       `Ten zestaw kosztuje około ${cost}, czyli więcej niż podany budżet. Zwiększ budżet albo wymień droższe części ręcznie.`,
     title: 'Dobierz za mnie',

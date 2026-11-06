@@ -3,11 +3,12 @@
 import { useDeferredValue, useId, useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { ExternalIcon, SearchIcon } from '@/components/ui/Icon';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PartPriceDetails } from '@/components/parts/PriceLinks';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
-import { allParts, categoryOrder, formatPriceRange, priceTiers } from '@/lib/parts';
+import { allParts, categoryOrder, priceTiers } from '@/lib/parts';
 import type { Part, PartCategory, PriceTier } from '@/lib/parts';
 import { cn, t } from '@/lib/utils';
 
@@ -221,9 +222,9 @@ function PartCard({ part, locale }: { part: Part; locale: Locale }) {
         <Badge tone="brand">{dict.configurator.tier[part.tier]}</Badge>
       </div>
 
-      <p className="font-display mt-2 text-lg font-bold text-accent-fg">
-        {formatPriceRange(part.price, locale)}
-      </p>
+      <div className="font-display mt-2 text-lg font-bold text-accent-fg">
+        <Price range={part.price} locale={locale} />
+      </div>
 
       <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">
         {t(part.note, locale)}

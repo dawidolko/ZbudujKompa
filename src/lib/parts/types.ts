@@ -32,9 +32,9 @@ export type PriceTier = 'budget' | 'value' | 'midrange' | 'high' | 'flagship';
  *
  * `unavailable` marks a part with no credible price. Its `min` and `max` are
  * zero only to keep the shape, so anything that sums or compares has to check
- * the flag first.
+ * the flag first. `checkedAt` is what decides whether the band may be shown.
  */
-export type PriceRange = { min: number; max: number; unavailable?: boolean };
+export type PriceRange = { min: number; max: number; unavailable?: boolean; checkedAt?: string };
 
 /** A sum of bands, with how many parts could not be included in it. */
 export type PriceTotal = PriceRange & { unpriced: number };

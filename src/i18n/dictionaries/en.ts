@@ -711,7 +711,9 @@ export const en = {
   prices: {
     checked: (date: string) => `Prices checked ${date}`,
     stale: (date: string) =>
-      `Prices checked ${date}. They may be out of date, so check them at the shop.`,
+      `Prices last checked ${date}. That is too long ago, so they stay hidden until they are checked again.`,
+    checkCurrent: 'Check current price',
+    estimate: 'estimate from stored prices',
     liveLabel: 'Current offers',
     linkLabel: (shop: string, part: string) =>
       `Current offers for ${part} on ${shop} (opens in a new tab)`,
@@ -723,6 +725,8 @@ export const en = {
     },
   },
   autoPick: {
+    overBudgetStale:
+      'By the stored estimates this build goes over your budget. Check current prices before buying anything.',
     overBudget: (cost: string) =>
       `This build comes to about ${cost}, above your budget. Raise the budget or swap the pricier parts by hand.`,
     title: 'Pick one for me',

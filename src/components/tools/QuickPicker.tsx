@@ -1,13 +1,14 @@
 'use client';
 
 import { useId, useMemo, useState } from 'react';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { Badge } from '@/components/ui/Badge';
 import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { localePath } from '@/i18n/config';
-import { cpus, gpus, coolers, formatPriceRange, sumPrices } from '@/lib/parts';
+import { cpus, gpus, coolers, sumPrices } from '@/lib/parts';
 import type { PriceRange } from '@/lib/parts';
 import { cn, t } from '@/lib/utils';
 import Link from 'next/link';
@@ -92,24 +93,32 @@ export function QuickPicker({ locale }: { locale: Locale }) {
             {suggestion.parts.map((part) => (
               <li key={part.id} className="flex items-start gap-2">
                 <CheckIcon className="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true" />
-                <span className="min-w-0">
+                <div className="min-w-0">
                   <span className="block text-sm font-semibold text-text-primary">
                     {part.brand} {part.name}
                   </span>
-                  <span className="text-xs text-text-muted">
-                    {formatPriceRange(part.price, locale)}
-                  </span>
-                </span>
+                  <div className="text-xs text-text-muted">
+                    <Price
+                      range={part.price}
+                      locale={locale}
+                      query={`${part.brand} ${part.name}`}
+                      name={`${part.brand} ${part.name}`}
+                    />
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
 
-          <p className="flex flex-wrap gap-2 border-t border-border-subtle pt-4">
+          <div className="flex flex-wrap gap-2 border-t border-border-subtle pt-4">
             <Badge tone="brand">{dict.quickPicker.total}</Badge>
-            <span className="font-display font-bold text-text-primary">
-              {formatPriceRange(sumPrices(suggestion.parts.map((part) => part.price)), locale)}
-            </span>
-          </p>
+            <div className="font-display font-bold text-text-primary">
+              <Price
+                range={sumPrices(suggestion.parts.map((part) => part.price))}
+                locale={locale}
+              />
+            </div>
+          </div>
           <PriceChecked locale={locale} />
         </div>
 

@@ -3,13 +3,13 @@ import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { ComparisonTable } from '@/components/configurator/ComparisonTable';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PartPriceDetails } from '@/components/parts/PriceLinks';
-import { Badge } from '@/components/ui/Badge';
 import { ExternalIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { categoryOrder, formatPriceRange, getPartsByCategory, priceTiers } from '@/lib/parts';
+import { categoryOrder, getPartsByCategory, priceTiers } from '@/lib/parts';
 import type { PartCategory } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
@@ -107,7 +107,9 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
                     <h3 className="font-display font-bold text-text-primary">
                       {part.brand} {part.name}
                     </h3>
-                    <Badge tone="brand">{formatPriceRange(part.price, typedLocale)}</Badge>
+                    <div className="text-sm font-semibold text-accent-fg">
+                      <Price range={part.price} locale={typedLocale} />
+                    </div>
                   </div>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">
                     {t(part.note, typedLocale)}

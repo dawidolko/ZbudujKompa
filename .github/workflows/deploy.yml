@@ -13,6 +13,11 @@ on:
     branches: [main]
   # Allows a manual redeploy from the Actions tab without an empty commit.
   workflow_dispatch:
+  # The export is judged against its own build date, so a daily rebuild takes
+  # expired prices out of the served HTML, not only out of a browser that runs
+  # the page's scripts.
+  schedule:
+    - cron: '41 3 * * *'
 
 # Least privilege: the workflow pushes the built site to a branch, so writing
 # repository contents is all it needs.
@@ -131,6 +136,11 @@ jobs:
 
       - name: Accessibility panel tests
         run: npm run test:a11ypanel
+        env:
+          TEST_BASE_URL: http://localhost:3000
+
+      - name: Price age tests
+        run: npm run test:priceage
         env:
           TEST_BASE_URL: http://localhost:3000
 

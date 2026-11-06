@@ -1,12 +1,15 @@
 'use client';
 
 import { useId, useMemo, useState } from 'react';
+import { Price } from '@/components/parts/Price';
+import { usePriceStale } from '@/components/parts/usePriceStale';
 import { Badge } from '@/components/ui/Badge';
 import { CheckIcon, ChevronDownIcon } from '@/components/ui/Icon';
 import type { Locale } from '@/i18n/config';
 import { getDictionary } from '@/i18n';
-import { formatPriceRange, getPartsByCategory } from '@/lib/parts';
+import { getPartsByCategory } from '@/lib/parts';
 import type { Part, PartCategory, PriceTier } from '@/lib/parts';
+import { partQuery } from '@/lib/shops';
 import { cn, t } from '@/lib/utils';
 
 /**
@@ -66,9 +69,14 @@ export function PartPicker({
             {chosen ? `${chosen.brand} ${chosen.name}` : dict.configurator.notChosen}
           </p>
           {chosen ? (
-            <p className="mt-0.5 text-xs text-text-muted">
-              {formatPriceRange(chosen.price, locale)}
-            </p>
+            <div className="mt-0.5 text-xs text-text-muted">
+              <Price
+                range={chosen.price}
+                locale={locale}
+                query={partQuery(chosen)}
+                name={`${chosen.brand} ${chosen.name}`}
+              />
+            </div>
           ) : null}
         </div>
 
@@ -215,9 +223,7 @@ function PartOption({
           <span className="font-semibold text-text-primary">
             {part.brand} {part.name}
           </span>
-          <span className="text-xs font-medium text-accent-fg">
-            {formatPriceRange(part.price, locale)}
-          </span>
+          <OptionPrice part={part} locale={locale} />
         </span>
 
         <span className="mt-1 block text-xs leading-relaxed text-text-secondary">
@@ -229,6 +235,26 @@ function PartOption({
         </span>
       </span>
     </label>
+  );
+}
+
+/**
+ * The price inside an option.
+ *
+ * An option is a label, which can hold neither a list nor a second control, so
+ * the expired state is words alone. Choosing the part brings up its live links.
+ */
+function OptionPrice({ part, locale }: { part: Part; locale: Locale }) {
+  const stale = usePriceStale(part.price.checkedAt);
+  if (stale && !part.price.unavailable) {
+    return (
+      <span className="text-xs font-medium text-accent-fg">
+        {getDictionary(locale).prices.checkCurrent}
+      </span>
+    );
+  }
+  return (
+    <Price range={part.price} locale={locale} className="text-xs font-medium text-accent-fg" />
   );
 }
 

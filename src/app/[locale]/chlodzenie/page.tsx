@@ -3,12 +3,13 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles } from '@/lib/cooling';
-import { formatPriceRange, priceRecord } from '@/lib/parts';
+import { priceRecord } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
@@ -107,7 +108,11 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
                     {profile.noise.min}–{profile.noise.max} dBA
                   </td>
                   <td className="px-4 py-3 text-text-secondary">
-                    {formatPriceRange(profile.price, typedLocale)}
+                    <Price
+                      range={profile.price}
+                      locale={typedLocale}
+                      query={t(profile.name, typedLocale)}
+                    />
                   </td>
                 </tr>
               ))}

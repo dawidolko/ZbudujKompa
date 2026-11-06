@@ -4,6 +4,7 @@ import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import '../globals.css';
 import { themeInitScript } from '@/lib/theme';
 import { a11yInitScript } from '@/lib/accessibility';
+import { priceAgeScript } from '@/lib/parts/pricing';
 import { ThemeScript } from '@/components/layout/ThemeScript';
 import { AccessibilityPanel } from '@/components/layout/AccessibilityPanel';
 import { A11yScript } from '@/components/layout/A11yScript';
@@ -141,6 +142,8 @@ export default async function LocaleLayout({
             reader who has enlarged the text never sees it at the default size
             first — the flash matters most to exactly those readers. */}
         <script dangerouslySetInnerHTML={{ __html: a11yInitScript }} />
+        {/* Hides prices past their age limit before anything is painted. */}
+        <script dangerouslySetInnerHTML={{ __html: priceAgeScript() }} />
       </head>
       <body className="flex min-h-dvh flex-col">
         {/* Re-applies the theme after a client-side navigation, which is where

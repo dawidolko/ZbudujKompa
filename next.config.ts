@@ -8,6 +8,9 @@ import type { NextConfig } from 'next';
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const nextConfig: NextConfig = {
+  /* The build's own clock, against which the static HTML judges price age. */
+  env: { NEXT_PUBLIC_BUILT_AT: process.env.NEXT_PUBLIC_BUILT_AT ?? String(Date.now()) },
+
   // Full static export - no server, runs anywhere including GitHub Pages.
   output: 'export',
 

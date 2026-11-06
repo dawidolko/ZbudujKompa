@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { Callout } from '@/components/ui/Callout';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -11,7 +12,7 @@ import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles, getCoolingProfile } from '@/lib/cooling';
 import { getOpinionsFor } from '@/lib/knowledge';
-import { formatPriceRange, priceRecord } from '@/lib/parts';
+import { priceRecord } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
@@ -117,7 +118,11 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
               {dict.cooling.price}
             </dt>
             <dd className="mt-1 font-display text-xl font-bold text-text-primary">
-              {formatPriceRange(profile.price, typedLocale)}
+              <Price
+                range={profile.price}
+                locale={typedLocale}
+                query={t(profile.name, typedLocale)}
+              />
             </dd>
           </div>
         </dl>

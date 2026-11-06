@@ -1,7 +1,9 @@
 'use client';
 
 import { useCallback, useId, useMemo, useState } from 'react';
+import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
+import { usePriceStale } from '@/components/parts/usePriceStale';
 import { AlertIcon, CheckIcon, InfoIcon, SparkIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
@@ -60,6 +62,7 @@ export function Configurator({ locale }: { locale: Locale }) {
 
   const report = useMemo(() => checkCompatibility(selection), [selection]);
   const price = useMemo(() => selectionPrice(selection), [selection]);
+  const stale = usePriceStale(price.checkedAt);
   const chosenCount = Object.keys(selection).length;
 
   /* Categories touched by a hard error, so the offending pickers can flag
@@ -147,7 +150,7 @@ export function Configurator({ locale }: { locale: Locale }) {
 
           {overBudget ? (
             <p role="status" className="mt-3 text-sm font-semibold text-text-primary">
-              {dict.autoPick.overBudget(overBudget)}
+              {stale ? dict.autoPick.overBudgetStale : dict.autoPick.overBudget(overBudget)}
             </p>
           ) : null}
 
@@ -198,9 +201,9 @@ export function Configurator({ locale }: { locale: Locale }) {
                       {dict.configurator.estimatedPrice}
                     </dt>
                     <dd className="font-display mt-0.5 text-xl font-bold text-text-primary">
-                      {formatPriceRange(price, locale)}
+                      <Price range={price} locale={locale} />
                     </dd>
-                    {price.unpriced > 0 ? (
+                    {price.unpriced > 0 && !stale ? (
                       <dd className="mt-0.5 text-xs text-text-muted">
                         {dict.prices.unpriced(price.unpriced)}
                       </dd>
