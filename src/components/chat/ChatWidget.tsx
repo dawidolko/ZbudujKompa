@@ -241,6 +241,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
           ref={transcriptRef}
           /* Polite rather than assertive: a new answer should be announced,
              but it must not interrupt someone mid-sentence in the input. */
+          role="log"
           aria-live="polite"
           aria-label={dict.chat.conversation}
           className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
