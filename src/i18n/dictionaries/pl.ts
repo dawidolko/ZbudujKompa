@@ -811,7 +811,6 @@ export const pl: Dictionary = {
       count === 1 ? 'Bez 1 części, która nie ma ceny' : `Bez ${count} części, które nie mają ceny`,
     reason: {
       discontinued: 'Wycofana ze sprzedaży, polskie sklepy już jej nie mają.',
-      unreleased: 'Nie trafiła do sprzedaży, więc nie ma ceny.',
       'no-offer': 'Nie znaleźliśmy wiarygodnej oferty w polskich sklepach.',
     },
   },

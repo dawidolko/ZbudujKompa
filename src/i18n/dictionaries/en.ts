@@ -789,7 +789,6 @@ export const en = {
       count === 1 ? 'Excludes 1 part with no price' : `Excludes ${count} parts with no price`,
     reason: {
       discontinued: 'Withdrawn from sale, and Polish shops no longer carry it.',
-      unreleased: 'Never went on sale, so it has no price.',
       'no-offer': 'We found no credible offer in Polish shops.',
     },
   },

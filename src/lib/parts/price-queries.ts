@@ -119,9 +119,7 @@ export const priceQueries: Record<string, PriceQuery> = {
   'rx-9060-xt': { q: 'Radeon RX 9060 XT 16GB', must: ['RX 9060 XT', '16GB'] },
   'rtx-5060': { q: 'GeForce RTX 5060 8GB', must: ['RTX 5060'], not: ['Ti'] },
   'rx-7600': { q: 'Radeon RX 7600 8GB', must: ['RX 7600'], not: ['XT'] },
-  'rtx-5070-ti-super': { q: 'GeForce RTX 5070 Ti SUPER', must: ['RTX 5070 Ti SUPER'] },
   'rx-9070': { q: 'Radeon RX 9070 16GB', must: ['RX 9070'], not: ['XT', 'GRE'] },
-  'rtx-5080-super': { q: 'GeForce RTX 5080 SUPER', must: ['RTX 5080 SUPER'] },
   'rtx-5050': { q: 'GeForce RTX 5050', must: ['RTX 5050'] },
   'arc-b580': { q: 'Intel Arc B580', must: ['Arc', 'B580'] },
 

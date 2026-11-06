@@ -823,26 +823,6 @@ export const priceRecords: Record<string, PriceRecord> = {
       },
     ],
   },
-  'rtx-5070-ti-super': {
-    min: null,
-    max: null,
-    reason: 'unreleased',
-    checkedAt: '2026-11-06',
-    sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-geforce+rtx+5070+ti',
-      },
-      {
-        label: 'PurePC',
-        url: 'https://www.purepc.pl/geforce-rtx-5000-super-na-ces-2027',
-      },
-      {
-        label: "Tom's Hardware",
-        url: 'https://www.tomshardware.com/pc-components/gpus/report-claims-nvidia-will-not-be-releasing-any-new-rtx-gaming-gpus-in-2026-rtx-60-series-likely-debuting-in-2028',
-      },
-    ],
-  },
   'rx-9070': {
     min: 3490,
     max: 3699,
@@ -855,26 +835,6 @@ export const priceRecords: Record<string, PriceRecord> = {
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=rx%209070%2016gb',
-      },
-    ],
-  },
-  'rtx-5080-super': {
-    min: null,
-    max: null,
-    reason: 'unreleased',
-    checkedAt: '2026-11-06',
-    sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-geforce+rtx+5080',
-      },
-      {
-        label: 'PurePC',
-        url: 'https://www.purepc.pl/geforce-rtx-5000-super-na-ces-2027',
-      },
-      {
-        label: "Tom's Hardware",
-        url: 'https://www.tomshardware.com/pc-components/gpus/report-claims-nvidia-will-not-be-releasing-any-new-rtx-gaming-gpus-in-2026-rtx-60-series-likely-debuting-in-2028',
       },
     ],
   },

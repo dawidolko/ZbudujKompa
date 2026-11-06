@@ -5,10 +5,9 @@ export type PriceSource = { label: string; url: string };
  * Why a part has no price.
  *
  * - `discontinued`: a shop marks it as withdrawn from sale.
- * - `unreleased`: announced or rumoured, but never on sale.
  * - `no-offer`: no credible new offer was found in Polish shops.
  */
-export type UnavailableReason = 'discontinued' | 'unreleased' | 'no-offer';
+export type UnavailableReason = 'discontinued' | 'no-offer';
 
 type PriceRecordBase = {
   /** The day the figures were checked, as YYYY-MM-DD. */
