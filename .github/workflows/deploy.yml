@@ -121,6 +121,9 @@ jobs:
       - name: Calculator formula tests
         run: npm run test:calc
 
+      - name: Price data and refresh tests
+        run: npm run test:prices
+
       - name: Theme persistence tests
         run: node tests/theme.spec.mjs
         env:

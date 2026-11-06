@@ -1,0 +1,70 @@
+name: Update prices
+
+on:
+  schedule:
+    - cron: '17 4 3 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: update-prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Refresh prices
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+    steps:
+      - name: Check for the API key
+        id: key
+        run: |
+          if [ -n "$SERPAPI_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::SERPAPI_KEY is not set, so prices were not refreshed."
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.key.outputs.present == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.key.outputs.present == 'true'
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.key.outputs.present == 'true'
+        run: npm ci --no-audit --no-fund
+
+      - name: Refresh prices
+        if: steps.key.outputs.present == 'true'
+        run: node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/update-prices.mjs
+
+      - name: Format the data module
+        if: steps.key.outputs.present == 'true'
+        run: npx prettier --write src/lib/parts/prices.ts
+
+      - name: Commit and deploy
+        if: steps.key.outputs.present == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- src/lib/parts/prices.ts; then
+            echo "No value changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/parts/prices.ts
+          git commit -m "chore: refresh part prices"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          gh workflow run deploy.yml --ref main
