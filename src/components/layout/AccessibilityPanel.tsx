@@ -120,7 +120,7 @@ export function AccessibilityPanel({ locale }: { locale: Locale }) {
         hidden={open}
         className={cn(
           'fixed bottom-4 left-4 z-50 inline-flex size-12 items-center justify-center',
-          'rounded-full border border-border-default bg-surface-raised text-text-primary shadow-lg',
+          'border border-border-strong bg-surface-raised text-text-primary shadow-lg',
           'transition-transform hover:scale-105 focus-ring md:bottom-6 md:left-6',
         )}
       >
@@ -158,9 +158,7 @@ export function AccessibilityPanel({ locale }: { locale: Locale }) {
         <div className="space-y-5 p-4">
           {/* ---- Text size ---- */}
           <section>
-            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.a11yPanel.textSize}
-            </h3>
+            <h3 className="mb-2 spec-label">{dict.a11yPanel.textSize}</h3>
             <div className="flex items-center gap-2">
               <button
                 ref={firstControlRef}
@@ -210,9 +208,7 @@ export function AccessibilityPanel({ locale }: { locale: Locale }) {
               Rendered as toggle buttons rather than a radio group because
               pressing the active one turns it off, which a radio cannot do. */}
           <section>
-            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.a11yPanel.contrast}
-            </h3>
+            <h3 className="mb-2 spec-label">{dict.a11yPanel.contrast}</h3>
             <div className="grid grid-cols-2 gap-2">
               {filters.map((filter) => {
                 const active = settings.filter === filter.value;
@@ -245,9 +241,7 @@ export function AccessibilityPanel({ locale }: { locale: Locale }) {
 
           {/* ---- Reading aids ---- */}
           <section>
-            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.a11yPanel.reading}
-            </h3>
+            <h3 className="mb-2 spec-label">{dict.a11yPanel.reading}</h3>
             <div className="space-y-2">
               <Toggle
                 label={dict.a11yPanel.underlineLinks}

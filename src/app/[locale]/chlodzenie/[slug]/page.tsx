@@ -98,25 +98,19 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
       <section className="container-page pb-12">
         <dl className="grid gap-px overflow-hidden rounded-lg border border-border-subtle bg-border-subtle sm:grid-cols-3">
           <div className="bg-surface p-4">
-            <dt className="text-xs tracking-wide text-text-muted uppercase">
-              {dict.cooling.wattage}
-            </dt>
+            <dt className="spec-label">{dict.cooling.wattage}</dt>
             <dd className="mt-1 font-display text-xl font-bold text-text-primary">
               {profile.wattage.min}–{profile.wattage.max} W
             </dd>
           </div>
           <div className="bg-surface p-4">
-            <dt className="text-xs tracking-wide text-text-muted uppercase">
-              {dict.cooling.noise}
-            </dt>
+            <dt className="spec-label">{dict.cooling.noise}</dt>
             <dd className="mt-1 font-display text-xl font-bold text-text-primary">
               {profile.noise.min}–{profile.noise.max} dBA
             </dd>
           </div>
           <div className="bg-surface p-4">
-            <dt className="text-xs tracking-wide text-text-muted uppercase">
-              {dict.cooling.price}
-            </dt>
+            <dt className="spec-label">{dict.cooling.price}</dt>
             <dd className="mt-1 font-display text-xl font-bold text-text-primary">
               <Price
                 range={profile.price}
@@ -147,7 +141,7 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
       {/* ---- Pros and cons ---- */}
       <section className="container-page pb-12">
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border border-border-subtle bg-surface p-5">
+          <div className="footprint p-5">
             <h2 className="mb-3 flex items-center gap-2 font-display text-lg font-bold text-text-primary">
               <CheckIcon className="size-5 text-success" aria-hidden="true" />
               {dict.cooling.pros}
@@ -162,7 +156,7 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
             </ul>
           </div>
 
-          <div className="rounded-lg border border-border-subtle bg-surface p-5">
+          <div className="footprint p-5">
             <h2 className="mb-3 flex items-center gap-2 font-display text-lg font-bold text-text-primary">
               <AlertIcon className="size-5 text-warning" aria-hidden="true" />
               {dict.cooling.cons}
@@ -192,7 +186,7 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
           <ul className="grid gap-4 md:grid-cols-2">
             {profileOpinions.map((opinion) => (
               <li key={opinion.id}>
-                <figure className="h-full rounded-lg border border-border-subtle bg-surface p-5">
+                <figure className="h-full footprint p-5">
                   <blockquote className="text-sm leading-relaxed text-text-secondary">
                     <p>„{t(opinion.quote, typedLocale)}”</p>
                   </blockquote>

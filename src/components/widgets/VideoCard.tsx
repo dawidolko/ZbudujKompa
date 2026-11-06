@@ -30,24 +30,26 @@ export function VideoCard({
   return (
     <article
       className={cn(
-        'hover-lift group relative isolate flex flex-col overflow-hidden rounded-lg border border-border-subtle bg-surface',
+        'group relative isolate flex flex-col overflow-hidden footprint',
         'focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[var(--focus-ring)]',
         className,
       )}
     >
-      <div className="relative aspect-video overflow-hidden bg-bg-muted">
+      <div className="relative aspect-video overflow-hidden bg-[var(--color-mask-600)]">
+        {/* Thumbnails come in every colour there is, so they are printed in the
+            board's green like the photographs. */}
         <img
           src={asset(videoThumbnail(video.id))}
           alt=""
           loading="lazy"
           decoding="async"
-          className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          className="size-full object-cover mix-blend-luminosity"
         />
         <span
           aria-hidden="true"
           className="absolute inset-0 flex items-center justify-center bg-black/25 transition-colors group-hover:bg-black/10"
         >
-          <span className="flex size-12 items-center justify-center rounded-full bg-accent text-text-on-brand shadow-lg">
+          <span className="flex size-11 items-center justify-center bg-[var(--mask-copper)] text-[#0a241c]">
             <svg viewBox="0 0 24 24" fill="currentColor" className="ml-0.5 size-5">
               <path d="M8 5.5v13l11-6.5z" />
             </svg>
@@ -65,7 +67,7 @@ export function VideoCard({
           {video.dated ? <Badge tone="warning">{dict.widgets.videoDated}</Badge> : null}
         </div>
 
-        <h3 className="font-display mt-2 leading-snug font-bold text-text-primary">
+        <h3 className="h-sans mt-2 leading-snug text-text-primary">
           <a
             href={videoUrl(video.id)}
             target="_blank"

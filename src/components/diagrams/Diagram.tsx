@@ -9,6 +9,9 @@ import { cn } from '@/lib/utils';
  * hundred, and its labels are real text — searchable, translatable and
  * readable by a screen reader.
  *
+ * The drawing sits on a `.mask` block, so it reads as a board in either theme and
+ * its tokens come from that scope.
+ *
  * The figure is exposed as a labelled group with a caption, so assistive
  * technology announces what the drawing shows rather than skipping it. The
  * caption is not decoration: for a reader who cannot see the diagram it is the
@@ -27,17 +30,19 @@ export function Diagram({
 }) {
   return (
     <figure
-      className={cn(
-        'my-6 overflow-hidden rounded-lg border border-border-subtle bg-surface',
-        className,
-      )}
+      className={cn('my-6 overflow-hidden border border-border-strong bg-surface', className)}
     >
       {/* The drawing scrolls inside its own box on narrow screens so the page
           body never scrolls sideways. */}
-      <div tabIndex={0} role="region" aria-label={title} className="overflow-x-auto p-4 md:p-6">
+      <div
+        tabIndex={0}
+        role="region"
+        aria-label={title}
+        className="mask overflow-x-auto p-4 focus-ring-inset md:p-6"
+      >
         <div className="min-w-[20rem]">{children}</div>
       </div>
-      <figcaption className="border-t border-border-subtle bg-bg-subtle px-4 py-3 text-xs leading-relaxed text-text-secondary">
+      <figcaption className="border-t border-border-strong px-4 py-3 text-xs leading-relaxed text-text-secondary">
         <span className="font-semibold text-text-primary">{title}.</span> {caption}
       </figcaption>
     </figure>

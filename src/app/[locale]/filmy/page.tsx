@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { VideoCard } from '@/components/widgets/VideoCard';
-import { Reveal } from '@/components/motion/Reveal';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { videos, videosByCategory, type VideoCategory } from '@/lib/videos';
@@ -66,15 +65,10 @@ export default async function VideosPage({ params }: { params: Promise<Params> }
           <section key={category} className="container-page pb-12">
             <SectionHeading title={dict.videoCategory[category]} id={`category-${category}`} />
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {inCategory.map((video, index) => (
-                <Reveal
-                  as="li"
-                  key={video.id}
-                  delay={((index % 3) + 1) as 1 | 2 | 3}
-                  className="flex"
-                >
+              {inCategory.map((video) => (
+                <li key={video.id} className="flex">
                   <VideoCard video={video} locale={typedLocale} className="w-full" />
-                </Reveal>
+                </li>
               ))}
             </ul>
           </section>

@@ -32,8 +32,8 @@ export const viewport: Viewport = {
   /* Two entries so the browser chrome matches the page in either theme —
      a single value would leave the address bar mismatched in one of them. */
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0d0f13' },
+    { media: '(prefers-color-scheme: light)', color: '#edf1ea' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b2a22' },
   ],
   colorScheme: 'light dark',
   width: 'device-width',

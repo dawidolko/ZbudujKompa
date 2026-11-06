@@ -108,7 +108,7 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
   if (parts.length === 0) return null;
 
   return (
-    <section className="rounded-lg border border-border-subtle bg-surface p-5 md:p-6">
+    <section className="footprint p-5 md:p-6">
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="font-display text-lg font-bold text-text-primary">{dict.shopping.title}</h2>
         <div className="text-right">
@@ -127,9 +127,7 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
           <li key={part.id} className="py-3 first:pt-0">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="min-w-0">
-                <p className="text-xs font-bold tracking-wide text-text-muted uppercase">
-                  {dict.configurator.category[part.category]}
-                </p>
+                <p className="spec-label">{dict.configurator.category[part.category]}</p>
                 <p className="font-semibold text-text-primary">
                   {part.brand} {part.name}
                 </p>
@@ -198,7 +196,7 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
             type="button"
             onClick={() => openAll(shop)}
             title={dict.shopping.openAtHint(shop.name, parts.length)}
-            className="inline-flex h-11 items-center gap-2 rounded-sm bg-accent px-4 text-sm font-semibold tracking-wide text-text-on-brand uppercase transition-colors hover:bg-accent-hover focus-ring"
+            className="inline-flex h-11 items-center gap-2 rounded-sm bg-accent px-4 text-sm font-bold text-text-on-brand transition-colors btn-pin hover:bg-accent-hover focus-ring"
           >
             {dict.shopping.openAt(shop.name)}
             <ExternalIcon className="size-4" aria-hidden="true" />

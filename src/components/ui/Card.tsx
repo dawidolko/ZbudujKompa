@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { ArrowRightIcon } from './Icon';
 
 /** Plain surface container used for grouping related content. */
 export function Card({
@@ -12,11 +11,7 @@ export function Card({
   children: React.ReactNode;
   as?: 'div' | 'article' | 'section' | 'li';
 }) {
-  return (
-    <Tag className={cn('rounded-lg border border-border-subtle bg-surface p-5 md:p-6', className)}>
-      {children}
-    </Tag>
-  );
+  return <Tag className={cn('footprint p-5 md:p-6', className)}>{children}</Tag>;
 }
 
 /**
@@ -46,16 +41,14 @@ export function LinkCard({
   return (
     <article
       className={cn(
-        'group relative isolate flex flex-col gap-2 rounded-lg border border-border-subtle',
-        'bg-surface p-5 transition-colors md:p-6',
-        'hover:border-border-brand',
+        'footprint group relative isolate flex flex-col gap-2 p-5',
         'focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[var(--focus-ring)]',
         className,
       )}
     >
       {eyebrow ? <div className="flex flex-wrap items-center gap-2">{eyebrow}</div> : null}
 
-      <h3 className="font-display text-lg leading-snug font-bold text-text-primary">
+      <h3 className="text-lg leading-snug h-sans text-text-primary">
         <Link
           href={href}
           /* The stretched pseudo-element covers the card; the card is the
@@ -71,13 +64,6 @@ export function LinkCard({
       ) : null}
 
       {footer ? <div className="mt-auto pt-3">{footer}</div> : null}
-
-      <span
-        className="mt-auto inline-flex items-center gap-1 pt-2 text-xs font-semibold tracking-wide text-accent-fg uppercase"
-        aria-hidden="true"
-      >
-        <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-      </span>
     </article>
   );
 }

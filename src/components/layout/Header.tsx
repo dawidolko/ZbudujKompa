@@ -108,28 +108,30 @@ export function Header({ locale }: { locale: Locale }) {
   return (
     <header
       ref={headerRef}
-      className="sticky top-0 z-50 border-b border-border-subtle bg-bg-base/85 backdrop-blur-md"
+      className="sticky top-0 z-50 border-b-2 border-border-strong bg-bg-base"
     >
-      <div className="container-page flex h-16 items-center gap-4">
+      {/* A strip of ruled cells, flush to both edges, like the head of a drawing. */}
+      <div className="flex h-14 items-stretch">
         <Link
           href={localePath(locale)}
-          className="rounded-sm focus-ring"
+          className="mask flex shrink-0 items-center px-4 focus-ring-inset"
           aria-label={`ZbudujKompa — ${dict.nav.home}`}
         >
           <Logo />
         </Link>
 
         {/* ---- Desktop navigation ---- */}
-        <nav aria-label={dict.nav.mainNavigation} className="ml-auto hidden lg:block">
-          <ul className="flex items-center gap-1">
+        <nav aria-label={dict.nav.mainNavigation} className="hidden min-w-0 flex-1 lg:block">
+          <ul className="flex h-full items-stretch">
             {navigation.map((section) => {
               const panelId = `${headerId}-${section.id}`;
               const expanded = openSection === section.id;
+              const current = isCurrent(section.href);
 
               return (
                 <li
                   key={section.id}
-                  className="relative"
+                  className="flex border-r border-border-subtle"
                   /* Hover opens the panel, which is what a pointer user
                      expects from a menu bar. It is only an enhancement: the
                      link works on click and the button works on keyboard, so
@@ -139,10 +141,11 @@ export function Header({ locale }: { locale: Locale }) {
                 >
                   <div
                     className={cn(
-                      'flex items-center rounded-sm transition-colors',
-                      isCurrent(section.href)
-                        ? 'text-text-brand'
+                      'flex items-stretch transition-colors',
+                      current
+                        ? 'text-text-primary shadow-[inset_0_-3px_0_var(--accent-fg)]'
                         : 'text-text-secondary hover:bg-bg-muted hover:text-text-primary',
+                      expanded && 'bg-bg-muted text-text-primary',
                     )}
                   >
                     {/* The section label is a real link, so the overview page
@@ -150,8 +153,8 @@ export function Header({ locale }: { locale: Locale }) {
                         panel — the top level was previously a dead end. */}
                     <Link
                       href={localePath(locale, section.href)}
-                      aria-current={isCurrent(section.href) ? 'page' : undefined}
-                      className="inline-flex h-10 items-center rounded-sm pr-1 pl-3 text-sm font-semibold focus-ring"
+                      aria-current={current ? 'page' : undefined}
+                      className="inline-flex items-center pr-0.5 pl-3.5 text-sm font-semibold focus-ring-inset xl:pl-4"
                     >
                       {t(section.label, locale)}
                     </Link>
@@ -171,7 +174,7 @@ export function Header({ locale }: { locale: Locale }) {
                         expanded ? dict.nav.closeMenu : dict.nav.openMenu
                       }`}
                       onClick={() => setOpenSection(expanded ? null : section.id)}
-                      className="inline-flex h-10 items-center rounded-sm pr-2 pl-1 focus-ring"
+                      className="inline-flex items-center pr-2.5 pl-0.5 focus-ring-inset"
                     >
                       <ChevronDownIcon
                         className={cn('size-4 transition-transform', expanded && 'rotate-180')}
@@ -186,33 +189,25 @@ export function Header({ locale }: { locale: Locale }) {
                        while the panel is closed. */
                     hidden={!expanded}
                     className={cn(
-                      'absolute top-full left-0 w-80 rounded-lg border border-border-subtle',
-                      'bg-surface-raised p-2 shadow-lg',
-                      /* Sections grow — guides alone are already eleven items —
-                         so the panel is capped to the space between the header
-                         and the bottom of the viewport and scrolls inside that.
-                         Without the cap the last entries render off-screen with
-                         no way to reach them. */
-                      'max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain',
-                      /* The panel sits flush against the trigger rather than
-                         offset by a margin: a visual gap would drop the hover
-                         and close the menu as the pointer crossed it. Padding
-                         supplies the spacing instead. */
-                      'mt-0',
+                      /* A full sheet under the strip, anchored to the header
+                         rather than to its item. It sits flush against the strip:
+                         a gap would drop the hover as the pointer crossed it. */
+                      'absolute inset-x-0 top-full border-y-2 border-border-strong bg-surface-raised shadow-lg',
+                      'max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain',
                     )}
                   >
-                    <ul className="flex flex-col">
+                    <ul className="container-page grid gap-x-8 py-4 lg:grid-cols-3">
                       {section.children?.map((link) => (
-                        <li key={link.href}>
+                        <li key={link.href} className="border-b border-border-subtle">
                           <Link
                             href={localePath(locale, link.href)}
-                            className="block rounded-sm px-3 py-2.5 transition-colors hover:bg-bg-muted focus-ring"
+                            className="block py-2.5 transition-colors hover:bg-bg-muted focus-ring-inset"
                           >
-                            <span className="block text-sm font-semibold text-text-primary">
+                            <span className="block text-sm font-bold text-text-primary">
                               {t(link.label, locale)}
                             </span>
                             {link.description ? (
-                              <span className="mt-0.5 block text-xs leading-relaxed text-text-muted">
+                              <span className="mt-0.5 block text-xs text-text-muted">
                                 {t(link.description, locale)}
                               </span>
                             ) : null}
@@ -227,9 +222,9 @@ export function Header({ locale }: { locale: Locale }) {
           </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-1 lg:ml-2">
+        <div className="ml-auto flex items-stretch border-l border-border-subtle">
           <LanguageSwitcher locale={locale} />
-          <ThemeToggle locale={locale} />
+          <ThemeToggle locale={locale} className="border-l border-border-subtle" />
 
           <button
             type="button"
@@ -237,7 +232,7 @@ export function Header({ locale }: { locale: Locale }) {
             aria-controls={`${headerId}-mobile`}
             aria-label={mobileOpen ? dict.nav.closeMenu : dict.nav.openMenu}
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="inline-flex size-10 items-center justify-center rounded-sm text-text-secondary transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring lg:hidden"
+            className="inline-flex w-12 items-center justify-center border-l border-border-subtle text-text-secondary transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring-inset lg:hidden"
           >
             {mobileOpen ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
           </button>
@@ -248,21 +243,19 @@ export function Header({ locale }: { locale: Locale }) {
       <div
         id={`${headerId}-mobile`}
         hidden={!mobileOpen}
-        className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border-subtle bg-bg-base lg:hidden"
+        className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto border-t border-border-strong bg-bg-base lg:hidden"
       >
         <nav aria-label={dict.nav.mainNavigation} className="container-page py-4">
           <ul className="flex flex-col gap-5">
             {navigation.map((section) => (
               <li key={section.id}>
-                <p className="mb-1.5 text-xs font-bold tracking-wide text-text-muted uppercase">
-                  {t(section.label, locale)}
-                </p>
-                <ul className="flex flex-col border-l border-border-subtle">
+                <p className="spec-label mb-1.5">{t(section.label, locale)}</p>
+                <ul className="flex flex-col border-l-2 border-border-default">
                   {section.children?.map((link) => (
                     <li key={link.href}>
                       <Link
                         href={localePath(locale, link.href)}
-                        className="block py-2.5 pl-3 text-sm font-medium text-text-secondary transition-colors hover:text-text-primary focus-ring"
+                        className="block py-2.5 pl-3 text-sm font-semibold text-text-secondary transition-colors hover:text-text-primary focus-ring"
                       >
                         {t(link.label, locale)}
                       </Link>

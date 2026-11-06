@@ -54,9 +54,7 @@ function Block({ block, locale }: { block: ArticleBlock; locale: Locale }) {
     case 'quote':
       return (
         <figure className="my-6 border-l-2 border-border-brand pl-5">
-          <blockquote className="text-lg leading-relaxed text-text-primary italic">
-            {t(block.text, locale)}
-          </blockquote>
+          <blockquote className="text-lg text-text-primary">{t(block.text, locale)}</blockquote>
           {block.attribution ? (
             <figcaption className="mt-2 text-sm text-text-muted">
               {block.attribution}
@@ -84,12 +82,12 @@ function Block({ block, locale }: { block: ArticleBlock; locale: Locale }) {
           tabIndex={0}
           role="region"
           aria-label={t(block.caption, locale)}
-          className="my-6 overflow-x-auto rounded-lg border border-border-subtle"
+          className="my-6 overflow-x-auto border border-border-strong"
         >
-          <table className="w-full min-w-[32rem] border-collapse text-sm">
+          <table className="datasheet w-full min-w-[32rem] border-collapse text-sm">
             <caption className="sr-only">{t(block.caption, locale)}</caption>
             <thead>
-              <tr className="border-b border-border-subtle bg-bg-muted text-left">
+              <tr className="mask text-left">
                 {headers.map((header) => (
                   <th
                     key={header}
@@ -103,10 +101,7 @@ function Block({ block, locale }: { block: ArticleBlock; locale: Locale }) {
             </thead>
             <tbody>
               {block.rows.map((row, rowIndex) => (
-                <tr
-                  key={rowIndex}
-                  className="border-b border-border-subtle last:border-0 even:bg-bg-subtle"
-                >
+                <tr key={rowIndex} className="border-b border-border-subtle last:border-0">
                   {t(row, locale).map((cell, cellIndex) =>
                     cellIndex === 0 ? (
                       <th
@@ -147,13 +142,15 @@ function Block({ block, locale }: { block: ArticleBlock; locale: Locale }) {
       /* A pulled-out statistic. The label carries the meaning, so the figure
          is never left to speak for itself. */
       return (
-        <aside className="my-6 rounded-lg border border-border-brand bg-accent-subtle p-5">
-          <p className="font-display text-4xl font-extrabold text-accent-fg">{block.value}</p>
-          <p className="mt-1 font-semibold text-text-primary">{t(block.label, locale)}</p>
+        <div className="my-6 grid gap-x-5 border-y border-border-strong py-4 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center">
+          <p className="font-display row-span-2 text-3xl font-semibold text-accent-fg">
+            {block.value}
+          </p>
+          <p className="font-semibold text-text-primary">{t(block.label, locale)}</p>
           {block.note ? (
             <p className="mt-1 text-sm text-text-secondary">{t(block.note, locale)}</p>
           ) : null}
-        </aside>
+        </div>
       );
   }
 }

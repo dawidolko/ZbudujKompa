@@ -70,11 +70,7 @@ export function GlossarySearch({ locale }: { locale: Locale }) {
       ) : (
         <dl className="grid gap-4 md:grid-cols-2">
           {results.map((entry) => (
-            <div
-              key={entry.slug}
-              id={entry.slug}
-              className="scroll-mt-24 rounded-lg border border-border-subtle bg-surface p-5"
-            >
+            <div key={entry.slug} id={entry.slug} className="scroll-mt-24 footprint p-5">
               <dt className="mb-2 flex flex-wrap items-center gap-2">
                 <span className="font-display text-lg font-bold text-text-primary">
                   {entry.term}

@@ -8,6 +8,7 @@ import {
   textMuted,
   textPrimary,
 } from './Diagram';
+import { board, dimmSlots, rect, zones } from './boardLayout';
 import type { Locale } from '@/i18n/config';
 
 const copy = {
@@ -54,10 +55,10 @@ const copy = {
 /**
  * Annotated map of an ATX motherboard.
  *
- * Proportions follow the real 305 x 244 mm ATX specification, so the spatial
- * relationships a builder needs — memory to the right of the socket, the
- * primary PCIe slot nearest the CPU, the front panel block bottom right — are
- * genuinely where the drawing puts them.
+ * The spatial relationships a builder needs — memory to the right of the socket,
+ * the primary PCIe slot nearest the CPU, the front panel block bottom right — are
+ * genuinely where the drawing puts them, because `boardLayout` follows the
+ * ATX specification.
  */
 export function MotherboardMap({ locale }: { locale: Locale }) {
   const text = copy[locale];
@@ -66,91 +67,48 @@ export function MotherboardMap({ locale }: { locale: Locale }) {
   return (
     <Diagram title={text.title} caption={text.caption}>
       <svg viewBox="0 0 520 420" className="h-auto w-full" role="img" aria-label={text.caption}>
-        {/* Board outline */}
-        <rect
-          x="10"
-          y="10"
-          width="500"
-          height="400"
-          rx="6"
-          fill={fillSurface}
-          stroke={stroke}
-          strokeWidth="2"
-        />
+        <rect {...rect(board)} rx="6" fill={fillSurface} stroke={stroke} strokeWidth="2" />
 
-        {/* Rear I/O shroud */}
-        <rect x="20" y="20" width="150" height="46" rx="3" fill={fillMuted} stroke={strokeSubtle} />
+        <rect {...rect(zones.io)} rx="3" fill={fillMuted} stroke={strokeSubtle} />
         <text x="95" y="48" fill={textMuted} fontSize="12" textAnchor="middle">
           {l.io}
         </text>
 
-        {/* EPS connector. The rectangle is sized for the longest label across
-            both languages, so a translation cannot overflow its own shape. */}
-        <rect
-          x="188"
-          y="18"
-          width="72"
-          height="24"
-          rx="2"
-          fill={fillMuted}
-          stroke={accent}
-          strokeWidth="2"
-        />
+        {/* The rectangle is sized for the longest label across both languages,
+            so a translation cannot overflow its own shape. */}
+        <rect {...rect(zones.eps)} rx="2" fill={fillMuted} stroke={accent} strokeWidth="2" />
         <text x="224" y="34" fill={textPrimary} fontSize="11" textAnchor="middle" fontWeight="600">
           {l.eps}
         </text>
 
-        {/* VRM heatsinks. The label sits above the heatsink rather than inside
-            it — "Sekcja zasilania" is far longer than "Power delivery" and
-            would not fit within the shape at any readable size. */}
-        <rect x="188" y="52" width="20" height="96" rx="2" fill={fillMuted} stroke={strokeSubtle} />
-        <rect x="112" y="86" width="68" height="16" rx="2" fill={fillMuted} stroke={strokeSubtle} />
+        {/* The label sits above the heatsink rather than inside it: "Sekcja
+            zasilania" would not fit within the shape at any readable size. */}
+        <rect {...rect(zones.vrmSide)} rx="2" fill={fillMuted} stroke={strokeSubtle} />
+        <rect {...rect(zones.vrmTop)} rx="2" fill={fillMuted} stroke={strokeSubtle} />
         <text x="146" y="78" fill={textMuted} fontSize="10" textAnchor="middle">
           {l.vrm}
         </text>
 
-        {/* CPU socket */}
-        <rect
-          x="218"
-          y="70"
-          width="86"
-          height="86"
-          rx="4"
-          fill={fillMuted}
-          stroke={accent}
-          strokeWidth="2.5"
-        />
-        <rect
-          x="234"
-          y="86"
-          width="54"
-          height="54"
-          rx="2"
-          fill={fillSurface}
-          stroke={strokeSubtle}
-        />
+        <rect {...rect(zones.cpu)} rx="4" fill={fillMuted} stroke={accent} strokeWidth="2.5" />
+        <rect {...rect(zones.cpuDie)} rx="2" fill={fillSurface} stroke={strokeSubtle} />
         <text x="261" y="118" fill={textPrimary} fontSize="12" textAnchor="middle" fontWeight="700">
           {l.cpu}
         </text>
 
-        {/* Memory slots — numbered, because the ordering is the point */}
-        {[0, 1, 2, 3].map((index) => {
-          const x = 332 + index * 22;
+        {/* Numbered, because the ordering is the point. */}
+        {dimmSlots.map((slot, index) => {
           const populated = index === 1 || index === 3;
           return (
-            <g key={index}>
+            <g key={slot.x}>
               <rect
-                x={x}
-                y="60"
-                width="13"
-                height="120"
+                {...rect(slot)}
                 rx="2"
                 fill={populated ? accent : fillMuted}
                 stroke={populated ? accent : strokeSubtle}
                 strokeWidth={populated ? 2 : 1}
                 opacity={populated ? 0.9 : 1}
               />
-              <text x={x + 6.5} y="194" fill={textMuted} fontSize="11" textAnchor="middle">
+              <text x={slot.x + 6.5} y="194" fill={textMuted} fontSize="11" textAnchor="middle">
                 {index + 1}
               </text>
             </g>
@@ -163,27 +121,13 @@ export function MotherboardMap({ locale }: { locale: Locale }) {
           {l.ramHint}
         </text>
 
-        {/* ATX 24-pin */}
-        <rect
-          x="446"
-          y="70"
-          width="26"
-          height="76"
-          rx="2"
-          fill={fillMuted}
-          stroke={accent}
-          strokeWidth="2"
-        />
+        <rect {...rect(zones.atx)} rx="2" fill={fillMuted} stroke={accent} strokeWidth="2" />
         <text x="459" y="162" fill={textPrimary} fontSize="11" textAnchor="middle" fontWeight="600">
           {l.atx}
         </text>
 
-        {/* Primary PCIe x16 */}
         <rect
-          x="60"
-          y="238"
-          width="300"
-          height="16"
+          {...rect(zones.pcieMain)}
           rx="2"
           fill={accent}
           stroke={accent}
@@ -194,69 +138,24 @@ export function MotherboardMap({ locale }: { locale: Locale }) {
           {l.pcie1}
         </text>
 
-        {/* M.2 slots */}
-        <rect
-          x="60"
-          y="196"
-          width="180"
-          height="10"
-          rx="2"
-          fill={fillMuted}
-          stroke={strokeSubtle}
-        />
+        <rect {...rect(zones.m2Top)} rx="2" fill={fillMuted} stroke={strokeSubtle} />
         <text x="150" y="190" fill={textMuted} fontSize="11" textAnchor="middle">
           {l.m2}
         </text>
-        <rect
-          x="60"
-          y="276"
-          width="180"
-          height="10"
-          rx="2"
-          fill={fillMuted}
-          stroke={strokeSubtle}
-        />
+        <rect {...rect(zones.m2Lower)} rx="2" fill={fillMuted} stroke={strokeSubtle} />
 
-        {/* Secondary PCIe */}
-        <rect x="60" y="306" width="90" height="14" rx="2" fill={fillMuted} stroke={strokeSubtle} />
+        <rect {...rect(zones.pcieShort)} rx="2" fill={fillMuted} stroke={strokeSubtle} />
         <text x="105" y="336" fill={textMuted} fontSize="11" textAnchor="middle">
           {l.pcie2}
         </text>
-        <rect
-          x="60"
-          y="348"
-          width="300"
-          height="16"
-          rx="2"
-          fill={fillMuted}
-          stroke={strokeSubtle}
-        />
+        <rect {...rect(zones.pcieLower)} rx="2" fill={fillMuted} stroke={strokeSubtle} />
 
-        {/* SATA ports */}
-        <rect
-          x="446"
-          y="250"
-          width="26"
-          height="60"
-          rx="2"
-          fill={fillMuted}
-          stroke={strokeSubtle}
-        />
+        <rect {...rect(zones.sata)} rx="2" fill={fillMuted} stroke={strokeSubtle} />
         <text x="459" y="326" fill={textMuted} fontSize="11" textAnchor="middle">
           {l.sata}
         </text>
 
-        {/* Front panel header */}
-        <rect
-          x="392"
-          y="366"
-          width="80"
-          height="24"
-          rx="2"
-          fill={fillMuted}
-          stroke={accent}
-          strokeWidth="2"
-        />
+        <rect {...rect(zones.panel)} rx="2" fill={fillMuted} stroke={accent} strokeWidth="2" />
         <text x="432" y="360" fill={textPrimary} fontSize="11" textAnchor="middle" fontWeight="600">
           {l.panel}
         </text>

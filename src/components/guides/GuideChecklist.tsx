@@ -66,7 +66,7 @@ export function GuideChecklist({ guide, locale }: { guide: Guide; locale: Locale
         type="button"
         onClick={download}
         disabled={busy}
-        className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-sm border border-border-default px-4 text-xs font-semibold tracking-wide text-text-primary uppercase transition-colors hover:border-border-brand hover:text-text-brand focus-ring disabled:opacity-50"
+        className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-sm border border-border-default px-4 text-sm font-bold text-text-primary transition-colors hover:border-border-brand hover:text-text-brand focus-ring disabled:opacity-50"
       >
         <DownloadIcon className="size-4" aria-hidden="true" />
         {dict.guides.downloadChecklist}

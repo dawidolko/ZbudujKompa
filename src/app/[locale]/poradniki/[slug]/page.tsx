@@ -9,6 +9,7 @@ import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ClockIcon, WrenchIcon } from '@/components/ui/Icon';
 import { GuideChecklist } from '@/components/guides/GuideChecklist';
+import { SideIndex } from '@/components/guides/SideIndex';
 import { StepDiagram } from '@/components/diagrams';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
@@ -106,51 +107,40 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
         }
       />
 
-      <div className="container-page grid gap-10 pb-14 lg:grid-cols-[16rem_minmax(0,1fr)]">
-        {/* ---- Table of contents ----
-            Sticky on wide screens, and a plain list on narrow ones where there
-            is no room to keep it beside the text. */}
-        <nav aria-labelledby="toc-heading" className="lg:sticky lg:top-24 lg:self-start">
-          <h2
-            id="toc-heading"
-            className="mb-3 text-xs font-bold tracking-wide text-text-muted uppercase"
+      <div className="container-page grid gap-8 pb-14 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12">
+        {/* ---- Side index ----
+            Stays beside the procedure and marks the step being read, as the
+            thumb index of a service manual does. */}
+        <div className="lg:sticky lg:top-20 lg:self-start">
+          <SideIndex
+            headingId="toc-heading"
+            items={guide.steps.map((step) => ({ id: step.id, title: t(step.title, typedLocale) }))}
+            numbered
+            locale={typedLocale}
           >
-            {dict.nav.onThisPage}
-          </h2>
-          <ol className="space-y-1 border-l border-border-subtle">
-            {guide.steps.map((step, index) => (
-              <li key={step.id}>
-                <a
-                  href={`#${step.id}`}
-                  className="block rounded-xs py-1.5 pl-3 text-sm text-text-secondary transition-colors hover:text-text-brand focus-ring"
-                >
-                  <span className="text-text-muted">{index + 1}.</span> {t(step.title, typedLocale)}
-                </a>
-              </li>
-            ))}
-          </ol>
-
-          <div className="mt-6">
-            <GuideChecklist guide={guide} locale={typedLocale} />
-          </div>
-        </nav>
+            <div className="mt-5">
+              <GuideChecklist guide={guide} locale={typedLocale} />
+            </div>
+          </SideIndex>
+        </div>
 
         {/* ---- Steps ---- */}
         <div className="min-w-0">
-          <ol className="space-y-10">
+          <ol className="procedure">
             {guide.steps.map((step, index) => (
-              <li key={step.id} id={step.id} className="scroll-mt-24">
-                <article>
-                  <p className="mb-1.5 text-xs font-bold tracking-wide text-accent-fg uppercase">
-                    {dict.guides.stepOf(index + 1, guide.steps.length)}
-                  </p>
+              <li key={step.id} id={step.id} className="step scroll-mt-20">
+                <span className="step-pad" aria-hidden="true">
+                  {index + 1}
+                </span>
+                <article className="min-w-0">
+                  <p className="spec-label">{dict.guides.stepOf(index + 1, guide.steps.length)}</p>
 
-                  <h2 className="font-display text-2xl leading-tight font-bold text-text-primary">
+                  <h2 className="font-display mt-1 text-xl font-semibold text-text-primary md:text-2xl">
                     {t(step.title, typedLocale)}
                   </h2>
 
                   {step.minutes || step.tools ? (
-                    <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-text-muted">
+                    <div className="spec-label mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
                       {step.minutes ? (
                         <span className="inline-flex items-center gap-1.5">
                           <ClockIcon className="size-4" aria-hidden="true" />
@@ -166,7 +156,7 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
                     </div>
                   ) : null}
 
-                  <div className="prose-guide mt-4 max-w-[46rem]">
+                  <div className="prose-guide mt-3 max-w-[42rem]">
                     {t(step.body, typedLocale).map((paragraph, paragraphIndex) => (
                       <p key={paragraphIndex}>{paragraph}</p>
                     ))}
@@ -177,7 +167,7 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
                   </div>
 
                   {step.warning ? (
-                    <div className="mt-4 max-w-[46rem]">
+                    <div className="mt-4 max-w-[42rem]">
                       <Callout tone="warning" label={dict.guides.warning}>
                         {t(step.warning, typedLocale)}
                       </Callout>
@@ -195,13 +185,12 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
               <ul className="grid gap-4 md:grid-cols-2">
                 {guideOpinions.map((opinion) => (
                   <li key={opinion.id}>
-                    <figure className="h-full rounded-lg border border-border-subtle bg-surface p-5">
+                    <figure className="h-full border-t border-border-strong pt-3">
                       <blockquote className="text-sm leading-relaxed text-text-secondary">
                         <p>„{t(opinion.quote, typedLocale)}”</p>
                       </blockquote>
                       <figcaption className="mt-4 border-t border-border-subtle pt-3 text-xs text-text-muted">
-                        <span className="font-semibold text-text-secondary">{opinion.author}</span>
-                        {' · '}
+                        <span className="font-semibold text-text-secondary">{opinion.author}</span>{' '}
                         <a
                           href={opinion.sourceUrl}
                           target="_blank"

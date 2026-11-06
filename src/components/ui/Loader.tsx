@@ -41,7 +41,7 @@ export function FanLoader({ label, className }: { label: string; className?: str
 export function ScanLoader({ label, className }: { label: string; className?: string }) {
   return (
     <div role="status" className={cn('w-full', className)}>
-      <div className="relative h-1.5 overflow-hidden rounded-full bg-bg-muted">
+      <div className="relative h-1.5 overflow-hidden bg-bg-muted">
         <div className="animate-scan absolute inset-x-0 h-full bg-gradient-to-r from-transparent via-accent to-transparent" />
       </div>
       <p className="mt-2 text-sm text-text-secondary">{label}</p>

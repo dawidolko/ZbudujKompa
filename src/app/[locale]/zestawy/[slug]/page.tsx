@@ -108,25 +108,19 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
       <section className="container-page pb-12">
         <dl className="grid gap-px overflow-hidden rounded-lg border border-border-subtle bg-border-subtle sm:grid-cols-3">
           <div className="bg-surface p-4">
-            <dt className="text-xs tracking-wide text-text-muted uppercase">
-              {dict.platform.socket}
-            </dt>
+            <dt className="spec-label">{dict.platform.socket}</dt>
             <dd className="mt-1 font-display text-2xl font-extrabold text-text-primary">
               {socket?.name ?? '—'}
             </dd>
           </div>
           <div className="bg-surface p-4">
-            <dt className="text-xs tracking-wide text-text-muted uppercase">
-              {dict.builds.useCase}
-            </dt>
+            <dt className="spec-label">{dict.builds.useCase}</dt>
             <dd className="mt-1 text-sm font-medium text-text-secondary">
               {t(build.useCase, typedLocale)}
             </dd>
           </div>
           <div className="bg-surface p-4">
-            <dt className="text-xs tracking-wide text-text-muted uppercase">
-              {dict.builds.difficulty}
-            </dt>
+            <dt className="spec-label">{dict.builds.difficulty}</dt>
             <dd className="mt-1 text-sm font-medium text-text-secondary">
               {difficultyLabel[build.difficulty]}
             </dd>
@@ -145,9 +139,7 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
         <SectionHeading title={dict.builds.parts} id="parts" />
 
         <div className="mb-4">
-          <p className="text-xs tracking-wide text-text-muted uppercase">
-            {dict.configurator.estimatedPrice}
-          </p>
+          <p className="spec-label">{dict.configurator.estimatedPrice}</p>
           <div className="font-display text-xl font-bold text-text-primary">
             <Price range={total} locale={typedLocale} />
           </div>
@@ -161,14 +153,14 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
           tabIndex={0}
           role="region"
           aria-label={dict.builds.parts}
-          className="overflow-x-auto rounded-lg border border-border-subtle"
+          className="overflow-x-auto border border-border-strong"
         >
-          <table className="w-full min-w-[60rem] border-collapse text-sm">
+          <table className="datasheet w-full min-w-[60rem] border-collapse text-sm">
             <caption className="sr-only">
               {dict.builds.parts} — {t(build.name, typedLocale)}
             </caption>
             <thead>
-              <tr className="border-b border-border-subtle bg-bg-muted text-left">
+              <tr className="mask text-left">
                 <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                   {dict.builds.component}
                 </th>
@@ -187,12 +179,9 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
               {build.parts.map((part) => (
                 <tr
                   key={`${part.kind}-${part.name}`}
-                  className="border-b border-border-subtle last:border-0 even:bg-bg-subtle"
+                  className="border-b border-border-subtle last:border-0"
                 >
-                  <th
-                    scope="row"
-                    className="px-4 py-3 text-left text-xs font-semibold tracking-wide text-text-muted uppercase"
-                  >
+                  <th scope="row" className="px-4 py-3 text-left spec-label">
                     {dict.builds.kind[part.kind]}
                   </th>
                   <td className="px-4 py-3 font-medium text-text-primary">{part.name}</td>
@@ -224,7 +213,7 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
       {/* ---- Platform cross-link ---- */}
       {socket ? (
         <section className="container-page pb-12">
-          <div className="rounded-lg border border-border-subtle bg-surface p-5">
+          <div className="footprint p-5">
             <h2 className="font-display text-lg font-bold text-text-primary">
               {dict.platform.socket}: {socket.name}
             </h2>
@@ -248,7 +237,7 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
           <ul className="grid gap-4 md:grid-cols-2">
             {buildOpinions.map((opinion) => (
               <li key={opinion.id}>
-                <figure className="h-full rounded-lg border border-border-subtle bg-surface p-5">
+                <figure className="h-full footprint p-5">
                   <blockquote className="text-sm leading-relaxed text-text-secondary">
                     <p>„{t(opinion.quote, typedLocale)}”</p>
                   </blockquote>

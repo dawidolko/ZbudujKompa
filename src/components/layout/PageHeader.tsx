@@ -3,17 +3,12 @@ import { Photo } from '@/components/ui/Photo';
 import { cn } from '@/lib/utils';
 
 /**
- * Page hero.
+ * The head of a page, printed on the board.
  *
  * Every content page opens with this, so the h1, the lead and the spacing stay
- * identical across the site rather than being re-specified per page and
- * drifting apart.
- *
- * The backdrop is built from three stacked layers, matching the home page:
- * a photograph held far back, a soft accent glow, and the circuit pattern.
- * Passing `photo` opts a page into the imagery; without it the header falls
- * back to the pattern alone, which is what pages with no fitting photograph
- * should use rather than a loosely related stock image.
+ * identical across the site. `photo` adds a plate beside the title on a wide
+ * screen; a narrow one has no room for it, and the image is then never fetched.
+ * Its subject is decoration here, so it is hidden from assistive technology.
  */
 export function PageHeader({
   eyebrow,
@@ -30,57 +25,38 @@ export function PageHeader({
   /** Badges or metadata rendered under the lead. */
   meta?: React.ReactNode;
   className?: string;
-  /** Photograph slug for the backdrop. Requires `locale`. */
+  /** Photograph slug for the plate. Requires `locale`. */
   photo?: string;
   locale?: Locale;
 }) {
   return (
-    <div
-      className={cn(
-        'relative overflow-hidden border-b border-border-subtle',
-        /* Top padding is generous because the breadcrumb trail overlaps into
-           this block. The bottom margin separates the hero from the first
-           section, which would otherwise start flush against the border. */
-        'mb-10 pt-16 pb-12 md:mb-14 md:pt-20 md:pb-16',
-        className,
-      )}
-    >
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        {photo && locale ? (
-          <Photo
-            slug={photo}
-            locale={locale}
-            /* Held at low opacity: this is a backdrop behind body text, and
-               the text has to keep its contrast ratio against it. */
-            className="absolute inset-0 h-full opacity-[0.10]"
-            ratio="auto"
-            sizes="100vw"
-            imgClassName="object-cover"
-          />
-        ) : null}
-        <div className="bg-accent-glow absolute inset-0 opacity-70" />
-        <div className="bg-circuit-grid absolute inset-0" />
-      </div>
-
-      <div className="container-page relative">
+    <div className={cn('mask mb-10 md:mb-14', className)}>
+      <div className="container-page grid gap-10 pt-6 pb-8 md:pt-8 md:pb-10 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-end">
         <div className="max-w-3xl">
-          {eyebrow ? (
-            <p className="mb-3 text-xs font-bold tracking-[0.12em] text-accent-fg uppercase">
-              {eyebrow}
-            </p>
-          ) : null}
+          {eyebrow ? <p className="spec-label mb-2 text-accent-fg">{eyebrow}</p> : null}
 
-          <h1 className="font-display text-3xl leading-tight font-extrabold text-text-primary md:text-4xl lg:text-5xl">
+          <h1 className="font-display text-3xl font-semibold text-text-primary lg:text-4xl">
             {title}
           </h1>
 
-          {lead ? (
-            <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-lg">{lead}</p>
-          ) : null}
+          {lead ? <p className="mt-4 text-text-secondary md:text-lg">{lead}</p> : null}
 
-          {meta ? <div className="mt-5 flex flex-wrap items-center gap-2">{meta}</div> : null}
+          {meta ? <div className="mt-4 flex flex-wrap items-center gap-2">{meta}</div> : null}
         </div>
+
+        {photo && locale ? (
+          <div className="plate hidden lg:block" aria-hidden="true">
+            <Photo
+              slug={photo}
+              locale={locale}
+              ratio="16/10"
+              sizes="19rem"
+              className="bg-transparent"
+            />
+          </div>
+        ) : null}
       </div>
+      <div className="ruler" aria-hidden="true" />
     </div>
   );
 }
@@ -100,22 +76,16 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        'mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between',
-        className,
-      )}
-    >
-      <div className="max-w-2xl">
-        <h2
-          id={id}
-          className="font-display text-2xl leading-tight font-bold text-text-primary md:text-3xl"
-        >
+    <div className={cn('mb-6', className)}>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span className="via" aria-hidden="true" />
+        <h2 id={id} className="font-display text-xl font-semibold text-text-primary md:text-2xl">
           {title}
         </h2>
-        {lead ? <p className="mt-2 text-sm leading-relaxed text-text-secondary">{lead}</p> : null}
+        <span className="hidden h-px flex-1 bg-border-default sm:block" aria-hidden="true" />
+        {action ? <div className="shrink-0">{action}</div> : null}
       </div>
-      {action ? <div className="shrink-0">{action}</div> : null}
+      {lead ? <p className="mt-2 max-w-2xl text-sm text-text-secondary">{lead}</p> : null}
     </div>
   );
 }

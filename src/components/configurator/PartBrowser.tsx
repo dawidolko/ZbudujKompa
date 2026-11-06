@@ -66,7 +66,7 @@ export function PartBrowser({ locale }: { locale: Locale }) {
   return (
     <div>
       {/* ---- Filters ---- */}
-      <div className="mb-6 grid gap-4 rounded-lg border border-border-subtle bg-surface p-4 md:p-5">
+      <div className="mb-6 grid gap-4 footprint p-4 md:p-5">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2">
             <label
@@ -125,9 +125,7 @@ export function PartBrowser({ locale }: { locale: Locale }) {
           </p>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs tracking-wide text-text-muted uppercase">
-              {dict.parts.sortBy}
-            </span>
+            <span className="spec-label">{dict.parts.sortBy}</span>
             {(
               [
                 ['name', dict.parts.sortName],
@@ -209,20 +207,20 @@ function PartCard({ part, locale }: { part: Part; locale: Locale }) {
   const dict = getDictionary(locale);
 
   return (
-    <article className="hover-lift flex h-full flex-col rounded-lg border border-border-subtle bg-surface p-4">
+    <article className="flex h-full flex-col footprint p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-xs font-bold tracking-wide text-text-muted uppercase">
-            {dict.configurator.category[part.category]}
+          <p className="spec-label">
+            {dict.configurator.category[part.category]} · P/N {part.id}
           </p>
-          <h3 className="font-display mt-0.5 font-bold text-text-primary">
+          <h3 className="mt-0.5 h-sans text-text-primary">
             {part.brand} {part.name}
           </h3>
         </div>
         <Badge tone="brand">{dict.configurator.tier[part.tier]}</Badge>
       </div>
 
-      <div className="font-display mt-2 text-lg font-bold text-accent-fg">
+      <div className="font-display mt-2 text-base font-semibold text-accent-fg">
         <Price range={part.price} locale={locale} />
       </div>
 
@@ -270,11 +268,8 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
         <span className="text-text-muted">{label}</span>
         <span className="font-semibold text-text-primary">{value}/100</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-bg-muted">
-        <div
-          className="animate-grow-bar h-full rounded-full bg-accent"
-          style={{ width: `${value}%` }}
-        />
+      <div className="h-1.5 overflow-hidden bg-bg-muted">
+        <div className="animate-grow-bar h-full bg-accent-fg" style={{ width: `${value}%` }} />
       </div>
     </div>
   );

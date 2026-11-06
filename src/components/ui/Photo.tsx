@@ -91,9 +91,11 @@ export function PhotoFigure({
   if (!photo) return null;
 
   return (
-    <figure className={cn('overflow-hidden rounded-lg border border-border-subtle', className)}>
-      <Photo slug={slug} locale={locale} ratio={ratio} sizes={sizes} />
-      <figcaption className="flex flex-wrap items-center justify-between gap-2 border-t border-border-subtle bg-bg-subtle px-4 py-2.5 text-xs text-text-muted">
+    <figure className={cn('min-w-0', className)}>
+      <div className="plate">
+        <Photo slug={slug} locale={locale} ratio={ratio} sizes={sizes} className="bg-transparent" />
+      </div>
+      <figcaption className="mt-2.5 flex flex-wrap items-baseline justify-between gap-2 text-xs text-text-muted">
         {caption ? <span className="text-text-secondary">{caption}</span> : <span />}
         <a
           href={photo.authorUrl}

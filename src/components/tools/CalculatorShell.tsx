@@ -29,11 +29,9 @@ export function CalculatorShell({
 }) {
   return (
     <div className={cn('grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start', className)}>
-      <div className="space-y-5 rounded-lg border border-border-subtle bg-surface p-5 md:p-6">
-        {inputs}
-      </div>
+      <div className="space-y-5 footprint p-5 md:p-6">{inputs}</div>
 
-      <aside className="rounded-lg border border-border-subtle bg-bg-subtle p-5 lg:sticky lg:top-24">
+      <aside className="border border-border-strong p-5 lg:sticky lg:top-24">
         {/* The result changes with no focus movement, so it is announced. */}
         <div aria-live="polite">{result}</div>
 
@@ -178,7 +176,7 @@ export function ResultValue({
 }) {
   return (
     <div className="mb-4 last:mb-0">
-      <p className="text-xs tracking-wide text-text-muted uppercase">{label}</p>
+      <p className="spec-label">{label}</p>
       <p
         className={cn(
           'font-display mt-0.5 text-3xl font-extrabold',

@@ -18,17 +18,15 @@ export function LanguageSwitcher({ locale, className }: { locale: Locale; classN
   const pathname = usePathname();
 
   return (
-    <div
-      className={cn('flex items-center rounded-sm border border-border-subtle p-0.5', className)}
-    >
+    <div className={cn('flex items-stretch', className)}>
       <span className="sr-only" id="language-switcher-label">
         {dict.language.label}
       </span>
-      <ul className="flex items-center gap-0.5" aria-labelledby="language-switcher-label">
+      <ul className="flex items-stretch" aria-labelledby="language-switcher-label">
         {locales.map((code) => {
           const isActive = code === locale;
           return (
-            <li key={code}>
+            <li key={code} className="flex">
               <Link
                 href={switchLocaleInPath(pathname, code)}
                 hrefLang={code}
@@ -39,7 +37,7 @@ export function LanguageSwitcher({ locale, className }: { locale: Locale; classN
                     : `${code.toUpperCase()}: ${dict.language.switchTo(localeNames[code])}`
                 }
                 className={cn(
-                  'flex h-8 items-center rounded-xs px-2.5 text-xs font-bold uppercase tracking-wide transition-colors focus-ring',
+                  'flex items-center px-3 font-mono text-xs font-semibold uppercase transition-colors focus-ring-inset',
                   isActive
                     ? 'bg-accent text-text-on-brand'
                     : 'text-text-secondary hover:bg-bg-muted hover:text-text-primary',

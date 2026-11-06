@@ -10,6 +10,7 @@ import type { Locale } from '@/i18n/config';
 import { categoryOrder, checkCompatibility, formatPriceRange, selectionPrice } from '@/lib/parts';
 import type { BuildSelection, PartCategory } from '@/lib/parts';
 import { cn } from '@/lib/utils';
+import { BuildBoard } from './BuildBoard';
 import { PartPicker } from './PartPicker';
 import { ShoppingList } from './ShoppingList';
 import { autoPick } from '@/lib/parts/autopick';
@@ -85,7 +86,7 @@ export function Configurator({ locale }: { locale: Locale }) {
       <div className="grid gap-3">
         {/* Automatic selection, placed above the pickers because it is the
             shortcut for someone who does not want to make eight decisions. */}
-        <section className="rounded-lg border border-border-brand bg-accent-subtle p-4 md:p-5">
+        <section className="border-l-4 border-border-brand bg-accent-subtle p-4 md:p-5">
           <h2 className="font-display text-base font-bold text-text-primary">
             {dict.autoPick.title}
           </h2>
@@ -142,7 +143,7 @@ export function Configurator({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={pickForMe}
-            className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-sm bg-accent px-5 text-sm font-semibold tracking-wide text-text-on-brand uppercase transition-colors hover:bg-accent-hover focus-ring sm:w-auto"
+            className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-sm bg-accent px-5 text-sm font-bold text-text-on-brand transition-colors btn-pin hover:bg-accent-hover focus-ring sm:w-auto"
           >
             <SparkIcon className="size-4" aria-hidden="true" />
             {chosenCount > 0 ? dict.autoPick.regenerate : dict.autoPick.generate}
@@ -157,16 +158,19 @@ export function Configurator({ locale }: { locale: Locale }) {
           <p className="mt-3 text-xs leading-relaxed text-text-muted">{dict.autoPick.note}</p>
         </section>
 
-        {categoryOrder.map((category) => (
-          <PartPicker
-            key={category}
-            category={category}
-            locale={locale}
-            selected={selection[category]}
-            onSelect={(id) => select(category, id)}
-            conflicting={conflicting.has(category)}
-          />
-        ))}
+        {/* One bill of materials rather than eight separate boxes. */}
+        <div className="divide-y divide-border-default border border-border-strong bg-surface">
+          {categoryOrder.map((category) => (
+            <PartPicker
+              key={category}
+              category={category}
+              locale={locale}
+              selected={selection[category]}
+              onSelect={(id) => select(category, id)}
+              conflicting={conflicting.has(category)}
+            />
+          ))}
+        </div>
 
         {chosenCount > 0 ? <ShoppingList selection={selection} locale={locale} /> : null}
 
@@ -182,84 +186,87 @@ export function Configurator({ locale }: { locale: Locale }) {
       </div>
 
       {/* ---- Summary, sticky beside the pickers on wide screens ---- */}
-      <aside className="lg:sticky lg:top-24">
-        <div className="rounded-lg border border-border-subtle bg-bg-subtle p-5">
-          <h2 className="font-display text-sm font-bold tracking-wide text-text-primary uppercase">
-            {dict.configurator.summary}
-          </h2>
-
-          <div aria-live="polite">
-            {chosenCount === 0 ? (
-              <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                {dict.configurator.empty}
-              </p>
-            ) : (
-              <>
-                <dl className="mt-4 space-y-3 border-b border-border-subtle pb-4">
-                  <div>
-                    <dt className="text-xs tracking-wide text-text-muted uppercase">
-                      {dict.configurator.estimatedPrice}
-                    </dt>
-                    <dd className="font-display mt-0.5 text-xl font-bold text-text-primary">
-                      <Price range={price} locale={locale} />
-                    </dd>
-                    {price.unpriced > 0 && !stale ? (
-                      <dd className="mt-0.5 text-xs text-text-muted">
-                        {dict.prices.unpriced(price.unpriced)}
-                      </dd>
-                    ) : null}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <dt className="text-xs tracking-wide text-text-muted uppercase">
-                        {dict.configurator.powerDraw}
-                      </dt>
-                      <dd className="mt-0.5 font-semibold text-text-primary">
-                        {report.power.estimated} W
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="text-xs tracking-wide text-text-muted uppercase">
-                        {dict.configurator.suggestedPsu}
-                      </dt>
-                      <dd className="mt-0.5 font-semibold text-accent-fg">
-                        {report.power.recommended} W
-                      </dd>
-                    </div>
-                  </div>
-                </dl>
-
-                <p
-                  className={cn(
-                    'mt-4 flex items-center gap-2 text-sm font-bold',
-                    report.buildable ? 'text-success' : 'text-danger',
-                  )}
-                >
-                  {report.buildable ? (
-                    <CheckIcon className="size-5 shrink-0" aria-hidden="true" />
-                  ) : (
-                    <AlertIcon className="size-5 shrink-0" aria-hidden="true" />
-                  )}
-                  {report.buildable ? dict.configurator.compatible : dict.configurator.incompatible}
-                </p>
-
-                {errors.length > 0 ? (
-                  <IssueList issues={errors} level="error" locale={locale} />
-                ) : null}
-                {warnings.length > 0 ? (
-                  <IssueList issues={warnings} level="warning" locale={locale} />
-                ) : null}
-                {passes.length > 0 ? (
-                  <IssueList issues={passes} level="ok" locale={locale} />
-                ) : null}
-              </>
-            )}
+      <aside className="lg:sticky lg:top-20">
+        <div className="border border-border-strong bg-surface">
+          <div className="mask p-3">
+            <BuildBoard selection={selection} />
           </div>
+          <div className="p-4">
+            <h2 className="font-display text-sm font-semibold text-text-primary">
+              {dict.configurator.summary}
+            </h2>
 
-          <div className="mt-5 space-y-1 border-t border-border-subtle pt-4">
-            <PriceChecked locale={locale} />
-            <p className="text-xs leading-relaxed text-text-muted">{dict.configurator.priceNote}</p>
+            <div aria-live="polite">
+              {chosenCount === 0 ? (
+                <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+                  {dict.configurator.empty}
+                </p>
+              ) : (
+                <>
+                  <dl className="mt-4 space-y-3 border-b border-border-subtle pb-4">
+                    <div>
+                      <dt className="spec-label">{dict.configurator.estimatedPrice}</dt>
+                      <dd className="font-display mt-0.5 text-xl font-bold text-text-primary">
+                        <Price range={price} locale={locale} />
+                      </dd>
+                      {price.unpriced > 0 && !stale ? (
+                        <dd className="mt-0.5 text-xs text-text-muted">
+                          {dict.prices.unpriced(price.unpriced)}
+                        </dd>
+                      ) : null}
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <dt className="spec-label">{dict.configurator.powerDraw}</dt>
+                        <dd className="mt-0.5 font-semibold text-text-primary">
+                          {report.power.estimated} W
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="spec-label">{dict.configurator.suggestedPsu}</dt>
+                        <dd className="mt-0.5 font-semibold text-accent-fg">
+                          {report.power.recommended} W
+                        </dd>
+                      </div>
+                    </div>
+                  </dl>
+
+                  <p
+                    className={cn(
+                      'mt-4 flex items-center gap-2 text-sm font-bold',
+                      report.buildable ? 'text-success' : 'text-danger',
+                    )}
+                  >
+                    {report.buildable ? (
+                      <CheckIcon className="size-5 shrink-0" aria-hidden="true" />
+                    ) : (
+                      <AlertIcon className="size-5 shrink-0" aria-hidden="true" />
+                    )}
+                    {report.buildable
+                      ? dict.configurator.compatible
+                      : dict.configurator.incompatible}
+                  </p>
+
+                  {errors.length > 0 ? (
+                    <IssueList issues={errors} level="error" locale={locale} />
+                  ) : null}
+                  {warnings.length > 0 ? (
+                    <IssueList issues={warnings} level="warning" locale={locale} />
+                  ) : null}
+                  {passes.length > 0 ? (
+                    <IssueList issues={passes} level="ok" locale={locale} />
+                  ) : null}
+                </>
+              )}
+            </div>
+
+            <div className="mt-5 space-y-1 border-t border-border-subtle pt-4">
+              <PriceChecked locale={locale} />
+              <p className="text-xs leading-relaxed text-text-muted">
+                {dict.configurator.priceNote}
+              </p>
+            </div>
           </div>
         </div>
       </aside>
@@ -302,7 +309,7 @@ function IssueList({
 
   return (
     <section className="mt-4">
-      <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">{heading}</h3>
+      <h3 className="mb-2 spec-label">{heading}</h3>
       <ul className="space-y-2">
         {issues.map((issue, index) => (
           <li key={index} className="flex gap-2 text-xs leading-relaxed">

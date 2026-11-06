@@ -1,50 +1,55 @@
 @import 'tailwindcss';
 
 /* =============================================================================
-   ZbudujKompa - Design System v2.0
-   Direction: deep graphite base + technical cyan accent.
+   ZbudujKompa - design system
+   Direction: a hardware service manual, printed on a circuit board.
 
-   Every text/background pair documented below was measured with the WCAG 2.2
-   relative-luminance formula and meets AA: >= 4.5:1 for body text, >= 3:1 for
-   large text, icons and UI boundaries. The measured ratio is written next to
-   each token so a future change can be checked against the number it has to
-   beat rather than against a guess.
+   The page is drawing paper in the light theme and solder mask in the dark one.
+   Copper is the accent in both, and a block marked `.mask` is always a board:
+   silkscreen ink on green, whichever theme is active. Type is DIN-derived Sofia
+   Sans for reading and Martian Mono for headings, figures and references.
+
+   Every text and background pair below was measured with the WCAG relative
+   luminance formula, and the ratio sits next to the token it applies to.
    ============================================================================= */
 
 @theme {
-  /* ---- Brand scale: technical cyan ----
-     Tuned so that 600/700 stay dark enough for AA text on white, while
-     300/400 stay light enough for AA text on the graphite dark surfaces. */
-  --color-brand-50: #ecfeff;
-  --color-brand-100: #cffafe;
-  --color-brand-200: #a5f3fc;
-  --color-brand-300: #67e8f9;
-  --color-brand-400: #22d3ee;
-  --color-brand-500: #06b6d4;
-  --color-brand-600: #0891b2;
-  --color-brand-700: #0e7490;
-  --color-brand-800: #155e75;
-  --color-brand-900: #164e63;
-  --color-brand-950: #083344;
+  /* ---- Substrate ----
+     Each neutral carries the green of the solder mask, so paper and board read
+     as one material in two finishes. */
+  --color-paper-50: #f8faf5;
+  --color-paper-100: #edf1ea;
+  --color-paper-200: #e3e9df;
+  --color-paper-300: #d9e2d7;
+  --color-paper-400: #c3d0c3;
+  --color-paper-500: #93a798;
+  --color-paper-600: #5f7769;
+  --color-ink-500: #425a4e;
+  --color-ink-700: #2b4539;
+  --color-ink-900: #0d2a21;
 
-  /* ---- Graphite: neutral base with a cool cast that pairs with cyan ---- */
-  --color-graphite-50: #f6f8f9;
-  --color-graphite-100: #eceff2;
-  --color-graphite-200: #d3d9e0;
-  --color-graphite-300: #adb6c2;
-  --color-graphite-400: #808b9d;
-  --color-graphite-500: #616c80;
-  --color-graphite-600: #4c5566;
-  --color-graphite-700: #3e4553;
-  --color-graphite-800: #343a46;
-  --color-graphite-900: #191c23;
-  --color-graphite-950: #0d0f13;
+  --color-mask-500: #16594a;
+  --color-mask-600: #0f4a39;
+  --color-mask-700: #0b3d2f;
+  --color-mask-800: #0a3a2c;
+  --color-mask-900: #0b2a22;
+  --color-mask-950: #08221b;
+
+  /* ---- Metal ---- */
+  --color-copper-300: #f2b788;
+  --color-copper-400: #e8a46c;
+  --color-copper-500: #d98d50;
+  --color-copper-800: #8a3d0e;
+  --color-gold-300: #f3cf72;
+  --color-gold-200: #ffe08a;
+  --color-silk-100: #f3f7ef;
+  --color-silk-300: #c4dacc;
 
   /* ---- Vendor accents ----
      Used only as small identifying marks (chips, chart keys), never as a
      background for body text, so they are held to the 3:1 non-text rule. */
   --color-amd-500: #ed1c24;
-  --color-amd-600: #c2141b;
+  --color-amd-600: #b01218;
   --color-intel-500: #0068b5;
   --color-intel-600: #00548f;
   --color-nvidia-500: #76b900;
@@ -58,7 +63,7 @@
   --color-success-700: #166534;
   --color-warning-500: #d97706;
   --color-warning-600: #b45309;
-  --color-warning-700: #92400e;
+  --color-warning-700: #7a4a00;
   --color-danger-500: #dc2626;
   --color-danger-600: #b91c1c;
   --color-danger-700: #991b1b;
@@ -67,29 +72,49 @@
   --color-info-700: #075985;
 
   /* ---- Typography ----
-     The --font-* variables come from next/font, so the files are self-hosted:
-     no request to Google and no layout shift when the face swaps in. */
+     Both faces are subsets in src/fonts, loaded through next/font/local, so
+     there is no outside request and the swap causes no layout shift. */
   --font-sans:
-    var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display:
-    var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono:
-    var(--font-jetbrains-mono), ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    var(--font-sofia), 'DIN Alternate', 'Segoe UI', ui-sans-serif, system-ui, -apple-system,
+    sans-serif;
+  --font-display: var(--font-martian), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono: var(--font-martian), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* ---- Radii: hardware-inspired, tight but not sharp ---- */
-  --radius-xs: 3px;
-  --radius-sm: 5px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 18px;
-  --radius-2xl: 26px;
+  /* ---- Type scale ----
+     The classical sequence, nudged up at the small end because Sofia Sans has a
+     modest x-height. */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.45;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.55;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.3125rem;
+  --text-xl--line-height: 1.35;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 1.15;
+  --text-5xl: 2.75rem;
+  --text-5xl--line-height: 1.1;
 
-  /* ---- Elevation: neutral shadows plus a cool glow for accent surfaces ---- */
-  --shadow-xs: 0 1px 2px 0 rgb(13 15 19 / 0.06);
-  --shadow-sm: 0 2px 8px -2px rgb(13 15 19 / 0.1);
-  --shadow-md: 0 8px 24px -8px rgb(13 15 19 / 0.16);
-  --shadow-lg: 0 20px 48px -16px rgb(13 15 19 / 0.22);
-  --shadow-glow: 0 0 0 1px rgb(6 182 212 / 0.3), 0 8px 32px -8px rgb(6 182 212 / 0.35);
+  /* ---- Radii: a board edge is routed, not moulded ---- */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+  --radius-2xl: 6px;
+
+  /* ---- Elevation: flat, as on paper. Only floating panels cast a shadow. ---- */
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: 0 14px 28px -14px rgb(8 34 27 / 0.45);
 
   /* ---- Motion ---- */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
@@ -111,46 +136,44 @@
 :root[data-theme='light'] {
   color-scheme: light;
 
-  --bg-base: #ffffff;
-  --bg-subtle: var(--color-graphite-50);
-  --bg-muted: var(--color-graphite-100);
-  --bg-inset: var(--color-graphite-100);
-  --bg-inverse: var(--color-graphite-950);
-  --bg-overlay: rgb(13 15 19 / 0.55);
+  --bg-base: var(--color-paper-100);
+  --bg-subtle: var(--color-paper-200);
+  --bg-muted: var(--color-paper-300);
+  --bg-inset: var(--color-paper-200);
+  --bg-inverse: var(--color-mask-900);
+  --bg-overlay: rgb(8 34 27 / 0.55);
 
-  --surface: #ffffff;
-  --surface-raised: #ffffff;
-  --surface-sunken: var(--color-graphite-50);
+  --surface: var(--color-paper-50);
+  --surface-raised: var(--color-paper-50);
+  --surface-sunken: var(--color-paper-200);
 
-  /* graphite-900 on white = 14.9:1 */
-  --text-primary: var(--color-graphite-900);
-  /* graphite-600 on white = 8.1:1 */
-  --text-secondary: var(--color-graphite-600);
-  /* graphite-500 on white = 5.9:1 - still AA for normal text */
-  --text-muted: var(--color-graphite-500);
-  --text-inverse: #ffffff;
-  /* brand-700 on white = 4.86:1 - AA for inline links */
-  --text-brand: var(--color-brand-700);
-  /* Cyan is a light hue: white on brand-500 is only 2.3:1, so brand surfaces
-     carry dark ink instead. graphite-950 on brand-500 = 7.15:1. */
-  --text-on-brand: var(--color-graphite-950);
+  /* ink-900 on paper-100 = 13.4:1, on paper-300 = 11.5:1 */
+  --text-primary: var(--color-ink-900);
+  /* ink-700 on paper-100 = 9.1:1, on paper-300 = 7.9:1 */
+  --text-secondary: var(--color-ink-700);
+  /* ink-500 on paper-100 = 6.6:1, on paper-300 = 5.6:1 */
+  --text-muted: var(--color-ink-500);
+  --text-inverse: var(--color-silk-100);
+  /* copper-800 on paper-100 = 6.7:1, on paper-300 = 5.7:1 */
+  --text-brand: var(--color-copper-800);
+  /* silk on mask-600 = 9.4:1 */
+  --text-on-brand: var(--color-silk-100);
 
-  --border-subtle: var(--color-graphite-200);
-  --border-default: var(--color-graphite-300);
-  --border-strong: var(--color-graphite-400);
-  --border-brand: var(--color-brand-600);
+  --border-subtle: var(--color-paper-400);
+  --border-default: var(--color-paper-500);
+  --border-strong: var(--color-paper-600);
+  --border-brand: var(--color-copper-800);
 
-  /* Accent surface (button fills) - pairs with --text-on-brand */
-  --accent: var(--color-brand-500);
-  --accent-hover: var(--color-brand-400);
-  --accent-active: var(--color-brand-600);
-  --accent-subtle: var(--color-brand-50);
-  --accent-ring: rgb(8 145 178 / 0.45);
+  /* Fills are solder mask here and copper in the dark theme. */
+  --accent: var(--color-mask-600);
+  --accent-hover: var(--color-mask-700);
+  --accent-active: var(--color-mask-900);
+  --accent-subtle: #dbe6d9;
+  --accent-ring: rgb(15 74 57 / 0.45);
+  --accent-fg: var(--color-copper-800);
 
-  /* Brand-coloured text/icons on a light background need the darker shade */
-  --accent-fg: var(--color-brand-700);
-
-  --focus-ring: var(--color-brand-700);
+  /* copper-800 on paper-100 = 6.7:1 */
+  --focus-ring: var(--color-copper-800);
 
   --success-text: var(--color-success-700);
   --warning-text: var(--color-warning-700);
@@ -160,6 +183,12 @@
   --vendor-amd: var(--color-amd-600);
   --vendor-intel: var(--color-intel-600);
   --vendor-nvidia: var(--color-nvidia-600);
+
+  /* A board stays a board in either theme. */
+  --mask: var(--color-mask-600);
+  --mask-trace: #1c6e56;
+  --mask-copper: var(--color-copper-300);
+  --mask-gold: var(--color-gold-300);
 }
 
 /* =============================================================================
@@ -174,101 +203,151 @@
   :root:not([data-theme='light']) {
     color-scheme: dark;
 
-    --bg-base: var(--color-graphite-950);
-    --bg-subtle: #12151a;
-    --bg-muted: var(--color-graphite-900);
-    --bg-inset: #08090c;
-    --bg-inverse: var(--color-graphite-50);
-    --bg-overlay: rgb(0 0 0 / 0.7);
+    --bg-base: var(--color-mask-900);
+    --bg-subtle: #0e3329;
+    --bg-muted: #133e32;
+    --bg-inset: var(--color-mask-950);
+    --bg-inverse: var(--color-silk-100);
+    --bg-overlay: rgb(4 18 14 / 0.72);
 
-    --surface: #12151a;
-    --surface-raised: #191c23;
-    --surface-sunken: #08090c;
+    --surface: #0f352b;
+    --surface-raised: #154437;
+    --surface-sunken: var(--color-mask-950);
 
-    /* graphite-50 on graphite-950 = 17.4:1 */
-    --text-primary: var(--color-graphite-50);
-    /* graphite-300 on graphite-950 = 9.2:1 */
-    --text-secondary: var(--color-graphite-300);
-    /* graphite-400 on graphite-950 = 5.4:1 */
-    --text-muted: var(--color-graphite-400);
-    --text-inverse: var(--color-graphite-950);
-    /* brand-400 on graphite-950 = 9.7:1 */
-    --text-brand: var(--color-brand-400);
-    /* graphite-950 on brand-500 = 7.15:1 */
-    --text-on-brand: var(--color-graphite-950);
+    /* #eef4ec on mask-900 = 13.7:1, on the raised surface = 9.8:1 */
+    --text-primary: #eef4ec;
+    /* #c6d8cc on mask-900 = 10.3:1, on the raised surface = 7.4:1 */
+    --text-secondary: #c6d8cc;
+    /* #a6c1b2 on mask-900 = 8:1, on the raised surface = 5.7:1 */
+    --text-muted: #a6c1b2;
+    --text-inverse: var(--color-mask-900);
+    /* copper-300 on mask-900 = 8.7:1, on the raised surface = 6.2:1 */
+    --text-brand: var(--color-copper-300);
+    /* #0a241c on copper-400 = 7.8:1 */
+    --text-on-brand: #0a241c;
 
-    --border-subtle: #242832;
-    --border-default: #323845;
-    --border-strong: #48505f;
-    --border-brand: var(--color-brand-500);
+    --border-subtle: #265547;
+    --border-default: #37705e;
+    --border-strong: #5c9682;
+    --border-brand: var(--color-copper-400);
 
-    --accent: var(--color-brand-500);
-    --accent-hover: var(--color-brand-400);
-    --accent-active: var(--color-brand-600);
-    --accent-subtle: rgb(6 182 212 / 0.14);
-    --accent-ring: rgb(34 211 238 / 0.55);
+    --accent: var(--color-copper-400);
+    --accent-hover: var(--color-copper-300);
+    --accent-active: var(--color-copper-500);
+    --accent-subtle: rgb(232 164 108 / 0.14);
+    --accent-ring: rgb(232 164 108 / 0.55);
+    --accent-fg: var(--color-copper-300);
 
-    --accent-fg: var(--color-brand-400);
+    --focus-ring: var(--color-gold-200);
 
-    --focus-ring: var(--color-brand-400);
+    --success-text: #6ee7a0;
+    --warning-text: #fbd06a;
+    --danger-text: #ff9c9c;
+    --info-text: #7ccbfa;
 
-    --success-text: #4ade80;
-    --warning-text: #fbbf24;
-    --danger-text: #f87171;
-    --info-text: #38bdf8;
-
-    /* The vendor reds and blues are too dark to read on graphite, so the dark
-       theme lifts them to the lighter step: each clears 4.5:1 on --bg-base. */
-    --vendor-amd: #ff6b6f;
-    --vendor-intel: #4dabf7;
-    --vendor-nvidia: #a3e635;
+    --vendor-amd: #ff9396;
+    --vendor-intel: #7cc0fa;
+    --vendor-nvidia: #b6ec5c;
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --bg-base: var(--color-graphite-950);
-  --bg-subtle: #12151a;
-  --bg-muted: var(--color-graphite-900);
-  --bg-inset: #08090c;
-  --bg-inverse: var(--color-graphite-50);
-  --bg-overlay: rgb(0 0 0 / 0.7);
+  --bg-base: var(--color-mask-900);
+  --bg-subtle: #0e3329;
+  --bg-muted: #133e32;
+  --bg-inset: var(--color-mask-950);
+  --bg-inverse: var(--color-silk-100);
+  --bg-overlay: rgb(4 18 14 / 0.72);
 
-  --surface: #12151a;
-  --surface-raised: #191c23;
-  --surface-sunken: #08090c;
+  --surface: #0f352b;
+  --surface-raised: #154437;
+  --surface-sunken: var(--color-mask-950);
 
-  --text-primary: var(--color-graphite-50);
-  --text-secondary: var(--color-graphite-300);
-  --text-muted: var(--color-graphite-400);
-  --text-inverse: var(--color-graphite-950);
-  --text-brand: var(--color-brand-400);
-  --text-on-brand: var(--color-graphite-950);
+  /* #eef4ec on mask-900 = 13.7:1, on the raised surface = 9.8:1 */
+  --text-primary: #eef4ec;
+  /* #c6d8cc on mask-900 = 10.3:1, on the raised surface = 7.4:1 */
+  --text-secondary: #c6d8cc;
+  /* #a6c1b2 on mask-900 = 8:1, on the raised surface = 5.7:1 */
+  --text-muted: #a6c1b2;
+  --text-inverse: var(--color-mask-900);
+  /* copper-300 on mask-900 = 8.7:1, on the raised surface = 6.2:1 */
+  --text-brand: var(--color-copper-300);
+  /* #0a241c on copper-400 = 7.8:1 */
+  --text-on-brand: #0a241c;
 
-  --border-subtle: #242832;
-  --border-default: #323845;
-  --border-strong: #48505f;
-  --border-brand: var(--color-brand-500);
+  --border-subtle: #265547;
+  --border-default: #37705e;
+  --border-strong: #5c9682;
+  --border-brand: var(--color-copper-400);
 
-  --accent: var(--color-brand-500);
-  --accent-hover: var(--color-brand-400);
-  --accent-active: var(--color-brand-600);
-  --accent-subtle: rgb(6 182 212 / 0.14);
-  --accent-ring: rgb(34 211 238 / 0.55);
+  --accent: var(--color-copper-400);
+  --accent-hover: var(--color-copper-300);
+  --accent-active: var(--color-copper-500);
+  --accent-subtle: rgb(232 164 108 / 0.14);
+  --accent-ring: rgb(232 164 108 / 0.55);
+  --accent-fg: var(--color-copper-300);
 
-  --accent-fg: var(--color-brand-400);
+  --focus-ring: var(--color-gold-200);
 
-  --focus-ring: var(--color-brand-400);
+  --success-text: #6ee7a0;
+  --warning-text: #fbd06a;
+  --danger-text: #ff9c9c;
+  --info-text: #7ccbfa;
 
-  --success-text: #4ade80;
-  --warning-text: #fbbf24;
-  --danger-text: #f87171;
-  --info-text: #38bdf8;
+  --vendor-amd: #ff9396;
+  --vendor-intel: #7cc0fa;
+  --vendor-nvidia: #b6ec5c;
+}
 
-  --vendor-amd: #ff6b6f;
-  --vendor-intel: #4dabf7;
-  --vendor-nvidia: #a3e635;
+/* =============================================================================
+   The board scope
+
+   Anything marked `.mask` is silkscreen on solder mask. Rather than a second set
+   of colour utilities, it redefines the semantic tokens for its own subtree, so
+   every component works on a board without knowing it is on one.
+   ============================================================================= */
+.mask {
+  color-scheme: dark;
+
+  --bg-base: var(--mask);
+  --bg-subtle: var(--color-mask-700);
+  --bg-muted: var(--color-mask-500);
+  --bg-inset: var(--color-mask-800);
+  --surface: var(--color-mask-700);
+  --surface-raised: var(--color-mask-700);
+  --surface-sunken: var(--color-mask-800);
+
+  /* On mask-600: silk-100 = 9.4:1, silk-300 = 6.9:1, copper-300 = 5.8:1 */
+  --text-primary: var(--color-silk-100);
+  --text-secondary: var(--color-silk-300);
+  --text-muted: var(--color-silk-300);
+  --text-brand: var(--color-copper-300);
+  --text-on-brand: #0a241c;
+
+  --border-subtle: #2a7560;
+  --border-default: #3f8f77;
+  --border-strong: var(--color-silk-300);
+  --border-brand: var(--color-copper-300);
+
+  --accent: var(--color-copper-300);
+  --accent-hover: var(--color-gold-300);
+  --accent-active: var(--color-copper-400);
+  --accent-subtle: var(--color-mask-700);
+  --accent-fg: var(--color-copper-300);
+
+  --focus-ring: var(--color-gold-200);
+
+  --success-text: #8cf0b6;
+  --warning-text: var(--color-gold-300);
+  --danger-text: #ffb4b4;
+  --info-text: #a6dcfb;
+  --vendor-amd: #ffb3b5;
+  --vendor-intel: #a8d6fc;
+
+  background-color: var(--mask);
+  color: var(--text-primary);
 }
 
 /* Expose the semantic tokens as Tailwind colour utilities
@@ -337,6 +416,8 @@
     background-color: var(--bg-base);
     color: var(--text-primary);
     font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -349,8 +430,8 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
 
@@ -399,24 +480,24 @@
     }
   }
 
-  /* Increased-contrast mode: darken the dividers and the dimmest text so the
+  /* Increased-contrast mode: strengthen the dividers and the dimmest text so the
      lowest-contrast pairs in the palette move well clear of the AA floor. */
   @media (prefers-contrast: more) {
     :root {
-      --border-subtle: var(--color-graphite-400);
-      --border-default: var(--color-graphite-600);
-      --text-muted: var(--color-graphite-700);
+      --border-subtle: var(--color-paper-500);
+      --border-default: var(--color-paper-600);
+      --text-muted: var(--color-ink-700);
     }
     :root[data-theme='dark'] {
-      --border-subtle: var(--color-graphite-500);
-      --border-default: var(--color-graphite-400);
-      --text-muted: var(--color-graphite-200);
+      --border-subtle: var(--border-strong);
+      --border-default: var(--color-silk-300);
+      --text-muted: var(--color-silk-100);
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme='light']) {
-        --border-subtle: var(--color-graphite-500);
-        --border-default: var(--color-graphite-400);
-        --text-muted: var(--color-graphite-200);
+        --border-subtle: var(--border-strong);
+        --border-default: var(--color-silk-300);
+        --text-muted: var(--color-silk-100);
       }
     }
   }
@@ -482,182 +563,422 @@
     margin-inline: auto;
   }
 
-  /* =========================================================================
-     Background patterns
-
-     All are drawn with gradients rather than images: they cost no request,
-     scale to any size, and follow the theme because they reference the same
-     border and accent tokens as everything else.
-     ========================================================================= */
-
-  /* Subtle circuit-board texture used behind hero and section headers */
-  .bg-circuit-grid {
-    background-image:
-      linear-gradient(var(--border-subtle) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
-    background-size: 44px 44px;
-    background-position: center;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
-  }
-
-  /* Circuit traces: right-angled paths with junction dots, echoing a PCB.
-     Used behind large headers where a plain grid reads as too plain. */
-  .bg-circuit-traces {
-    background-image:
-      linear-gradient(var(--border-subtle) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px),
-      radial-gradient(circle at 0 0, var(--accent) 2px, transparent 2.5px),
-      radial-gradient(circle at 88px 88px, var(--accent) 2px, transparent 2.5px);
-    background-size:
-      88px 88px,
-      88px 88px,
-      88px 88px,
-      88px 88px;
-    opacity: 0.5;
-    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 30%, transparent 100%);
-  }
-
-  /* Diagonal hatch, for callout and quote surfaces that need texture without
-     competing with the text on top of them. */
-  .bg-hatch {
-    background-image: repeating-linear-gradient(
-      45deg,
-      var(--border-subtle) 0,
-      var(--border-subtle) 1px,
-      transparent 1px,
-      transparent 10px
-    );
-    opacity: 0.4;
-  }
-
-  /* Dot matrix, a lighter alternative to the grid for full-width sections. */
-  .bg-dots {
-    background-image: radial-gradient(circle, var(--border-default) 1px, transparent 1px);
-    background-size: 22px 22px;
-    mask-image: linear-gradient(to bottom, #000, transparent);
-  }
-
-  /* Soft accent glow anchored behind a hero. Two offset radial gradients read
-     as depth without the banding a single large one produces. */
-  .bg-accent-glow {
-    background-image:
-      radial-gradient(ellipse 50% 40% at 20% 0%, var(--accent-subtle), transparent 70%),
-      radial-gradient(ellipse 40% 50% at 85% 20%, var(--accent-subtle), transparent 70%);
+  /* Inside a flush cell an outline would be cut off by its neighbours. */
+  .focus-ring-inset {
+    &:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: -3px;
+    }
   }
 
   /* =========================================================================
-     Animation
+     The manual's parts
 
-     Every animation here is an enhancement layered on content that is already
-     visible and readable without it. The reduced-motion block at the end of
-     the base layer neutralises all of them, so nothing below is load-bearing.
+     Each device stands for something on a real board or drawing, so the marks
+     mean the same thing wherever they appear.
      ========================================================================= */
 
-  /* Reveal on scroll. The element starts shifted and transparent, and the
-     `is-visible` class — added by an IntersectionObserver — animates it in.
-     Content is fully readable before the script runs, and the no-JS fallback
-     at the end of this block guarantees it stays that way. */
-  /* Gated on `.js`, which the head script adds. Without scripting the hidden
-     state is never applied at all, so the content simply renders — rather
-     than starting invisible and waiting for an observer that will never run. */
-  .js .reveal {
-    opacity: 0;
-    translate: 0 1.25rem;
-    transition:
-      opacity 600ms var(--ease-out-quint),
-      translate 600ms var(--ease-out-quint);
-  }
-  .js .reveal.is-visible {
-    opacity: 1;
-    translate: 0 0;
+  /* Reference text: designators, part numbers and the small print of a drawing. */
+  .spec-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text-muted);
   }
 
-  /* Staggering. Applied as a small per-item delay so a grid resolves in
-     sequence rather than snapping in as one block. Capped at six because
-     beyond that the last item feels like it is lagging rather than flowing. */
-  .reveal-delay-1 {
-    transition-delay: 60ms;
-  }
-  .reveal-delay-2 {
-    transition-delay: 120ms;
-  }
-  .reveal-delay-3 {
-    transition-delay: 180ms;
-  }
-  .reveal-delay-4 {
-    transition-delay: 240ms;
-  }
-  .reveal-delay-5 {
-    transition-delay: 300ms;
-  }
-  .reveal-delay-6 {
-    transition-delay: 360ms;
+  /* A heading set for reading, for the many small ones in lists and cards. */
+  .h-sans {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: 0;
   }
 
-  /* Lift on hover, for cards. Kept small — 2px and a shadow — because a large
-     movement under the pointer makes a grid feel unstable. */
-  .hover-lift {
-    transition:
-      translate 220ms var(--ease-out-quint),
-      box-shadow 220ms var(--ease-out-quint),
-      border-color 220ms var(--ease-out-quint);
+  /* A component footprint: a silkscreen outline with a pin 1 mark in the corner.
+     The mark is a background, not a clip, so a focus outline stays visible. */
+  .footprint {
+    border: 1px solid var(--border-default);
+    background-color: var(--surface);
+    background-image: linear-gradient(135deg, var(--accent-fg) 5px, transparent 5px);
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    transition: border-color 160ms ease-out;
   }
   @media (hover: hover) {
-    .hover-lift:hover {
-      translate: 0 -2px;
-      box-shadow: var(--shadow-md);
+    a.footprint:hover,
+    .footprint:has(a:hover) {
+      border-color: var(--border-brand);
     }
   }
 
-  /* Accent underline that grows from the left on hover. */
-  .link-underline {
-    background-image: linear-gradient(var(--accent), var(--accent));
-    background-size: 0% 2px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size 260ms var(--ease-out-quint);
+  /* The same pin 1 mark on a control. */
+  .btn-pin {
+    position: relative;
   }
-  .link-underline:hover,
-  .link-underline:focus-visible {
-    background-size: 100% 2px;
+  .btn-pin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-style: solid;
+    border-width: 7px 7px 0 0;
+    border-color: currentColor transparent transparent transparent;
+    opacity: 0.7;
   }
 
-  /* Slow drift for hero background patterns. The movement is deliberately
-     small and very slow: enough to feel alive, not enough to distract from
-     the text sitting on top of it. */
-  @keyframes drift {
+  /* A via: where a heading connects down through the page. */
+  .via {
+    flex: none;
+    width: 0.8125rem;
+    height: 0.8125rem;
+    border: 3px solid var(--accent-fg);
+    border-radius: 50%;
+    background-color: var(--bg-base);
+  }
+
+  /* A scale along the edge of a sheet, with a heavier tick every ten. */
+  .ruler {
+    height: 0.625rem;
+    color: var(--border-strong);
+    background-image:
+      repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 12px),
+      repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 120px);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size:
+      100% 5px,
+      100% 10px;
+  }
+
+  /* A photograph printed in the board's own green, as a manual would print it. */
+  .plate {
+    background-color: var(--color-mask-600);
+    outline: 1px solid var(--border-default);
+    outline-offset: 3px;
+  }
+  .plate img {
+    mix-blend-mode: luminosity;
+  }
+
+  /* Table of a datasheet. The header row carries `.mask`. */
+  .datasheet {
+    font-variant-numeric: tabular-nums;
+  }
+  .datasheet thead th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .datasheet tbody tr {
+    background: transparent;
+  }
+
+  /* One chapter of the home page: its title in the margin, its content beside it. */
+  .chapter {
+    display: grid;
+    gap: 1.5rem;
+    padding-block: 3rem;
+    border-top: 1px solid var(--border-default);
+  }
+  @media (width >= 64rem) {
+    .chapter {
+      grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+      gap: 3.5rem;
+      padding-block: 4.5rem;
+    }
+    .chapter-head {
+      position: sticky;
+      top: 5.5rem;
+      align-self: start;
+    }
+  }
+
+  /* A row of a parts list: the whole row is the link, and copper marks it. */
+  .bom-list {
+    border-top: 1px solid var(--border-strong);
+  }
+  .bom-row {
+    position: relative;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .bom-row::before {
+    content: '';
+    position: absolute;
+    inset-block: -1px;
+    left: 0;
+    width: 3px;
+    background-color: var(--accent-fg);
+    scale: 1 0;
+    transform-origin: top;
+    transition: scale 160ms ease-out;
+  }
+  .bom-row:hover::before,
+  .bom-row:focus-within::before {
+    scale: 1 1;
+  }
+
+  /* A procedure: numbered steps joined by a single trace. */
+  .procedure {
+    position: relative;
+  }
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0 0.875rem;
+    padding-bottom: 3rem;
+  }
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 2.25rem;
+    bottom: 0;
+    left: calc(1.125rem - 1px);
+    width: 2px;
+    background-color: var(--border-default);
+  }
+  .step:last-child::before {
+    display: none;
+  }
+  .step-pad {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 2px solid var(--accent-fg);
+    border-radius: 50%;
+    background-color: var(--bg-base);
+    color: var(--accent-fg);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  @media (width >= 48rem) {
+    .step {
+      grid-template-columns: 3rem minmax(0, 1fr);
+      gap: 0 1.25rem;
+    }
+    .step::before {
+      top: 3rem;
+      left: calc(1.5rem - 1px);
+    }
+    .step-pad {
+      width: 3rem;
+      height: 3rem;
+      font-size: 1rem;
+    }
+  }
+
+  /* The side index of a document. */
+  .side-index a[aria-current='true'] {
+    border-color: var(--accent-fg);
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .js .side-index-list[data-open='false'] {
+    display: none;
+  }
+  @media (width >= 64rem) {
+    .js .side-index-list[data-open='false'] {
+      display: block;
+    }
+  }
+
+  /* =========================================================================
+     The board on the home page
+
+     Below the large breakpoint the copy sits above a crop of the board. From it
+     up the drawing fills the block and the copy is laid into the empty left side
+     of the same grid cell, so larger text can push the block taller but can
+     never be cut off.
+     ========================================================================= */
+  .hero-stage {
+    display: grid;
+  }
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    padding-block: 2rem 1.5rem;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 8.6vw, 3.25rem);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+  .hero-crop {
+    overflow: hidden;
+    margin-inline: -1rem;
+  }
+  .hero-drawing {
+    display: block;
+    width: 181%;
+    max-width: none;
+    height: auto;
+    margin-left: -81%;
+  }
+  @media (width >= 64rem) {
+    .hero-copy,
+    .hero-crop {
+      grid-area: 1 / 1;
+    }
+    .hero-copy {
+      width: 41%;
+      padding-block: 3rem 7.5rem;
+    }
+    /* Held to the bottom, so the traces always reach the connector under them. */
+    .hero-crop {
+      align-self: end;
+      overflow: visible;
+      margin-inline: 0;
+    }
+    .hero-drawing {
+      width: 100%;
+      margin-left: 0;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 3.9vw, 3.5rem);
+    }
+  }
+
+  .bd-trace {
+    fill: none;
+    stroke: var(--net, var(--mask-copper));
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    transition: stroke 120ms linear;
+  }
+  .bd-faint {
+    fill: none;
+    stroke: var(--mask-trace);
+    stroke-width: 1.5;
+  }
+  .bd-part {
+    fill: var(--color-mask-800);
+    stroke: var(--net, var(--color-silk-300));
+    stroke-width: 1;
+    transition:
+      stroke 120ms linear,
+      fill 120ms linear;
+  }
+  .bd-metal {
+    fill: var(--net, var(--mask-gold));
+  }
+  .bd-text {
+    fill: var(--color-silk-100);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+  }
+  .bd-dim {
+    fill: none;
+    stroke: var(--color-silk-300);
+    stroke-width: 1;
+  }
+  .bd-hit {
+    cursor: pointer;
+  }
+  .bd-hit:hover,
+  .hero-board:has(.finger[data-net='cooling']:is(:hover, :focus-visible)) .net-cooling,
+  .hero-board:has(.finger[data-net='cpu']:is(:hover, :focus-visible)) .net-cpu,
+  .hero-board:has(.finger[data-net='storage']:is(:hover, :focus-visible)) .net-storage,
+  .hero-board:has(.finger[data-net='gpu']:is(:hover, :focus-visible)) .net-gpu,
+  .hero-board:has(.finger[data-net='memory']:is(:hover, :focus-visible)) .net-memory,
+  .hero-board:has(.finger[data-net='case']:is(:hover, :focus-visible)) .net-case,
+  .hero-board:has(.finger[data-net='psu']:is(:hover, :focus-visible)) .net-psu {
+    --net: var(--color-gold-200);
+  }
+
+  /* The edge connector: every finger is a link, and every trace ends in one. */
+  .fingers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .finger {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-height: 100%;
+    padding: 0.5rem 0.625rem 0.625rem;
+    border-top: 6px solid var(--mask-gold);
+    background-color: var(--color-mask-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1.25;
+    transition:
+      background-color 120ms linear,
+      color 120ms linear;
+  }
+  .finger .spec-label {
+    color: var(--mask-gold);
+  }
+  .finger:hover,
+  .finger:focus-visible,
+  .hero-board:has(.net-cooling:hover) .finger[data-net='cooling'],
+  .hero-board:has(.net-cpu:hover) .finger[data-net='cpu'],
+  .hero-board:has(.net-storage:hover) .finger[data-net='storage'],
+  .hero-board:has(.net-gpu:hover) .finger[data-net='gpu'],
+  .hero-board:has(.net-memory:hover) .finger[data-net='memory'],
+  .hero-board:has(.net-case:hover) .finger[data-net='case'],
+  .hero-board:has(.net-psu:hover) .finger[data-net='psu'] {
+    background-color: var(--mask-gold);
+    color: #0a241c;
+  }
+  .finger:hover .spec-label,
+  .finger:focus-visible .spec-label,
+  .hero-board:has(.bd-hit:hover) .finger:hover .spec-label {
+    color: #0a241c;
+  }
+  @media (width >= 64rem) {
+    .fingers {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0;
+      padding-bottom: 0;
+    }
+    .finger {
+      margin-inline: 0.25rem;
+    }
+  }
+
+  /* The one orchestrated moment: on load the traces route themselves from the
+     edge connector to the parts. The finished drawing is the resting state, so
+     anyone with motion turned off simply sees it. */
+  @keyframes route-trace {
     from {
-      background-position:
-        0 0,
-        0 0;
+      stroke-dashoffset: 1;
     }
     to {
-      background-position:
-        88px 88px,
-        88px 88px;
+      stroke-dashoffset: 0;
     }
   }
   @media (prefers-reduced-motion: no-preference) {
-    .animate-drift {
-      animation: drift 90s linear infinite;
+    .bd-route {
+      stroke-dasharray: 1;
+      animation: route-trace 900ms cubic-bezier(0.65, 0, 0.35, 1) both;
     }
-  }
-
-  /* Pulse for the assistant launcher, drawing the eye once on arrival. */
-  @keyframes pulse-ring {
-    0% {
-      box-shadow: 0 0 0 0 var(--accent-ring);
+    .bd-route-1 {
+      animation-delay: 80ms;
     }
-    70% {
-      box-shadow: 0 0 0 14px transparent;
+    .bd-route-2 {
+      animation-delay: 160ms;
     }
-    100% {
-      box-shadow: 0 0 0 0 transparent;
+    .bd-route-3 {
+      animation-delay: 240ms;
     }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .animate-pulse-ring {
-      animation: pulse-ring 2.4s var(--ease-out-quint) 3;
+    .bd-route-4 {
+      animation-delay: 320ms;
+    }
+    .bd-route-5 {
+      animation-delay: 400ms;
+    }
+    .bd-route-6 {
+      animation-delay: 480ms;
     }
   }
 
@@ -673,7 +994,7 @@
   @media (prefers-reduced-motion: no-preference) {
     .animate-grow-bar {
       transform-origin: left center;
-      animation: grow-bar 800ms var(--ease-out-quint) both;
+      animation: grow-bar 500ms ease-out both;
     }
   }
 
@@ -681,17 +1002,21 @@
      plugin so the guide pages depend on nothing outside this file. */
   .prose-guide {
     color: var(--text-secondary);
-    line-height: 1.75;
+    font-size: var(--text-base);
+    line-height: 1.65;
 
     & h2 {
-      margin-block: 2.5rem 1rem;
-      font-size: 1.5rem;
+      margin-block: 2.75rem 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-default);
+      font-size: 1.3125rem;
+      line-height: 1.3;
       color: var(--text-primary);
       scroll-margin-top: 6rem;
     }
     & h3 {
       margin-block: 2rem 0.75rem;
-      font-size: 1.185rem;
+      font-size: 1.0625rem;
       color: var(--text-primary);
       scroll-margin-top: 6rem;
     }
@@ -704,7 +1029,12 @@
       padding-inline-start: 1.5rem;
     }
     & ul {
-      list-style: disc;
+      list-style: square;
+    }
+    & li::marker {
+      color: var(--accent-fg);
+      font-family: var(--font-mono);
+      font-size: 0.875em;
     }
     & ol {
       list-style: decimal;
@@ -805,18 +1135,24 @@ html {
    uncomfortable regardless of the theme setting. */
 :root[data-a11y-filter='light'] {
   color-scheme: light;
-  --bg-base: #ffffff;
-  --bg-subtle: #f6f8f9;
-  --bg-muted: #eceff2;
-  --surface: #ffffff;
-  --surface-raised: #ffffff;
-  --text-primary: #191c23;
-  --text-secondary: #4c5566;
-  --text-muted: #616c80;
-  --border-subtle: #d3d9e0;
-  --border-default: #adb6c2;
-  --accent-fg: #0e7490;
-  --text-brand: #0e7490;
+  --bg-base: #edf1ea;
+  --bg-subtle: #e3e9df;
+  --bg-muted: #d9e2d7;
+  --surface: #f8faf5;
+  --surface-raised: #f8faf5;
+  --text-primary: #0d2a21;
+  --text-secondary: #2b4539;
+  --text-muted: #425a4e;
+  --text-on-brand: #f3f7ef;
+  --border-subtle: #c3d0c3;
+  --border-default: #93a798;
+  --border-strong: #5f7769;
+  --border-brand: #8a3d0e;
+  --accent: #0f4a39;
+  --accent-hover: #0b3d2f;
+  --accent-fg: #8a3d0e;
+  --text-brand: #8a3d0e;
+  --focus-ring: #8a3d0e;
 }
 
 /* High contrast. Pushes every pair to the extremes rather than merely
@@ -830,22 +1166,38 @@ html {
   --text-primary: #ffffff;
   --text-secondary: #ffffff;
   --text-muted: #e8e8e8;
-  --text-brand: #4fe3ff;
-  --accent-fg: #4fe3ff;
-  --accent: #4fe3ff;
+  --text-brand: #ffd9b8;
+  --accent-fg: #ffd9b8;
+  --accent: #ffd9b8;
   --text-on-brand: #000000;
   --border-subtle: #ffffff;
   --border-default: #ffffff;
   --border-strong: #ffffff;
   --focus-ring: #ffff00;
 }
-/* Background images would defeat a high-contrast palette, so they go. */
-:root[data-a11y-filter='high-contrast'] .bg-circuit-grid,
-:root[data-a11y-filter='high-contrast'] .bg-circuit-traces,
-:root[data-a11y-filter='high-contrast'] .bg-dots,
-:root[data-a11y-filter='high-contrast'] .bg-hatch,
-:root[data-a11y-filter='high-contrast'] .bg-accent-glow {
-  display: none;
+/* A board goes black as well, or the green would survive the setting. */
+:root[data-a11y-filter='high-contrast'] .mask {
+  --mask: #000000;
+  --bg-base: #000000;
+  --bg-subtle: #000000;
+  --bg-muted: #1a1a1a;
+  --surface: #000000;
+  --surface-raised: #0d0d0d;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-muted: #ffffff;
+  --text-brand: #ffd9b8;
+  --accent: #ffd9b8;
+  --accent-fg: #ffd9b8;
+  --text-on-brand: #000000;
+  --border-subtle: #ffffff;
+  --border-default: #ffffff;
+  --border-strong: #ffffff;
+  --focus-ring: #ffff00;
+}
+:root[data-a11y-filter='high-contrast'] .finger {
+  background-color: #000000;
+  outline: 1px solid #ffffff;
 }
 :root[data-a11y-filter='high-contrast'] img {
   /* Photographs are dimmed rather than hidden: they still convey what the page
@@ -893,57 +1245,7 @@ html {
 }
 
 /* =============================================================================
-   Additional background patterns
-   ============================================================================= */
-
-/* Isometric grid, for section dividers that need more presence than dots. */
-.bg-iso-grid {
-  background-image:
-    linear-gradient(30deg, var(--border-subtle) 1px, transparent 1px),
-    linear-gradient(150deg, var(--border-subtle) 1px, transparent 1px);
-  background-size: 40px 70px;
-  opacity: 0.35;
-  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
-}
-
-/* Concentric rings, echoing a fan. Used behind cooling content. */
-.bg-rings {
-  background-image: repeating-radial-gradient(
-    circle at 50% 50%,
-    transparent 0,
-    transparent 28px,
-    var(--border-subtle) 28px,
-    var(--border-subtle) 29px
-  );
-  opacity: 0.25;
-  mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 70%);
-}
-
-/* Vertical data lines, suggesting a bus. */
-.bg-datalines {
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--border-subtle) 0,
-    var(--border-subtle) 1px,
-    transparent 1px,
-    transparent 24px
-  );
-  opacity: 0.3;
-  mask-image: linear-gradient(to right, transparent, #000 20%, #000 80%, transparent);
-}
-
-/* Soft topographic contours, for long-form pages that need texture without
-   any suggestion of structure. */
-.bg-contours {
-  background-image:
-    radial-gradient(ellipse 60% 30% at 20% 30%, var(--accent-subtle) 0, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 80% 70%, var(--accent-subtle) 0, transparent 60%),
-    radial-gradient(ellipse 40% 20% at 50% 10%, var(--accent-subtle) 0, transparent 60%);
-  opacity: 0.6;
-}
-
-/* =============================================================================
-   Additional animation
+   Loading animation
    ============================================================================= */
 
 /* Scanning line, used on loaders to suggest a diagnostic in progress. */
@@ -974,27 +1276,6 @@ html {
   }
 }
 
-/* Gentle float, for decorative elements that should feel alive at rest. */
-@keyframes float {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -8px;
-  }
-}
-
-/* Counting bars sweeping in, used in statistics blocks. */
-@keyframes sweep-in {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .animate-scan {
     animation: scan 2s var(--ease-in-out-quart) infinite;
@@ -1004,12 +1285,6 @@ html {
   }
   .animate-trace-pulse {
     animation: trace-pulse 1.6s ease-in-out infinite;
-  }
-  .animate-float {
-    animation: float 5s ease-in-out infinite;
-  }
-  .animate-sweep-in {
-    animation: sweep-in 900ms var(--ease-out-quint) both;
   }
 }
 

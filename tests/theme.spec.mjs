@@ -120,7 +120,7 @@ const browser = await chromium.launch();
   const background = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   check(
     'dark theme is painted at first paint (no flash)',
-    theme === 'dark' && background === 'rgb(13, 15, 19)',
+    theme === 'dark' && background === 'rgb(11, 42, 34)',
     `${theme} / ${background}`,
   );
   await ctx.close();

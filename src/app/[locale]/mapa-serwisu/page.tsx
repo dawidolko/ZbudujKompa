@@ -137,9 +137,7 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
         <SectionHeading title={dict.parts.browseBy} id="parts-index" />
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.parts.filterCategory}
-            </h3>
+            <h3 className="mb-2 spec-label">{dict.parts.filterCategory}</h3>
             <ul className="flex flex-wrap gap-2">
               {categoryOrder.map((category) => (
                 <li key={category}>
@@ -154,9 +152,7 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
             </ul>
           </div>
           <div>
-            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.parts.filterBrand}
-            </h3>
+            <h3 className="mb-2 spec-label">{dict.parts.filterBrand}</h3>
             <ul className="flex flex-wrap gap-2">
               {getBrands().map(({ brand }) => (
                 <li key={brand}>
@@ -228,7 +224,7 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
             { term: dict.widgets.videosTitle, value: videos.length, href: '/filmy' },
           ].map((item) => (
             <div key={item.term} className="bg-surface p-4">
-              <dt className="text-xs tracking-wide text-text-muted uppercase">
+              <dt className="spec-label">
                 <Link
                   href={localePath(typedLocale, item.href)}
                   className="rounded-xs transition-colors hover:text-text-brand focus-ring"

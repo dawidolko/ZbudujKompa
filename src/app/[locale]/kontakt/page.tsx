@@ -87,10 +87,8 @@ export default async function ContactPage({ params }: { params: Promise<Params> 
         <ul className="grid max-w-3xl gap-4 sm:grid-cols-2">
           {channels.map((channel) => (
             <li key={channel.label}>
-              <div className="h-full rounded-lg border border-border-subtle bg-surface p-5">
-                <h2 className="text-xs font-bold tracking-wide text-text-muted uppercase">
-                  {channel.label}
-                </h2>
+              <div className="h-full footprint p-5">
+                <h2 className="spec-label">{channel.label}</h2>
                 <p className="mt-2 break-words">
                   <a
                     href={channel.href}

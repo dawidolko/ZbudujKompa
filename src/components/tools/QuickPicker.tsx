@@ -38,7 +38,7 @@ export function QuickPicker({ locale }: { locale: Locale }) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
-      <div className="space-y-5 rounded-lg border border-border-subtle bg-surface p-5 md:p-6">
+      <div className="space-y-5 footprint p-5 md:p-6">
         <ChoiceGroup
           name={`${groupId}-use`}
           legend={dict.quickPicker.useCase}
@@ -78,8 +78,8 @@ export function QuickPicker({ locale }: { locale: Locale }) {
         />
       </div>
 
-      <aside className="rounded-lg border border-border-subtle bg-bg-subtle p-5 lg:sticky lg:top-24">
-        <h3 className="font-display text-sm font-bold tracking-wide text-text-primary uppercase">
+      <aside className="border border-border-strong p-5 lg:sticky lg:top-24">
+        <h3 className="font-display text-sm font-semibold text-text-primary">
           {dict.quickPicker.suggestion}
         </h3>
 
@@ -124,7 +124,7 @@ export function QuickPicker({ locale }: { locale: Locale }) {
 
         <Link
           href={localePath(locale, '/konfigurator')}
-          className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-sm bg-accent px-4 text-sm font-semibold tracking-wide text-text-on-brand uppercase transition-colors hover:bg-accent-hover focus-ring"
+          className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-sm bg-accent px-4 text-sm font-bold text-text-on-brand transition-colors btn-pin hover:bg-accent-hover focus-ring"
         >
           {dict.quickPicker.openConfigurator}
           <ArrowRightIcon className="size-4" aria-hidden="true" />

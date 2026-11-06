@@ -72,8 +72,8 @@ export function ThemeToggle({ locale, className }: { locale: Locale; className?:
          "dark mode, pressed" rather than leaving the current theme implicit. */
       aria-pressed={theme === 'dark'}
       className={cn(
-        'inline-flex size-10 items-center justify-center rounded-sm text-text-secondary',
-        'transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring',
+        'inline-flex w-12 items-center justify-center text-text-secondary',
+        'transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring-inset',
         className,
       )}
     >

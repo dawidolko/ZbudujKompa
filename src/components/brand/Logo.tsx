@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
  * ZbudujKompa logo.
  *
  * The mark is a stylised CPU: a rounded square die with contact pins on each
- * edge and a cyan build-arrow rising through the middle — "build" plus
+ * edge and a copper build-arrow rising through the middle — "build" plus
  * "computer" in one shape, which is what the name says.
  *
  * Drawn as inline SVG rather than loaded as a file so it inherits the current
@@ -72,8 +72,8 @@ export function LogoMark({ className }: { className?: string }) {
 export function Logo({ className, markClassName }: { className?: string; markClassName?: string }) {
   return (
     <span className={cn('inline-flex items-center gap-2.5', className)}>
-      <LogoMark className={cn('size-8', markClassName)} />
-      <span className="font-display text-lg leading-none font-bold tracking-tight">
+      <LogoMark className={cn('size-7', markClassName)} />
+      <span className="font-display text-base leading-none font-semibold tracking-tighter">
         <span className="text-text-primary">Zbuduj</span>
         <span className="text-accent-fg">Kompa</span>
       </span>

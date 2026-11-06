@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronRightIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
@@ -31,7 +31,6 @@ export function Carousel({
   className?: string;
 }) {
   const dict = getDictionary(locale);
-  const regionId = useId();
   const trackRef = useRef<HTMLDivElement>(null);
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -73,11 +72,7 @@ export function Carousel({
   }, []);
 
   return (
-    <section aria-labelledby={regionId} className={cn('relative', className)}>
-      <h3 id={regionId} className="sr-only">
-        {label}
-      </h3>
-
+    <div className={cn('relative', className)}>
       <div
         ref={trackRef}
         /* Focusable and labelled, so a keyboard user can scroll it with the
@@ -102,7 +97,7 @@ export function Carousel({
           disabled={!canScrollLeft}
           aria-hidden="true"
           tabIndex={-1}
-          className="inline-flex size-9 items-center justify-center rounded-sm border border-border-default text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
+          className="inline-flex size-9 items-center justify-center border border-border-strong text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
         >
           <ChevronRightIcon className="size-4 rotate-180" />
         </button>
@@ -112,13 +107,13 @@ export function Carousel({
           disabled={!canScrollRight}
           aria-hidden="true"
           tabIndex={-1}
-          className="inline-flex size-9 items-center justify-center rounded-sm border border-border-default text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
+          className="inline-flex size-9 items-center justify-center border border-border-strong text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary disabled:opacity-30"
         >
           <ChevronRightIcon className="size-4" />
         </button>
       </div>
 
       <p className="mt-2 text-xs text-text-muted md:hidden">{dict.widgets.swipeHint}</p>
-    </section>
+    </div>
   );
 }

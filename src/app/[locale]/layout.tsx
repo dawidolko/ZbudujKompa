@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import '../globals.css';
 import { themeInitScript } from '@/lib/theme';
 import { a11yInitScript } from '@/lib/accessibility';
@@ -24,29 +24,26 @@ import {
   type Locale,
 } from '@/i18n/config';
 
-/* Fonts are self-hosted by next/font: no request to Google, and the metrics
-   are inlined so swapping in the real face causes no layout shift. Only the
-   latin subset is preloaded; latin-ext stays declared and loads on demand. */
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
+/* Both faces are subsets cut for this site: Latin with the Polish letters, and
+   only the weights in use. next/font serves them from this origin and inlines
+   fallback metrics, so the swap moves nothing. */
+const sofiaSans = localFont({
+  src: '../../fonts/sofia-sans-wght.woff2',
+  weight: '400 800',
+  variable: '--font-sofia',
   display: 'swap',
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
+const martianMono = localFont({
+  src: '../../fonts/martian-mono-wght.woff2',
+  weight: '400 700',
+  variable: '--font-martian',
   display: 'swap',
+  adjustFontFallback: false,
+  fallback: ['ui-monospace', 'Menlo', 'Consolas', 'monospace'],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-  preload: false,
-});
-
-const fontVariables = `${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
+const fontVariables = `${sofiaSans.variable} ${martianMono.variable}`;
 
 type LayoutParams = { locale: string };
 

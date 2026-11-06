@@ -6,7 +6,6 @@ import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { Photo } from '@/components/ui/Photo';
-import { Reveal } from '@/components/motion/Reveal';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { articles, articleCategoryOrder, articleReadingTime, getTags } from '@/lib/blog';
@@ -60,39 +59,39 @@ export default async function ArticlesPage({ params }: { params: Promise<Params>
       {/* ---- Lead article ---- */}
       {featured ? (
         <section className="container-page pb-12">
-          <Reveal>
-            <Link
-              href={localePath(typedLocale, `/artykuly/${featured.slug}`)}
-              className="hover-lift group grid overflow-hidden rounded-lg border border-border-subtle bg-surface focus-ring md:grid-cols-2"
-            >
-              {featured.photo ? (
+          <Link
+            href={localePath(typedLocale, `/artykuly/${featured.slug}`)}
+            className="footprint group grid overflow-hidden focus-ring md:grid-cols-2"
+          >
+            {featured.photo ? (
+              <div className="bg-[var(--color-mask-600)] [&_img]:mix-blend-luminosity">
                 <Photo
                   slug={featured.photo}
                   locale={typedLocale}
                   ratio="16/10"
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  imgClassName="transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="bg-transparent"
                 />
-              ) : null}
-              <div className="flex flex-col justify-center p-6 md:p-8">
-                <span className="flex flex-wrap items-center gap-2">
-                  <Badge tone="brand">{dict.blog.category[featured.category]}</Badge>
-                  <span className="text-xs text-text-muted">
-                    {formatDate(featured.published, typedLocale)}
-                  </span>
-                </span>
-                <h2 className="font-display mt-3 text-2xl leading-tight font-bold text-text-primary md:text-3xl">
-                  {t(featured.title, typedLocale)}
-                </h2>
-                <p className="mt-3 leading-relaxed text-text-secondary">
-                  {t(featured.summary, typedLocale)}
-                </p>
-                <p className="mt-4 text-xs text-text-muted">
-                  {dict.blog.readingTime(articleReadingTime(featured, typedLocale))}
-                </p>
               </div>
-            </Link>
-          </Reveal>
+            ) : null}
+            <div className="flex flex-col justify-center p-6 md:p-8">
+              <span className="flex flex-wrap items-center gap-2">
+                <Badge tone="brand">{dict.blog.category[featured.category]}</Badge>
+                <span className="text-xs text-text-muted">
+                  {formatDate(featured.published, typedLocale)}
+                </span>
+              </span>
+              <h2 className="font-display mt-3 text-2xl leading-tight font-bold text-text-primary md:text-3xl">
+                {t(featured.title, typedLocale)}
+              </h2>
+              <p className="mt-3 leading-relaxed text-text-secondary">
+                {t(featured.summary, typedLocale)}
+              </p>
+              <p className="mt-4 text-xs text-text-muted">
+                {dict.blog.readingTime(articleReadingTime(featured, typedLocale))}
+              </p>
+            </div>
+          </Link>
         </section>
       ) : null}
 
@@ -123,13 +122,8 @@ export default async function ArticlesPage({ params }: { params: Promise<Params>
           <section key={category} className="container-page pb-12">
             <SectionHeading title={dict.blog.category[category]} id={`category-${category}`} />
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {inCategory.map((article, index) => (
-                <Reveal
-                  as="li"
-                  key={article.slug}
-                  delay={((index % 3) + 1) as 1 | 2 | 3}
-                  className="flex"
-                >
+              {inCategory.map((article) => (
+                <li key={article.slug} className="flex">
                   <LinkCard
                     className="w-full"
                     href={localePath(typedLocale, `/artykuly/${article.slug}`)}
@@ -146,7 +140,7 @@ export default async function ArticlesPage({ params }: { params: Promise<Params>
                     title={t(article.title, typedLocale)}
                     description={t(article.summary, typedLocale)}
                   />
-                </Reveal>
+                </li>
               ))}
             </ul>
           </section>

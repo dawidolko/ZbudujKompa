@@ -102,15 +102,15 @@ export function ComparisonTable({
         <div
           tabIndex={0}
           role="region"
-          aria-label={dict.comparison.title}
-          className="overflow-x-auto rounded-lg border border-border-subtle"
+          aria-label={`${dict.comparison.title} — ${dict.configurator.category[category]}`}
+          className="overflow-x-auto border border-border-strong"
         >
-          <table className="w-full min-w-[36rem] border-collapse text-sm">
+          <table className="datasheet w-full min-w-[36rem] border-collapse text-sm">
             <caption className="sr-only">
               {dict.comparison.title} — {dict.configurator.category[category]}
             </caption>
             <thead>
-              <tr className="border-b border-border-subtle bg-bg-muted text-left">
+              <tr className="mask text-left">
                 <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                   {dict.comparison.property}
                 </th>
@@ -135,10 +135,7 @@ export function ComparisonTable({
             </thead>
             <tbody>
               {rows.map((row) => (
-                <tr
-                  key={row.label}
-                  className="border-b border-border-subtle last:border-0 even:bg-bg-subtle"
-                >
+                <tr key={row.label} className="border-b border-border-subtle last:border-0">
                   <th scope="row" className="px-4 py-3 text-left font-medium text-text-secondary">
                     {row.label}
                   </th>

@@ -135,7 +135,7 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
             { term: dict.platform.chipsets, value: String(socket.chipsets.length) },
           ].map((item) => (
             <div key={item.term} className="bg-surface p-4">
-              <dt className="text-xs tracking-wide text-text-muted uppercase">{item.term}</dt>
+              <dt className="spec-label">{item.term}</dt>
               <dd className="mt-1 font-display text-lg font-bold text-text-primary">
                 {item.value}
               </dd>
@@ -171,14 +171,14 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
           tabIndex={0}
           role="region"
           aria-label={dict.platform.chipsets}
-          className="overflow-x-auto rounded-lg border border-border-subtle"
+          className="overflow-x-auto border border-border-strong"
         >
-          <table className="w-full min-w-[40rem] border-collapse text-sm">
+          <table className="datasheet w-full min-w-[40rem] border-collapse text-sm">
             <caption className="sr-only">
               {dict.platform.chipsets} — {socket.name}
             </caption>
             <thead>
-              <tr className="border-b border-border-subtle bg-bg-muted text-left">
+              <tr className="mask text-left">
                 <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                   {dict.platform.chipset}
                 </th>
@@ -195,10 +195,7 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
             </thead>
             <tbody>
               {socket.chipsets.map((chipset) => (
-                <tr
-                  key={chipset.name}
-                  className="border-b border-border-subtle last:border-0 even:bg-bg-subtle"
-                >
+                <tr key={chipset.name} className="border-b border-border-subtle last:border-0">
                   <th scope="row" className="px-4 py-3 text-left font-bold text-text-primary">
                     {chipset.name}
                   </th>
@@ -247,7 +244,7 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
           <ul className="grid gap-4 md:grid-cols-2">
             {socketOpinions.map((opinion) => (
               <li key={opinion.id}>
-                <figure className="h-full rounded-lg border border-border-subtle bg-surface p-5">
+                <figure className="h-full footprint p-5">
                   <blockquote className="text-sm leading-relaxed text-text-secondary">
                     <p>„{t(opinion.quote, typedLocale)}”</p>
                   </blockquote>

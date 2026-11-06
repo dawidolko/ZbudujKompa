@@ -67,12 +67,12 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
           tabIndex={0}
           role="region"
           aria-label={dict.cooling.lead}
-          className="overflow-x-auto rounded-lg border border-border-subtle"
+          className="overflow-x-auto border border-border-strong"
         >
-          <table className="w-full min-w-[46rem] border-collapse text-sm">
+          <table className="datasheet w-full min-w-[46rem] border-collapse text-sm">
             <caption className="sr-only">{dict.cooling.lead}</caption>
             <thead>
-              <tr className="border-b border-border-subtle bg-bg-muted text-left">
+              <tr className="mask text-left">
                 <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                   {dict.cooling.type}
                 </th>
@@ -89,10 +89,7 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
             </thead>
             <tbody>
               {coolingProfiles.map((profile) => (
-                <tr
-                  key={profile.slug}
-                  className="border-b border-border-subtle last:border-0 even:bg-bg-subtle"
-                >
+                <tr key={profile.slug} className="border-b border-border-subtle last:border-0">
                   <th scope="row" className="px-4 py-3 text-left">
                     <span className="block font-bold text-text-primary">
                       {t(profile.name, typedLocale)}

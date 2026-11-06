@@ -24,8 +24,8 @@ There is no backend, no database and no tracking. Everything is prerendered to f
 
 ## 🎯 Key Features
 
-- 🧩 **Configurator** — Pick parts from a catalogue of 96 components and get live compatibility checks: socket, memory generation, VRM capacity, physical clearances and supply headroom, each explaining its reasoning
-- 🔩 **Components** — Every part carries a checked Polish price range with its date and live links to Ceneo, Allegro and Amazon.pl, with the specifications that actually decide a build: cooler height, card length, module height
+- 🧩 **Configurator** — Pick parts from a catalogue of 100 components and get live compatibility checks: socket, memory generation, VRM capacity, physical clearances and supply headroom, each explaining its reasoning
+- 🔩 **Components** — Every part carries a checked Polish price range with its date and live links to Ceneo, Allegro and Amazon.pl, and a price is hidden once its check is over 45 days old, with the specifications that actually decide a build: cooler height, card length, module height
 - 🖥️ **Platforms** — Five AMD and Intel sockets with chipset tables and an honest verdict on which are still worth buying into
 - ❄️ **Cooling** — Five cooling classes compared on heat handled, noise and price, with the trade-offs stated plainly
 - 📖 **Guides** — Fourteen step-by-step guides: assembly, first boot, BIOS, Windows and Linux installation, overclocking, quiet builds, diagnostics and maintenance
@@ -33,7 +33,7 @@ There is no backend, no database and no tracking. Everything is prerendered to f
 - 📰 **Articles** — Analysis, buying advice, news and explainers, with perishable pieces flagged by age rather than presented as current indefinitely
 - 💬 **Assistant** — A docked chat assistant answering from a local knowledge base, with no API key required and an optional LLM layered on top
 - 🌐 **Bilingual** — Every route exists in Polish and English with correct `hreflang`, `lang` and canonical URLs; Polish is the default
-- 🎨 **Visuals** — Technical SVG diagrams, licensed photography, gradient background patterns and scroll animations that degrade to nothing without JavaScript
+- 🎨 **Design** — Laid out as a hardware service manual: an interactive board drawing, a side index on guides, and datasheet tables, in both themes. See [Design](#-design)
 - ♿ **Accessible** — WCAG 2.2 Level AA in both light and dark themes, verified by an automated axe suite
 
 ---
@@ -49,6 +49,18 @@ There is no backend, no database and no tracking. Everything is prerendered to f
 | ![The build configurator, showing selected parts and a live compatibility summary](docs/screenshots/configurator.webp) | ![An assembly guide with a sticky table of contents and technical diagrams](docs/screenshots/guide.webp) |
 
 Both themes meet WCAG 2.2 AA, and the choice survives a language switch.
+
+---
+
+## 🎨 Design
+
+ZbudujKompa reads as a hardware service manual printed on a circuit board. That follows from what the site is: a reference someone keeps open while building.
+
+- **The board.** The home page opens on a drawing of an ATX board with the real 305 × 244 mm proportions, and its gold edge connector is the way into the site. Each finger is a link, and a copper trace runs from it to the part it covers. Hovering or focusing either end lights the whole net using CSS `:has()`, so it needs no script. The drawing, the annotated [`MotherboardMap`](src/components/diagrams/MotherboardMap.tsx) and the configurator's status board all read one table, [`boardLayout.ts`](src/components/diagrams/boardLayout.ts).
+- **Substrate and metal.** The page is pale drawing paper in the light theme and deep solder mask in the dark one. Copper is the accent and gold marks contacts. A block marked `.mask` is always a board, whichever theme is active: the class redefines the semantic tokens for its subtree, so components work on it unchanged.
+- **Type.** [Sofia Sans](https://github.com/lettersoup/Sofia-Sans), which comes from DIN engineering lettering, is used for reading. [Martian Mono](https://github.com/evilmartians/mono) is used for headings, figures and references. Both are woff2 subsets with the Polish letters, 19 KB and 10 KB, served from this site. Their licence is in [`src/fonts/OFL.txt`](src/fonts/OFL.txt).
+- **Documentation layout.** Home page sections are numbered chapters with the title in the margin. Guides and articles keep a side index beside the text that marks the section being read. Procedures are numbered steps joined by one trace. Part lists are bills of materials with part numbers, not card grids, and tables are datasheets. The footer is a drawing's title block.
+- **Motion.** There is one moment: on load the traces route themselves from the connector to the parts. The finished drawing is the resting state, so with reduced motion or stopped animations you simply see it.
 
 ---
 
@@ -154,13 +166,15 @@ Copy [`.env.example`](.env.example) to `.env.local`. Every variable is compiled 
 
 ## 💰 Prices
 
-The site is static, so it cannot show live prices. Instead each price is checked on a known day and that day is shown beside it. Once a check is more than 45 days old, the reader's browser adds a warning that the price may be out of date. Live links per part open the current search on Ceneo, Allegro and Amazon.pl, with no affiliate tags.
+The site is static, so it cannot show live prices. Instead each price is checked on a known day and that day is shown beside it. Once a check is more than 45 days old the price is not shown at all: the figure and every total that includes it are replaced by "Check current price" and the live links. Live links per part open the current search on Ceneo, Allegro and Amazon.pl, with no affiliate tags.
 
 **What a range means:** the low end is the lowest sensible price for a new unit, usually the Ceneo lowest with several shops behind it. The high end is the typical in-stock price at a mainstream shop. For cards with many models, that is the median of the listings seen, taking the lower middle value of an even set, so a range only holds prices a shop displayed.
 
-**Where the data is:** [`src/lib/parts/prices.ts`](src/lib/parts/prices.ts) is the only place a price is written. Each record has `min`, `max`, `checkedAt` and `sources`, plus an optional `note` on how the figures were chosen. Cooling class ranges are there too, as `class:` records.
+**How the age limit is enforced:** every figure goes through one component, [`Price`](src/components/parts/Price.tsx), and a total carries the oldest date among its parts. The limit is applied three times. The build judges the static HTML against its own date, and a daily scheduled deploy keeps that current. The browser judges it again against the reader's clock. A small head script hides expired figures before the first paint, so they never show while the page hydrates. Budget logic, such as the automatic build and the upgrade calculator, keeps using stored values and labels them as an estimate. A total of many parts shows the prompt alone, with the live links next to each of its parts or, on the builds overview, on the build's own page.
 
-**Parts with no price:** when a part is discontinued, never released, or has no credible offer, its `min` and `max` are `null` and `reason` says why. The interface shows "No price", autopick skips the part, and totals state how many parts they exclude. Out-of-stock prices are not used as evidence, because they turned out to be stale.
+**Where the data is:** [`src/lib/parts/prices.ts`](src/lib/parts/prices.ts) is the only place a price is written. Each record has `min`, `max`, `tier`, `checkedAt` and `sources`, plus an optional `note` on how the figures were chosen. Cooling class ranges are there too, as `class:` records.
+
+**Parts with no price:** when a part is discontinued or has no credible offer, its `min` and `max` are `null` and `reason` says why. The interface shows "No price", autopick skips the part, and totals state how many parts they exclude. Out-of-stock prices are not used as evidence, because they turned out to be stale.
 
 ### Data sources
 
@@ -174,14 +188,16 @@ The site is static, so it cannot show live prices. Instead each price is checked
 
 ### How to refresh
 
-**By hand:** check each part, edit `src/lib/parts/prices.ts`, and set `checkedAt`. If a price leaves its category's range, reassess `tier` in the part's file. A large market move also has to go into `BUDGET_SPLIT` in `src/lib/parts/autopick.ts`.
+**By hand:** check each part, edit `src/lib/parts/prices.ts`, and set `checkedAt`. If a price leaves its tier's limits in [`price-tiers.ts`](src/lib/parts/price-tiers.ts), update `tier` in the same record. A large market move also has to go into `BUDGET_SPLIT` in `src/lib/parts/autopick.ts`.
 
 **Automatically:** create a free account at [SerpApi](https://serpapi.com/), then add the key as a repository secret named `SERPAPI_KEY`. `.github/workflows/update-prices.yml` then runs on the 3rd of each month, or on demand from the Actions tab. Without the secret it exits cleanly and changes nothing.
 
-- The free plan allows 250 searches a month and 50 an hour. The catalogue uses one search per priced part, so a run fits the month and waits 75 seconds between searches to fit the hour. That makes a run take about 105 minutes.
-- For each part the script keeps Polish-priced offers whose title really is that part, drops used stock, foreign marketplaces and outliers, then writes the lowest remaining offer and the median. A part with fewer than three matches keeps its previous record and date, and the site's date stays on the oldest check, so a failed part shows up as a warning rather than as a false date.
-- It commits only when a number changed, then starts a deploy.
-- Unavailable parts and `manual` records are skipped, so a part that returns to shops has to be restored by hand.
+- The free plan allows 250 searches a month and 50 an hour. The catalogue uses one search per part, so a run fits the month and waits 75 seconds between searches to fit the hour. That makes a run take about two hours.
+- For each part the script keeps Polish-priced offers whose title really is that part, drops used stock, foreign marketplaces and outliers, then writes the lowest remaining offer and the median. A part with fewer than three matches keeps its previous record and date, so it reaches the age limit and is hidden rather than given a false date.
+- A part whose typical price leaves its tier by more than 10 percent moves to the tier that fits. The limits per category are in [`price-tiers.ts`](src/lib/parts/price-tiers.ts).
+- A part with no price is restored once at least five reliable offers return. Priced parts are searched first, so a quota that runs out costs restorations rather than prices on show. `manual` records are skipped.
+- A run that refreshes fewer than half of the priced parts writes nothing, so a broken key or feed cannot overwrite good data. A run that stops later keeps what it found. Either way, when the key exists and the refresh failed, the workflow ends in failure.
+- Otherwise it commits the file, dates included, then starts a deploy.
 
 Before relying on it, do one supervised run and review the diff: the parsing is tested against a [hand-written sample](tests/fixtures/serpapi-google-shopping.sample.json) shaped from the documentation, and the Polish price format in it is an assumption. On the free plan, SerpApi's Legal Shield does not apply, and its terms leave responsibility for how the data is used with you. Google's DMCA suit against SerpApi was dismissed in July 2026 with leave to amend, so check where that stands.
 
@@ -229,8 +245,8 @@ The site targets WCAG 2.2 Level AA. [`tests/a11y.spec.mjs`](tests/a11y.spec.mjs)
 - Every text/background pair is documented with its measured contrast ratio in [`globals.css`](src/app/globals.css), so a future change can be checked against the number it has to beat.
 - Colour is never the sole carrier of meaning: every status pairs colour with an icon and a text label.
 - Focus is always visible, meets the 3:1 indicator contrast of SC 2.4.13, and returns to the triggering control when a panel closes.
-- `prefers-reduced-motion`, `prefers-contrast` and `forced-colors` are all honoured. Scroll animations are gated on JavaScript being available, so content is never left invisible.
-- Interactive targets meet the 44×44 minimum of SC 2.5.8.
+- `prefers-reduced-motion`, `prefers-contrast` and `forced-colors` are all honoured. Nothing depends on animation to become visible.
+- Interactive targets meet the 24×24 minimum of SC 2.5.8.
 - An in-page [accessibility panel](src/components/layout/AccessibilityPanel.tsx) exposes the preferences directly, with its own suite in `tests/accessibility-panel.spec.mjs`.
 
 An accessibility panel in the corner of every page changes text size, contrast, font and motion, and remembers the choice on the device. It sits on top of the markup and does not replace accessible markup.
@@ -243,7 +259,7 @@ Automated testing catches roughly a third of accessibility problems. Passing the
 
 ```bash
 npm run verify   # secrets, typecheck, lint, formatting, build
-npm run test     # chat, compatibility, calculators, prices, theme, a11y panel, interaction, accessibility
+npm run test     # chat, compatibility, calculators, prices, theme, a11y panel, price age, interaction, accessibility
 ```
 
 The browser suites need a built site running — `npm run build && npm run serve` first, or point them elsewhere with `TEST_BASE_URL`.
@@ -251,15 +267,16 @@ The browser suites need a built site running — `npm run build && npm run serve
 | Suite                                | Covers                                                                                  |
 | ------------------------------------ | --------------------------------------------------------------------------------------- |
 | `tests/chat.spec.mjs`                | Question matching in both languages, including off-topic questions that must be refused |
-| `tests/compatibility.spec.mjs`       | The configurator engine: sockets, memory, power, physical fit                           |
+| `tests/compatibility.spec.mjs`       | The configurator engine, and that every reference build fits and can be bought          |
 | `tests/calculators.spec.mjs`         | Every calculator formula, without a browser                                             |
-| `tests/prices.spec.mjs`              | Price data integrity, unpriced parts, the age warning, and the SerpApi parsing          |
+| `tests/prices.spec.mjs`              | Price data integrity, the age limit, tiers, and the refresh, with its refusal rules     |
+| `tests/price-age.spec.mjs`           | With a shifted clock, that no expired figure is shown, even before hydration            |
 | `tests/theme.spec.mjs`               | Theme persistence across language switches, and no flash on load                        |
 | `tests/accessibility-panel.spec.mjs` | The in-page accessibility preferences panel                                             |
 | `tests/interaction.spec.mjs`         | Menu, assistant, calculators, glossary filter                                           |
 | `tests/a11y.spec.mjs`                | axe against every section, in both themes                                               |
 
-Individual suites are also available as `npm run test:chat`, `test:compat`, `test:calc`, `test:prices`, `test:theme`, `test:a11ypanel`, `test:interaction` and `test:a11y`.
+Individual suites are also available as `npm run test:chat`, `test:compat`, `test:calc`, `test:prices`, `test:theme`, `test:a11ypanel`, `test:priceage`, `test:interaction` and `test:a11y`.
 
 ---
 
@@ -284,12 +301,13 @@ ZbudujKompa/
 │   │   ├── blog/          # Article rendering
 │   │   ├── chat/          # Build assistant
 │   │   ├── configurator/  # Part pickers, browser and comparison
-│   │   ├── diagrams/      # Technical SVG drawings
+│   │   ├── diagrams/      # Technical SVG drawings and the shared board layout
+│   │   ├── guides/        # Side index and checklist
 │   │   ├── layout/        # Header, footer, theme, language, accessibility panel
-│   │   ├── motion/        # Scroll-reveal wrapper
-│   │   ├── parts/         # Price check date and live price links
+│   │   ├── parts/         # The expiring price, its check date and live price links
 │   │   ├── tools/         # Calculators and utilities
 │   │   └── ui/            # Buttons, badges, cards, photos, icons
+│   ├── fonts/             # Self-hosted font subsets and their licence
 │   ├── i18n/              # Locale config and PL/EN dictionaries
 │   └── lib/
 │       ├── parts/         # Component catalogue, price data and compatibility engine
@@ -298,7 +316,7 @@ ZbudujKompa/
 │       ├── guides/        # Guide content, split by subject
 │       ├── calculators.ts # Every formula, testable without a browser
 │       └── theme.ts       # Theme resolution and persistence
-└── tests/                 # Chat, compatibility, calculators, theme, interaction, a11y
+└── tests/                 # Chat, compatibility, calculators, prices, theme, interaction, a11y
 ```
 
 ### Three decisions worth knowing

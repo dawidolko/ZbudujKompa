@@ -99,34 +99,37 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
       {byTier.map((group) => (
         <section key={group.tier} className="container-page pb-12">
           <SectionHeading title={dict.configurator.tier[group.tier]} id={`tier-${group.tier}`} />
-          <ul className="grid gap-3 md:grid-cols-2">
+          <ul className="bom-list">
             {group.items.map((part) => (
-              <li key={part.id}>
-                <article className="hover-lift flex h-full flex-col rounded-lg border border-border-subtle bg-surface p-4">
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <h3 className="font-display font-bold text-text-primary">
+              <li key={part.id} className="bom-row">
+                <article className="grid gap-x-8 gap-y-2 py-4 pl-3 md:grid-cols-[minmax(0,1fr)_18rem]">
+                  <div className="min-w-0">
+                    <p className="spec-label">P/N {part.id}</p>
+                    <h3 className="mt-0.5 text-lg h-sans text-text-primary">
                       {part.brand} {part.name}
                     </h3>
-                    <div className="text-sm font-semibold text-accent-fg">
+                    <p className="mt-1 max-w-2xl text-sm text-text-secondary">
+                      {t(part.note, typedLocale)}
+                    </p>
+                    {part.url ? (
+                      <a
+                        href={part.url}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="mt-2 inline-flex items-center gap-1.5 rounded-xs text-xs font-semibold text-text-brand underline underline-offset-2 focus-ring"
+                      >
+                        {dict.common.learnMore}
+                        <ExternalIcon className="size-3" aria-hidden="true" />
+                        <span className="sr-only">({dict.common.externalLink})</span>
+                      </a>
+                    ) : null}
+                  </div>
+                  <div>
+                    <div className="font-display text-sm font-semibold text-accent-fg">
                       <Price range={part.price} locale={typedLocale} />
                     </div>
+                    <PartPriceDetails part={part} locale={typedLocale} className="mt-1.5" />
                   </div>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">
-                    {t(part.note, typedLocale)}
-                  </p>
-                  <PartPriceDetails part={part} locale={typedLocale} className="mt-3" />
-                  {part.url ? (
-                    <a
-                      href={part.url}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="mt-3 inline-flex items-center gap-1.5 self-start rounded-xs text-xs font-semibold text-text-brand underline underline-offset-2 focus-ring"
-                    >
-                      {dict.common.learnMore}
-                      <ExternalIcon className="size-3" aria-hidden="true" />
-                      <span className="sr-only">({dict.common.externalLink})</span>
-                    </a>
-                  ) : null}
                 </article>
               </li>
             ))}

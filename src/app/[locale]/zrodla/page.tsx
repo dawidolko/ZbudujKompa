@@ -77,7 +77,7 @@ export default async function ResourcesPage({ params }: { params: Promise<Params
                     href={resource.url}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
-                    className="flex h-full flex-col gap-2 rounded-lg border border-border-subtle bg-surface p-4 transition-colors hover:border-border-brand focus-ring"
+                    className="flex h-full flex-col gap-2 footprint p-4 transition-colors hover:border-border-brand focus-ring"
                   >
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="font-semibold text-text-primary">{resource.name}</span>

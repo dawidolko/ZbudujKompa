@@ -37,12 +37,6 @@ export default function GlobalNotFound() {
       </head>
       <body>
         <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-4 py-20 text-center">
-          {/* Layered backdrop, matching the heroes elsewhere on the site. */}
-          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <div className="bg-accent-glow absolute inset-0 opacity-60" />
-            <div className="bg-circuit-traces animate-drift absolute inset-0" />
-          </div>
-
           <div className="relative">
             {/* Decorative: the heading below carries the meaning, so a screen
                 reader gains nothing from the drawing. */}
@@ -58,7 +52,7 @@ export default function GlobalNotFound() {
                 y="8"
                 width="108"
                 height="104"
-                rx="6"
+                rx="2"
                 stroke="var(--border-strong)"
                 strokeWidth="2"
               />
@@ -109,7 +103,7 @@ export default function GlobalNotFound() {
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 href={localePath(defaultLocale)}
-                className="inline-flex h-11 items-center rounded-sm bg-accent px-6 text-sm font-semibold tracking-wide text-text-on-brand uppercase transition-colors hover:bg-accent-hover focus-ring"
+                className="inline-flex h-11 items-center rounded-xs bg-accent px-6 text-sm font-bold text-text-on-brand transition-colors btn-pin hover:bg-accent-hover focus-ring"
               >
                 {dict.common.notFoundAction}
               </Link>

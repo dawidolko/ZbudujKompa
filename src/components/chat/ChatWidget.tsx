@@ -187,8 +187,8 @@ export function ChatWidget({ locale }: { locale: Locale }) {
         hidden={open}
         className={cn(
           'fixed right-4 bottom-4 z-50 inline-flex size-14 items-center justify-center',
-          'rounded-full bg-accent text-text-on-brand shadow-lg transition-transform',
-          'hover:scale-105 focus-ring md:right-6 md:bottom-6',
+          'btn-pin bg-accent text-text-on-brand shadow-lg transition-colors',
+          'hover:bg-accent-hover focus-ring md:right-6 md:bottom-6',
         )}
       >
         <ChatIcon className="size-6" />
@@ -205,11 +205,13 @@ export function ChatWidget({ locale }: { locale: Locale }) {
         className={cn(
           'fixed right-0 bottom-0 z-50 flex h-[min(32rem,100dvh)] w-full flex-col',
           'border border-border-default bg-surface-raised shadow-lg',
-          'md:right-6 md:bottom-6 md:h-[32rem] md:w-96 md:rounded-lg',
+          'md:right-6 md:bottom-6 md:h-[32rem] md:w-96',
         )}
       >
-        <div className="flex items-center justify-between border-b border-border-subtle px-4 py-3">
-          <h2 className="font-display text-sm font-bold text-text-primary">{dict.chat.title}</h2>
+        <div className="mask flex items-center justify-between px-4 py-2">
+          <h2 className="font-display text-sm font-semibold text-text-primary">
+            {dict.chat.title}
+          </h2>
           <div className="flex items-center gap-1">
             {/* Only offered once there is something to clear. */}
             {messages.length > 1 ? (
@@ -284,9 +286,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
 
           {messages.length === 1 ? (
             <div className="pt-2">
-              <p className="mb-2 text-xs font-semibold tracking-wide text-text-muted uppercase">
-                {dict.chat.suggestions}
-              </p>
+              <p className="mb-2 spec-label">{dict.chat.suggestions}</p>
               <ul className="flex flex-wrap gap-1.5">
                 {suggestedQuestions[locale].map((question) => (
                   <li key={question}>

@@ -4,9 +4,9 @@ import { AlertIcon, CheckIcon, InfoIcon } from './Icon';
 type Tone = 'info' | 'warning' | 'success';
 
 const tones: Record<Tone, { wrapper: string; icon: string }> = {
-  info: { wrapper: 'border-info/35 bg-info/8', icon: 'text-info' },
-  warning: { wrapper: 'border-warning/40 bg-warning/8', icon: 'text-warning' },
-  success: { wrapper: 'border-success/35 bg-success/8', icon: 'text-success' },
+  info: { wrapper: 'border-info', icon: 'text-info' },
+  warning: { wrapper: 'border-warning', icon: 'text-warning' },
+  success: { wrapper: 'border-success', icon: 'text-success' },
 };
 
 const icons: Record<Tone, typeof InfoIcon> = {
@@ -36,17 +36,17 @@ export function Callout({
   const Icon = icons[tone];
 
   return (
-    <aside className={cn('rounded-md border p-4', tones[tone].wrapper, className)}>
+    <div role="note" className={cn('border-l-4 py-1 pl-4', tones[tone].wrapper, className)}>
       <p
         className={cn(
-          'mb-1.5 flex items-center gap-2 text-xs font-bold tracking-wide uppercase',
+          'mb-1 flex items-center gap-2 font-mono text-xs font-semibold',
           tones[tone].icon,
         )}
       >
         <Icon className="size-4" />
         {label}
       </p>
-      <div className="text-sm leading-relaxed text-text-secondary">{children}</div>
-    </aside>
+      <div className="text-sm text-text-secondary">{children}</div>
+    </div>
   );
 }

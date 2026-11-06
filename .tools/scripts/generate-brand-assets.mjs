@@ -19,11 +19,11 @@ const here = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(here, '..', '..', 'public');
 
 /* Brand colours, kept in step with the tokens in globals.css. */
-const CYAN = '#06b6d4';
-const CYAN_LIGHT = '#22d3ee';
-const GRAPHITE = '#0d0f13';
-const GRAPHITE_MID = '#191c23';
-const WHITE = '#f6f8f9';
+const COPPER = '#e8a46c';
+const COPPER_LIGHT = '#f2b788';
+const MASK = '#0f4a39';
+const MASK_MID = '#0b3d2f';
+const WHITE = '#f3f7ef';
 
 /**
  * The logo mark: a CPU die with contact pins and a build arrow rising through
@@ -60,7 +60,7 @@ function markSvg({ size = 512, background = 'transparent', padding = 0.16 } = {}
   <rect x="${u(5)}" y="${u(5)}" width="${s(22)}" height="${s(22)}" rx="${s(3.5)}"
         fill="none" stroke="${WHITE}" stroke-width="${s(2)}"/>
   <path d="M ${u(16)} ${u(21.5)} V ${u(11.5)} M ${u(16)} ${u(11.5)} L ${u(11.5)} ${u(16)} M ${u(16)} ${u(11.5)} L ${u(20.5)} ${u(16)}"
-        fill="none" stroke="${CYAN}" stroke-width="${s(2.5)}"
+        fill="none" stroke="${COPPER}" stroke-width="${s(2.5)}"
         stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 }
@@ -69,10 +69,10 @@ function markSvg({ size = 512, background = 'transparent', padding = 0.16 } = {}
 function faviconSvg() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <style>
-    /* The mark is drawn in the graphite ink by default and switches to the
+    /* The mark is drawn in the board green by default and switches to the
        light tone when the browser chrome is dark, so it stays visible in both. */
-    .ink { fill: ${GRAPHITE}; }
-    .stroke-ink { stroke: ${GRAPHITE}; }
+    .ink { fill: ${MASK}; }
+    .stroke-ink { stroke: ${MASK}; }
     @media (prefers-color-scheme: dark) {
       .ink { fill: ${WHITE}; }
       .stroke-ink { stroke: ${WHITE}; }
@@ -93,7 +93,7 @@ function faviconSvg() {
     <rect x="27" y="20" width="4" height="2" rx="0.5"/>
   </g>
   <rect x="5" y="5" width="22" height="22" rx="3.5" fill="none" class="stroke-ink" stroke-width="2"/>
-  <path d="M16 21.5V11.5M16 11.5L11.5 16M16 11.5L20.5 16" fill="none" stroke="${CYAN}"
+  <path d="M16 21.5V11.5M16 11.5L11.5 16M16 11.5L20.5 16" fill="none" stroke="${COPPER}"
         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 }
@@ -108,12 +108,12 @@ function ogSvg() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${GRAPHITE}"/>
-      <stop offset="100%" stop-color="${GRAPHITE_MID}"/>
+      <stop offset="0%" stop-color="${MASK}"/>
+      <stop offset="100%" stop-color="${MASK_MID}"/>
     </linearGradient>
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="${CYAN}"/>
-      <stop offset="100%" stop-color="${CYAN_LIGHT}"/>
+      <stop offset="0%" stop-color="${COPPER}"/>
+      <stop offset="100%" stop-color="${COPPER_LIGHT}"/>
     </linearGradient>
     <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
       <path d="M44 0H0V44" fill="none" stroke="${WHITE}" stroke-opacity="0.05" stroke-width="1"/>
@@ -131,7 +131,7 @@ function ogSvg() {
   </g>
 
   <text x="80" y="360" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="700" fill="${WHITE}">
-    Zbuduj<tspan fill="${CYAN_LIGHT}">Kompa</tspan>
+    Zbuduj<tspan fill="${COPPER_LIGHT}">Kompa</tspan>
   </text>
   <text x="80" y="424" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="${WHITE}" opacity="0.72">
     Złóż komputer bez zgadywania
@@ -139,7 +139,7 @@ function ogSvg() {
   <text x="80" y="470" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="${WHITE}" opacity="0.5">
     Platformy · Chłodzenie · Zestawy · Poradniki
   </text>
-  <text x="80" y="560" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="${CYAN_LIGHT}">
+  <text x="80" y="560" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="${COPPER_LIGHT}">
     zbudujkompa.dawidolko.pl
   </text>
 </svg>`;
@@ -154,7 +154,7 @@ async function main() {
      it is supported, and the PNGs below only exist as a fallback. */
   await writeFile(join(publicDir, 'favicon.svg'), faviconSvg(), 'utf8');
 
-  const iconSource = Buffer.from(markSvg({ size: 512, background: GRAPHITE }));
+  const iconSource = Buffer.from(markSvg({ size: 512, background: MASK }));
 
   const targets = [
     { file: 'favicon-96.png', size: 96 },

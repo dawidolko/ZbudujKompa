@@ -100,9 +100,9 @@ export default async function BrandPage({ params }: { params: Promise<Params> })
           <ul className="grid gap-3 md:grid-cols-2">
             {group.items.map((part) => (
               <li key={part.id}>
-                <article className="flex h-full flex-col rounded-lg border border-border-subtle bg-surface p-4">
+                <article className="flex h-full flex-col footprint p-4">
                   <div className="flex flex-wrap items-start justify-between gap-2">
-                    <h3 className="font-display font-bold text-text-primary">{part.name}</h3>
+                    <h3 className="h-sans text-text-primary">{part.name}</h3>
                     <Badge tone="neutral">{dict.configurator.tier[part.tier]}</Badge>
                   </div>
                   <div className="mt-1 text-sm font-semibold text-accent-fg">

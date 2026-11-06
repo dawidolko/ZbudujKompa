@@ -58,9 +58,7 @@ export default async function PartsPage({ params }: { params: Promise<Params> })
         <SectionHeading title={dict.parts.browseBy} id="browse" />
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.parts.filterCategory}
-            </h3>
+            <h3 className="mb-2 spec-label">{dict.parts.filterCategory}</h3>
             <ul className="flex flex-wrap gap-2">
               {categoryOrder.map((category) => (
                 <li key={category}>
@@ -76,9 +74,7 @@ export default async function PartsPage({ params }: { params: Promise<Params> })
           </div>
 
           <div>
-            <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.parts.filterBrand}
-            </h3>
+            <h3 className="mb-2 spec-label">{dict.parts.filterBrand}</h3>
             <ul className="flex flex-wrap gap-2">
               {getBrands().map(({ brand, count }) => (
                 <li key={brand}>

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
-import { Reveal } from '@/components/motion/Reveal';
 import { EnergyCostCalculator } from '@/components/tools/calculators/EnergyCost';
 import { NoiseCalculator } from '@/components/tools/calculators/NoiseCalculator';
 import { DisplayCalculator } from '@/components/tools/calculators/DisplayCalculator';
@@ -178,25 +177,11 @@ export default async function CalculatorsPage({ params }: { params: Promise<Para
         </ul>
       </nav>
 
-      {sections.map((section, index) => (
-        <section
-          key={section.id}
-          id={section.id}
-          className={
-            index % 2 === 1
-              ? 'relative scroll-mt-24 border-y border-border-subtle bg-bg-subtle'
-              : 'scroll-mt-24'
-          }
-        >
-          {index % 2 === 1 ? (
-            <div
-              className="bg-dots pointer-events-none absolute inset-0 opacity-40"
-              aria-hidden="true"
-            />
-          ) : null}
-          <div className="container-page relative py-14">
+      {sections.map((section) => (
+        <section key={section.id} id={section.id} className="scroll-mt-24">
+          <div className="container-page py-10">
             <SectionHeading title={section.title} lead={section.lead} />
-            <Reveal>{section.render}</Reveal>
+            {section.render}
           </div>
         </section>
       ))}

@@ -127,7 +127,7 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
       {/* ---- Inputs ---- */}
-      <div className="space-y-5 rounded-lg border border-border-subtle bg-surface p-5 md:p-6">
+      <div className="space-y-5 footprint p-5 md:p-6">
         <div>
           <label
             htmlFor={`${fieldId}-socket`}
@@ -232,8 +232,8 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
       </div>
 
       {/* ---- Result ---- */}
-      <div className="rounded-lg border border-border-subtle bg-bg-subtle p-5 md:p-6">
-        <h2 className="font-display mb-4 text-sm font-bold tracking-wide text-text-primary uppercase">
+      <div className="border border-border-strong p-5 md:p-6">
+        <h2 className="font-display mb-4 text-sm font-semibold text-text-primary">
           {dict.tools.compatibility.resultTitle}
         </h2>
 

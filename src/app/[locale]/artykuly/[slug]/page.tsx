@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { ArticleBody } from '@/components/blog/ArticleBody';
+import { SideIndex } from '@/components/guides/SideIndex';
 import { Badge } from '@/components/ui/Badge';
 import { Callout } from '@/components/ui/Callout';
 import { LinkCard } from '@/components/ui/Card';
@@ -141,42 +142,30 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         }
       />
 
-      <div className="container-page grid gap-10 pb-14 lg:grid-cols-[16rem_minmax(0,1fr)]">
-        {/* ---- Table of contents and tags ---- */}
-        <aside aria-label={dict.nav.onThisPage} className="lg:sticky lg:top-24 lg:self-start">
+      <div className="container-page grid gap-8 pb-14 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12">
+        {/* ---- Side index and tags ---- */}
+        <aside aria-label={dict.blog.tags} className="lg:sticky lg:top-20 lg:self-start">
           {headings.length > 1 ? (
-            <nav aria-labelledby="article-toc" className="mb-8">
-              <h2
-                id="article-toc"
-                className="mb-3 text-xs font-bold tracking-wide text-text-muted uppercase"
-              >
-                {dict.nav.onThisPage}
-              </h2>
-              <ol className="space-y-1 border-l border-border-subtle">
-                {headings.map((heading) => (
-                  <li key={heading.id}>
-                    <a
-                      href={`#${heading.id}`}
-                      className="block rounded-xs py-1.5 pl-3 text-sm text-text-secondary transition-colors hover:text-text-brand focus-ring"
-                    >
-                      {t(heading.text, typedLocale)}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+            <div className="mb-6">
+              <SideIndex
+                headingId="article-toc"
+                items={headings.map((heading) => ({
+                  id: heading.id,
+                  title: t(heading.text, typedLocale),
+                }))}
+                locale={typedLocale}
+              />
+            </div>
           ) : null}
 
           <div>
-            <h2 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">
-              {dict.blog.tags}
-            </h2>
+            <h2 className="spec-label mb-2">{dict.blog.tags}</h2>
             <ul className="flex flex-wrap gap-1.5">
               {article.tags.map((tag) => (
                 <li key={tag}>
                   <Link
                     href={localePath(typedLocale, `/artykuly/tag/${slugify(tag)}`)}
-                    className="inline-flex rounded-xs border border-border-default px-2 py-1 text-xs text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary focus-ring"
+                    className="inline-flex border border-border-default px-2 py-1 font-mono text-xs text-text-secondary transition-colors hover:border-border-brand hover:text-text-primary focus-ring"
                   >
                     {tag}
                   </Link>

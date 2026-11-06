@@ -130,7 +130,7 @@ export default async function AboutPage({ params }: { params: Promise<Params> })
             { term: dict.home.statsBuilds, value: builds.length },
           ].map((stat) => (
             <div key={stat.term} className="bg-surface p-4">
-              <dt className="text-xs tracking-wide text-text-muted uppercase">{stat.term}</dt>
+              <dt className="spec-label">{stat.term}</dt>
               <dd className="font-display mt-1 text-2xl font-extrabold text-text-primary">
                 {stat.value}
               </dd>

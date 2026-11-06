@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ChevronRightIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import { localePath, type Locale } from '@/i18n/config';
 import { absoluteLocaleUrl } from '@/lib/site';
@@ -26,14 +25,10 @@ export function Breadcrumbs({ locale, items }: { locale: Locale; items: Crumb[] 
 
   return (
     <>
-      {/* Negative bottom margin pulls the following PageHeader up so its
-          backdrop starts behind this trail rather than below it — otherwise the
-          hero reads as a detached band with the breadcrumb floating above. */}
-      <nav
-        aria-label={dict.nav.breadcrumb}
-        className="container-page relative z-10 -mb-11 pt-6 md:-mb-14"
-      >
-        <ol className="flex flex-wrap items-center gap-1.5 text-sm">
+      {/* On the same board as the PageHeader below it, so the two read as one
+          block with the path printed along its top edge. */}
+      <nav aria-label={dict.nav.breadcrumb} className="mask">
+        <ol className="container-page flex flex-wrap items-center gap-x-1.5 gap-y-1 pt-4 font-mono text-xs">
           {trail.map((crumb, index) => {
             const isLast = index === trail.length - 1;
 
@@ -43,17 +38,19 @@ export function Breadcrumbs({ locale, items }: { locale: Locale; items: Crumb[] 
                 className="flex items-center gap-1.5"
               >
                 {index > 0 ? (
-                  <ChevronRightIcon className="size-3.5 shrink-0 text-text-muted" />
+                  <span aria-hidden="true" className="text-text-muted">
+                    /
+                  </span>
                 ) : null}
 
                 {isLast || !crumb.href ? (
-                  <span aria-current="page" className="font-medium text-text-primary">
+                  <span aria-current="page" className="text-text-primary">
                     {crumb.label}
                   </span>
                 ) : (
                   <Link
                     href={localePath(locale, crumb.href)}
-                    className="rounded-xs text-text-secondary transition-colors hover:text-text-brand focus-ring"
+                    className="inline-flex min-h-6 items-center rounded-xs text-text-secondary underline-offset-2 transition-colors hover:text-text-brand hover:underline focus-ring"
                   >
                     {crumb.label}
                   </Link>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useMemo, useState } from 'react';
+import { categoryRefs } from '@/components/diagrams/boardLayout';
 import { Price } from '@/components/parts/Price';
 import { usePriceStale } from '@/components/parts/usePriceStale';
 import { Badge } from '@/components/ui/Badge';
@@ -54,17 +55,19 @@ export function PartPicker({
   const tiers = useMemo(() => Array.from(new Set(parts.map((part) => part.tier))), [parts]);
 
   return (
-    <div
-      className={cn(
-        'rounded-lg border bg-surface transition-colors',
-        conflicting ? 'border-danger' : 'border-border-subtle',
-      )}
-    >
-      <div className="flex flex-wrap items-center gap-3 p-4">
+    <div className={cn('border-l-4', conflicting ? 'border-l-danger' : 'border-l-transparent')}>
+      <div className="flex flex-wrap items-center gap-3 p-3 md:px-4">
+        <span
+          aria-hidden="true"
+          className={cn(
+            'spec-label w-12 shrink-0 self-start pt-0.5',
+            chosen ? 'text-accent-fg' : undefined,
+          )}
+        >
+          {categoryRefs[category]}
+        </span>
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold tracking-wide text-text-muted uppercase">
-            {dict.configurator.category[category]}
-          </p>
+          <p className="spec-label">{dict.configurator.category[category]}</p>
           <p className="mt-0.5 truncate font-semibold text-text-primary">
             {chosen ? `${chosen.brand} ${chosen.name}` : dict.configurator.notChosen}
           </p>
@@ -102,7 +105,11 @@ export function PartPicker({
         </button>
       </div>
 
-      <div id={groupId} hidden={!open} className="border-t border-border-subtle p-4">
+      <div
+        id={groupId}
+        hidden={!open}
+        className="border-t border-border-subtle bg-bg-subtle p-3 md:p-4"
+      >
         {tiers.length > 1 ? (
           <div className="mb-4 flex flex-wrap gap-1.5">
             <FilterChip
