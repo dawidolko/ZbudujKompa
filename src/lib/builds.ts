@@ -1,6 +1,6 @@
 import { priceQueries } from './parts/price-queries.ts';
 import { priceOf, sumPrices } from './parts/pricing.ts';
-import type { PriceRange, PriceTotal } from './parts/types.ts';
+import type { BuildSelection, PriceRange, PriceTotal } from './parts/types.ts';
 import type { Build, BuildPart } from './types';
 
 /**
@@ -80,7 +80,7 @@ export const builds: Build[] = [
       },
       {
         kind: 'psu',
-        name: 'be quiet! System Power 10 550 W 80+ Bronze',
+        name: 'be quiet! System Power 11 550 W 80+ Bronze',
         rationale: {
           pl: 'Na zasilaczu nie oszczędzaj. 550 W daje zapas, a marka z certyfikatem chroni resztę podzespołów.',
           en: 'The power supply is not the place to economise. 550 W leaves headroom, and a certified unit protects everything else.',
@@ -172,10 +172,10 @@ export const builds: Build[] = [
       },
       {
         kind: 'psu',
-        name: 'be quiet! Pure Power 12 M 750 W 80+ Gold',
+        name: 'be quiet! Pure Power 13 M 850 W 80+ Gold',
         rationale: {
-          pl: '750 W z zapasem na chwilowe skoki poboru karty graficznej. Modularne kable ułatwiają montaż.',
-          en: '750 W with headroom for the transient spikes modern GPUs produce. Modular cables ease assembly.',
+          pl: '850 W z zapasem na chwilowe skoki poboru karty graficznej. Modularne kable ułatwiają montaż.',
+          en: '850 W with headroom for the transient spikes modern GPUs produce. Modular cables ease assembly.',
         },
       },
       {
@@ -280,7 +280,7 @@ export const builds: Build[] = [
       },
       {
         kind: 'cooler',
-        name: 'Arctic Liquid Freezer III 360',
+        name: 'Arctic Liquid Freezer III Pro 360',
         rationale: {
           pl: 'Chłodnica 360 mm utrzymuje taktowania przy obciążeniu wszystkich rdzeni przez godziny.',
           en: 'A 360 mm radiator holds clocks through hours of all-core load.',
@@ -324,10 +324,10 @@ export const builds: Build[] = [
       },
       {
         kind: 'motherboard',
-        name: 'ASRock B650I Lightning WiFi',
+        name: 'Gigabyte B650I AX',
         rationale: {
-          pl: 'Mini-ITX na AM5 z solidnym zasilaniem. Wybór w tym formacie jest wąski, więc płytę dobiera się pierwszą.',
-          en: 'Mini-ITX on AM5 with solid power delivery. The choice in this form factor is narrow, so the board is picked first.',
+          pl: 'Najtańsza dostępna płyta Mini-ITX na AM5, a jej zasilanie wystarcza na 65-watowego 9700X. Wybór w tym formacie jest wąski, więc płytę dobiera się pierwszą.',
+          en: 'The cheapest Mini-ITX AM5 board in stock, and its power delivery is enough for a 65 W 9700X. The choice in this form factor is narrow, so the board is picked first.',
         },
       },
       {
@@ -416,10 +416,10 @@ export const builds: Build[] = [
       },
       {
         kind: 'motherboard',
-        name: 'ASRock B650M Pro RS',
+        name: 'Gigabyte B650I AX',
         rationale: {
-          pl: 'Micro-ATX z wyjściem HDMI 2.1, które jest tu wymogiem — starsze HDMI nie przepuści 4K przy 120 Hz.',
-          en: 'Micro-ATX with an HDMI 2.1 output, which is mandatory here — older HDMI cannot carry 4K at 120 Hz.',
+          pl: 'Node 304 przyjmuje tylko Mini-ITX. Płyta ma HDMI 2.1 do 4K przy 60 Hz, a DisplayPort 1.4 do 4K przy 144 Hz, jeśli potrzeba więcej.',
+          en: 'The Node 304 only takes Mini-ITX. This board has HDMI 2.1 up to 4K at 60 Hz, and DisplayPort 1.4 up to 4K at 144 Hz for anything faster.',
         },
       },
       {
@@ -440,10 +440,10 @@ export const builds: Build[] = [
       },
       {
         kind: 'psu',
-        name: 'be quiet! Pure Power 12 M 550 W 80+ Gold',
+        name: 'be quiet! Pure Power 13 M 650 W 80+ Gold',
         rationale: {
-          pl: 'Bez osobnej karty graficznej 550 W to duży zapas, a zasilacz pracujący przy jednej trzeciej obciążenia ma wentylator zatrzymany.',
-          en: 'With no discrete card 550 W is ample headroom, and a supply running at a third of its rating keeps its fan stopped.',
+          pl: 'Bez osobnej karty graficznej 650 W to duży zapas, a zasilacz pracujący przy jednej trzeciej obciążenia ma wentylator zatrzymany.',
+          en: 'With no discrete card 650 W is ample headroom, and a supply running at a third of its rating keeps its fan stopped.',
         },
       },
       {
@@ -524,7 +524,7 @@ export const builds: Build[] = [
       },
       {
         kind: 'psu',
-        name: 'be quiet! Pure Power 12 M 550 W 80+ Gold',
+        name: 'be quiet! Pure Power 13 M 650 W 80+ Gold',
         rationale: {
           pl: 'Przy pracy ciągłej sprawność zasilacza przekłada się wprost na rachunek. Certyfikat Gold zwraca się w ciągu kilku lat.',
           en: 'With a machine that never switches off, PSU efficiency shows up directly on the bill. A Gold rating pays for itself over a few years.',
@@ -540,7 +540,7 @@ export const builds: Build[] = [
       },
       {
         kind: 'cooler',
-        name: 'be quiet! Pure Rock 2',
+        name: 'Thermalright Peerless Assassin 120 SE',
         rationale: {
           pl: 'Ciche chłodzenie z dużym zapasem względem 65 W procesora, więc wentylator pracuje na najniższych obrotach.',
           en: 'A quiet cooler with generous headroom over the 65 W processor, so the fan sits at its lowest speed.',
@@ -566,7 +566,7 @@ const buildPartIds: Record<string, { id: string; quantity?: number }[]> = {
   'Kingston Fury Beast 16 GB (2×8) DDR4-3200 CL16': [{ id: 'fury-beast-16-3200' }],
   'AMD Radeon RX 7600 8 GB': [{ id: 'rx-7600' }],
   'Kingston NV3 1 TB NVMe PCIe 4.0': [{ id: 'nv3-1tb' }],
-  'be quiet! System Power 10 550 W 80+ Bronze': [{ id: 'system-power-10-550' }],
+  'be quiet! System Power 11 550 W 80+ Bronze': [{ id: 'system-power-11-550' }],
   'Fractal Design Focus 2': [{ id: 'focus-2' }],
   'Thermalright Assassin X 120 R SE': [{ id: 'assassin-x-120' }],
   'AMD Ryzen 7 7800X3D': [{ id: 'ryzen-7-7800x3d' }],
@@ -574,7 +574,7 @@ const buildPartIds: Record<string, { id: string; quantity?: number }[]> = {
   'G.Skill Flare X5 32 GB (2×16) DDR5-6000 CL30': [{ id: 'flare-x5-32-6000' }],
   'NVIDIA GeForce RTX 5070 12 GB': [{ id: 'rtx-5070' }],
   'Samsung 990 EVO Plus 2 TB NVMe': [{ id: '990-evo-plus-2tb' }],
-  'be quiet! Pure Power 12 M 750 W 80+ Gold': [{ id: 'pure-power-12m-750' }],
+  'be quiet! Pure Power 13 M 850 W 80+ Gold': [{ id: 'pure-power-13m-850' }],
   'Fractal Design North': [{ id: 'north' }],
   'Thermalright Peerless Assassin 120 SE': [{ id: 'peerless-assassin-120' }],
   'Intel Core Ultra 7 265K': [{ id: 'core-ultra-7-265k' }],
@@ -584,15 +584,16 @@ const buildPartIds: Record<string, { id: string; quantity?: number }[]> = {
   'Samsung 990 PRO 2 TB NVMe PCIe 4.0': [{ id: '990-pro-2tb' }],
   'Seasonic Focus GX-850 850 W 80+ Gold': [{ id: 'focus-gx-850' }],
   'Fractal Design Define 7': [{ id: 'define-7' }],
-  'Arctic Liquid Freezer III 360': [{ id: 'liquid-freezer-iii-360' }],
+  'Arctic Liquid Freezer III Pro 360': [{ id: 'liquid-freezer-iii-pro-360' }],
   'AMD Ryzen 7 9700X': [{ id: 'ryzen-7-9700x' }],
-  'ASRock B650I Lightning WiFi': [{ id: 'b650i-lightning' }],
+  'Gigabyte B650I AX': [{ id: 'b650i-ax' }],
   'NVIDIA GeForce RTX 5070 12 GB (wersja 2-slot)': [{ id: 'rtx-5070' }],
   'Corsair SF750 750 W SFX 80+ Platinum': [{ id: 'sf750' }],
   'Fractal Design Terra': [{ id: 'terra' }],
   'Noctua NH-L12S': [{ id: 'nh-l12s' }],
   'AMD Ryzen 7 8700G': [{ id: 'ryzen-7-8700g' }],
-  'ASRock B650M Pro RS': [{ id: 'b650m-pro-rs' }],
+  'be quiet! Pure Power 13 M 650 W 80+ Gold': [{ id: 'pure-power-13m-650' }],
+  'Intel Core i5-14400': [{ id: 'core-i5-14400' }],
   'Kingston Fury Beast 32 GB (2×16) DDR5-6000': [{ id: 'fury-beast-32-6000' }],
   'Fractal Design Node 304': [{ id: 'node-304' }],
   'ASUS PRIME B760M-A': [{ id: 'prime-b760m-a' }],
@@ -619,6 +620,16 @@ function lineTotal(ids: { id: string; quantity?: number }[]): PriceTotal {
   return sumPrices(
     ids.flatMap(({ id, quantity = 1 }) => Array.from({ length: quantity }, () => priceOf(id))),
   );
+}
+
+/** The build as a configurator selection, so the compatibility engine can check it. */
+export function buildSelection(build: Build): BuildSelection {
+  const selection: BuildSelection = {};
+  for (const part of build.parts) {
+    const id = buildPartIds[part.name]?.[0]?.id;
+    if (id) selection[part.kind] = id;
+  }
+  return selection;
 }
 
 /** The whole build, with a count of the parts that have no price. */

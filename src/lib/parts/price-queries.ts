@@ -37,6 +37,7 @@ export const priceQueries: Record<string, PriceQuery> = {
   'ryzen-7-5700x': { q: 'AMD Ryzen 7 5700X', must: ['5700X'] },
   'core-ultra-9-285k': { q: 'Intel Core Ultra 9 285K', must: ['Ultra 9', '285K'] },
   'core-i7-14700k': { q: 'Intel Core i7-14700K', must: ['14700K'] },
+  'core-i5-14400': { q: 'Intel Core i5-14400', must: ['14400'], not: ['14400F', '14400T'] },
   'core-i3-14100f': { q: 'Intel Core i3-14100F', must: ['14100F'] },
 
   /* -------------------------------------------------------- Motherboards --- */
@@ -59,6 +60,7 @@ export const priceQueries: Record<string, PriceQuery> = {
   'x670e-hero': { q: 'ASUS ROG Crosshair X670E Hero', must: ['Crosshair', 'X670E', 'Hero'] },
   'b850-tomahawk': { q: 'MSI MAG B850 TOMAHAWK WIFI', must: ['B850', 'TOMAHAWK'], not: ['MAX'] },
   'a620m-hdv': { q: 'ASRock A620M-HDV/M.2', must: ['A620M HDV'] },
+  'b650i-ax': { q: 'Gigabyte B650I AX', must: ['B650I AX'] },
   'z890-aorus-elite': {
     q: 'Gigabyte Z890 AORUS ELITE WIFI7',
     must: ['Z890', 'AORUS ELITE', 'WIFI7'],
@@ -146,6 +148,9 @@ export const priceQueries: Record<string, PriceQuery> = {
   rm850x: { q: 'Corsair RM850x', must: ['RM850x'], not: ['SHIFT'] },
   'mpg-a1000g': { q: 'MSI MPG A1000G PCIE5', must: ['A1000G'] },
   sf850l: { q: 'Corsair SF850L', must: ['SF850L'] },
+  'system-power-11-550': { q: 'be quiet! System Power 11 550W', must: ['System Power 11', '550W'] },
+  'pure-power-13m-650': { q: 'be quiet! Pure Power 13 M 650W', must: ['Pure Power 13 M', '650W'] },
+  'pure-power-13m-850': { q: 'be quiet! Pure Power 13 M 850W', must: ['Pure Power 13 M', '850W'] },
   'system-power-11-750': {
     q: 'be quiet! System Power 11 750W',
     must: ['System Power 11', '750W'],
@@ -187,6 +192,11 @@ export const priceQueries: Record<string, PriceQuery> = {
     q: 'Arctic Liquid Freezer III 240',
     must: ['Liquid Freezer III 240'],
     not: ['Pro'],
+  },
+  'liquid-freezer-iii-pro-360': {
+    q: 'Arctic Liquid Freezer III Pro 360',
+    must: ['Liquid Freezer III Pro 360'],
+    not: ['ARGB', 'White'],
   },
   'liquid-freezer-iii-360': {
     q: 'Arctic Liquid Freezer III 360',

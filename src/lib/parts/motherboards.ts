@@ -100,6 +100,27 @@ export const motherboards: Motherboard[] = [
       en: 'Mini-ITX on AM5 with good power delivery. The choice in this form factor is narrow, so the board is picked first.',
     },
   },
+  {
+    id: 'b650i-ax',
+    category: 'motherboard',
+    name: 'B650I AX',
+    brand: 'Gigabyte',
+    socket: 'am5',
+    chipset: 'B650',
+    formFactor: 'Mini-ITX',
+    memoryType: 'ddr5',
+    memorySlots: 2,
+    m2Slots: 1,
+    vrmRating: 120,
+    wifi: true,
+    tier: 'value',
+    price: priceOf('b650i-ax'),
+    url: 'https://www.gigabyte.com/Motherboard/B650I-AX-rev-12/sp',
+    note: {
+      pl: 'Najtańsza dostępna płyta Mini-ITX na AM5. Skromniejsze zasilanie i jedno gniazdo M.2, ale do procesora 65–105 W w zupełności wystarcza.',
+      en: 'The cheapest Mini-ITX AM5 board in stock. Modest power delivery and one M.2 socket, but entirely enough for a 65–105 W processor.',
+    },
+  },
   /* ---------------------------------------------------------------- AM4 --- */
   {
     id: 'b550-a-pro',

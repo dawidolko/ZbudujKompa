@@ -344,8 +344,9 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'b650i-lightning': {
-    min: 639,
-    max: 689,
+    min: null,
+    max: null,
+    reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -357,7 +358,7 @@ export const priceRecords: Record<string, PriceRecord> = {
         url: 'https://www.x-kom.pl/szukaj?q=b650i%20lightning',
       },
     ],
-    note: 'x-kom listed it out of stock. A single Ceneo offer at 1437 zł was treated as an outlier.',
+    note: 'x-kom listed it out of stock and the only Ceneo offer was 1437 zł from Allegro, which is no retail price.',
   },
   'b550-a-pro': {
     min: 489,
@@ -407,7 +408,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   },
   'prime-b760m-a': {
     min: 379,
-    max: 379,
+    max: 499,
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -415,7 +416,7 @@ export const priceRecords: Record<string, PriceRecord> = {
         url: 'https://www.ceneo.pl/;szukaj-asus+prime+b760m-a',
       },
     ],
-    note: 'Priced from the PRIME B760M-A-CSM listing, the corporate version. The plain board was not listed.',
+    note: 'Priced from the PRIME B760M-A-CSM listing, the corporate version, at 379 to 499 zł. The plain board was not listed.',
   },
   'b760m-ddr4': {
     min: 449,
@@ -1501,6 +1502,78 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
     note: 'Free in a boxed Ryzen. 28 zł is the loose unit from nine shops.',
     manual: true,
+  },
+  'core-i5-14400': {
+    min: 722,
+    max: 787,
+    checkedAt: '2026-11-06',
+    sources: [
+      {
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/162718502',
+      },
+    ],
+    note: 'Thirteen offers on Ceneo. x-kom and Morele show 769 and 786 zł.',
+  },
+  'b650i-ax': {
+    min: 591,
+    max: 669,
+    checkedAt: '2026-11-06',
+    sources: [
+      {
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/161459535',
+      },
+    ],
+    note: 'Thirteen offers on Ceneo, from Amazon.pl at 591 zł to the usual 669 zł.',
+  },
+  'system-power-11-550': {
+    min: 249,
+    max: 249,
+    checkedAt: '2026-11-06',
+    sources: [
+      {
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/183209183',
+      },
+    ],
+    note: 'Thirteen offers on Ceneo, most of them at 249 zł.',
+  },
+  'pure-power-13m-650': {
+    min: 429,
+    max: 434,
+    checkedAt: '2026-11-06',
+    sources: [
+      {
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/184870051',
+      },
+    ],
+    note: 'Ten offers on Ceneo. The 550 W and 750 W models were not listed.',
+  },
+  'pure-power-13m-850': {
+    min: 559,
+    max: 569,
+    checkedAt: '2026-11-06',
+    sources: [
+      {
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/184870070',
+      },
+    ],
+    note: 'Thirteen offers on Ceneo, including x-kom at 559 zł.',
+  },
+  'liquid-freezer-iii-pro-360': {
+    min: 326,
+    max: 337,
+    checkedAt: '2026-11-06',
+    sources: [
+      {
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/183982377',
+      },
+    ],
+    note: 'Ten offers on Ceneo for the black version, ACFRE00180A.',
   },
   'class:air-tower-single': {
     min: 80,

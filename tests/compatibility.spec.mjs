@@ -146,5 +146,25 @@ const distinct = new Set(
 );
 report(distinct.size > 5, 'successive picks differ', `only ${distinct.size} distinct in 10`);
 
+console.log('\nThe reference builds');
+
+const { builds, buildPartPrice, buildSelection, buildTotal } = await import('../src/lib/builds.ts');
+
+for (const build of builds) {
+  const verdict = checkCompatibility(buildSelection(build));
+  const errors = verdict.issues.filter((issue) => issue.level === 'error');
+  report(
+    errors.length === 0,
+    `${build.slug} has no compatibility errors`,
+    `${build.slug}: ${errors[0]?.message.en}`,
+  );
+  report(
+    build.parts.every((part) => !buildPartPrice(part).unavailable) &&
+      buildTotal(build).unpriced === 0,
+    `${build.slug} can be bought: every line has a price`,
+    `${build.slug} has a line with no price`,
+  );
+}
+
 console.log(`\n${passed}/${passed + failed} passed`);
 process.exit(failed > 0 ? 1 : 0);

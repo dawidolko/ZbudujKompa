@@ -108,6 +108,23 @@ export const coolers: Cooler[] = [
     },
   },
   {
+    id: 'liquid-freezer-iii-pro-360',
+    category: 'cooler',
+    name: 'Liquid Freezer III Pro 360',
+    brand: 'Arctic',
+    kind: 'aio',
+    sockets: ['am4', 'am5', 'lga1700', 'lga1851'],
+    wattage: 350,
+    radiatorSize: 360,
+    noise: 34,
+    tier: 'midrange',
+    price: priceOf('liquid-freezer-iii-pro-360'),
+    note: {
+      pl: 'Nowsza wersja Pro kosztuje dziś mniej niż zwykła III 360, bo to ona trafia do sklepów. Wymaga obudowy z miejscem na 360 mm.',
+      en: 'The newer Pro version now costs less than the plain III 360, because it is the one shops stock. It needs a case with room for 360 mm.',
+    },
+  },
+  {
     id: 'liquid-freezer-iii-360',
     category: 'cooler',
     name: 'Liquid Freezer III 360',
