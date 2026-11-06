@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { themeInitScript } from '@/lib/theme';
 import { a11yInitScript } from '@/lib/accessibility';
+import { CONTENT_SECURITY_POLICY } from '@/lib/csp';
 import { getDictionary } from '@/i18n';
 import { defaultLocale, localePath, localeTags } from '@/i18n/config';
 
@@ -11,10 +12,12 @@ const dict = getDictionary(defaultLocale);
 export const metadata: Metadata = {
   title: dict.common.notFoundTitle,
   robots: { index: false, follow: true },
+  referrer: 'strict-origin-when-cross-origin',
 };
 
 /**
- * Global 404 page.
+ * Global 404 page. A separate entry rather than app/not-found.tsx, whose
+ * stylesheet would also load on the root redirect page and hold up the redirect.
  *
  * It sits outside the locale segments and so carries its own document shell,
  * falling back to the default language — the visitor reached a URL matching no
@@ -24,10 +27,11 @@ export const metadata: Metadata = {
  * subject and, more usefully, reads as "nothing here" rather than as an error
  * the visitor caused.
  */
-export default function NotFound() {
+export default function GlobalNotFound() {
   return (
     <html lang={localeTags[defaultLocale]} suppressHydrationWarning>
       <head>
+        <meta httpEquiv="Content-Security-Policy" content={CONTENT_SECURITY_POLICY} />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script dangerouslySetInnerHTML={{ __html: a11yInitScript }} />
       </head>

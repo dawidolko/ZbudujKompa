@@ -7,7 +7,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { glossary } from '@/lib/knowledge';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
 type Params = { locale: string };
@@ -22,14 +22,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.glossary.title,
-    description: dict.glossary.lead,
+    title: seoTitle(dict.glossary.title, locale),
+    description: seoDescription(dict.glossary.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/slownik'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/slownik')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/slownik'), images: [ogImage] },
   };
 }
 

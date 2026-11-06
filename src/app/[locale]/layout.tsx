@@ -11,7 +11,8 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ChatWidget } from '@/components/chat/ChatWidget';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { site, absoluteLocaleUrl, absoluteUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, site } from '@/lib/site';
+import { CONTENT_SECURITY_POLICY } from '@/lib/csp';
 import { getDictionary } from '@/i18n';
 import {
   defaultLocale,
@@ -23,26 +24,25 @@ import {
 } from '@/i18n/config';
 
 /* Fonts are self-hosted by next/font: no request to Google, and the metrics
-   are inlined so swapping in the real face causes no layout shift. */
+   are inlined so swapping in the real face causes no layout shift. Only the
+   latin subset is preloaded; latin-ext stays declared and loads on demand. */
 const inter = Inter({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
 
 const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['600', '700'],
+  subsets: ['latin'],
   variable: '--font-space-grotesk',
   display: 'swap',
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500'],
+  subsets: ['latin'],
   variable: '--font-jetbrains-mono',
   display: 'swap',
+  preload: false,
 });
 
 const fontVariables = `${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
@@ -90,21 +90,15 @@ export async function generateMetadata({
       title: dict.meta.siteTitle,
       description: dict.meta.siteDescription,
       url: absoluteLocaleUrl(locale, '/'),
-      images: [
-        {
-          url: absoluteUrl('/og-default.png'),
-          width: 1200,
-          height: 630,
-          alt: dict.meta.siteTitle,
-        },
-      ],
+      images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
       title: dict.meta.siteTitle,
       description: dict.meta.siteDescription,
-      images: [absoluteUrl('/og-default.png')],
+      images: [ogImage.url],
     },
+    referrer: 'strict-origin-when-cross-origin',
     robots: {
       index: true,
       follow: true,
@@ -138,6 +132,7 @@ export default async function LocaleLayout({
   return (
     <html lang={localeTags[typedLocale]} className={fontVariables} suppressHydrationWarning>
       <head>
+        <meta httpEquiv="Content-Security-Policy" content={CONTENT_SECURITY_POLICY} />
         {/* Runs before first paint and sets data-theme on <html>. It is what
             keeps the chosen theme stable across the full document swap the
             language switcher performs. */}

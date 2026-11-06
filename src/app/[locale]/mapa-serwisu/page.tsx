@@ -12,7 +12,7 @@ import { glossary, faq } from '@/lib/knowledge';
 import { articles } from '@/lib/blog';
 import { categoryOrder, getBrands } from '@/lib/parts';
 import { videos } from '@/lib/videos';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { slugify, t } from '@/lib/utils';
 
 type Params = { locale: string };
@@ -27,14 +27,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.sitemap.title,
-    description: dict.sitemap.lead,
+    title: seoTitle(dict.sitemap.title, locale),
+    description: seoDescription(dict.sitemap.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/mapa-serwisu'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/mapa-serwisu')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/mapa-serwisu'), images: [ogImage] },
   };
 }
 

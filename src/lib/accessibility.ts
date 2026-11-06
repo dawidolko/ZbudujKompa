@@ -34,6 +34,8 @@ export type A11ySettings = {
   underlineLinks: boolean;
   /** Switch to a face tuned for dyslexia and low vision. */
   readableFont: boolean;
+  /** Stop animations and transitions, for readers the movement distracts or unsettles. */
+  stopMotion: boolean;
 };
 
 export const defaultA11ySettings: A11ySettings = {
@@ -41,6 +43,7 @@ export const defaultA11ySettings: A11ySettings = {
   filter: 'none',
   underlineLinks: false,
   readableFont: false,
+  stopMotion: false,
 };
 
 /** Narrows unknown parsed JSON into settings, falling back per field. */
@@ -64,6 +67,7 @@ export function parseSettings(value: unknown): A11ySettings {
         : 'none',
     underlineLinks: raw.underlineLinks === true,
     readableFont: raw.readableFont === true,
+    stopMotion: raw.stopMotion === true,
   };
 }
 
@@ -80,6 +84,7 @@ export function applyA11ySettings(settings: A11ySettings): void {
 
   root.toggleAttribute('data-a11y-underline', settings.underlineLinks);
   root.toggleAttribute('data-a11y-readable', settings.readableFont);
+  root.toggleAttribute('data-a11y-motion', settings.stopMotion);
 
   try {
     localStorage.setItem(A11Y_STORAGE_KEY, JSON.stringify(settings));
@@ -120,5 +125,6 @@ export const a11yInitScript = `
   if (s.filter && s.filter !== 'none') root.setAttribute('data-a11y-filter', s.filter);
   if (s.underlineLinks === true) root.setAttribute('data-a11y-underline', '');
   if (s.readableFont === true) root.setAttribute('data-a11y-readable', '');
+  if (s.stopMotion === true) root.setAttribute('data-a11y-motion', '');
 })();
 `.trim();

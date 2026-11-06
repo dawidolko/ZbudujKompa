@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { Configurator } from '@/components/configurator/Configurator';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -19,14 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.configurator.title,
-    description: dict.configurator.lead,
+    title: seoTitle(dict.configurator.title, locale),
+    description: seoDescription(dict.configurator.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/konfigurator'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/konfigurator')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/konfigurator'), images: [ogImage] },
   };
 }
 

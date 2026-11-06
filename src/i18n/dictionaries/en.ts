@@ -682,6 +682,7 @@ export const en = {
     reading: 'Reading aids',
     underlineLinks: 'Underline links',
     readableFont: 'Readable font',
+    stopMotion: 'Stop animations',
     reset: 'Reset all',
     sizeAnnounce: (percent: number) => `Text size ${percent} per cent`,
     filterOn: (name: string) => `${name} on`,

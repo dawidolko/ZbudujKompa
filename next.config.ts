@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
   // resolving to /products/index.html.
   trailingSlash: true,
 
+  experimental: { globalNotFound: true },
+
   images: {
     // next/image has no optimizer under output:'export' - images are already
     // pre-processed into AVIF/WebP by scripts/optimize-images.mjs.

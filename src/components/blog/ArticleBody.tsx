@@ -80,7 +80,11 @@ function Block({ block, locale }: { block: ArticleBlock; locale: Locale }) {
       return (
         /* The table scrolls inside its own container so the article body never
            scrolls sideways on a narrow screen. */
-        <div className="my-6 overflow-x-auto rounded-lg border border-border-subtle">
+        <div
+          tabIndex={0}
+          aria-label={t(block.caption, locale)}
+          className="my-6 overflow-x-auto rounded-lg border border-border-subtle"
+        >
           <table className="w-full min-w-[32rem] border-collapse text-sm">
             <caption className="sr-only">{t(block.caption, locale)}</caption>
             <thead>

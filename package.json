@@ -2,7 +2,7 @@
   "name": "zbudujkompa",
   "version": "2.0.0",
   "private": true,
-  "description": "ZbudujKompa \u2014 bilingual PC building guide: platforms, cooling, reference builds and step-by-step instructions. Next.js 16, Tailwind CSS 4, fully static export.",
+  "description": "ZbudujKompa — bilingual PC building guide: platforms, cooling, reference builds and step-by-step instructions. Next.js 16, Tailwind CSS 4, fully static export.",
   "type": "module",
   "license": "MIT",
   "author": "Dawid Olko",
@@ -44,7 +44,7 @@
     "test:a11ypanel": "node tests/accessibility-panel.spec.mjs"
   },
   "dependencies": {
-    "next": "16.3.0",
+    "next": "16.4.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
@@ -57,7 +57,7 @@
     "@types/react-dom": "^19.2.0",
     "axe-core": "^4.10.2",
     "eslint": "^9.20.0",
-    "eslint-config-next": "16.3.0",
+    "eslint-config-next": "16.4.5",
     "playwright": "^1.49.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.1",

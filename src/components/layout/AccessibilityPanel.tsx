@@ -273,6 +273,18 @@ export function AccessibilityPanel({ locale }: { locale: Locale }) {
                   )
                 }
               />
+              <Toggle
+                label={dict.a11yPanel.stopMotion}
+                checked={settings.stopMotion}
+                onChange={(value) =>
+                  update(
+                    { stopMotion: value },
+                    value
+                      ? dict.a11yPanel.filterOn(dict.a11yPanel.stopMotion)
+                      : dict.a11yPanel.filterOff(dict.a11yPanel.stopMotion),
+                  )
+                }
+              />
             </div>
           </section>
 

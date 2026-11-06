@@ -148,7 +148,7 @@ export const navigation: NavSection[] = [
   },
   {
     id: 'tools',
-    href: '/narzedzia',
+    href: '/konfigurator',
     label: { pl: 'Narzędzia', en: 'Tools' },
     children: [
       {

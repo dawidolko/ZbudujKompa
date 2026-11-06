@@ -9,7 +9,7 @@ import { categoryOrder, getBrands } from '@/lib/parts';
 import { slugify } from '@/lib/utils';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -23,14 +23,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.parts.title,
-    description: dict.parts.lead,
+    title: seoTitle(dict.parts.title, locale),
+    description: seoDescription(dict.parts.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/podzespoly'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/podzespoly')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/podzespoly'), images: [ogImage] },
   };
 }
 

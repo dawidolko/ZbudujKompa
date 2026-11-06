@@ -14,7 +14,7 @@ import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { getGuide, guides, readingTime } from '@/lib/guides';
 import { getOpinionsFor } from '@/lib/knowledge';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { formatDate, t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!guide) return {};
 
   const title = t(guide.title, locale);
-  const description = t(guide.summary, locale);
+  const description = seoDescription(t(guide.summary, locale));
 
   return {
-    title,
+    title: seoTitle(title, locale),
     description,
     alternates: {
       canonical: canonicalUrl(locale, `/poradniki/${slug}`),
@@ -43,6 +43,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       ),
     },
     openGraph: {
+      url: absoluteLocaleUrl(locale, `/poradniki/${slug}`),
+      images: [ogImage],
       title,
       description,
       type: 'article',

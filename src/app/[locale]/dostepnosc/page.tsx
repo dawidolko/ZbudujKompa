@@ -4,7 +4,14 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl, site } from '@/lib/site';
+import {
+  absoluteLocaleUrl,
+  canonicalUrl,
+  ogImage,
+  seoDescription,
+  seoTitle,
+  site,
+} from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -18,14 +25,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.accessibility.title,
-    description: dict.accessibility.lead,
+    title: seoTitle(dict.accessibility.title, locale),
+    description: seoDescription(dict.accessibility.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/dostepnosc'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/dostepnosc')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/dostepnosc'), images: [ogImage] },
   };
 }
 

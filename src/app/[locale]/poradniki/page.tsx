@@ -8,7 +8,7 @@ import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { guides, readingTime } from '@/lib/guides';
 import type { GuideCategory } from '@/lib/types';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
 type Params = { locale: string };
@@ -23,14 +23,20 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.guides.title,
-    description: dict.guides.lead,
+    title: seoTitle(dict.guides.title, locale),
+    description: seoDescription(
+      dict.guides.lead,
+      locale === 'pl'
+        ? 'Składanie, BIOS, chłodzenie i zasilanie w ZbudujKompa.'
+        : 'Assembly, BIOS, cooling and power on ZbudujKompa.',
+    ),
     alternates: {
       canonical: canonicalUrl(locale, '/poradniki'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/poradniki')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/poradniki'), images: [ogImage] },
   };
 }
 

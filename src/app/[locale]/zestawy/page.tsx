@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { builds } from '@/lib/builds';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
 type Params = { locale: string };
@@ -22,14 +22,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.builds.title,
-    description: dict.builds.lead,
+    title: seoTitle(dict.builds.title, locale),
+    description: seoDescription(dict.builds.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/zestawy'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/zestawy')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/zestawy'), images: [ogImage] },
   };
 }
 
@@ -57,6 +58,7 @@ export default async function BuildsPage({ params }: { params: Promise<Params> }
       />
 
       <section className="container-page pb-14">
+        <h2 className="sr-only">{dict.builds.title}</h2>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {builds.map((build) => (
             <li key={build.slug} className="flex">

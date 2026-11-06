@@ -925,6 +925,18 @@ html {
   line-height: 1.9;
 }
 
+/* The same stop as prefers-reduced-motion, for readers who want it on this site
+   only or cannot change the setting on their device. */
+:root[data-a11y-motion] {
+  scroll-behavior: auto !important;
+}
+:root[data-a11y-motion] *,
+:root[data-a11y-motion] *::before,
+:root[data-a11y-motion] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
 /* =============================================================================
    Additional background patterns
    ============================================================================= */

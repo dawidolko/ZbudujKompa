@@ -19,7 +19,7 @@ import { M2Calculator } from '@/components/tools/calculators/M2Calculator';
 import { PsuCalculator } from '@/components/tools/PsuCalculator';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -33,14 +33,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.calc.title,
-    description: dict.calc.lead,
+    title: seoTitle(dict.calc.title, locale),
+    description: seoDescription(dict.calc.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/kalkulatory'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/kalkulatory')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/kalkulatory'), images: [ogImage] },
   };
 }
 

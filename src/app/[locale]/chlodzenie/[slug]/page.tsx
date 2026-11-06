@@ -10,7 +10,7 @@ import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles, getCoolingProfile } from '@/lib/cooling';
 import { getOpinionsFor } from '@/lib/knowledge';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { formatPrice, t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
@@ -29,10 +29,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!profile) return {};
 
   const title = t(profile.name, locale);
-  const description = t(profile.tagline, locale);
+  const description = seoDescription(
+    t(profile.tagline, locale),
+    locale === 'pl'
+      ? `${t(profile.name, locale)}: kiedy ma sens i na co uważać przy montażu, opisane w ZbudujKompa.`
+      : `${t(profile.name, locale)}: when it makes sense and what to watch for during fitting, explained on ZbudujKompa.`,
+  );
 
   return {
-    title,
+    title: seoTitle(title, locale),
     description,
     alternates: {
       canonical: canonicalUrl(locale, `/chlodzenie/${slug}`),
@@ -40,7 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, `/chlodzenie/${slug}`)]),
       ),
     },
-    openGraph: { title, description, type: 'article' },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: absoluteLocaleUrl(locale, `/chlodzenie/${slug}`),
+      images: [ogImage],
+    },
   };
 }
 

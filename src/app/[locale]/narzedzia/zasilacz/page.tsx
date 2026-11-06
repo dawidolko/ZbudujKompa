@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { PsuCalculator } from '@/components/tools/PsuCalculator';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -19,14 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.tools.psu.title,
-    description: dict.tools.psu.lead,
+    title: seoTitle(dict.tools.psu.title, locale),
+    description: seoDescription(dict.tools.psu.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/narzedzia/zasilacz'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/narzedzia/zasilacz')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/narzedzia/zasilacz'), images: [ogImage] },
   };
 }
 

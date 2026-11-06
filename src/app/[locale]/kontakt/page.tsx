@@ -5,7 +5,14 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { ExternalIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl, site } from '@/lib/site';
+import {
+  absoluteLocaleUrl,
+  canonicalUrl,
+  ogImage,
+  seoDescription,
+  seoTitle,
+  site,
+} from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -19,14 +26,20 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.contact.title,
-    description: dict.contact.lead,
+    title: seoTitle(dict.contact.title, locale),
+    description: seoDescription(
+      dict.contact.lead,
+      locale === 'pl'
+        ? 'Kontakt z autorem ZbudujKompa, poradnika składania komputera.'
+        : 'Reach the author of ZbudujKompa, a free PC building guide.',
+    ),
     alternates: {
       canonical: canonicalUrl(locale, '/kontakt'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/kontakt')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/kontakt'), images: [ogImage] },
   };
 }
 

@@ -11,7 +11,7 @@ import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/c
 import { getSocket, sockets } from '@/lib/sockets';
 import { builds } from '@/lib/builds';
 import { getOpinionsFor } from '@/lib/knowledge';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
@@ -29,10 +29,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!socket) return {};
 
   const title = `${socket.name} — ${socket.vendor === 'amd' ? 'AMD' : 'Intel'}`;
-  const description = t(socket.tagline, locale);
+  const description = seoDescription(
+    t(socket.tagline, locale),
+    locale === 'pl'
+      ? `${socket.name}: procesory, chipsety i pamięć tej platformy, opisane w ZbudujKompa.`
+      : `${socket.name}: the processors, chipsets and memory of this platform, explained on ZbudujKompa.`,
+  );
 
   return {
-    title,
+    title: seoTitle(title, locale),
     description,
     alternates: {
       canonical: canonicalUrl(locale, `/platformy/${slug}`),
@@ -40,7 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, `/platformy/${slug}`)]),
       ),
     },
-    openGraph: { title, description, type: 'article' },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: absoluteLocaleUrl(locale, `/platformy/${slug}`),
+      images: [ogImage],
+    },
   };
 }
 
@@ -156,7 +167,11 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
 
         {/* The table scrolls inside its own container so the page body never
             scrolls sideways on a narrow screen. */}
-        <div className="overflow-x-auto rounded-lg border border-border-subtle">
+        <div
+          tabIndex={0}
+          aria-label={dict.platform.chipsets}
+          className="overflow-x-auto rounded-lg border border-border-subtle"
+        >
           <table className="w-full min-w-[40rem] border-collapse text-sm">
             <caption className="sr-only">
               {dict.platform.chipsets} — {socket.name}

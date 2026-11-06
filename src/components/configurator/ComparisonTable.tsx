@@ -95,7 +95,11 @@ export function ComparisonTable({
       {chosen.length === 0 ? (
         <p className="text-sm text-text-secondary">{dict.comparison.empty}</p>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-border-subtle">
+        <div
+          tabIndex={0}
+          aria-label={dict.comparison.title}
+          className="overflow-x-auto rounded-lg border border-border-subtle"
+        >
           <table className="w-full min-w-[36rem] border-collapse text-sm">
             <caption className="sr-only">
               {dict.comparison.title} — {dict.configurator.category[category]}

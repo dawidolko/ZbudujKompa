@@ -34,7 +34,7 @@ export function Diagram({
     >
       {/* The drawing scrolls inside its own box on narrow screens so the page
           body never scrolls sideways. */}
-      <div className="overflow-x-auto p-4 md:p-6">
+      <div tabIndex={0} aria-label={title} className="overflow-x-auto p-4 md:p-6">
         <div className="min-w-[20rem]">{children}</div>
       </div>
       <figcaption className="border-t border-border-subtle bg-bg-subtle px-4 py-3 text-xs leading-relaxed text-text-secondary">

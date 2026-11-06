@@ -99,7 +99,7 @@ export function ShoppingList({ selection, locale }: { selection: BuildSelection;
   return (
     <section className="rounded-lg border border-border-subtle bg-surface p-5 md:p-6">
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-        <h3 className="font-display text-lg font-bold text-text-primary">{dict.shopping.title}</h3>
+        <h2 className="font-display text-lg font-bold text-text-primary">{dict.shopping.title}</h2>
         <p className="font-display text-lg font-bold text-accent-fg">
           {formatPriceRange(price, locale)}
         </p>

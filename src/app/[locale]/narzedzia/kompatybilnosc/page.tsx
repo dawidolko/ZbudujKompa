@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { CompatibilityChecker } from '@/components/tools/CompatibilityChecker';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.tools.compatibility.title,
-    description: dict.tools.compatibility.lead,
+    title: seoTitle(dict.tools.compatibility.title, locale),
+    description: seoDescription(dict.tools.compatibility.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/narzedzia/kompatybilnosc'),
       languages: Object.fromEntries(
@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         ]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/narzedzia/kompatybilnosc'), images: [ogImage] },
   };
 }
 

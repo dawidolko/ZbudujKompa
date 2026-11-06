@@ -196,6 +196,8 @@ The site targets WCAG 2.2 Level AA. [`tests/a11y.spec.mjs`](tests/a11y.spec.mjs)
 - Interactive targets meet the 44×44 minimum of SC 2.5.8.
 - An in-page [accessibility panel](src/components/layout/AccessibilityPanel.tsx) exposes the preferences directly, with its own suite in `tests/accessibility-panel.spec.mjs`.
 
+An accessibility panel in the corner of every page changes text size, contrast, font and motion, and remembers the choice on the device. It sits on top of the markup and does not replace accessible markup.
+
 Automated testing catches roughly a third of accessibility problems. Passing the suite is a floor, not a certificate — known gaps are listed on the site's own [accessibility page](https://zbudujkompa.dawidolko.pl/pl/dostepnosc/), served from `src/app/[locale]/dostepnosc/`.
 
 ---

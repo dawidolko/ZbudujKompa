@@ -11,7 +11,7 @@ import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/c
 import { builds, getBuild } from '@/lib/builds';
 import { getSocket } from '@/lib/sockets';
 import { getOpinionsFor } from '@/lib/knowledge';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
@@ -28,10 +28,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!build) return {};
 
   const title = t(build.name, locale);
-  const description = t(build.tagline, locale);
+  const description = seoDescription(
+    t(build.tagline, locale),
+    locale === 'pl'
+      ? `${t(build.name, locale)}: lista podzespołów z uzasadnieniem każdego wyboru w ZbudujKompa.`
+      : `${t(build.name, locale)}: the parts list with the reasoning behind each choice on ZbudujKompa.`,
+  );
 
   return {
-    title,
+    title: seoTitle(title, locale),
     description,
     alternates: {
       canonical: canonicalUrl(locale, `/zestawy/${slug}`),
@@ -39,7 +44,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, `/zestawy/${slug}`)]),
       ),
     },
-    openGraph: { title, description, type: 'article' },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: absoluteLocaleUrl(locale, `/zestawy/${slug}`),
+      images: [ogImage],
+    },
   };
 }
 
@@ -129,7 +140,11 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
       <section className="container-page pb-12">
         <SectionHeading title={dict.builds.parts} id="parts" />
 
-        <div className="overflow-x-auto rounded-lg border border-border-subtle">
+        <div
+          tabIndex={0}
+          aria-label={dict.builds.parts}
+          className="overflow-x-auto rounded-lg border border-border-subtle"
+        >
           <table className="w-full min-w-[48rem] border-collapse text-sm">
             <caption className="sr-only">
               {dict.builds.parts} — {t(build.name, typedLocale)}

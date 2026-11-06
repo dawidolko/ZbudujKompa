@@ -7,7 +7,7 @@ import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, type Locale } from '@/i18n/config';
 import { getSocketsByVendor } from '@/lib/sockets';
-import { canonicalUrl, absoluteLocaleUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { localeTags } from '@/i18n/config';
 import { t } from '@/lib/utils';
 
@@ -23,14 +23,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.platform.title,
-    description: dict.platform.lead,
+    title: seoTitle(dict.platform.title, locale),
+    description: seoDescription(dict.platform.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/platformy'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/platformy')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/platformy'), images: [ogImage] },
   };
 }
 

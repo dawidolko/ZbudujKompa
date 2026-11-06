@@ -5,7 +5,14 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { CheckIcon, ExternalIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
-import { absoluteLocaleUrl, canonicalUrl, contact } from '@/lib/site';
+import {
+  absoluteLocaleUrl,
+  canonicalUrl,
+  contact,
+  ogImage,
+  seoDescription,
+  seoTitle,
+} from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -19,14 +26,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.services.title,
-    description: dict.services.lead,
+    title: seoTitle(dict.services.title, locale),
+    description: seoDescription(dict.services.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/zloz-u-mnie'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/zloz-u-mnie')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/zloz-u-mnie'), images: [ogImage] },
   };
 }
 

@@ -42,7 +42,10 @@ export function Reveal({
 
     /* Honour the motion preference before doing any work: show the content and
        stop, rather than running a fast animation nobody asked for. */
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      document.documentElement.hasAttribute('data-a11y-motion')
+    ) {
       node.classList.add('is-visible');
       return;
     }

@@ -9,7 +9,7 @@ import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { categoryOrder, formatPriceRange, getPartsByCategory, priceTiers } from '@/lib/parts';
 import type { PartCategory } from '@/lib/parts';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
 type Params = { locale: string; category: string };
@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.configurator.category[category],
-    description: dict.parts.categoryLead(dict.configurator.category[category]),
+    title: seoTitle(dict.configurator.category[category], locale),
+    description: seoDescription(dict.parts.categoryLead(dict.configurator.category[category])),
     alternates: {
       canonical: canonicalUrl(locale, `/podzespoly/${category}`),
       languages: Object.fromEntries(
@@ -47,6 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         ]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, `/podzespoly/${category}`), images: [ogImage] },
   };
 }
 

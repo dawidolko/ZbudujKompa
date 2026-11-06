@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles } from '@/lib/cooling';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { formatPrice, t } from '@/lib/utils';
 
 type Params = { locale: string };
@@ -22,14 +22,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.cooling.title,
-    description: dict.cooling.lead,
+    title: seoTitle(dict.cooling.title, locale),
+    description: seoDescription(dict.cooling.lead),
     alternates: {
       canonical: canonicalUrl(locale, '/chlodzenie'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/chlodzenie')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/chlodzenie'), images: [ogImage] },
   };
 }
 
@@ -58,7 +59,12 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
 
       {/* ---- Comparison table ---- */}
       <section className="container-page pb-12">
-        <div className="overflow-x-auto rounded-lg border border-border-subtle">
+        <h2 className="sr-only">{dict.cooling.title}</h2>
+        <div
+          tabIndex={0}
+          aria-label={dict.cooling.lead}
+          className="overflow-x-auto rounded-lg border border-border-subtle"
+        >
           <table className="w-full min-w-[46rem] border-collapse text-sm">
             <caption className="sr-only">{dict.cooling.lead}</caption>
             <thead>

@@ -75,9 +75,9 @@ export function Configurator({ locale }: { locale: Locale }) {
         {/* Automatic selection, placed above the pickers because it is the
             shortcut for someone who does not want to make eight decisions. */}
         <section className="rounded-lg border border-border-brand bg-accent-subtle p-4 md:p-5">
-          <h3 className="font-display text-base font-bold text-text-primary">
+          <h2 className="font-display text-base font-bold text-text-primary">
             {dict.autoPick.title}
-          </h3>
+          </h2>
           <p className="mt-1 text-sm leading-relaxed text-text-secondary">{dict.autoPick.lead}</p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -167,9 +167,9 @@ export function Configurator({ locale }: { locale: Locale }) {
       {/* ---- Summary, sticky beside the pickers on wide screens ---- */}
       <aside className="lg:sticky lg:top-24">
         <div className="rounded-lg border border-border-subtle bg-bg-subtle p-5">
-          <h3 className="font-display text-sm font-bold tracking-wide text-text-primary uppercase">
+          <h2 className="font-display text-sm font-bold tracking-wide text-text-primary uppercase">
             {dict.configurator.summary}
-          </h3>
+          </h2>
 
           <div aria-live="polite">
             {chosenCount === 0 ? (
@@ -279,7 +279,7 @@ function IssueList({
 
   return (
     <section className="mt-4">
-      <h4 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">{heading}</h4>
+      <h3 className="mb-2 text-xs font-bold tracking-wide text-text-muted uppercase">{heading}</h3>
       <ul className="space-y-2">
         {issues.map((issue, index) => (
           <li key={index} className="flex gap-2 text-xs leading-relaxed">

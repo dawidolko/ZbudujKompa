@@ -702,6 +702,7 @@ export const pl: Dictionary = {
     reading: 'Ułatwienia czytania',
     underlineLinks: 'Podkreślenie linków',
     readableFont: 'Czytelna czcionka',
+    stopMotion: 'Zatrzymaj animacje',
     reset: 'Resetuj wszystko',
     sizeAnnounce: (percent: number) => `Rozmiar tekstu ${percent} procent`,
     filterOn: (name: string) => `${name} włączone`,

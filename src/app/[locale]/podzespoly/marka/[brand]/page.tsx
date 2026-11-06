@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { categoryOrder, formatPriceRange, getBrands, getPartsByBrand } from '@/lib/parts';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { slugify, t } from '@/lib/utils';
 
 type Params = { locale: string; brand: string };
@@ -39,8 +39,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: name,
-    description: dict.parts.brandLead(name),
+    title: seoTitle(name, locale),
+    description: seoDescription(
+      dict.parts.brandLead(name),
+      locale === 'pl'
+        ? `Parametry i zgodność podzespołów ${name} opisane w ZbudujKompa.`
+        : `Specifications and compatibility of ${name} parts, explained on ZbudujKompa.`,
+    ),
     alternates: {
       canonical: canonicalUrl(locale, `/podzespoly/marka/${brand}`),
       languages: Object.fromEntries(
@@ -50,6 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         ]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, `/podzespoly/marka/${brand}`), images: [ogImage] },
   };
 }
 

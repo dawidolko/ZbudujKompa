@@ -7,7 +7,7 @@ import { LinkCard } from '@/components/ui/Card';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { articleReadingTime, getArticlesByTag, getTags } from '@/lib/blog';
-import { absoluteLocaleUrl, canonicalUrl } from '@/lib/site';
+import { absoluteLocaleUrl, canonicalUrl, seoDescription, seoTitle } from '@/lib/site';
 import { formatDate, slugify, t } from '@/lib/utils';
 
 /**
@@ -45,8 +45,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.blog.taggedWith(decoded),
-    description: dict.blog.tagLead(decoded),
+    title: seoTitle(dict.blog.taggedWith(decoded), locale),
+    description: seoDescription(dict.blog.tagLead(decoded)),
     alternates: {
       canonical: canonicalUrl(locale, `/artykuly/tag/${slugify(decoded)}`),
       languages: Object.fromEntries(

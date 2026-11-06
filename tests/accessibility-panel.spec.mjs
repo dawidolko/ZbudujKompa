@@ -51,6 +51,13 @@ check(
   (await page.getAttribute('html', 'data-a11y-filter')) === 'high-contrast',
 );
 
+await page.locator('label:has-text("Zatrzymaj animacje")').click();
+await page.waitForTimeout(100);
+check(
+  'stopping animations sets the attribute',
+  (await page.getAttribute('html', 'data-a11y-motion')) !== null,
+);
+
 /* The settings have to outlive both a reload and the full document swap the
    language switcher performs — the case that previously broke the theme.
 
@@ -90,6 +97,7 @@ await page.waitForTimeout(300);
 await page.locator('button:text("Reset all")').click();
 await page.waitForTimeout(300);
 check('reset clears the filter', (await page.getAttribute('html', 'data-a11y-filter')) === null);
+check('and the motion setting', (await page.getAttribute('html', 'data-a11y-motion')) === null);
 check(
   'and restores the default size',
   (await page.evaluate(() => getComputedStyle(document.documentElement).fontSize)) === '16px',

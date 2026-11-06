@@ -233,9 +233,9 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
 
       {/* ---- Result ---- */}
       <div className="rounded-lg border border-border-subtle bg-bg-subtle p-5 md:p-6">
-        <h3 className="font-display mb-4 text-sm font-bold tracking-wide text-text-primary uppercase">
+        <h2 className="font-display mb-4 text-sm font-bold tracking-wide text-text-primary uppercase">
           {dict.tools.compatibility.resultTitle}
-        </h3>
+        </h2>
 
         <div aria-live="polite">
           <p

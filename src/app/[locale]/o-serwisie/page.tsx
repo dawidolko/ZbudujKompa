@@ -7,7 +7,14 @@ import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { builds } from '@/lib/builds';
 import { guides } from '@/lib/guides';
 import { sockets } from '@/lib/sockets';
-import { absoluteLocaleUrl, canonicalUrl, site } from '@/lib/site';
+import {
+  absoluteLocaleUrl,
+  canonicalUrl,
+  ogImage,
+  seoDescription,
+  seoTitle,
+  site,
+} from '@/lib/site';
 
 type Params = { locale: string };
 
@@ -21,14 +28,20 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const dict = getDictionary(locale);
 
   return {
-    title: dict.about.title,
-    description: dict.about.lead,
+    title: seoTitle(dict.about.title, locale),
+    description: seoDescription(
+      dict.about.lead,
+      locale === 'pl'
+        ? 'ZbudujKompa to darmowy poradnik składania komputera.'
+        : 'ZbudujKompa is a free guide to building a PC.',
+    ),
     alternates: {
       canonical: canonicalUrl(locale, '/o-serwisie'),
       languages: Object.fromEntries(
         locales.map((code) => [localeTags[code], absoluteLocaleUrl(code, '/o-serwisie')]),
       ),
     },
+    openGraph: { url: absoluteLocaleUrl(locale, '/o-serwisie'), images: [ogImage] },
   };
 }
 

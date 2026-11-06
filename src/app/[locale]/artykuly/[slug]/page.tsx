@@ -12,7 +12,14 @@ import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { articleReadingTime, articles, getArticle, monthsOld } from '@/lib/blog';
 import { getGuide } from '@/lib/guides';
-import { absoluteLocaleUrl, canonicalUrl, site } from '@/lib/site';
+import {
+  absoluteLocaleUrl,
+  canonicalUrl,
+  ogImage,
+  seoDescription,
+  seoTitle,
+  site,
+} from '@/lib/site';
 import { formatDate, slugify, t } from '@/lib/utils';
 
 type Params = { locale: string; slug: string };
@@ -29,10 +36,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!article) return {};
 
   const title = t(article.title, locale);
-  const description = t(article.summary, locale);
+  const description = seoDescription(t(article.summary, locale));
 
   return {
-    title,
+    title: seoTitle(title, locale),
     description,
     keywords: article.tags,
     alternates: {
@@ -42,6 +49,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       ),
     },
     openGraph: {
+      url: absoluteLocaleUrl(locale, `/artykuly/${slug}`),
+      images: [ogImage],
       title,
       description,
       type: 'article',
@@ -134,7 +143,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
 
       <div className="container-page grid gap-10 pb-14 lg:grid-cols-[16rem_minmax(0,1fr)]">
         {/* ---- Table of contents and tags ---- */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside aria-label={dict.nav.onThisPage} className="lg:sticky lg:top-24 lg:self-start">
           {headings.length > 1 ? (
             <nav aria-labelledby="article-toc" className="mb-8">
               <h2
