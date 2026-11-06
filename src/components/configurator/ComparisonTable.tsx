@@ -97,6 +97,7 @@ export function ComparisonTable({
       ) : (
         <div
           tabIndex={0}
+          role="region"
           aria-label={dict.comparison.title}
           className="overflow-x-auto rounded-lg border border-border-subtle"
         >

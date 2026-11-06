@@ -82,6 +82,7 @@ function Block({ block, locale }: { block: ArticleBlock; locale: Locale }) {
            scrolls sideways on a narrow screen. */
         <div
           tabIndex={0}
+          role="region"
           aria-label={t(block.caption, locale)}
           className="my-6 overflow-x-auto rounded-lg border border-border-subtle"
         >

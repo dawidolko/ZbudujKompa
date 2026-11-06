@@ -142,6 +142,7 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
 
         <div
           tabIndex={0}
+          role="region"
           aria-label={dict.builds.parts}
           className="overflow-x-auto rounded-lg border border-border-subtle"
         >

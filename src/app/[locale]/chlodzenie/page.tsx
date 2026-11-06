@@ -62,6 +62,7 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
         <h2 className="sr-only">{dict.cooling.title}</h2>
         <div
           tabIndex={0}
+          role="region"
           aria-label={dict.cooling.lead}
           className="overflow-x-auto rounded-lg border border-border-subtle"
         >

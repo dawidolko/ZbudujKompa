@@ -169,6 +169,7 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
             scrolls sideways on a narrow screen. */}
         <div
           tabIndex={0}
+          role="region"
           aria-label={dict.platform.chipsets}
           className="overflow-x-auto rounded-lg border border-border-subtle"
         >
