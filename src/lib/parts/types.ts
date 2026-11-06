@@ -16,8 +16,8 @@ export type PartCategory =
 /**
  * Where a part sits in its category's price range.
  *
- * Tiers compare parts within one category, so they are set by hand against the
- * checked prices in `prices.ts` and have to be reassessed when those move.
+ * Tiers compare parts within one category. `prices.ts` stores them, and the
+ * price refresh moves a part whose price leaves the limits in `price-tiers.ts`.
  */
 export type PriceTier = 'budget' | 'value' | 'midrange' | 'high' | 'flagship';
 

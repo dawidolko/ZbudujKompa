@@ -15,12 +15,15 @@ import {
   isNewPolishOffer,
   matchesPart,
   median,
+  mergeRefresh,
+  refusalReason,
   rejectOutliers,
   renderPricesModule,
 } from '../scripts/lib/price-matching.mjs';
 import { allParts } from '../src/lib/parts/selection.ts';
 import { autoPick } from '../src/lib/parts/autopick.ts';
 import { priceQueries } from '../src/lib/parts/price-queries.ts';
+import { tierAfter, tierForPrice } from '../src/lib/parts/price-tiers.ts';
 import { priceRecords } from '../src/lib/parts/prices.ts';
 import {
   catalogueCheckedAt,
@@ -268,6 +271,95 @@ report(
   'the rendered module is missing its export',
 );
 
+console.log('\nApplying a run');
+
+const stored = {
+  gpu: { min: 1000, max: 1200, tier: 'budget', checkedAt: '2026-01-01', sources: [] },
+  same: { min: 500, max: 600, tier: 'budget', checkedAt: '2026-01-01', sources: [] },
+  gone: {
+    min: null,
+    max: null,
+    reason: 'no-offer',
+    tier: 'value',
+    checkedAt: '2026-01-01',
+    sources: [],
+  },
+  missed: { min: 10, max: 20, tier: 'budget', checkedAt: '2026-01-01', sources: [] },
+};
+const applied = mergeRefresh(
+  stored,
+  [
+    { id: 'gpu', band: { min: 4000, max: 4300, sources: [{ label: 'x', url: 'https://x.pl' }] } },
+    { id: 'same', band: { min: 500, max: 600, sources: [] } },
+    { id: 'gone', band: { min: 700, max: 800, sources: [] } },
+    { id: 'missed', band: null },
+  ],
+  {
+    today: '2026-12-03',
+    tierFor: (_, tier, price) => tierAfter('gpu', tier, price),
+  },
+);
+report(
+  applied.next.gpu.tier === 'midrange' && applied.retiered.some((move) => move.startsWith('gpu')),
+  'a price leaving its band moves the tier',
+  `the tier stayed ${applied.next.gpu.tier}`,
+);
+report(
+  applied.next.gone.min === 700 && !applied.next.gone.reason && applied.restored[0] === 'gone',
+  'a part with no price comes back when offers return',
+  'an unpriced part was not restored',
+);
+report(
+  applied.next.same.checkedAt === '2026-12-03' && !applied.changed.includes('same'),
+  'an unchanged price still gets a new date',
+  'a confirmed price kept its old date',
+);
+report(
+  applied.next.missed.checkedAt === '2026-01-01',
+  'a part with too few offers keeps its old date, so it can expire',
+  'a part with no evidence was marked as checked',
+);
+
+report(
+  refusalReason({ refreshed: 0, pricedRefreshed: 0, pricedQueued: 100 }) !== null &&
+    refusalReason({ refreshed: 49, pricedRefreshed: 49, pricedQueued: 100 }) !== null,
+  'a run that fails for most parts is refused',
+  'a mostly failed run would have been written',
+);
+report(
+  refusalReason({ refreshed: 60, pricedRefreshed: 3, pricedQueued: 100 }) !== null,
+  'restored parts do not make up for failed priced parts',
+  'restorations hid a failed run',
+);
+report(
+  refusalReason({ refreshed: 80, pricedRefreshed: 80, pricedQueued: 100 }) === null,
+  'a mostly complete run is accepted',
+  'a good run was refused',
+);
+
+console.log('\nPrice tiers');
+
+const priced = allParts.filter((part) => !part.price.unavailable);
+report(
+  priced.every((part) => tierAfter(part.category, part.tier, part.price.max) === part.tier),
+  'every part sits inside its band today',
+  `outside: ${priced
+    .filter((part) => tierAfter(part.category, part.tier, part.price.max) !== part.tier)
+    .map((part) => part.id)
+    .join(', ')}`,
+);
+report(
+  tierAfter('gpu', 'midrange', 4500) === 'midrange' &&
+    tierAfter('gpu', 'midrange', 5000) === 'high',
+  'an ordinary swing keeps the tier and a real move changes it',
+  'the tolerance around a band is wrong',
+);
+report(
+  tierForPrice('cpu', 100) === 'budget' && tierForPrice('cpu', 99_999) === 'flagship',
+  'the two ends of the scale resolve',
+  'a price fell off the scale',
+);
+
 console.log('\nRunning without a key');
 
 const run = spawnSync(
@@ -287,6 +379,33 @@ report(
   run.status === 0 && run.stdout.includes('SERPAPI_KEY is not set'),
   'the script exits cleanly and says why',
   `exit ${run.status}: ${run.stderr}`,
+);
+
+const failing = spawnSync(
+  process.execPath,
+  [
+    '--experimental-strip-types',
+    '--disable-warning=ExperimentalWarning',
+    'scripts/update-prices.mjs',
+  ],
+  {
+    cwd: join(here, '..'),
+    encoding: 'utf8',
+    timeout: 60_000,
+    env: { ...process.env, SERPAPI_KEY: 'invalid', SERPAPI_ENDPOINT: 'http://127.0.0.1:9/search' },
+  },
+);
+report(
+  failing.status === 1 && failing.stderr.includes('::error::'),
+  'with a key set, a failed refresh exits with an error',
+  `exit ${failing.status}: ${failing.stderr}`,
+);
+report(
+  readFileSync(join(here, '../src/lib/parts/prices.ts'), 'utf8').includes(
+    'export const priceRecords',
+  ),
+  'and leaves the data module in place',
+  'a failed run damaged the data module',
 );
 
 console.log(`\n${passed}/${passed + failed} passed`);

@@ -8,13 +8,15 @@ import type { PriceRecord } from './price-types.ts';
  *
  * `min` is the lowest sensible new retail price and `max` the typical price at
  * a mainstream shop, both in PLN. `min` and `max` are null when no credible
- * Polish price was found, and `reason` then says why. Records marked `manual`
- * are not touched by the automated refresh.
+ * Polish price was found, and `reason` then says why. `tier` is where the part
+ * sits in its category, and follows the price. Records marked `manual` are not
+ * touched by the automated refresh.
  */
 export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-5-7600': {
     min: 699,
     max: 839,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -30,6 +32,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-7-7800x3d': {
     min: 1385,
     max: 1549,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -45,6 +48,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-7-9700x': {
     min: 1138,
     max: 1329,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -60,6 +64,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-9-9950x': {
     min: 2035,
     max: 2349,
+    tier: 'flagship',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -75,6 +80,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-7-8700g': {
     min: 1098,
     max: 1269,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -90,6 +96,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-5-5600': {
     min: 595,
     max: 599,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -105,6 +112,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-7-5800x3d': {
     min: 1499,
     max: 1539,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -120,6 +128,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-ultra-5-245k': {
     min: 894,
     max: 899,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -135,6 +144,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-ultra-7-265k': {
     min: 1399,
     max: 1459,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -150,6 +160,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-i5-14400f': {
     min: 629,
     max: 669,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -165,6 +176,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-i5-14600k': {
     min: 1089,
     max: 1159,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -180,6 +192,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-5-9600x': {
     min: 689,
     max: 799,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -195,6 +208,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-9-7900x3d': {
     min: 2249,
     max: 2275,
+    tier: 'flagship',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -207,6 +221,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-9-9950x3d': {
     min: 2699,
     max: 2899,
+    tier: 'flagship',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -222,6 +237,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-5-5500': {
     min: 385,
     max: 419,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -237,6 +253,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-7-5700x': {
     min: 676,
     max: 849,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -252,6 +269,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-ultra-9-285k': {
     min: 2160,
     max: 2499,
+    tier: 'flagship',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -267,6 +285,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-i7-14700k': {
     min: 1622,
     max: 1729,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -282,6 +301,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-i3-14100f': {
     min: 449,
     max: 449,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -297,6 +317,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'b650m-pro-rs': {
     min: 512,
     max: 539,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -312,6 +333,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'tuf-b650-plus-wifi': {
     min: 599,
     max: 639,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -327,6 +349,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'x870e-tomahawk': {
     min: 1425,
     max: 1651,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -346,6 +369,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'b650i-lightning': {
     min: null,
     max: null,
+    tier: 'value',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -363,6 +387,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'b550-a-pro': {
     min: 489,
     max: 558,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -378,6 +403,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'z890-tomahawk': {
     min: 1269,
     max: 1401,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -397,6 +423,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'b860m-pro': {
     min: 786,
     max: 786,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -409,6 +436,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'prime-b760m-a': {
     min: 379,
     max: 499,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -421,6 +449,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'b760m-ddr4': {
     min: 449,
     max: 449,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -436,6 +465,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'x670e-hero': {
     min: null,
     max: null,
+    tier: 'flagship',
     reason: 'discontinued',
     checkedAt: '2026-11-06',
     sources: [
@@ -461,6 +491,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'b850-tomahawk': {
     min: 949,
     max: 1173,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -476,6 +507,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'a620m-hdv': {
     min: null,
     max: null,
+    tier: 'budget',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -501,6 +533,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'z890-aorus-elite': {
     min: 1099,
     max: 1145,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -517,6 +550,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'flare-x5-32-6000': {
     min: 3029,
     max: 3457,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -532,6 +566,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'fury-beast-32-6000': {
     min: 2718,
     max: 3299,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -547,6 +582,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'vengeance-64-6000': {
     min: 6531,
     max: 6636,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -563,6 +599,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'fury-beast-16-5600': {
     min: 1549,
     max: 1620,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -578,6 +615,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'lowprofile-32-6000': {
     min: null,
     max: null,
+    tier: 'midrange',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -595,6 +633,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'fury-beast-16-3200': {
     min: 759,
     max: 909,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -610,6 +649,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'vengeance-32-3600': {
     min: null,
     max: null,
+    tier: 'value',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -635,6 +675,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'trident-z5-32-6400': {
     min: 3749,
     max: 3860,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -651,6 +692,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'fury-renegade-64-6000': {
     min: null,
     max: null,
+    tier: 'high',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -675,6 +717,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'crucial-32-5600': {
     min: 3019,
     max: 3054,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -690,6 +733,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rtx-5090': {
     min: 35887,
     max: 44999,
+    tier: 'flagship',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -706,6 +750,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rtx-5080': {
     min: 8799,
     max: 8999,
+    tier: 'flagship',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -721,6 +766,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rtx-5070-ti': {
     min: 5919,
     max: 6499,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -736,6 +782,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rtx-5070': {
     min: 3966,
     max: 4399,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -751,6 +798,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rx-9070-xt': {
     min: 4168,
     max: 4399,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -766,6 +814,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rtx-5060-ti': {
     min: 3482,
     max: 3899,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -781,6 +830,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rx-9060-xt': {
     min: 2770,
     max: 2999,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -796,6 +846,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rtx-5060': {
     min: 2099,
     max: 2399,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -812,6 +863,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rx-7600': {
     min: 1699,
     max: 1799,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -827,6 +879,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rx-9070': {
     min: 3490,
     max: 3699,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -842,6 +895,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'rtx-5050': {
     min: 1738,
     max: 1849,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -857,6 +911,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'arc-b580': {
     min: 1798,
     max: 1799,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -872,6 +927,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'nv3-1tb': {
     min: 616,
     max: 635,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -887,6 +943,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   '990-evo-plus-2tb': {
     min: 1485,
     max: 1693,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -902,6 +959,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   '990-pro-2tb': {
     min: 1699,
     max: 2299,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -917,6 +975,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'wd-blue-4tb-hdd': {
     min: 927,
     max: 968,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -932,6 +991,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   't705-2tb': {
     min: 2403,
     max: 2403,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -944,6 +1004,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'nv3-2tb': {
     min: 1173,
     max: 1219,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -959,6 +1020,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'sn850x-4tb': {
     min: 2929,
     max: 3277,
+    tier: 'flagship',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -975,6 +1037,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ironwolf-8tb': {
     min: 1566,
     max: 1599,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -990,6 +1053,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'system-power-10-550': {
     min: null,
     max: null,
+    tier: 'budget',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -1015,6 +1079,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'pure-power-12m-650': {
     min: null,
     max: null,
+    tier: 'value',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -1040,6 +1105,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'pure-power-12m-750': {
     min: null,
     max: null,
+    tier: 'midrange',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -1065,6 +1131,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'focus-gx-850': {
     min: 599,
     max: 834,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1081,6 +1148,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'prime-tx-1000': {
     min: null,
     max: null,
+    tier: 'flagship',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -1109,6 +1177,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   sf750: {
     min: 703,
     max: 773,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1125,6 +1194,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   rm850x: {
     min: 529,
     max: 669,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1140,6 +1210,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'mpg-a1000g': {
     min: 499,
     max: 559,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1155,6 +1226,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   sf850l: {
     min: 649,
     max: 649,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1167,6 +1239,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'system-power-11-750': {
     min: 339,
     max: 339,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1182,6 +1255,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'focus-2': {
     min: 299,
     max: 359,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1198,6 +1272,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   north: {
     min: 576,
     max: 719,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1213,6 +1288,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'define-7': {
     min: 800,
     max: 889,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1228,6 +1304,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   terra: {
     min: 965,
     max: 1209,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1244,6 +1321,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'node-304': {
     min: 399,
     max: 530,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1256,6 +1334,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'lancool-216': {
     min: 431,
     max: 449,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1271,6 +1350,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'pop-air': {
     min: 361,
     max: 392,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1287,6 +1367,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'o11-dynamic-evo': {
     min: 793,
     max: 793,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1299,6 +1380,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'meshify-2-compact': {
     min: 476,
     max: 589,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1314,6 +1396,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'ncase-m1': {
     min: null,
     max: null,
+    tier: 'flagship',
     reason: 'no-offer',
     checkedAt: '2026-11-06',
     sources: [
@@ -1334,6 +1417,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'assassin-x-120': {
     min: 80,
     max: 105,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1349,6 +1433,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'peerless-assassin-120': {
     min: 172,
     max: 199,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1364,6 +1449,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'nh-d15-g2': {
     min: 617,
     max: 689,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1379,6 +1465,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'nh-l12s': {
     min: 293,
     max: 293,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1394,6 +1481,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'liquid-freezer-iii-240': {
     min: 429,
     max: 429,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1406,6 +1494,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'liquid-freezer-iii-360': {
     min: 429,
     max: 599,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1422,6 +1511,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'phantom-spirit-120': {
     min: 180,
     max: 209,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1437,6 +1527,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'nh-u12a': {
     min: 579,
     max: 579,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1453,6 +1544,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   ak620: {
     min: 239,
     max: 244,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1469,6 +1561,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'kraken-360': {
     min: 900,
     max: 900,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1481,6 +1574,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'liquid-freezer-iii-420': {
     min: 714,
     max: 714,
+    tier: 'high',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1493,6 +1587,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'stock-wraith': {
     min: 0,
     max: 28,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1506,6 +1601,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'core-i5-14400': {
     min: 722,
     max: 787,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1518,6 +1614,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'b650i-ax': {
     min: 591,
     max: 669,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1530,6 +1627,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'system-power-11-550': {
     min: 249,
     max: 249,
+    tier: 'budget',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1542,6 +1640,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'pure-power-13m-650': {
     min: 429,
     max: 434,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1554,6 +1653,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'pure-power-13m-850': {
     min: 559,
     max: 569,
+    tier: 'value',
     checkedAt: '2026-11-06',
     sources: [
       {
@@ -1566,6 +1666,7 @@ export const priceRecords: Record<string, PriceRecord> = {
   'liquid-freezer-iii-pro-360': {
     min: 326,
     max: 337,
+    tier: 'midrange',
     checkedAt: '2026-11-06',
     sources: [
       {

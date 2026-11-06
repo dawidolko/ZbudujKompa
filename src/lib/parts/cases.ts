@@ -1,5 +1,5 @@
 import type { Case } from './types.ts';
-import { priceOf } from './pricing.ts';
+import { priceOf, tierOf } from './pricing.ts';
 
 /**
  * Case catalogue.
@@ -25,7 +25,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 45,
     driveBays: 4,
-    tier: 'budget',
+    tier: tierOf('focus-2'),
     price: priceOf('focus-2'),
     url: 'https://www.fractal-design.com/products/cases/',
     note: {
@@ -45,7 +45,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 47,
     driveBays: 4,
-    tier: 'midrange',
+    tier: tierOf('north'),
     price: priceOf('north'),
     note: {
       pl: 'Dobry przepływ powietrza w obudowie, która nie wygląda jak sprzęt gamingowy. Front z drewna zamiast szkła i podświetlenia.',
@@ -64,7 +64,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 60,
     driveBays: 14,
-    tier: 'high',
+    tier: tierOf('define-7'),
     price: priceOf('define-7'),
     note: {
       pl: 'Wyciszona obudowa mieszcząca do czternastu dysków. Najlepszy wybór pod serwer domowy stojący w mieszkaniu.',
@@ -83,7 +83,7 @@ export const cases: Case[] = [
     psuFormFactor: 'SFX',
     volume: 11,
     driveBays: 2,
-    tier: 'high',
+    tier: tierOf('terra'),
     price: priceOf('terra'),
     note: {
       pl: 'Poniżej 11 litrów przy zachowaniu miejsca na kartę dwuslotową. Chłodzenie wyłącznie niskoprofilowe — maksymalnie 77 mm.',
@@ -102,7 +102,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 19,
     driveBays: 6,
-    tier: 'value',
+    tier: tierOf('node-304'),
     price: priceOf('node-304'),
     note: {
       pl: 'Kompaktowa obudowa mieszcząca sześć dysków i zwykły zasilacz ATX — rzadkie połączenie w tym formacie.',
@@ -121,7 +121,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 55,
     driveBays: 4,
-    tier: 'value',
+    tier: tierOf('lancool-216'),
     price: priceOf('lancool-216'),
     url: 'https://lian-li.com/product-category/pc-cases/',
     note: {
@@ -141,7 +141,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 46,
     driveBays: 4,
-    tier: 'budget',
+    tier: tierOf('pop-air'),
     price: priceOf('pop-air'),
     note: {
       pl: 'Siatkowy front i miejsce na długie karty w niskiej cenie. Dobra baza dla pierwszego zestawu.',
@@ -160,7 +160,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 58,
     driveBays: 4,
-    tier: 'high',
+    tier: tierOf('o11-dynamic-evo'),
     price: priceOf('o11-dynamic-evo'),
     note: {
       pl: 'Obudowa pokazowa z dwiema szybami. Mieści trzy chłodnice 360 mm, ale front bez wlotów oznacza gorszy przepływ na chłodzeniu powietrznym.',
@@ -179,7 +179,7 @@ export const cases: Case[] = [
     psuFormFactor: 'ATX',
     volume: 39,
     driveBays: 4,
-    tier: 'midrange',
+    tier: tierOf('meshify-2-compact'),
     price: priceOf('meshify-2-compact'),
     note: {
       pl: 'Mniejsza obudowa ATX z bardzo dobrym przepływem. Dobry kompromis, gdy pełna wieża jest za duża na biurko.',
@@ -198,7 +198,7 @@ export const cases: Case[] = [
     psuFormFactor: 'SFX',
     volume: 13,
     driveBays: 2,
-    tier: 'flagship',
+    tier: tierOf('ncase-m1'),
     price: priceOf('ncase-m1'),
     note: {
       pl: 'Kultowa obudowa Mini-ITX mieszcząca pełnowymiarową kartę i chłodnicę 240 mm w trzynastu litrach. Montaż wymaga cierpliwości.',

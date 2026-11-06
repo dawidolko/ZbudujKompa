@@ -1,5 +1,5 @@
 import type { Ram } from './types.ts';
-import { priceOf } from './pricing.ts';
+import { priceOf, tierOf } from './pricing.ts';
 
 /**
  * Memory catalogue.
@@ -26,7 +26,7 @@ export const ramKits: Ram[] = [
     speed: 6000,
     casLatency: 30,
     height: 33,
-    tier: 'midrange',
+    tier: tierOf('flare-x5-32-6000'),
     price: priceOf('flare-x5-32-6000'),
     url: 'https://www.gskill.com/qvl',
     note: {
@@ -45,7 +45,7 @@ export const ramKits: Ram[] = [
     speed: 6000,
     casLatency: 36,
     height: 35,
-    tier: 'value',
+    tier: tierOf('fury-beast-32-6000'),
     price: priceOf('fury-beast-32-6000'),
     url: 'https://www.kingston.com/en/memory/search',
     note: {
@@ -64,7 +64,7 @@ export const ramKits: Ram[] = [
     speed: 6000,
     casLatency: 30,
     height: 34,
-    tier: 'high',
+    tier: tierOf('vengeance-64-6000'),
     price: priceOf('vengeance-64-6000'),
     url: 'https://www.corsair.com/memory-finder',
     note: {
@@ -83,7 +83,7 @@ export const ramKits: Ram[] = [
     speed: 5600,
     casLatency: 36,
     height: 35,
-    tier: 'budget',
+    tier: tierOf('fury-beast-16-5600'),
     price: priceOf('fury-beast-16-5600'),
     note: {
       pl: '16 GB to dziś praktyczne minimum. Wystarczy do grania, ale przy przeglądarce w tle bywa ciasno.',
@@ -101,7 +101,7 @@ export const ramKits: Ram[] = [
     speed: 6000,
     casLatency: 36,
     height: 22,
-    tier: 'midrange',
+    tier: tierOf('lowprofile-32-6000'),
     price: priceOf('lowprofile-32-6000'),
     note: {
       pl: 'Niskie moduły bez wysokich radiatorów — konieczne pod dużymi wieżami powietrznymi i w obudowach Mini-ITX.',
@@ -120,7 +120,7 @@ export const ramKits: Ram[] = [
     speed: 3200,
     casLatency: 16,
     height: 35,
-    tier: 'budget',
+    tier: tierOf('fury-beast-16-3200'),
     price: priceOf('fury-beast-16-3200'),
     note: {
       pl: 'DDR4-3200 CL16 to najlepszy punkt cenowy dla Ryzenów na AM4 — szybsze moduły dają już niewiele.',
@@ -138,7 +138,7 @@ export const ramKits: Ram[] = [
     speed: 3600,
     casLatency: 18,
     height: 34,
-    tier: 'value',
+    tier: tierOf('vengeance-32-3600'),
     price: priceOf('vengeance-32-3600'),
     note: {
       pl: 'Rozsądne 32 GB na DDR4. Przy AM4 warto sprawdzić, czy płyta utrzyma 3600 MHz stabilnie.',
@@ -156,7 +156,7 @@ export const ramKits: Ram[] = [
     speed: 6400,
     casLatency: 32,
     height: 44,
-    tier: 'high',
+    tier: tierOf('trident-z5-32-6400'),
     price: priceOf('trident-z5-32-6400'),
     note: {
       pl: 'Wyższa częstotliwość przy tym samym opóźnieniu 10 ns. Wysokie radiatory — sprawdź prześwit pod chłodzeniem.',
@@ -174,7 +174,7 @@ export const ramKits: Ram[] = [
     speed: 6000,
     casLatency: 32,
     height: 40,
-    tier: 'high',
+    tier: tierOf('fury-renegade-64-6000'),
     price: priceOf('fury-renegade-64-6000'),
     note: {
       pl: 'Dwa moduły po 32 GB zamiast czterech po 16 — kontroler pamięci utrzyma profil znacznie łatwiej.',
@@ -192,7 +192,7 @@ export const ramKits: Ram[] = [
     speed: 5600,
     casLatency: 46,
     height: 31,
-    tier: 'value',
+    tier: tierOf('crucial-32-5600'),
     price: priceOf('crucial-32-5600'),
     note: {
       pl: 'Jedno z tańszych 32 GB DDR5. Wysokie opóźnienia — 16,4 ns wobec 10 ns w zestawach z profilem — ale do pracy biurowej bez znaczenia.',

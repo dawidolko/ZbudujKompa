@@ -1,5 +1,5 @@
 import type { Storage } from './types.ts';
-import { priceOf } from './pricing.ts';
+import { priceOf, tierOf } from './pricing.ts';
 
 /**
  * Storage catalogue.
@@ -21,7 +21,7 @@ export const storage: Storage[] = [
     readSpeed: 6000,
     pcieGen: 4,
     tbw: 320,
-    tier: 'budget',
+    tier: tierOf('nv3-1tb'),
     price: priceOf('nv3-1tb'),
     note: {
       pl: '1 TB to praktyczne minimum — dwie duże gry potrafią zająć połowę tej przestrzeni.',
@@ -38,7 +38,7 @@ export const storage: Storage[] = [
     readSpeed: 7250,
     pcieGen: 4,
     tbw: 1200,
-    tier: 'midrange',
+    tier: tierOf('990-evo-plus-2tb'),
     price: priceOf('990-evo-plus-2tb'),
     url: 'https://semiconductor.samsung.com/consumer-storage/internal-ssd/',
     note: {
@@ -56,7 +56,7 @@ export const storage: Storage[] = [
     readSpeed: 7450,
     pcieGen: 4,
     tbw: 1200,
-    tier: 'high',
+    tier: tierOf('990-pro-2tb'),
     price: priceOf('990-pro-2tb'),
     note: {
       pl: 'Wysoka prędkość zapisu ciągłego ma znaczenie przy pracy na dużych plikach wideo. Do grania to nadpłata.',
@@ -71,7 +71,7 @@ export const storage: Storage[] = [
     kind: 'hdd',
     capacity: 4000,
     readSpeed: 180,
-    tier: 'value',
+    tier: tierOf('wd-blue-4tb-hdd'),
     price: priceOf('wd-blue-4tb-hdd'),
     note: {
       pl: 'Talerzowy dysk do archiwum i kopii zapasowych. Nie instaluj na nim systemu — różnica w płynności jest ogromna.',
@@ -88,7 +88,7 @@ export const storage: Storage[] = [
     readSpeed: 14500,
     pcieGen: 5,
     tbw: 1200,
-    tier: 'high',
+    tier: tierOf('t705-2tb'),
     price: priceOf('t705-2tb'),
     note: {
       pl: 'Najszybszy odczyt sekwencyjny na rynku. W grach różnica wobec dysku PCIe 4.0 jest w granicach dziesiątych części sekundy.',
@@ -105,7 +105,7 @@ export const storage: Storage[] = [
     readSpeed: 6000,
     pcieGen: 4,
     tbw: 640,
-    tier: 'value',
+    tier: tierOf('nv3-2tb'),
     price: priceOf('nv3-2tb'),
     note: {
       pl: 'Rozsądne 2 TB bez dopłaty za rekordowe prędkości. Do grania i codziennej pracy nie odczujesz różnicy wobec droższych.',
@@ -122,7 +122,7 @@ export const storage: Storage[] = [
     readSpeed: 7300,
     pcieGen: 4,
     tbw: 2400,
-    tier: 'flagship',
+    tier: tierOf('sn850x-4tb'),
     price: priceOf('sn850x-4tb'),
     note: {
       pl: '4 TB dla dużych bibliotek gier. Wysoka wytrzymałość zapisu, przydatna przy pracy z materiałem wideo.',
@@ -137,7 +137,7 @@ export const storage: Storage[] = [
     kind: 'hdd',
     capacity: 8000,
     readSpeed: 210,
-    tier: 'midrange',
+    tier: tierOf('ironwolf-8tb'),
     price: priceOf('ironwolf-8tb'),
     note: {
       pl: 'Dysk przeznaczony do pracy ciągłej w serwerze domowym. Odporny na wibracje przy wielu dyskach w jednej obudowie.',

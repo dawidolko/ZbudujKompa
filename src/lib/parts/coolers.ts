@@ -1,5 +1,5 @@
 import type { Cooler } from './types.ts';
-import { priceOf } from './pricing.ts';
+import { priceOf, tierOf } from './pricing.ts';
 
 /**
  * Cooler catalogue.
@@ -26,7 +26,7 @@ export const coolers: Cooler[] = [
     height: 155,
     noise: 28,
     ramClearance: 38,
-    tier: 'budget',
+    tier: tierOf('assassin-x-120'),
     price: priceOf('assassin-x-120'),
     url: 'https://www.thermalright.com/',
     note: {
@@ -45,7 +45,7 @@ export const coolers: Cooler[] = [
     height: 155,
     noise: 31,
     ramClearance: 43,
-    tier: 'value',
+    tier: tierOf('peerless-assassin-120'),
     price: priceOf('peerless-assassin-120'),
     note: {
       pl: 'Podwójna wieża dorównująca chłodnicom 240 mm za ułamek ceny. Najlepszy stosunek wydajności do ceny na rynku.',
@@ -63,7 +63,7 @@ export const coolers: Cooler[] = [
     height: 168,
     noise: 30,
     ramClearance: 32,
-    tier: 'high',
+    tier: tierOf('nh-d15-g2'),
     price: priceOf('nh-d15-g2'),
     url: 'https://noctua.at/en/products/cpu-cooler-retail',
     note: {
@@ -82,7 +82,7 @@ export const coolers: Cooler[] = [
     height: 70,
     noise: 26,
     ramClearance: 48,
-    tier: 'midrange',
+    tier: tierOf('nh-l12s'),
     price: priceOf('nh-l12s'),
     note: {
       pl: 'Niskoprofilowe chłodzenie zaprojektowane pod obudowy, w których wieża się nie mieści. 70 mm wysokości.',
@@ -99,7 +99,7 @@ export const coolers: Cooler[] = [
     wattage: 250,
     radiatorSize: 240,
     noise: 32,
-    tier: 'midrange',
+    tier: tierOf('liquid-freezer-iii-240'),
     price: priceOf('liquid-freezer-iii-240'),
     url: 'https://www.arctic.de/en/Cooling/CPU-Cooler',
     note: {
@@ -117,7 +117,7 @@ export const coolers: Cooler[] = [
     wattage: 350,
     radiatorSize: 360,
     noise: 34,
-    tier: 'midrange',
+    tier: tierOf('liquid-freezer-iii-pro-360'),
     price: priceOf('liquid-freezer-iii-pro-360'),
     note: {
       pl: 'Nowsza wersja Pro kosztuje dziś mniej niż zwykła III 360, bo to ona trafia do sklepów. Wymaga obudowy z miejscem na 360 mm.',
@@ -134,7 +134,7 @@ export const coolers: Cooler[] = [
     wattage: 350,
     radiatorSize: 360,
     noise: 34,
-    tier: 'high',
+    tier: tierOf('liquid-freezer-iii-360'),
     price: priceOf('liquid-freezer-iii-360'),
     note: {
       pl: 'Chłodnica 360 mm utrzymuje taktowania przy godzinach obciążenia wszystkich rdzeni. Wymaga obudowy z miejscem na 360 mm.',
@@ -152,7 +152,7 @@ export const coolers: Cooler[] = [
     height: 154,
     noise: 30,
     ramClearance: 42,
-    tier: 'value',
+    tier: tierOf('phantom-spirit-120'),
     price: priceOf('phantom-spirit-120'),
     note: {
       pl: 'Siedem ciepłowodów i dwie wieże. Praktycznie dorównuje chłodzeniom trzykrotnie droższym.',
@@ -170,7 +170,7 @@ export const coolers: Cooler[] = [
     height: 158,
     noise: 27,
     ramClearance: 45,
-    tier: 'high',
+    tier: tierOf('nh-u12a'),
     price: priceOf('nh-u12a'),
     note: {
       pl: 'Pojedyncza wieża o wydajności podwójnej, przy zachowaniu prześwitu nad pamięcią. Wybór, gdy duża wieża nie mieści się nad modułami.',
@@ -188,7 +188,7 @@ export const coolers: Cooler[] = [
     height: 160,
     noise: 32,
     ramClearance: 40,
-    tier: 'midrange',
+    tier: tierOf('ak620'),
     price: priceOf('ak620'),
     note: {
       pl: 'Podwójna wieża z wyświetlaczem temperatury. Wyświetlacz to gadżet, ale samo chłodzenie jest solidne.',
@@ -205,7 +205,7 @@ export const coolers: Cooler[] = [
     wattage: 320,
     radiatorSize: 360,
     noise: 36,
-    tier: 'high',
+    tier: tierOf('kraken-360'),
     price: priceOf('kraken-360'),
     note: {
       pl: 'Chłodnica 360 mm z podświetleniem i wyświetlaczem na pompie. Wydajnie, ale drożej niż odpowiedniki bez ozdób.',
@@ -222,7 +222,7 @@ export const coolers: Cooler[] = [
     wattage: 420,
     radiatorSize: 420,
     noise: 35,
-    tier: 'high',
+    tier: tierOf('liquid-freezer-iii-420'),
     price: priceOf('liquid-freezer-iii-420'),
     note: {
       pl: 'Największa gotowa chłodnica na rynku. Mieści się w niewielu obudowach — sprawdź specyfikację, zanim kupisz.',
@@ -240,7 +240,7 @@ export const coolers: Cooler[] = [
     height: 54,
     noise: 38,
     ramClearance: 60,
-    tier: 'budget',
+    tier: tierOf('stock-wraith'),
     price: priceOf('stock-wraith'),
     note: {
       pl: 'Chłodzenie dołączane do części procesorów. Wystarcza do 65 W, ale jest głośne — wymiana na tanią wieżę to jedna z najlepszych inwestycji.',

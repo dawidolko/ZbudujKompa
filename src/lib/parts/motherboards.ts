@@ -1,5 +1,5 @@
 import type { Motherboard } from './types.ts';
-import { priceOf } from './pricing.ts';
+import { priceOf, tierOf } from './pricing.ts';
 
 /**
  * Motherboard catalogue.
@@ -30,7 +30,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 2,
     vrmRating: 130,
     wifi: false,
-    tier: 'budget',
+    tier: tierOf('b650m-pro-rs'),
     price: priceOf('b650m-pro-rs'),
     url: 'https://www.asrock.com/support/',
     note: {
@@ -51,7 +51,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 3,
     vrmRating: 180,
     wifi: true,
-    tier: 'value',
+    tier: tierOf('tuf-b650-plus-wifi'),
     price: priceOf('tuf-b650-plus-wifi'),
     url: 'https://www.asus.com/support/',
     note: {
@@ -72,7 +72,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 4,
     vrmRating: 260,
     wifi: true,
-    tier: 'high',
+    tier: tierOf('x870e-tomahawk'),
     price: priceOf('x870e-tomahawk'),
     url: 'https://www.msi.com/support',
     note: {
@@ -93,7 +93,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 2,
     vrmRating: 150,
     wifi: true,
-    tier: 'value',
+    tier: tierOf('b650i-lightning'),
     price: priceOf('b650i-lightning'),
     note: {
       pl: 'Mini-ITX na AM5 z dobrym zasilaniem. W tym formacie wybór jest wąski, więc płytę dobiera się pierwszą.',
@@ -113,7 +113,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 1,
     vrmRating: 120,
     wifi: true,
-    tier: 'value',
+    tier: tierOf('b650i-ax'),
     price: priceOf('b650i-ax'),
     url: 'https://www.gigabyte.com/Motherboard/B650I-AX-rev-12/sp',
     note: {
@@ -135,7 +135,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 2,
     vrmRating: 140,
     wifi: false,
-    tier: 'budget',
+    tier: tierOf('b550-a-pro'),
     price: priceOf('b550-a-pro'),
     note: {
       pl: 'Sprawdzony średniak na AM4 z PCIe 4.0 dla karty i głównego dysku, bez wentylatora na mostku.',
@@ -156,7 +156,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 4,
     vrmRating: 280,
     wifi: true,
-    tier: 'high',
+    tier: tierOf('z890-tomahawk'),
     price: priceOf('z890-tomahawk'),
     note: {
       pl: 'Pełne podkręcanie pamięci i mocne zasilanie — potrzebne przy Core Ultra 7 i wyżej, które pod obciążeniem pobierają 250 W.',
@@ -176,7 +176,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 2,
     vrmRating: 160,
     wifi: true,
-    tier: 'value',
+    tier: tierOf('b860m-pro'),
     price: priceOf('b860m-pro'),
     note: {
       pl: 'Rozsądna płyta pod Core Ultra 5. Podkręcanie pamięci bez OC procesora, co przy modelach nie-K niczego nie odbiera.',
@@ -197,7 +197,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 2,
     vrmRating: 150,
     wifi: false,
-    tier: 'budget',
+    tier: tierOf('prime-b760m-a'),
     price: priceOf('prime-b760m-a'),
     note: {
       pl: 'Tania płyta pod Intela z sześcioma portami SATA — dobra podstawa serwera domowego.',
@@ -217,7 +217,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 2,
     vrmRating: 140,
     wifi: false,
-    tier: 'budget',
+    tier: tierOf('b760m-ddr4'),
     price: priceOf('b760m-ddr4'),
     note: {
       pl: 'Wersja DDR4 tej samej płyty. Sensowna wyłącznie wtedy, gdy masz już moduły DDR4 i chcesz je przenieść.',
@@ -237,7 +237,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 5,
     vrmRating: 300,
     wifi: true,
-    tier: 'flagship',
+    tier: tierOf('x670e-hero'),
     price: priceOf('x670e-hero'),
     note: {
       pl: 'Flagowa płyta z pięcioma gniazdami M.2 i bardzo mocnym zasilaniem. Sensowna wyłącznie przy ekstremalnym podkręcaniu.',
@@ -257,7 +257,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 3,
     vrmRating: 220,
     wifi: true,
-    tier: 'midrange',
+    tier: tierOf('b850-tomahawk'),
     price: priceOf('b850-tomahawk'),
     note: {
       pl: 'Nowszy chipset B850 z solidnym zasilaniem. Udźwignie nawet 9950X bez obniżania taktowań.',
@@ -277,7 +277,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 1,
     vrmRating: 90,
     wifi: false,
-    tier: 'budget',
+    tier: tierOf('a620m-hdv'),
     price: priceOf('a620m-hdv'),
     note: {
       pl: 'Najtańsze wejście w AM5. Słabe zasilanie i dwa sloty pamięci — wyłącznie do procesorów 65 W.',
@@ -297,7 +297,7 @@ export const motherboards: Motherboard[] = [
     m2Slots: 4,
     vrmRating: 270,
     wifi: true,
-    tier: 'midrange',
+    tier: tierOf('z890-aorus-elite'),
     price: priceOf('z890-aorus-elite'),
     note: {
       pl: 'Alternatywa dla Tomahawka na tej samej podstawce. Cztery gniazda M.2 i Wi-Fi 7.',

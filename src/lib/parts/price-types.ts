@@ -1,3 +1,5 @@
+import type { PriceTier } from './types.ts';
+
 /** A page a price was read from. */
 export type PriceSource = { label: string; url: string };
 
@@ -12,6 +14,8 @@ export type UnavailableReason = 'discontinued' | 'no-offer';
 type PriceRecordBase = {
   /** The day the figures were checked, as YYYY-MM-DD. */
   checkedAt: string;
+  /** Where a part sits in its category. Cooling classes have none. */
+  tier?: PriceTier;
   /** The pages the figures were read from. */
   sources: PriceSource[];
   /** What a reader of the data should know about how the figures were chosen. */

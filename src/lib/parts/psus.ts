@@ -1,5 +1,5 @@
 import type { Psu } from './types.ts';
-import { priceOf } from './pricing.ts';
+import { priceOf, tierOf } from './pricing.ts';
 
 /**
  * Power supply catalogue.
@@ -25,7 +25,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 3,
-    tier: 'budget',
+    tier: tierOf('system-power-10-550'),
     price: priceOf('system-power-10-550'),
     url: 'https://www.bequiet.com/en/powersupply',
     note: {
@@ -44,7 +44,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'value',
+    tier: tierOf('pure-power-12m-650'),
     price: priceOf('pure-power-12m-650'),
     note: {
       pl: 'Dziesięcioletnia gwarancja i pełna modularność. Rozsądny wybór do zestawu ze średnią kartą graficzną.',
@@ -62,7 +62,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'midrange',
+    tier: tierOf('pure-power-12m-750'),
     price: priceOf('pure-power-12m-750'),
     note: {
       pl: '750 W z zapasem na skoki poboru współczesnych kart. Najczęściej wybierana moc do zestawów do 1440p.',
@@ -80,7 +80,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'midrange',
+    tier: tierOf('focus-gx-850'),
     price: priceOf('focus-gx-850'),
     url: 'https://seasonic.com/wattage-calculator/',
     note: {
@@ -99,7 +99,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 12,
-    tier: 'flagship',
+    tier: tierOf('prime-tx-1000'),
     price: priceOf('prime-tx-1000'),
     note: {
       pl: 'Konieczny przy RTX 5090. Sprawność Titanium i dwunastoletnia gwarancja, ale cena odpowiada jakości.',
@@ -117,7 +117,7 @@ export const psus: Psu[] = [
     formFactor: 'SFX',
     atx31: true,
     warranty: 7,
-    tier: 'midrange',
+    tier: tierOf('sf750'),
     price: priceOf('sf750'),
     note: {
       pl: 'Format SFX do obudów Mini-ITX. Zasilacze SFX są droższe od ATX o tej samej mocy — to koszt małych wymiarów.',
@@ -135,7 +135,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'value',
+    tier: tierOf('rm850x'),
     price: priceOf('rm850x'),
     note: {
       pl: 'Cicha jednostka z wentylatorem zatrzymującym się przy niskim obciążeniu. Popularny wybór do zestawów z mocną kartą.',
@@ -153,7 +153,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'value',
+    tier: tierOf('mpg-a1000g'),
     price: priceOf('mpg-a1000g'),
     note: {
       pl: 'Tysiąc watów ze złączem 12V-2x6 w zestawie. Sensowna podstawa pod najmocniejsze karty bez przepłacania za Titanium.',
@@ -171,7 +171,7 @@ export const psus: Psu[] = [
     formFactor: 'SFX',
     atx31: true,
     warranty: 10,
-    tier: 'midrange',
+    tier: tierOf('sf850l'),
     price: priceOf('sf850l'),
     note: {
       pl: 'Format SFX-L jest nieco dłuższy od zwykłego SFX, więc mieści cichszy wentylator. Sprawdź, czy obudowa go przyjmie.',
@@ -189,7 +189,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 3,
-    tier: 'budget',
+    tier: tierOf('system-power-11-750'),
     price: priceOf('system-power-11-750'),
     note: {
       pl: 'Tania jednostka o rozsądnej mocy. Kable nieodłączane i tylko trzyletnia gwarancja — to widać w cenie.',
@@ -207,7 +207,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 3,
-    tier: 'budget',
+    tier: tierOf('system-power-11-550'),
     price: priceOf('system-power-11-550'),
     note: {
       pl: 'Następca System Power 10 i dziś najtańszy zasilacz, który można polecić. Kable nieodłączane, więc nadmiar trzeba gdzieś schować.',
@@ -225,7 +225,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'value',
+    tier: tierOf('pure-power-13m-650'),
     price: priceOf('pure-power-13m-650'),
     note: {
       pl: 'Pełna modularność, dziesięć lat gwarancji i wentylator zatrzymany przy małym obciążeniu. Dobry wybór do cichego zestawu.',
@@ -243,7 +243,7 @@ export const psus: Psu[] = [
     formFactor: 'ATX',
     atx31: true,
     warranty: 10,
-    tier: 'value',
+    tier: tierOf('pure-power-13m-850'),
     price: priceOf('pure-power-13m-850'),
     note: {
       pl: 'Duży zapas pod kartę graficzną średniej i wyższej klasy, z kablem 12V-2x6 i zgodnością z ATX 3.1.',

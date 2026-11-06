@@ -8,6 +8,12 @@
 /* An offer needs at least this many siblings before a band is trusted. */
 export const MIN_OFFERS = 3;
 
+/* Bringing back a part with no price takes more evidence than updating one. */
+export const RESTORE_MIN_OFFERS = 5;
+
+/* Below this share of priced parts refreshed, a run has failed and writes nothing. */
+const MIN_REFRESHED_SHARE = 0.5;
+
 /* Offers this far from the median are treated as a wrong match or a mistake. */
 const OUTLIER_LOW = 0.6;
 const OUTLIER_HIGH = 1.6;
@@ -112,12 +118,12 @@ export function rejectOutliers(offers) {
  * The band runs from the lowest credible offer to the median, which is the same
  * meaning the hand-checked figures have: lowest sensible and typical.
  */
-export function bandFromResponse(response, query) {
+export function bandFromResponse(response, query, minOffers = MIN_OFFERS) {
   const matching = extractOffers(response)
     .filter(isNewPolishOffer)
     .filter((offer) => matchesPart(offer.title, query));
   const offers = rejectOutliers(matching);
-  if (offers.length < MIN_OFFERS) return null;
+  if (offers.length < minOffers) return null;
 
   const prices = offers.map((offer) => offer.price);
   const typical = median(prices);
@@ -133,6 +139,56 @@ export function bandFromResponse(response, query) {
 /* True when a refresh changed a number, which is what is worth a commit. */
 export function bandsDiffer(previous, next) {
   return previous.min !== next.min || previous.max !== next.max;
+}
+
+/*
+ * Applies a run to the records. `outcomes` holds one { id, band } per part the
+ * run got an answer for, with a null band where too few offers survived: that
+ * part keeps its record, date included, so it ages out rather than being
+ * refreshed on no evidence. A part with no price comes back on a band, and the
+ * tier follows the new typical price through `tierFor`.
+ */
+export function mergeRefresh(records, outcomes, { today, tierFor }) {
+  const next = structuredClone(records);
+  const summary = { refreshed: 0, pricedRefreshed: 0, changed: [], restored: [], retiered: [] };
+
+  for (const { id, band } of outcomes) {
+    if (!band) continue;
+    const previous = records[id];
+    const restored = previous.min === null;
+    const tier = previous.tier ? tierFor(id, previous.tier, band.max) : undefined;
+
+    next[id] = {
+      min: band.min,
+      max: band.max,
+      ...(tier ? { tier } : {}),
+      checkedAt: today,
+      sources: band.sources,
+    };
+
+    summary.refreshed += 1;
+    if (restored) summary.restored.push(id);
+    else {
+      summary.pricedRefreshed += 1;
+      if (bandsDiffer(previous, band)) summary.changed.push(id);
+    }
+    if (tier && tier !== previous.tier) summary.retiered.push(`${id}: ${previous.tier} -> ${tier}`);
+  }
+
+  return { next, ...summary };
+}
+
+/*
+ * Why a run must not be written, or null when it may. A key that stopped working
+ * or a shop feed that broke shows up as most parts failing, and that run says
+ * nothing about the prices it missed, so all of it is thrown away.
+ */
+export function refusalReason({ refreshed, pricedRefreshed, pricedQueued }) {
+  if (refreshed === 0) return 'Nothing could be refreshed.';
+  if (pricedRefreshed < pricedQueued * MIN_REFRESHED_SHARE) {
+    return `Only ${pricedRefreshed} of ${pricedQueued} priced parts were refreshed.`;
+  }
+  return null;
 }
 
 /* Writes the data module. Prettier tidies the layout in the workflow. */
@@ -151,8 +207,9 @@ export function renderPricesModule(records) {
  *
  * \`min\` is the lowest sensible new retail price and \`max\` the typical price at
  * a mainstream shop, both in PLN. \`min\` and \`max\` are null when no credible
- * Polish price was found, and \`reason\` then says why. Records marked \`manual\`
- * are not touched by the automated refresh.
+ * Polish price was found, and \`reason\` then says why. \`tier\` is where the part
+ * sits in its category, and follows the price. Records marked \`manual\` are not
+ * touched by the automated refresh.
  */
 export const priceRecords: Record<string, PriceRecord> = {
 ${entries}

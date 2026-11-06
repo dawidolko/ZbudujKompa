@@ -1,6 +1,6 @@
 import { priceRecords } from './prices.ts';
 import type { PriceRecord, UnavailableReason } from './price-types.ts';
-import type { PriceRange, PriceTotal } from './types.ts';
+import type { PriceRange, PriceTier, PriceTotal } from './types.ts';
 
 /** Past this many days a price is hidden, and the reader is sent to live offers. */
 export const PRICE_STALE_DAYS = 45;
@@ -32,6 +32,13 @@ export function priceRecord(id: string): PriceRecord {
 export function priceOf(id: string): PriceRange {
   const { min, max, checkedAt } = priceRecord(id);
   return min === null ? { min: 0, max: 0, unavailable: true } : { min, max, checkedAt };
+}
+
+/** Where a part sits in its category's price range. */
+export function tierOf(id: string): PriceTier {
+  const { tier } = priceRecord(id);
+  if (!tier) throw new Error(`No price tier for "${id}"`);
+  return tier;
 }
 
 /** Why a part has no price, or undefined when it has one. */

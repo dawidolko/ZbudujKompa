@@ -45,7 +45,9 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Refresh prices
+        id: refresh
         if: steps.key.outputs.present == 'true'
+        continue-on-error: true
         run: node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/update-prices.mjs
 
       - name: Format the data module
@@ -68,3 +70,9 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
           gh workflow run deploy.yml --ref main
+
+      - name: Fail when the refresh failed
+        if: steps.key.outputs.present == 'true' && steps.refresh.outcome == 'failure'
+        run: |
+          echo "::error::The price refresh failed although SERPAPI_KEY is set. Prices expire 45 days after their last check, so this needs a look."
+          exit 1

@@ -8,21 +8,35 @@
  * Run it with: node --experimental-strip-types scripts/update-prices.mjs
  *
  * The free plan allows 250 searches a month and 50 an hour, so the script spends
- * one search per priced part and waits between searches to stay under the hourly
- * limit. A part keeps its previous record when too few offers match it, and the
- * file is only rewritten when at least one number changed.
+ * one search per part and waits between searches to stay under the hourly limit.
+ *
+ * A part keeps its previous record when too few offers match it. A part with no
+ * price gets one back when enough reliable offers return, and a part's tier
+ * follows its price. A run that fails for most parts writes nothing and exits
+ * with an error; one that stops late keeps what it found and still exits with
+ * an error, so the workflow fails either way.
  */
 import { writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { bandFromResponse, bandsDiffer, renderPricesModule } from './lib/price-matching.mjs';
+import {
+  bandFromResponse,
+  bandsDiffer,
+  MIN_OFFERS,
+  mergeRefresh,
+  refusalReason,
+  renderPricesModule,
+  RESTORE_MIN_OFFERS,
+} from './lib/price-matching.mjs';
 import { priceQueries } from '../src/lib/parts/price-queries.ts';
+import { tierAfter } from '../src/lib/parts/price-tiers.ts';
 import { priceRecords } from '../src/lib/parts/prices.ts';
+import { allParts } from '../src/lib/parts/selection.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUTPUT = join(ROOT, 'src/lib/parts/prices.ts');
-const ENDPOINT = 'https://serpapi.com/search';
+const ENDPOINT = process.env.SERPAPI_ENDPOINT ?? 'https://serpapi.com/search';
 
 /* 75 seconds a search is 48 an hour, just inside the free plan's limit of 50. */
 const DELAY_MS = Number(process.env.PRICE_DELAY_MS ?? 75_000);
@@ -58,15 +72,19 @@ async function search(query) {
 }
 
 const today = new Date().toISOString().slice(0, 10);
-const queue = Object.entries(priceRecords).filter(
-  ([id, record]) => record.min !== null && !record.manual && priceQueries[id],
-);
+const categoryOf = new Map(allParts.map((part) => [part.id, part.category]));
 
-console.log(`Refreshing ${queue.length} parts.`);
+/* Priced parts first, so a quota that runs out costs the restorations rather
+   than the prices the site is showing. */
+const queue = Object.entries(priceRecords)
+  .filter(([id, record]) => !record.manual && priceQueries[id])
+  .sort(([, a], [, b]) => Number(a.min === null) - Number(b.min === null));
+const pricedQueued = queue.filter(([, record]) => record.min !== null).length;
 
-const next = structuredClone(priceRecords);
-let changed = 0;
-let refreshed = 0;
+console.log(`Searching ${queue.length} parts, ${pricedQueued} of them priced.`);
+
+const outcomes = [];
+let stoppedBy = null;
 
 for (const [index, [id, record]] of queue.entries()) {
   if (index > 0) await sleep(DELAY_MS);
@@ -75,36 +93,52 @@ for (const [index, [id, record]] of queue.entries()) {
   try {
     response = await search(priceQueries[id].q);
   } catch (error) {
-    /* Usually the key or the quota, which the next search would hit as well.
-       What has been fetched so far is still worth keeping. */
-    console.error(`Stopping at ${id}: ${error.message}`);
+    /* Usually the key or the quota, which the next search would hit as well. */
+    stoppedBy = `Stopped at ${id}: ${error.message}`;
+    console.error(stoppedBy);
     break;
   }
 
-  const band = bandFromResponse(response, priceQueries[id]);
-  if (!band) {
-    console.log(`  ${id}: too few matching offers, keeping ${record.checkedAt}`);
-    continue;
-  }
-
-  refreshed += 1;
-  if (bandsDiffer(record, band)) {
-    changed += 1;
+  const restoring = record.min === null;
+  const band = bandFromResponse(
+    response,
+    priceQueries[id],
+    restoring ? RESTORE_MIN_OFFERS : MIN_OFFERS,
+  );
+  if (!band) console.log(`  ${id}: too few matching offers, keeping ${record.checkedAt}`);
+  else if (restoring) console.log(`  ${id}: price restored at ${band.min}-${band.max}`);
+  else if (bandsDiffer(record, band)) {
     console.log(`  ${id}: ${record.min}-${record.max} -> ${band.min}-${band.max}`);
   }
-  next[id] = { min: band.min, max: band.max, checkedAt: today, sources: band.sources };
+  outcomes.push({ id, band });
 }
 
-console.log(`${refreshed} of ${queue.length} refreshed, ${changed} changed.`);
+const run = mergeRefresh(priceRecords, outcomes, {
+  today,
+  tierFor: (id, tier, price) => tierAfter(categoryOf.get(id), tier, price),
+});
 
-if (refreshed === 0) {
-  console.error('Nothing could be refreshed, so this needs a look.');
+console.log(
+  `${run.pricedRefreshed} of ${pricedQueued} priced parts refreshed, ${run.changed.length} changed, ` +
+    `${run.restored.length} restored, ${run.retiered.length} moved tier.`,
+);
+for (const move of run.retiered) console.log(`  tier ${move}`);
+
+/* A failed run writes nothing: the file keeps its good data, and the failure
+   reaches the workflow through the exit code. */
+const refusal = refusalReason({ ...run, pricedQueued });
+if (refusal) {
+  console.error(`::error::Prices left unchanged. ${refusal}${stoppedBy ? ` ${stoppedBy}` : ''}`);
   process.exit(1);
 }
 
-if (changed === 0) {
-  console.log('No value changed, leaving the file alone.');
-  process.exit(0);
-}
+/* The date has moved even where no number did. Skipping the write would leave
+   a confirmed price to expire. */
+await writeFile(OUTPUT, renderPricesModule(run.next));
 
-await writeFile(OUTPUT, renderPricesModule(next));
+/* Most of the catalogue made it, so that is kept, but the run still reports the
+   failure instead of passing for a complete one. */
+if (stoppedBy) {
+  console.error(`::error::The refresh stopped early. ${stoppedBy}`);
+  process.exitCode = 1;
+}
