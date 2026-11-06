@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://zbudujkompa.dawidolko.pl/pl/"><img src="docs/readme/banner.webp" alt="ZbudujKompa: web platform. Build your PC without guessing - a bilingual, fully static reference site that explains the reasoning behind every hardware recommendation" width="100%"></a>
+</p>
+
 # ZbudujKompa
 
 > 🚀 **Build your PC without guessing** - a bilingual, fully static reference site that explains the reasoning behind every hardware recommendation
@@ -13,6 +17,8 @@ There is no backend, no database and no tracking. Everything is prerendered to f
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![WCAG](https://img.shields.io/badge/WCAG%202.2-AA-16A34A?logo=accessibleicon&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
+
+**[Live site](https://zbudujkompa.dawidolko.pl/pl/)** · [Screenshots](#️-screenshots) · [Getting started](#-getting-started)
 
 ---
 
@@ -271,12 +277,6 @@ For a project site at `https://<user>.github.io/<repo>/`, set `NEXT_PUBLIC_BASE_
 
 ---
 
-## 🌍 Live Demo
-
-The project is deployed and available at: **[https://zbudujkompa.dawidolko.pl](https://zbudujkompa.dawidolko.pl)**
-
----
-
 ## 🤝 Contributing
 
 Corrections to the technical content are especially welcome; hardware advice ages, and an issue pointing at something now wrong is genuinely useful. Please keep commits following [Conventional Commits](https://www.conventionalcommits.org/) and run `npm run verify` before opening a pull request.
@@ -293,7 +293,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
-Created by **[Dawid Olko](https://github.com/dawidolko)**
+**Dawid Olko** · Fullstack / AI Developer
 
-- **Website** — [dawidolko.pl](https://dawidolko.pl/)
-- **LinkedIn** — [@dawidolko](https://www.linkedin.com/in/dawidolko/)
+[Portfolio](https://olkodawid.dawidolko.pl) · [CV](https://cv.dawidolko.pl) · [LinkedIn](https://www.linkedin.com/in/dawidolko/) · [GitHub](https://github.com/dawidolko)
