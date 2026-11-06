@@ -184,7 +184,7 @@ export const ramKits: Ram[] = [
   {
     id: 'crucial-32-5600',
     category: 'ram',
-    name: 'Crucial Pro 32 GB (2×16) DDR5-5600 CL46',
+    name: 'Pro 32 GB (2×16) DDR5-5600 CL46',
     brand: 'Crucial',
     type: 'ddr5',
     capacity: 32,
