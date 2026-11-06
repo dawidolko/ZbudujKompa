@@ -33,7 +33,11 @@ export function LanguageSwitcher({ locale, className }: { locale: Locale; classN
                 href={switchLocaleInPath(pathname, code)}
                 hrefLang={code}
                 aria-current={isActive ? 'true' : undefined}
-                aria-label={isActive ? undefined : dict.language.switchTo(localeNames[code])}
+                aria-label={
+                  isActive
+                    ? undefined
+                    : `${code.toUpperCase()}: ${dict.language.switchTo(localeNames[code])}`
+                }
                 className={cn(
                   'flex h-8 items-center rounded-xs px-2.5 text-xs font-bold uppercase tracking-wide transition-colors focus-ring',
                   isActive
