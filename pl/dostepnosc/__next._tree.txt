@@ -1,0 +1,7 @@
+:HL["/_next/static/chunks/036_alwi0pgl_.css","style"]
+:HL["/_next/static/media/martian_mono_wght.p.350or6f9pv2u1.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/sofia_sans_wght-s.p.15jesk1gjhpm_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+3:[["children",{"s":"__PAGE__","h":160}]]
+2:[["children",{"s":"dostepnosc","h":64,"c":"$Q3"}]]
+1:[["children",{"s":{"n":"locale","t":"d","k":"pl","s":[]},"h":32,"c":"$Q2"}]]
+0:{"b":"paTTCCOiLyXP3qIEssQQB","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
