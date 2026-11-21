@@ -118,7 +118,17 @@ check('PCIe 5.0 x16 is 63 GB/s', c.pcieBandwidth(5, 16), 63.01, 0.01);
 /* The known real-world result: 4K at 144 Hz needs compression on
    DisplayPort 1.4 but fits uncompressed over HDMI 2.1. */
 const uhd144 = c.displayBandwidth(3840, 2160, 144, 8);
-check('4K 144 Hz needs about 29 Gbps', uhd144, 29.24, 0.05);
+/* CVT-RB2 timing for 3840x2160 at 144 Hz is 3920 x 2314 total, a 1306 MHz
+   pixel clock: 31.35 Gbps at 24 bits per pixel. */
+check('4K 144 Hz needs about 31.3 Gbps', uhd144, 31.35, 0.05);
+check(
+  '4K 120 Hz at 8 bits still fits DisplayPort 1.4 uncompressed',
+  c.checkDisplayLink(
+    c.displayBandwidth(3840, 2160, 120, 8),
+    c.DISPLAY_INTERFACES['dp-1.4'].effective,
+  ).fits,
+  true,
+);
 check(
   'which does not fit DisplayPort 1.4',
   c.checkDisplayLink(uhd144, c.DISPLAY_INTERFACES['dp-1.4'].effective).fits,

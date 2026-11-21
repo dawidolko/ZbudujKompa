@@ -595,13 +595,20 @@ export function pcieBandwidth(generation: 3 | 4 | 5, lanes: number): number {
 /**
  * Data rate a display mode requires, in Gbps.
  *
- *   rate = width · height · refresh · bits per pixel · blanking overhead
+ *   rate = (width + 80) · (height + vertical blank) · refresh · bits per pixel
  *
- * The 1.02 factor covers CVT reduced blanking. The result is the payload, so
- * it is compared against a cable's *effective* rate rather than its headline
- * signalling rate — the difference between the two is exactly why 4K at 144 Hz
- * needs compression on DisplayPort 1.4.
+ * The blanking follows VESA CVT reduced blanking v2: a fixed 80-pixel
+ * horizontal blank, and a vertical blank of at least 460 µs per frame, so the
+ * vertical overhead grows with the refresh rate — about 3 per cent at 60 Hz
+ * and about 7 per cent at 144 Hz. A flat factor would understate the
+ * high-refresh modes, which are exactly the ones close to a cable's limit.
+ * The result is compared against a cable's *effective* rate rather than its
+ * headline signalling rate — the difference between the two is exactly why 4K
+ * at 144 Hz needs compression on DisplayPort 1.4.
  */
+const CVT_RB2_H_BLANK_PX = 80;
+const CVT_RB2_MIN_V_BLANK_S = 460e-6;
+
 export function displayBandwidth(
   width: number,
   height: number,
@@ -609,7 +616,11 @@ export function displayBandwidth(
   bitsPerChannel: number,
 ): number {
   const bitsPerPixel = bitsPerChannel * 3;
-  return (width * height * refreshHz * bitsPerPixel * 1.02) / 1_000_000_000;
+  /* Lines needed so that the blank lasts at least 460 µs of the frame. */
+  const blankShare = CVT_RB2_MIN_V_BLANK_S * refreshHz;
+  const vBlankLines = blankShare < 1 ? Math.ceil((height * blankShare) / (1 - blankShare)) : 0;
+  const pixelsPerSecond = (width + CVT_RB2_H_BLANK_PX) * (height + vBlankLines) * refreshHz;
+  return (pixelsPerSecond * bitsPerPixel) / 1_000_000_000;
 }
 
 /** Effective payload rates of the common display interfaces, in Gbps. */
@@ -934,10 +945,10 @@ export function estimateLoadTemp(input: {
 /**
  * Time to transfer a file over a network link.
  *
- * Uses 80 per cent of the nominal rate, which is roughly what TCP over
- * Ethernet achieves in practice once framing and acknowledgements are
- * accounted for. Quoting the nominal figure would understate the time by a
- * fifth.
+ * Uses 80 per cent of the nominal rate as a deliberately conservative
+ * allowance. A healthy wired Gigabit link sustains about 940 Mbit/s of TCP
+ * payload, so the real figure there is closer to 94 per cent, while Wi-Fi and
+ * slow disks at either end often fall well below 80.
  */
 export function networkTransferTime(
   sizeGb: number,
