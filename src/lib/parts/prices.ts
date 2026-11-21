@@ -15,51 +15,50 @@ import type { PriceRecord } from './price-types.ts';
 export const priceRecords: Record<string, PriceRecord> = {
   'ryzen-5-7600': {
     min: 699,
-    max: 839,
+    max: 809,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
         label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-ryzen+5+7600',
-      },
-      {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=ryzen%205%207600',
+        url: 'https://www.ceneo.pl/146709962',
       },
     ],
+    note: 'Media Expert, Avans and Electro at 699 zł, Morele 795 zł, Komputronik 809 zł, all in stock.',
   },
   'ryzen-7-7800x3d': {
-    min: 1385,
-    max: 1549,
+    min: 1349,
+    max: 1365,
     tier: 'high',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
         label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-ryzen+7+7800x3d',
+        url: 'https://www.ceneo.pl/151188370',
       },
       {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=ryzen%207%207800x3d',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=amd+ryzen+7+7800x3d',
       },
     ],
+    note: 'Six shops at 1349 zł and Komputronik at 1365 zł. A single Amazon.pl offer at 1314 zł was left out.',
   },
   'ryzen-7-9700x': {
-    min: 1138,
-    max: 1329,
+    min: 1169,
+    max: 1199,
     tier: 'midrange',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
         label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-ryzen+7+9700x',
+        url: 'https://www.ceneo.pl/171280719',
       },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=ryzen%207%209700x',
       },
     ],
+    note: 'x-kom, Morele, Media Expert and Euro at 1199 zł, in stock.',
   },
   'ryzen-9-9950x': {
     min: 2035,
@@ -94,20 +93,21 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'ryzen-5-5600': {
-    min: 595,
+    min: 599,
     max: 599,
     tier: 'budget',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-ryzen+5+5600',
-      },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=ryzen%205%205600',
       },
+      {
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=amd+ryzen+5+5600+box',
+      },
     ],
+    note: 'Box version at x-kom and Morele. The 499 zł listings are the tray version.',
   },
   'ryzen-7-5800x3d': {
     min: 1499,
@@ -126,52 +126,47 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'core-ultra-5-245k': {
-    min: 894,
-    max: 899,
+    min: 889,
+    max: 942,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
         label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-core+ultra+5+245k',
-      },
-      {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=core%20ultra%205%20245k',
+        url: 'https://www.ceneo.pl/175358046',
       },
     ],
+    note: 'Sferis 889 zł and Morele 942 zł. A single Amazon.pl offer at 748 zł was left out, and x-kom listed it out of stock.',
   },
   'core-ultra-7-265k': {
-    min: 1399,
+    min: 1459,
     max: 1459,
     tier: 'high',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Proline',
-        url: 'https://proline.pl/?qp=core+ultra+7+265k',
-      },
-      {
         label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-core+ultra+7+265k',
+        url: 'https://www.ceneo.pl/175216878',
       },
     ],
+    note: 'Only Komputronik had it in stock; x-kom showed the same price out of stock.',
   },
   'core-i5-14400f': {
-    min: 629,
-    max: 669,
+    min: 669,
+    max: 709,
     tier: 'budget',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-core+i5+14400f',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=i5-14400f',
       },
       {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=core%20i5%2014400f',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=intel+core+i5-14400f',
       },
     ],
+    note: 'x-kom 669 zł in stock; the Morele box at 709 zł is from a marketplace seller.',
   },
   'core-i5-14600k': {
     min: 1089,
@@ -190,20 +185,17 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'ryzen-5-9600x': {
-    min: 689,
-    max: 799,
+    min: 739,
+    max: 749,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
         label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-ryzen+5+9600x',
-      },
-      {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=ryzen%205%209600x',
+        url: 'https://www.ceneo.pl/171280884',
       },
     ],
+    note: 'x-kom, Media Expert, Euro and Neonet at 749 zł.',
   },
   'ryzen-9-7900x3d': {
     min: 2249,
@@ -219,20 +211,17 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: 'Only three shops list the box; x-kom showed 2939 zł out of stock.',
   },
   'ryzen-9-9950x3d': {
-    min: 2699,
-    max: 2899,
+    min: 2599,
+    max: 2699,
     tier: 'flagship',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
         label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-ryzen+9+9950x',
-      },
-      {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=ryzen%209%209950x',
+        url: 'https://www.ceneo.pl/181611049',
       },
     ],
+    note: 'Neonet 2599 zł, x-kom 2649 zł, Morele 2689 zł, Media Expert 2699 zł.',
   },
   'ryzen-5-5500': {
     min: 385,
@@ -315,34 +304,31 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'b650m-pro-rs': {
-    min: 512,
-    max: 539,
+    min: 567,
+    max: 567,
     tier: 'budget',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-asrock+b650m+pro+rs',
-      },
-      {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=asrock%20b650m%20pro%20rs',
+        label: 'Morele',
+        url: 'https://www.morele.net/plyta-glowna-asrock-b650m-pro-rs-12893886/',
       },
     ],
+    note: 'Only Morele had it in stock, as last units; x-kom listed 571 zł out of stock.',
   },
   'tuf-b650-plus-wifi': {
-    min: 599,
+    min: 638,
     max: 639,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-asus+tuf+gaming+b650-plus+wifi',
-      },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=tuf%20gaming%20b650-plus%20wifi',
+      },
+      {
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=asus+tuf+gaming+b650-plus+wifi',
       },
     ],
   },
@@ -489,14 +475,14 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: 'x-kom marks it Produkt wycofany.',
   },
   'b850-tomahawk': {
-    min: 949,
-    max: 1173,
+    min: 1060,
+    max: 1156,
     tier: 'midrange',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-msi+mag+b850+tomahawk+wifi',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=msi+mag+b850+tomahawk+wifi',
       },
       {
         label: 'x-kom',
@@ -631,20 +617,21 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: 'No Corsair DDR5 kit with this name and a 22 mm height could be identified.',
   },
   'fury-beast-16-3200': {
-    min: 759,
+    min: 811,
     max: 909,
     tier: 'budget',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-kingston+fury+beast+16gb+3200+cl16+ddr4',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=kingston+fury+beast+ddr4+16gb+3200+cl16',
       },
       {
         label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=fury%20beast%2016gb%203200%20cl16%20ddr4',
+        url: 'https://www.x-kom.pl/szukaj?q=kingston%20fury%20beast%2016gb%202x8gb%203200%20ddr4',
       },
     ],
+    note: 'KF432C16BBK2/16: Morele 811 zł, x-kom 909 zł in stock.',
   },
   'vengeance-32-3600': {
     min: null,
@@ -751,114 +738,116 @@ export const priceRecords: Record<string, PriceRecord> = {
     min: 8799,
     max: 8999,
     tier: 'flagship',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-geforce+rtx+5080',
-      },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=rtx%205080',
       },
     ],
+    note: 'Only x-kom confirmed stock: Gainward Python III 8799 zł, several models at 8999 zł. Cheaper listings were out of stock.',
   },
   'rtx-5070-ti': {
-    min: 5919,
+    min: 6299,
     max: 6499,
     tier: 'high',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-geforce+rtx+5070+ti',
-      },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=rtx%205070%20ti',
       },
+      {
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=rtx+5070+ti',
+      },
     ],
+    note: 'PNY 6299 zł at Morele; Palit and Gigabyte 6499 zł.',
   },
   'rtx-5070': {
-    min: 3966,
+    min: 4099,
     max: 4399,
     tier: 'midrange',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-geforce+rtx+5070+12gb',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=rtx%205070',
       },
       {
         label: 'Morele',
-        url: 'https://www.morele.net/wyszukiwarka/?q=geforce+rtx+5070+12gb',
+        url: 'https://www.morele.net/wyszukiwarka/?q=rtx+5070',
       },
     ],
+    note: 'Zotac Twin Edge 4099 zł at x-kom; MSI Ventus 4399 zł.',
   },
   'rx-9070-xt': {
-    min: 4168,
-    max: 4399,
+    min: 4299,
+    max: 4499,
     tier: 'high',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-radeon+rx+9070+xt',
-      },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=rx%209070%20xt',
       },
+      {
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=rx+9070+xt',
+      },
     ],
+    note: 'ASUS Prime 4299 zł at x-kom; ASRock and ASUS 4499 zł.',
   },
   'rtx-5060-ti': {
-    min: 3482,
+    min: 3749,
     max: 3899,
     tier: 'midrange',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-geforce+rtx+5060+ti+16gb',
-      },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=rtx%205060%20ti%2016gb',
       },
+      {
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=rtx+5060+ti+16gb',
+      },
     ],
+    note: 'Gainward Ghost OC 3749 zł at x-kom; ASUS Dual 3899 zł at x-kom and Morele.',
   },
   'rx-9060-xt': {
-    min: 2770,
-    max: 2999,
+    min: 3150,
+    max: 3399,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-radeon+rx+9060+xt+16gb',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=rx+9060+xt+16gb',
       },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=rx%209060%20xt%2016gb',
       },
     ],
+    note: 'Up by about 400 zł since 6 November. Morele ASUS Prime 3150 zł, Proline ASRock 3175 zł, x-kom XFX Swift 3399 zł in stock.',
   },
   'rtx-5060': {
-    min: 2099,
+    min: 2199,
     max: 2399,
     tier: 'budget',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-geforce+rtx+5060+8gb',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=rtx%205060',
       },
       {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=rtx%205060%208gb',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=rtx+5060',
       },
     ],
-    note: 'x-kom charged 2099 zł only with a promo code, so its regular 2399 zł is the typical price.',
+    note: 'Cheapest in-stock models: ASUS Dual OC and Gainward Ghost at 2199 zł.',
   },
   'rx-7600': {
     min: 1699,
@@ -925,18 +914,18 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'nv3-1tb': {
-    min: 616,
-    max: 635,
+    min: 635,
+    max: 646,
     tier: 'budget',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-kingston+nv3+1tb',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=kingston%20nv3',
       },
       {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=kingston%20nv3%201tb',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=kingston+nv3',
       },
     ],
   },
@@ -957,20 +946,21 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   '990-pro-2tb': {
-    min: 1699,
-    max: 2299,
+    min: 2299,
+    max: 2371,
     tier: 'high',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-samsung+990+pro+2tb',
-      },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=samsung%20990%20pro%202tb',
       },
+      {
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=samsung+990+2tb',
+      },
     ],
+    note: 'x-kom 2299 zł in stock, Morele 2371 zł. A marketplace offer at 1950 zł was left out.',
   },
   'wd-blue-4tb-hdd': {
     min: 927,
@@ -1002,18 +992,18 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: 'One offer on Ceneo. x-kom showed a stale 1199 zł out of stock.',
   },
   'nv3-2tb': {
-    min: 1173,
-    max: 1219,
+    min: 1189,
+    max: 1217,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-kingston+nv3+2tb',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=kingston%20nv3',
       },
       {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=kingston%20nv3%202tb',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=kingston+nv3',
       },
     ],
   },
@@ -1192,20 +1182,21 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: '2024 revision. x-kom listed it out of stock.',
   },
   rm850x: {
-    min: 529,
+    min: 651,
     max: 669,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-corsair+rm850x',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=corsair+rm850x',
       },
       {
         label: 'x-kom',
         url: 'https://www.x-kom.pl/szukaj?q=corsair%20rm850x',
       },
     ],
+    note: 'x-kom charged 499 zł only with a promo code, so its regular 669 zł is the typical price.',
   },
   'mpg-a1000g': {
     min: 499,
@@ -1651,17 +1642,21 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: 'Ten offers on Ceneo. The 550 W and 750 W models were not listed.',
   },
   'pure-power-13m-850': {
-    min: 559,
-    max: 569,
+    min: 549,
+    max: 599,
     tier: 'value',
-    checkedAt: '2026-11-06',
+    checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/184870070',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=be+quiet+pure+power+13+m+850w',
+      },
+      {
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=pure%20power%2013%20m%20850w',
       },
     ],
-    note: 'Thirteen offers on Ceneo, including x-kom at 559 zł.',
+    note: 'x-kom 559 zł only with a promo code; 599 zł regular.',
   },
   'liquid-freezer-iii-pro-360': {
     min: 326,
