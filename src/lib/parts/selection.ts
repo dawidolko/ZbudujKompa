@@ -8,6 +8,7 @@ import { psus } from './psus.ts';
 import { cases } from './cases.ts';
 import { coolers } from './coolers.ts';
 import { storage } from './storage.ts';
+import { buildPowerBreakdown, TYPICAL_BUILD, type ChipsetClass } from '../calculators.ts';
 
 /**
  * The catalogue and the helpers that read a selection out of it.
@@ -63,12 +64,31 @@ export function selectionPrice(selection: BuildSelection): PriceTotal {
  */
 export function selectionPower(selection: BuildSelection): number {
   const parts = resolveSelection(selection);
-  let watts = 90;
+  const cpu = parts.cpu?.category === 'cpu' ? parts.cpu : undefined;
+  const gpu = parts.gpu?.category === 'gpu' ? parts.gpu : undefined;
+  const board = parts.motherboard?.category === 'motherboard' ? parts.motherboard : undefined;
+  const drive = parts.storage?.category === 'storage' ? parts.storage : undefined;
 
-  if (parts.cpu?.category === 'cpu') watts += parts.cpu.peakPower;
-  if (parts.gpu?.category === 'gpu') watts += parts.gpu.tdp;
+  /* The same item-by-item sum as the power supply calculator, so the
+     configurator and the calculator never disagree about one build. What the
+     selection does not name comes from the typical build. */
+  let chipset: ChipsetClass = TYPICAL_BUILD.chipset;
+  if (board) {
+    chipset = /^X(670|670E|870E)$/.test(board.chipset)
+      ? 'amd-dual'
+      : board.socket.startsWith('am')
+        ? 'amd'
+        : 'intel';
+  }
 
-  return watts;
+  const { total } = buildPowerBreakdown({
+    ...TYPICAL_BUILD,
+    cpuWatts: cpu?.peakPower ?? 0,
+    gpuWatts: gpu?.tdp ?? 0,
+    chipset,
+    mainDriveWatts: drive?.power ?? TYPICAL_BUILD.mainDriveWatts,
+  });
+  return Math.ceil(total);
 }
 
 /** Every brand in the catalogue, with how many parts each has. */

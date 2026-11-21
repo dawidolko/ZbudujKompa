@@ -416,9 +416,9 @@ export const PART_POWER = {
  * which use two of them. B550 and A620 are reported lower, so 7 W is the safe
  * end for them too.
  *
- * Voltage-regulator losses, audio and networking are not itemised: no
- * manufacturer publishes them, and the 30 per cent headroom the supply
- * recommendation adds covers them.
+ * Audio and networking are not itemised: no manufacturer publishes them, and
+ * the 30 per cent headroom the supply recommendation adds covers them. The
+ * board's voltage-regulator loss is itemised as an estimate, see VRM_LOSS.
  */
 export const CHIPSET_POWER = {
   intel: 6,
@@ -427,6 +427,17 @@ export const CHIPSET_POWER = {
 } as const;
 
 export type ChipsetClass = keyof typeof CHIPSET_POWER;
+
+/**
+ * Share of the processor's draw lost in the board's voltage regulators.
+ *
+ * An estimate, not a published figure: the regulators turn 12 V into the
+ * processor's core voltage at roughly 90 per cent efficiency under load, so
+ * about a tenth of the processor's power is drawn from the supply on top of
+ * what the processor itself uses. It is shown as its own row so the reader
+ * sees it rather than having it hidden in a flat allowance.
+ */
+export const VRM_LOSS = 0.1;
 
 /**
  * The rest of a typical build, used wherever the reader has only named the
@@ -451,6 +462,7 @@ export type PowerItem = {
     | 'cpu'
     | 'gpu'
     | 'board'
+    | 'vrm'
     | 'ram'
     | 'drive'
     | 'nvme'
@@ -502,6 +514,7 @@ export function buildPowerBreakdown(input: {
     item('cpu', 1, input.cpuWatts),
     item('gpu', 1, input.gpuWatts),
     item('board', 1, CHIPSET_POWER[input.chipset]),
+    item('vrm', 1, Math.round(input.cpuWatts * VRM_LOSS * 10) / 10),
     item('ram', input.ramModules, PART_POWER.ramModule),
     item('drive', input.mainDriveWatts ? 1 : 0, input.mainDriveWatts ?? 0),
     item('nvme', input.nvme, PART_POWER.nvme),

@@ -220,7 +220,7 @@ export const pl: Dictionary = {
       chipsetAmdDual: (watts: number) =>
         `AMD X670, X670E lub X870E, dwa chipsety (około ${watts} W)`,
       chipsetHint:
-        'Intel podaje 6 W na chipset; AMD nie podaje nic, więc jego wartości pochodzą z publikacji. Straty sekcji zasilania, dźwięk i sieć pokrywa 30-procentowy zapas.',
+        'Intel podaje 6 W na chipset; AMD nie podaje nic, więc jego wartości pochodzą z publikacji. Straty sekcji zasilania procesora liczymy osobno jako szacunek (około 10% jego poboru), a dźwięk i sieć pokrywa 30-procentowy zapas.',
       mainDrive: 'Dysk systemowy',
       mainDriveManual: (watts: number) =>
         `Nie ma go na liście — liczony jako typowy dysk NVMe (${watts.toLocaleString('pl-PL')} W)`,
@@ -251,6 +251,7 @@ export const pl: Dictionary = {
         cpu: 'Procesor',
         gpu: 'Karta graficzna',
         board: 'Chipset',
+        vrm: 'Straty zasilania procesora na płycie (szacunek)',
         ram: 'Pamięć',
         drive: 'Dysk systemowy',
         nvme: 'Pozostałe dyski NVMe',

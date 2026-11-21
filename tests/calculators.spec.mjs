@@ -276,9 +276,14 @@ const typical = c.buildPowerBreakdown({
   rgbLeds: 20,
   usbDevices: 2,
 });
-/* 162 + 300 + 7 + 2×5 + 8.5 + 2.5 + 2×10.1 + 4×1.68 + 4.2 + 20×0.18 + 2×4.5 */
-check('the breakdown sums every item', typical.total, 533.72, 0.01);
-check('and reports the rest rounded up', typical.other, 72);
+/* 162 + 300 + 7 + 16.2 (10% regulator loss) + 2×5 + 8.5 + 2.5 + 2×10.1 + 4×1.68 + 4.2 + 20×0.18 + 2×4.5 */
+check('the breakdown sums every item', typical.total, 549.92, 0.01);
+check('and reports the rest rounded up', typical.other, 88);
+check(
+  'the board regulators lose about a tenth of the processor power',
+  typical.items.find((item) => item.key === 'vrm')?.watts,
+  16.2,
+);
 check(
   'empty categories are left out',
   typical.items.some((item) => item.key === 'nvme'),
@@ -309,8 +314,8 @@ const sized = c.sizePowerSupply({
   otherWatts: typical.other,
   atx3x: true,
 });
-check('the breakdown feeds the supply sizing', sized.estimated, 534);
-check('534 W with 30% headroom needs a 750 W unit', sized.recommended, 750);
+check('the breakdown feeds the supply sizing', sized.estimated, 550);
+check('550 W with 30% headroom needs a 750 W unit', sized.recommended, 750);
 
 /* ---- Catalogue to calculator inputs ---- */
 const parts = await import('../src/lib/parts/index.ts');

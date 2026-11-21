@@ -217,7 +217,7 @@ export const en = {
       chipsetAmdDual: (watts: number) =>
         `AMD X670, X670E or X870E, two chipsets (about ${watts} W)`,
       chipsetHint:
-        'Intel publishes 6 W per chipset; AMD publishes nothing, so its figures are the reported ones. Regulator losses, audio and networking are covered by the 30% headroom.',
+        'Intel publishes 6 W per chipset; AMD publishes nothing, so its figures are the reported ones. The processor regulator losses are counted separately as an estimate (about 10% of its draw); audio and networking are covered by the 30% headroom.',
       mainDrive: 'System drive',
       mainDriveManual: (watts: number) =>
         `Not on the list — counted as a generic NVMe drive (${watts} W)`,
@@ -248,6 +248,7 @@ export const en = {
         cpu: 'Processor',
         gpu: 'Graphics card',
         board: 'Chipset',
+        vrm: 'Processor power losses on the board (estimate)',
         ram: 'Memory',
         drive: 'System drive',
         nvme: 'Other NVMe SSDs',
