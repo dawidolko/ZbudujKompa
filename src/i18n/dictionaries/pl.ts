@@ -197,7 +197,7 @@ export const pl: Dictionary = {
     },
     psu: {
       title: 'Kalkulator zasilacza',
-      lead: 'Podaj pobór mocy procesora i karty graficznej. Wynik uwzględnia zapas, którego zasilacz naprawdę potrzebuje.',
+      lead: 'Wybierz podzespoły z katalogu albo wpisz ich pobór ręcznie. Wynik rozpisuje zestaw na części, podaje potrzebne przewody i uwzględnia zapas, którego zasilacz naprawdę potrzebuje.',
       cpuWatts: 'Pobór mocy procesora (W)',
       gpuWatts: 'Pobór mocy karty graficznej (W)',
       otherWatts: 'Pozostałe podzespoły (W)',
@@ -212,8 +212,77 @@ export const pl: Dictionary = {
       raisedForTransients: 'podniesione ze względu na skoki',
       estimated: 'Szacowany pobór',
       recommended: 'Zalecany zasilacz',
+      gpuHint: 'Moc karty według producenta: TGP u NVIDII, TBP u AMD i Intela',
+      groupCore: 'Procesor, karta graficzna i płyta',
+      groupRest: 'Reszta zestawu',
+      groupSupply: 'Zasilacz',
+      chipset: 'Chipset płyty',
+      chipsetIntel: (watts: number) => `Intel, jeden chipset (${watts} W)`,
+      chipsetAmd: (watts: number) => `AMD, jeden chipset (około ${watts} W)`,
+      chipsetAmdDual: (watts: number) =>
+        `AMD X670, X670E lub X870E, dwa chipsety (około ${watts} W)`,
+      chipsetHint:
+        'Intel podaje 6 W na chipset; AMD nie podaje nic, więc jego wartości pochodzą z publikacji. Straty sekcji zasilania, dźwięk i sieć pokrywa 30-procentowy zapas.',
+      mainDrive: 'Dysk systemowy',
+      mainDriveManual: (watts: number) =>
+        `Nie ma go na liście — liczony jako typowy dysk NVMe (${watts.toLocaleString('pl-PL')} W)`,
+      noFigure: 'producent nie podaje',
+      genericFigure: '(wartość typowa)',
+      ramModules: 'Moduły pamięci',
+      nvme: 'Pozostałe dyski NVMe',
+      sataSsd: 'Dyski SSD SATA',
+      hdd: 'Dyski twarde 3,5 cala',
+      fans: 'Wentylatory obudowy i chłodzenia',
+      pumps: 'Pompy AiO',
+      rgbLeds: 'Diody adresowalne RGB',
+      rgbHint: (watts: number) =>
+        `Około ${watts.toLocaleString('pl-PL')} W na diodę przy pełnej bieli; liczbę diod podaje specyfikacja produktu`,
+      usbDevices: 'Urządzenia USB zasilane z komputera',
+      each: (watts: number) => `${watts.toLocaleString('pl-PL')} W na sztukę`,
+      yourPsu: 'Twój zasilacz',
+      yourPsuNone: 'Jeszcze niewybrany',
+      yourPsuEnough: (watts: number) => `twój zasilacz ${watts} W wystarczy`,
+      yourPsuTight: (watts: number) => `twój zasilacz ${watts} W pokrywa pobór, ale bez zapasu`,
+      yourPsuTooSmall: (watts: number) => `twój zasilacz ${watts} W jest za słaby`,
+      vendorPsu: 'Producent karty zaleca',
+      breakdown: 'Na co idą waty',
+      part: 'Podzespół',
+      draw: 'Pobór',
+      total: 'Razem',
+      items: {
+        cpu: 'Procesor',
+        gpu: 'Karta graficzna',
+        board: 'Chipset',
+        ram: 'Pamięć',
+        drive: 'Dysk systemowy',
+        nvme: 'Pozostałe dyski NVMe',
+        sataSsd: 'Dyski SSD SATA',
+        hdd: 'Dyski twarde',
+        fans: 'Wentylatory',
+        pump: 'Pompa AiO',
+        rgb: 'Diody RGB',
+        usb: 'Urządzenia USB',
+      },
+      connectors: 'Przewody, których potrzeba z zasilacza',
+      eps: 'Procesor: jeden przewód EPS 8-pin; płyta z drugim gniazdem EPS może go potrzebować przy mocnym procesorze',
+      gpu12v2x6: (rating: number | undefined, adapter: number) =>
+        `Karta graficzna: jeden przewód 12V-2x6 (16-pin)${rating ? ` o mocy co najmniej ${rating} W` : ''} albo ${adapter} × PCIe 8-pin do przejściówki z pudełka`,
+      gpu8pin: (count: number, alternative: number | undefined) =>
+        `Karta graficzna: ${count} × PCIe 8-pin${alternative ? ` albo jeden przewód 12V-2x6 o mocy co najmniej ${alternative} W` : ''}`,
+      gpuNone: 'Karta graficzna: bez przewodu — gniazdo dostarcza do 75 W',
+      fromVendor: 'specyfikacja producenta',
+      fromWattage: 'szacunek z poboru mocy',
+      sata: (count: number) =>
+        `Zasilanie SATA: ${count} ${count === 1 ? 'wtyczka' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'wtyczki' : 'wtyczek'}`,
+      headersOk: (used: number, total: number) =>
+        `Złącza wentylatorów: zajęte ${used} z ${total} na płycie`,
+      headersShort: (used: number, total: number, splitters: number) =>
+        `Złącza wentylatorów: ${used} wentylatorów i pomp na ${total} złączy — dodaj rozgałęźniki (${splitters}) albo hub`,
+      headersCheck:
+        'Więcej niż cztery wentylatory: sprawdź, czy płyta ma dość złączy, albo zaplanuj hub',
+      headersUnknown: 'Wybierz płytę, aby porównać wentylatory z jej złączami',
       explanation:
-        'Zalecenie dodaje 30 procent do szacowanego poboru. Ten zapas nie służy dokładaniu części — utrzymuje zasilacz blisko szczytu sprawności i pochłania krótkie skoki poboru współczesnych kart graficznych. Właśnie przez te skoki standard ma znaczenie: zasilacz ATX 3.x musi wytrzymać 180 procent mocy znamionowej przez milisekundę, więc zwykły zapas wystarcza. Starszy nie musi, a jego zabezpieczenia reagują na skok, nie na średnią — dlatego przy jego wyborze zalecenie rośnie.',
+        'Zalecenie dodaje 30 procent do szacowanego poboru. Ten zapas nie służy dokładaniu części — utrzymuje zasilacz blisko szczytu sprawności i pochłania krótkie skoki poboru współczesnych kart graficznych. Właśnie przez te skoki standard ma znaczenie: zasilacz ATX 3.x musi wytrzymać 180 procent mocy znamionowej przez milisekundę, więc zwykły zapas wystarcza. Starszy nie musi, a jego zabezpieczenia reagują na skok, nie na średnią — dlatego przy jego wyborze zalecenie rośnie. Każda część poza procesorem i kartą jest liczona według opublikowanej wartości — pamięć według zasady Crucial 5 W na moduł, dyski, wentylatory i pompa według kart katalogowych producentów, USB według 900 mA, które dostarcza port USB 3 — więc zestawienie pokazuje, na co idą waty, zamiast chować je w ryczałcie.',
     },
   },
 
@@ -411,6 +480,16 @@ export const pl: Dictionary = {
   calc: {
     title: 'Kalkulatory',
     lead: 'Czternaście narzędzi do pytań, które pojawiają się przy planowaniu zestawu — każde pokazuje uzasadnienie, a nie samą liczbę.',
+    picker: {
+      manual: 'Nie ma go na liście — wpiszę wartości ręcznie',
+      loadBuild: 'Wczytaj mój zestaw z konfiguratora',
+      loadBuildHint:
+        'Wypełnia kalkulator ostatnim zestawem złożonym w konfiguratorze na tym urządzeniu. Wartości nadal można zmieniać.',
+      loaded: (names: string) => `Wczytano: ${names}.`,
+      noBuild: 'Na tym urządzeniu nie ma jeszcze zapisanego zestawu z tymi częściami.',
+      openConfigurator: 'Otwórz konfigurator',
+      driveKind: { nvme: 'NVMe', 'sata-ssd': 'SSD SATA', hdd: 'HDD' },
+    },
     energy: {
       title: 'Koszt prądu',
       lead: 'Ile kosztuje roczne używanie komputera, z osobnym liczeniem spoczynku i obciążenia.',
@@ -432,6 +511,10 @@ export const pl: Dictionary = {
       fromIdle: 'Ze spoczynku',
       fromLoad: 'Z obciążenia',
       working: 'Obliczenie',
+      noGpu: 'Bez karty graficznej albo nie ma jej na liście',
+      fromPartsHint:
+        'Wybór procesora lub karty wpisuje obciążenie jako sumę przy pełnym obciążeniu z kalkulatora zasilacza, z typową resztą zestawu. Gry rzadko obciążają wszystko naraz do maksimum, więc obniż tę wartość, jeśli znasz swój zwykły pobór.',
+      psuModel: 'Zasilacz',
       explanation:
         'Krok po kroku: (1) pobór w spoczynku i pod obciążeniem dzielimy przez sprawność zasilacza, co daje pobór z gniazdka; (2) każdy z nich mnożymy przez jego godziny dziennie i sumujemy na rok (365 dni); (3) wynik w kWh mnożymy przez cenę za kWh. Koszt liczony jest od poboru z gniazdka, czyli od wartości prądu stałego podzielonej przez sprawność zasilacza — zestaw 400 W na jednostce Gold płaci jak za 444 W. Większość kalkulatorów pomija ten krok i zaniża rachunek o mniej więcej dziesiątą część. Spoczynek i obciążenie są liczone osobno, bo komputer do grania przez większość życia stoi bezczynnie, a liczenie każdej godziny po szczytowym poborze zawyża wynik kilkukrotnie.',
     },
@@ -454,6 +537,10 @@ export const pl: Dictionary = {
       refLibrary: 'biblioteką',
       refConversation: 'cichą rozmową',
       refLoud: 'wyraźnie słyszalne',
+      cooler: 'Chłodzenie procesora',
+      coolerNone: 'Brak albo nie ma go na liście',
+      coolerNoise: 'Głośność chłodzenia procesora',
+      coolerHint: 'Głośność pod obciążeniem według producenta; 0 pomija to źródło',
       explanation:
         'Decybele są logarytmiczne, więc nie da się ich dodawać: dwa identyczne wentylatory po 30 dBA dają 33 dBA, a nie 60. Podwojenie liczby wentylatorów zawsze dodaje dokładnie 3 dB, co słychać jako około 1,2× głośniej, a nie dwa razy. Wynik to górna granica — obudowa część tłumi — i zakłada, że wartości ze specyfikacji mierzono z tej samej odległości, co między producentami często nie jest prawdą.',
     },
@@ -516,6 +603,8 @@ export const pl: Dictionary = {
       hours: (hours: number) => `~${hours} h`,
       lifespan: 'Wytrzymałość na',
       years: (years: number) => `~${years} lat`,
+      noTbw:
+        'Dyski twarde mają roczne obciążenie znamionowe, a nie TBW, więc wytrzymałość zostaje bez zmian',
       explanation:
         'Brakująca pojemność to arytmetyka, nie wada: producenci liczą gigabajt jako miliard bajtów, a system dzieli przez 1024 trzy razy. Ta siedmioprocentowa różnica jest identyczna na każdym dysku każdej marki. Wytrzymałość podajemy głównie po to, żeby pokazać, że obawy są nieuzasadnione — przy typowym zapisie na komputerze domowym dysk przeżyje resztę zestawu kilkakrotnie.',
     },
@@ -576,6 +665,9 @@ export const pl: Dictionary = {
       effectiveLimit: 'Realnie dostępna długość na kartę',
       gpuMargin: 'Zapas dla karty',
       coolerMargin: 'Zapas dla chłodzenia',
+      airCooler: 'Chłodzenie powietrzne',
+      airCoolerHint:
+        'Na liście nie ma chłodzeń AiO: liczy się nie ich wysokość, lecz chłodnica — użyj opcji chłodnicy',
       explanation:
         'Wartości podawane przez producenta obudowy mierzone są niezależnie od siebie. Chłodnica zamontowana z przodu stoi tam, gdzie miałaby trafić karta, więc zabiera własną grubość wraz z wentylatorami — około 55 mm — z dostępnej długości. To najczęstszy powód, dla którego zestawu nie da się złożyć mimo że każda część z osobna mieści się w specyfikacji. Zostaw trochę zapasu ponad zero: za kartą muszą jeszcze zmieścić się kable zasilania.',
     },
@@ -604,6 +696,9 @@ export const pl: Dictionary = {
       warm: 'ciepło, ale w porządku',
       hot: 'gorąco, blisko granicy',
       throttling: 'będzie obniżać taktowania',
+      coolerModel: 'Model chłodzenia',
+      coolerModelHint:
+        'Ustawia klasę poniżej: AiO według chłodnicy, powietrzne według konstrukcji; niskoprofilowe liczą się jak fabryczne',
       explanation:
         'Obie składowe pokazane są osobno, bo wymagają różnych działań: wysoka wartość od obudowy oznacza więcej albo lepiej rozmieszczonych wentylatorów, a wysoka od chłodzenia — większe chłodzenie. Wzrost od obudowy to oszacowanie według klasy przepływu, a nie wyliczenie, bo realnego przepływu nie da się zmierzyć z zewnątrz. Osiągnięcie 95 °C nie jest usterką na współczesnych procesorach — algorytmy boostu traktują tę wartość jako cel — ale oznacza, że to chłodzenie ogranicza wydajność.',
     },
@@ -647,6 +742,18 @@ export const pl: Dictionary = {
       drivePotential: 'Dysk potrafi',
       limited: 'slot ogranicza dysk',
       notLimited: 'dysk pracuje z pełną prędkością',
+      drive: 'Dysk',
+      slot: 'Gniazdo na płycie',
+      slotCount: (count: number) =>
+        count === 1
+          ? '1 gniazdo M.2'
+          : count >= 2 && count <= 4
+            ? `${count} gniazda M.2`
+            : `${count} gniazd M.2`,
+      wiredCpu: 'z procesora',
+      wiredChipset: 'z chipsetu',
+      betterSlot: 'Pełna prędkość w',
+      noBetterSlot: 'żadnym gnieździe tej płyty',
       explanation:
         'Drugi i trzeci slot M.2 na płycie często pracują w niższej generacji PCIe albo na mniejszej liczbie linii niż pierwszy, a nic nie informuje o tym, że dysk jest hamowany. Praktyczna zasada: najszybszy dysk wkładaj w slot najbliżej procesora, bo to ten podłączony bezpośrednio do niego. Sprawdź też tabelę współdzielenia linii w instrukcji płyty: na części płyt AM5 i LGA1851 zajęcie dodatkowego slotu M.2 PCIe 5.0 obniża slot karty graficznej do x8, a na starszych płytach zajęty slot M.2 potrafi wyłączyć porty SATA. Miej przy tym na uwadze, że prędkość sekwencyjna i tak niewiele zmienia przy wczytywaniu gier — decydują tam odczyty losowe, a te są zbliżone między generacjami.',
     },

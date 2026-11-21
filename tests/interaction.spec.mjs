@@ -74,6 +74,89 @@ ck('Escape closes chat', !(await page.isVisible('[role="dialog"]')));
   await p2.close();
 }
 
+// PSU calculator: picking catalogue parts fills the figures, itemises the
+// build and reads the card's connectors from the vendor specification.
+{
+  const p3 = await ctx.newPage();
+  await p3.goto(`${BASE}/pl/narzedzia/zasilacz/`);
+  await p3.getByLabel('Procesor', { exact: true }).selectOption('ryzen-7-7800x3d');
+  const cpuWatts = await p3.getByLabel('Pobór mocy procesora (W)').inputValue();
+  ck('PSU CPU picker fills peak power', cpuWatts === '162', `cpu=${cpuWatts}`);
+  await p3.getByLabel('Karta graficzna', { exact: true }).selectOption('rtx-5070-ti');
+  const result = await p3.locator('[aria-live]').first().innerText();
+  ck('PSU breakdown names the parts', /7800X3D/.test(result) && /RTX 5070 Ti/.test(result));
+  ck(
+    'PSU lists the vendor 12V-2x6 connector',
+    /12V-2x6/.test(result) && /specyfikacja producenta/.test(result),
+  );
+  await p3.getByLabel('Płyta główna', { exact: true }).selectOption('b650m-pro-rs');
+  await p3.getByLabel('Wentylatory obudowy i chłodzenia').fill('7');
+  const headers = await p3.locator('[aria-live]').first().innerText();
+  ck(
+    'PSU compares fans with the board headers',
+    /rozgałęźniki \(2\)/.test(headers),
+    headers.match(/Złącza[^\n]*/)?.[0],
+  );
+  // Editing a filled figure sets its picker back to manual entry.
+  await p3.getByLabel('Pobór mocy procesora (W)').fill('200');
+  const cpuPick = await p3.getByLabel('Procesor', { exact: true }).inputValue();
+  ck('editing a figure returns its picker to manual', cpuPick === '', `picker=${cpuPick}`);
+  await p3.close();
+}
+
+// The configurator keeps its build on this device, and a calculator loads it.
+{
+  const p4 = await ctx.newPage();
+  await p4.goto(`${BASE}/pl/konfigurator/`);
+  await p4.getByRole('button', { name: 'Dobierz zestaw' }).click();
+  await p4.waitForTimeout(300);
+  const stored = await p4.evaluate(() => localStorage.getItem('zbudujkompa:build'));
+  ck('configurator saves its build', Boolean(stored && JSON.parse(stored).cpu), stored ?? 'none');
+  await p4.goto(`${BASE}/pl/narzedzia/zasilacz/`);
+  await p4.getByRole('button', { name: 'Wczytaj mój zestaw z konfiguratora' }).click();
+  await p4.waitForTimeout(200);
+  const picked = await p4.getByLabel('Procesor', { exact: true }).inputValue();
+  const status = await p4.getByRole('status').first().innerText();
+  ck(
+    'calculator loads the configurator build',
+    picked === JSON.parse(stored).cpu && /Wczytano/.test(status),
+    status,
+  );
+  // With nothing saved, the button says so and links to the configurator.
+  await p4.evaluate(() => localStorage.removeItem('zbudujkompa:build'));
+  await p4.reload();
+  await p4.getByRole('button', { name: 'Wczytaj mój zestaw z konfiguratora' }).click();
+  ck(
+    'no saved build is reported',
+    await p4.getByRole('link', { name: 'Otwórz konfigurator' }).isVisible(),
+  );
+  await p4.close();
+}
+
+// Clearance and M.2 calculators fill their figures from the catalogue.
+{
+  const p5 = await ctx.newPage();
+  await p5.setViewportSize({ width: 390, height: 844 });
+  await p5.goto(`${BASE}/pl/kalkulatory/`);
+  const clearance = p5.locator('#zgodnosc');
+  await clearance.getByLabel('Obudowa', { exact: true }).selectOption('terra');
+  const numbers = await clearance
+    .locator('input[type="number"]')
+    .evaluateAll((els) => els.map((el) => el.value));
+  ck(
+    'clearance case picker fills the limits',
+    numbers.includes('322') && numbers.includes('77'),
+    numbers.join(','),
+  );
+  const m2 = p5.locator('#slot-m2');
+  await m2.getByLabel('Płyta główna', { exact: true }).selectOption('a620m-hdv');
+  const slotOptions = await m2.getByLabel('Gniazdo na płycie').locator('option').count();
+  ck('M.2 board picker lists its real slots', slotOptions === 2, `slots=${slotOptions}`);
+  const scrollWidth = await p5.evaluate(() => document.documentElement.scrollWidth);
+  ck('calculators fit a 390 px screen', scrollWidth <= 390, `scrollWidth=${scrollWidth}`);
+  await p5.close();
+}
+
 // Compatibility checker flags a real mismatch: AM5 is DDR5-only
 await page.goto(`${BASE}/pl/narzedzia/kompatybilnosc/`);
 await page.selectOption('select >> nth=0', 'am5');

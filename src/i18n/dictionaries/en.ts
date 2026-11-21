@@ -194,7 +194,7 @@ export const en = {
     },
     psu: {
       title: 'Power supply calculator',
-      lead: 'Enter the power draw of your CPU and graphics card. The result includes the headroom a supply actually needs.',
+      lead: 'Pick your parts from the catalogue or enter their power draw by hand. The result itemises the build, lists the cables the supply needs and includes the headroom it actually needs.',
       cpuWatts: 'CPU power draw (W)',
       gpuWatts: 'Graphics card power draw (W)',
       otherWatts: 'Other components (W)',
@@ -209,8 +209,75 @@ export const en = {
       raisedForTransients: 'raised to cover spikes',
       estimated: 'Estimated draw',
       recommended: 'Recommended supply',
+      gpuHint: 'Board power from the vendor: NVIDIA TGP, AMD or Intel TBP',
+      groupCore: 'Processor, graphics card and board',
+      groupRest: 'Rest of the build',
+      groupSupply: 'Power supply',
+      chipset: 'Board chipset',
+      chipsetIntel: (watts: number) => `Intel, one chipset (${watts} W)`,
+      chipsetAmd: (watts: number) => `AMD, one chipset (about ${watts} W)`,
+      chipsetAmdDual: (watts: number) =>
+        `AMD X670, X670E or X870E, two chipsets (about ${watts} W)`,
+      chipsetHint:
+        'Intel publishes 6 W per chipset; AMD publishes nothing, so its figures are the reported ones. Regulator losses, audio and networking are covered by the 30% headroom.',
+      mainDrive: 'System drive',
+      mainDriveManual: (watts: number) =>
+        `Not on the list — counted as a generic NVMe drive (${watts} W)`,
+      noFigure: 'no published figure',
+      genericFigure: '(generic figure)',
+      ramModules: 'Memory modules',
+      nvme: 'Other NVMe SSDs',
+      sataSsd: 'SATA SSDs',
+      hdd: '3.5-inch hard drives',
+      fans: 'Case and cooler fans',
+      pumps: 'AiO pumps',
+      rgbLeds: 'Addressable RGB LEDs',
+      rgbHint: (watts: number) =>
+        `About ${watts} W per LED at full white; the LED count is in the product specification`,
+      usbDevices: 'USB devices powered by the PC',
+      each: (watts: number) => `${watts} W each`,
+      yourPsu: 'Your power supply',
+      yourPsuNone: 'Not chosen yet',
+      yourPsuEnough: (watts: number) => `your ${watts} W supply is enough`,
+      yourPsuTight: (watts: number) => `your ${watts} W supply covers the draw, not the headroom`,
+      yourPsuTooSmall: (watts: number) => `your ${watts} W supply is too small`,
+      vendorPsu: 'Card vendor recommends',
+      breakdown: 'Where the watts go',
+      part: 'Part',
+      draw: 'Draw',
+      total: 'Total',
+      items: {
+        cpu: 'Processor',
+        gpu: 'Graphics card',
+        board: 'Chipset',
+        ram: 'Memory',
+        drive: 'System drive',
+        nvme: 'Other NVMe SSDs',
+        sataSsd: 'SATA SSDs',
+        hdd: 'Hard drives',
+        fans: 'Fans',
+        pump: 'AiO pump',
+        rgb: 'RGB LEDs',
+        usb: 'USB devices',
+      },
+      connectors: 'Cables the supply needs',
+      eps: 'Processor: one 8-pin EPS cable; a board with a second EPS socket may want it for a high-power chip',
+      gpu12v2x6: (rating: number | undefined, adapter: number) =>
+        `Graphics card: one 12V-2x6 (16-pin) cable${rating ? ` rated ${rating} W or more` : ''}, or ${adapter} × 8-pin PCIe into the adapter in the box`,
+      gpu8pin: (count: number, alternative: number | undefined) =>
+        `Graphics card: ${count} × 8-pin PCIe${alternative ? `, or one 12V-2x6 cable rated ${alternative} W or more` : ''}`,
+      gpuNone: 'Graphics card: no cable — the slot supplies up to 75 W',
+      fromVendor: 'vendor specification',
+      fromWattage: 'estimated from the wattage',
+      sata: (count: number) => `SATA power: ${count === 1 ? 'one plug' : `${count} plugs`}`,
+      headersOk: (used: number, total: number) =>
+        `Fan headers: ${used} of the board's ${total} in use`,
+      headersShort: (used: number, total: number, splitters: number) =>
+        `Fan headers: ${used} fans and pumps for ${total} headers — add ${splitters === 1 ? 'one splitter' : `${splitters} splitters`} or a hub`,
+      headersCheck: 'More than four fans: check the board has enough headers, or plan a hub',
+      headersUnknown: 'Pick a board to compare the fans with its headers',
       explanation:
-        'The recommendation adds 30 per cent on top of the estimated draw. That margin is not spare capacity for more parts — it keeps the supply near its efficiency peak and absorbs the brief spikes modern graphics cards produce. Those spikes are why the standard matters: an ATX 3.x supply is required to ride out 180 per cent of its rated power for a millisecond, so the ordinary margin suffices. An older supply is not, and its protection trips on the spike rather than the average — which is why the recommendation rises when you select one.',
+        "The recommendation adds 30 per cent on top of the estimated draw. That margin is not spare capacity for more parts — it keeps the supply near its efficiency peak and absorbs the brief spikes modern graphics cards produce. Those spikes are why the standard matters: an ATX 3.x supply is required to ride out 180 per cent of its rated power for a millisecond, so the ordinary margin suffices. An older supply is not, and its protection trips on the spike rather than the average — which is why the recommendation rises when you select one. Each part around the CPU and card is counted at a published figure — memory at Crucial's 5 W per module, drives, fans and the pump at their makers' datasheet values, USB at the 900 mA a USB 3 port supplies — so the breakdown shows where the watts go rather than hiding them in a flat allowance.",
     },
   },
 
@@ -391,6 +458,16 @@ export const en = {
   calc: {
     title: 'Calculators',
     lead: 'Fourteen tools for the questions that come up while planning a build, each showing its reasoning rather than just a number.',
+    picker: {
+      manual: 'Not on the list — enter the figures by hand',
+      loadBuild: 'Load my build from the configurator',
+      loadBuildHint:
+        'Fills this calculator from the last build you put together in the configurator on this device. The figures stay editable.',
+      loaded: (names: string) => `Loaded: ${names}.`,
+      noBuild: 'No build with these parts is saved on this device yet.',
+      openConfigurator: 'Open the configurator',
+      driveKind: { nvme: 'NVMe', 'sata-ssd': 'SATA SSD', hdd: 'HDD' },
+    },
     energy: {
       title: 'Running cost',
       lead: 'What a machine costs to run over a year, with idle and load counted separately.',
@@ -412,6 +489,10 @@ export const en = {
       fromIdle: 'From idling',
       fromLoad: 'From load',
       working: 'Working',
+      noGpu: 'No graphics card, or not on the list',
+      fromPartsHint:
+        'Choosing a processor or card fills the load with the full-load total from the power supply calculator, with a typical rest of the build. Games rarely hold every part at its peak, so lower it if you know your usual draw.',
+      psuModel: 'Power supply',
       explanation:
         'Step by step: (1) the idle and load draws are each divided by the supply efficiency to give the draw at the wall; (2) each is multiplied by its hours per day, and both are summed over a year (365 days); (3) the total in kWh is multiplied by the price per kWh. The cost is calculated from the draw at the wall, which is the DC figure divided by the supply efficiency — a 400 W build on a Gold unit is billed as 444 W. Most calculators skip that step and understate the bill by about a tenth. Idle and load are separated because a gaming machine idles for most of its life, and costing every hour at peak draw overstates it several times over.',
     },
@@ -434,6 +515,10 @@ export const en = {
       refLibrary: 'a library',
       refConversation: 'a quiet conversation',
       refLoud: 'clearly audible',
+      cooler: 'CPU cooler',
+      coolerNone: 'None, or not on the list',
+      coolerNoise: 'CPU cooler noise',
+      coolerHint: 'The rated noise under load; 0 leaves it out',
       explanation:
         'Decibels are logarithmic, so they cannot be added: two identical 30 dBA fans give 33 dBA, not 60. Doubling the number of fans always adds exactly 3 dB, which is heard as roughly 1.2× as loud rather than twice. The figure is an upper bound — a case absorbs some of it — and it assumes the datasheet levels were measured at the same distance, which between manufacturers they often are not.',
     },
@@ -496,6 +581,8 @@ export const en = {
       hours: (hours: number) => `~${hours} h`,
       lifespan: 'Endurance lasts',
       years: (years: number) => `~${years} years`,
+      noTbw:
+        'Hard drives are rated by yearly workload, not TBW, so the endurance figure is left as it was',
       explanation:
         'The missing capacity is arithmetic, not a defect: manufacturers count a gigabyte as a thousand million bytes, while the operating system divides by 1024 three times. The seven per cent difference is the same on every drive from every brand. Endurance is included mainly to show the worry is misplaced — at ordinary desktop write rates a modern drive outlasts the machine several times over.',
     },
@@ -556,6 +643,9 @@ export const en = {
       effectiveLimit: 'Card length actually available',
       gpuMargin: 'Card margin',
       coolerMargin: 'Cooler margin',
+      airCooler: 'Air cooler',
+      airCoolerHint:
+        'AiO coolers are not listed: their height does not matter here, the radiator does — use the radiator option',
       explanation:
         'The figures a case publishes are measured independently of each other. A front-mounted radiator sits where the card would go, so it takes its own thickness plus its fans — around 55 mm — out of the length available. This is the most common way a build fails to assemble despite every individual part being within spec. Leave a little margin beyond zero: power cables need somewhere to go behind the card.',
     },
@@ -584,6 +674,9 @@ export const en = {
       warm: 'warm but fine',
       hot: 'hot, close to the limit',
       throttling: 'will reduce clocks',
+      coolerModel: 'Cooler model',
+      coolerModelHint:
+        'Sets the class below: AiO by radiator size, air coolers by design; low-profile ones count as boxed',
       explanation:
         'The two contributions are shown separately because they call for different fixes: a high case figure means more or better-placed fans, while a high cooler figure means a bigger cooler. The case rise is a tiered estimate rather than a computation, since real airflow cannot be measured from the outside. Reaching 95 °C is not a fault on modern processors — boost algorithms treat it as a target — but it does mean the cooler is what limits performance.',
     },
@@ -627,6 +720,13 @@ export const en = {
       drivePotential: 'Drive is capable of',
       limited: 'the slot limits the drive',
       notLimited: 'the drive runs at full speed',
+      drive: 'Drive',
+      slot: 'Slot on the board',
+      slotCount: (count: number) => (count === 1 ? '1 M.2 slot' : `${count} M.2 slots`),
+      wiredCpu: 'from the processor',
+      wiredChipset: 'from the chipset',
+      betterSlot: 'Full speed in',
+      noBetterSlot: 'no slot on this board',
       explanation:
         'The second and third M.2 slots on a board frequently run at a lower PCIe generation or on fewer lanes than the first, and nothing tells you when a drive is being held back. The practical rule is to put the fastest drive in the slot nearest the processor, which is the one wired directly to it. Check the lane-sharing table in the board manual too: on some AM5 and LGA1851 boards, filling an extra PCIe 5.0 M.2 slot drops the graphics slot to x8, and on older boards an occupied M.2 slot can disable SATA ports. Bear in mind that sequential speed barely affects game loading anyway — random reads dominate there, and those are similar across generations.',
     },

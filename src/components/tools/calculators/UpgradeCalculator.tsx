@@ -8,7 +8,9 @@ import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { upgradeValue } from '@/lib/calculators';
 import { cpus, gpus } from '@/lib/parts';
+import { partLabel } from '@/lib/parts/calculator-inputs';
 import { formatPln } from '@/lib/utils';
+import { LoadBuildButton } from '../CataloguePicker';
 import { CalculatorShell, ResultRow, ResultValue, SelectField } from '../CalculatorShell';
 
 /**
@@ -57,6 +59,24 @@ export function UpgradeCalculator({ locale }: { locale: Locale }) {
     <CalculatorShell
       inputs={
         <>
+          {/* The build supplies the part you own; what to buy stays the
+              reader's choice. The card is preferred, because it is the
+              upgrade that changes gaming performance most. */}
+          <LoadBuildButton
+            locale={locale}
+            uses={['cpu', 'gpu']}
+            onLoad={(parts) => {
+              const owned = kind === 'cpu' && parts.cpu ? parts.cpu : (parts.gpu ?? parts.cpu);
+              if (!owned) return [];
+              if (owned.category !== kind) {
+                const next = owned.category === 'gpu' ? gpus : cpus;
+                setKind(owned.category);
+                setToId(next[Math.min(2, next.length - 1)]!.id);
+              }
+              setFromId(owned.id);
+              return [partLabel(owned)];
+            }}
+          />
           <SelectField
             label={dict.calc.upgrade.what}
             value={kind}

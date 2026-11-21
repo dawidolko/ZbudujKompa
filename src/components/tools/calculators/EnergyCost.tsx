@@ -3,9 +3,18 @@
 import { useMemo, useState } from 'react';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
-import { PSU_EFFICIENCY, splitEnergyCost } from '@/lib/calculators';
+import {
+  buildPowerBreakdown,
+  PART_POWER,
+  PSU_EFFICIENCY,
+  splitEnergyCost,
+  TYPICAL_BUILD,
+} from '@/lib/calculators';
+import { cpus, gpus, psus } from '@/lib/parts';
+import { chipsetClassOf, partLabel, type BuildParts } from '@/lib/parts/calculator-inputs';
 import { electricityPrice } from '@/lib/energy-price';
-import { formatPln } from '@/lib/utils';
+import { clamp, formatPln } from '@/lib/utils';
+import { LoadBuildButton, PartSelect, partOptions } from '../CataloguePicker';
 import {
   CalculatorShell,
   NumberField,
@@ -21,6 +30,12 @@ import {
  * gaming machine idles for most of its life: costing every hour at peak draw
  * overstates the bill several times over, which is the flaw in most calculators
  * of this kind.
+ *
+ * The load can be filled from parts: the processor and card from the
+ * catalogue, summed with the rest of the build exactly as the power supply
+ * calculator itemises it. That is a full-load figure — games rarely hold every
+ * part at its peak — so it stays editable. A catalogue power supply sets the
+ * efficiency grade.
  */
 export function EnergyCostCalculator({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
@@ -31,6 +46,33 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
   const [idleHours, setIdleHours] = useState(5);
   const [price, setPrice] = useState(Math.round(electricityPrice.pricePerKwh * 100) / 100);
   const [grade, setGrade] = useState<keyof typeof PSU_EFFICIENCY>('Gold');
+  const [cpuId, setCpuId] = useState('');
+  const [gpuId, setGpuId] = useState('');
+  const [psuId, setPsuId] = useState('');
+
+  /* Recomputes the load from whichever of the processor and card are
+     picked, with the rest of the build taken from the loaded build when
+     there is one and from the typical build otherwise. */
+  const fillLoad = (nextCpuId: string, nextGpuId: string, build: BuildParts = {}) => {
+    const cpu = cpus.find((item) => item.id === nextCpuId);
+    const gpu = gpus.find((item) => item.id === nextGpuId);
+    if (!cpu && !gpu) return;
+    const breakdown = buildPowerBreakdown({
+      ...TYPICAL_BUILD,
+      cpuWatts: cpu?.peakPower ?? 0,
+      gpuWatts: gpu?.tdp ?? 0,
+      ...(build.motherboard ? { chipset: chipsetClassOf(build.motherboard) } : {}),
+      ...(build.ram ? { ramModules: build.ram.modules } : {}),
+      ...(build.storage ? { mainDriveWatts: build.storage.power ?? PART_POWER.nvme } : {}),
+      ...(build.cooler ? { pumps: build.cooler.kind === 'aio' ? 1 : 0 } : {}),
+    });
+    setLoadWatts(clamp(Math.ceil(breakdown.total), 100, 1200));
+  };
+  const pickPsu = (id: string) => {
+    setPsuId(id);
+    const part = psus.find((item) => item.id === id);
+    if (part) setGrade(part.efficiency);
+  };
 
   const result = useMemo(
     () => splitEnergyCost(idleWatts, loadWatts, loadHours, idleHours, price, PSU_EFFICIENCY[grade]),
@@ -47,6 +89,56 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
     <CalculatorShell
       inputs={
         <>
+          <LoadBuildButton
+            locale={locale}
+            uses={['cpu', 'gpu', 'psu']}
+            onLoad={(parts) => {
+              const used: string[] = [];
+              if (parts.cpu) {
+                setCpuId(parts.cpu.id);
+                used.push(partLabel(parts.cpu));
+              }
+              if (parts.gpu) {
+                setGpuId(parts.gpu.id);
+                used.push(partLabel(parts.gpu));
+              }
+              fillLoad(parts.cpu?.id ?? cpuId, parts.gpu?.id ?? gpuId, parts);
+              if (parts.psu) {
+                pickPsu(parts.psu.id);
+                used.push(partLabel(parts.psu));
+              }
+              return used;
+            }}
+          />
+          <PartSelect
+            label={dict.configurator.category.cpu}
+            value={cpuId}
+            onChange={(id) => {
+              setCpuId(id);
+              fillLoad(id, gpuId);
+            }}
+            options={partOptions(
+              cpus,
+              (part) => part.socket.toUpperCase(),
+              (part) => `${part.peakPower} W`,
+            )}
+            manualLabel={dict.calc.picker.manual}
+          />
+          <PartSelect
+            label={dict.configurator.category.gpu}
+            value={gpuId}
+            onChange={(id) => {
+              setGpuId(id);
+              fillLoad(cpuId, id);
+            }}
+            options={partOptions(
+              gpus,
+              (part) => part.brand,
+              (part) => `${part.tdp} W`,
+            )}
+            manualLabel={dict.calc.energy.noGpu}
+            hint={dict.calc.energy.fromPartsHint}
+          />
           <NumberField
             label={dict.calc.energy.idleWatts}
             unit="W"
@@ -61,7 +153,11 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
             label={dict.calc.energy.loadWatts}
             unit="W"
             value={loadWatts}
-            onChange={setLoadWatts}
+            onChange={(value) => {
+              setLoadWatts(value);
+              setCpuId('');
+              setGpuId('');
+            }}
             min={100}
             max={1200}
             step={10}
@@ -101,10 +197,24 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
               electricityPrice.provisional,
             )}
           />
+          <PartSelect
+            label={dict.calc.energy.psuModel}
+            value={psuId}
+            onChange={(id) => (id ? pickPsu(id) : setPsuId(''))}
+            options={partOptions(
+              psus,
+              (part) => part.brand,
+              (part) => `${part.wattage} W, 80 Plus ${part.efficiency}`,
+            )}
+            manualLabel={dict.calc.picker.manual}
+          />
           <SelectField
             label={dict.calc.energy.efficiency}
             value={grade}
-            onChange={setGrade}
+            onChange={(value) => {
+              setGrade(value);
+              setPsuId('');
+            }}
             options={(Object.keys(PSU_EFFICIENCY) as (keyof typeof PSU_EFFICIENCY)[]).map(
               (key) => ({ value: key, label: `80 Plus ${key} (${PSU_EFFICIENCY[key] * 100}%)` }),
             )}

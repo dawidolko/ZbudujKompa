@@ -4,6 +4,9 @@ import { useMemo, useState } from 'react';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { driveLifespanYears, itemsThatFit, usableCapacity } from '@/lib/calculators';
+import { storage } from '@/lib/parts';
+import { partLabel } from '@/lib/parts/calculator-inputs';
+import { LoadBuildButton, PartSelect, partOptions } from '../CataloguePicker';
 import { CalculatorShell, NumberField, ResultRow, ResultValue } from '../CalculatorShell';
 
 /**
@@ -13,6 +16,10 @@ import { CalculatorShell, NumberField, ResultRow, ResultValue } from '../Calcula
  * is one of the most common questions about a new drive — and the answer is
  * arithmetic, not a fault. Manufacturers count a gigabyte as 1,000,000,000
  * bytes while the operating system divides by 1024 three times.
+ *
+ * A catalogue drive fills its capacity and, where the maker rates one, its
+ * endurance. Hard drives carry a workload rating rather than a TBW figure, so
+ * for them the endurance field is left as it was.
  */
 export function StorageCalculator({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
@@ -21,6 +28,16 @@ export function StorageCalculator({ locale }: { locale: Locale }) {
   const [gameSize, setGameSize] = useState(120);
   const [dailyWrites, setDailyWrites] = useState(30);
   const [tbw, setTbw] = useState(1200);
+  const [driveId, setDriveId] = useState('');
+  const drive = storage.find((item) => item.id === driveId);
+
+  const pickDrive = (id: string) => {
+    setDriveId(id);
+    const part = storage.find((item) => item.id === id);
+    if (!part) return;
+    setCapacity(part.capacity);
+    if (part.tbw) setTbw(part.tbw);
+  };
 
   const result = useMemo(() => {
     const usable = usableCapacity(capacity);
@@ -40,11 +57,31 @@ export function StorageCalculator({ locale }: { locale: Locale }) {
     <CalculatorShell
       inputs={
         <>
+          <LoadBuildButton
+            locale={locale}
+            uses={['storage']}
+            onLoad={(parts) => {
+              if (!parts.storage) return [];
+              pickDrive(parts.storage.id);
+              return [partLabel(parts.storage)];
+            }}
+          />
+          <PartSelect
+            label={dict.configurator.category.storage}
+            value={driveId}
+            onChange={(id) => (id ? pickDrive(id) : setDriveId(''))}
+            options={partOptions(storage, (part) => dict.calc.picker.driveKind[part.kind])}
+            manualLabel={dict.calc.picker.manual}
+            hint={drive && !drive.tbw ? dict.calc.storage.noTbw : undefined}
+          />
           <NumberField
             label={dict.calc.storage.capacity}
             unit="GB"
             value={capacity}
-            onChange={setCapacity}
+            onChange={(value) => {
+              setCapacity(value);
+              setDriveId('');
+            }}
             min={250}
             max={8000}
             step={250}
@@ -64,7 +101,10 @@ export function StorageCalculator({ locale }: { locale: Locale }) {
             label={dict.calc.storage.tbw}
             unit="TBW"
             value={tbw}
-            onChange={setTbw}
+            onChange={(value) => {
+              setTbw(value);
+              setDriveId('');
+            }}
             min={100}
             max={5000}
             step={100}

@@ -4,6 +4,9 @@ import { useMemo, useState } from 'react';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { memoryBandwidth, memoryLatencyNs } from '@/lib/calculators';
+import { ramKits } from '@/lib/parts';
+import { partLabel } from '@/lib/parts/calculator-inputs';
+import { LoadBuildButton, PartSelect, partOptions } from '../CataloguePicker';
 import {
   CalculatorShell,
   NumberField,
@@ -19,6 +22,9 @@ import {
  * DDR5: a CL30 kit sounds slower than a CL16 one, but the clock is running far
  * faster, and only nanoseconds make the two comparable. Showing both kits'
  * figures side by side is the point of the tool.
+ *
+ * A kit from the catalogue fills its rated speed and CAS latency, and its
+ * module count decides the channels: two or more modules populate both.
  */
 export function MemoryCalculator({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
@@ -26,6 +32,16 @@ export function MemoryCalculator({ locale }: { locale: Locale }) {
   const [speed, setSpeed] = useState(6000);
   const [cas, setCas] = useState(30);
   const [channels, setChannels] = useState<'1' | '2'>('2');
+  const [kitId, setKitId] = useState('');
+
+  const pickKit = (id: string) => {
+    setKitId(id);
+    const kit = ramKits.find((item) => item.id === id);
+    if (!kit) return;
+    setSpeed(kit.speed);
+    setCas(kit.casLatency);
+    setChannels(kit.modules >= 2 ? '2' : '1');
+  };
 
   const { latency, bandwidth, singleChannel, comparison } = useMemo(() => {
     const ns = memoryLatencyNs(speed, cas);
@@ -52,11 +68,30 @@ export function MemoryCalculator({ locale }: { locale: Locale }) {
     <CalculatorShell
       inputs={
         <>
+          <LoadBuildButton
+            locale={locale}
+            uses={['ram']}
+            onLoad={(parts) => {
+              if (!parts.ram) return [];
+              pickKit(parts.ram.id);
+              return [partLabel(parts.ram)];
+            }}
+          />
+          <PartSelect
+            label={dict.configurator.category.ram}
+            value={kitId}
+            onChange={(id) => (id ? pickKit(id) : setKitId(''))}
+            options={partOptions(ramKits, (kit) => kit.type.toUpperCase())}
+            manualLabel={dict.calc.picker.manual}
+          />
           <NumberField
             label={dict.calc.memory.speed}
             unit="MT/s"
             value={speed}
-            onChange={setSpeed}
+            onChange={(value) => {
+              setSpeed(value);
+              setKitId('');
+            }}
             min={2133}
             max={9000}
             step={100}
@@ -66,14 +101,20 @@ export function MemoryCalculator({ locale }: { locale: Locale }) {
             label={dict.calc.memory.cas}
             unit="CL"
             value={cas}
-            onChange={setCas}
+            onChange={(value) => {
+              setCas(value);
+              setKitId('');
+            }}
             min={10}
             max={54}
           />
           <SelectField
             label={dict.calc.memory.channels}
             value={channels}
-            onChange={setChannels}
+            onChange={(value) => {
+              setChannels(value);
+              setKitId('');
+            }}
             options={[
               { value: '2', label: dict.calc.memory.dual },
               { value: '1', label: dict.calc.memory.single },

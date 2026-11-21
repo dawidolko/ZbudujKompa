@@ -6,6 +6,8 @@ import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { estimateBottleneck } from '@/lib/calculators';
 import { cpus, gpus } from '@/lib/parts';
+import { partLabel } from '@/lib/parts/calculator-inputs';
+import { LoadBuildButton } from '../CataloguePicker';
 import { CalculatorShell, ResultRow, ResultValue, SelectField } from '../CalculatorShell';
 
 /**
@@ -62,6 +64,22 @@ export function BottleneckCalculator({ locale }: { locale: Locale }) {
     <CalculatorShell
       inputs={
         <>
+          <LoadBuildButton
+            locale={locale}
+            uses={['cpu', 'gpu']}
+            onLoad={(parts) => {
+              const used: string[] = [];
+              if (parts.cpu) {
+                setCpuId(parts.cpu.id);
+                used.push(partLabel(parts.cpu));
+              }
+              if (parts.gpu) {
+                setGpuId(parts.gpu.id);
+                used.push(partLabel(parts.gpu));
+              }
+              return used;
+            }}
+          />
           <SelectField
             label={dict.configurator.category.cpu}
             value={cpuId}
