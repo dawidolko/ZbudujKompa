@@ -1,4 +1,4 @@
-import type { FaqEntry, GlossaryTerm, Opinion } from './types';
+import type { FaqEntry, GlossaryTerm } from './types';
 
 /**
  * Glossary.
@@ -196,99 +196,6 @@ export const faq: FaqEntry[] = [
     },
   },
 ];
-
-/**
- * Community opinions.
- *
- * Kept as versioned repository data rather than fetched at runtime. A static
- * site cannot call a rating API without exposing a key, and a quote whose
- * source and date are recorded is more useful to a reader than an anonymous
- * live feed anyway. Each entry links back to where it came from.
- */
-export const opinions: Opinion[] = [
-  {
-    id: 'am5-longevity',
-    author: 'u/mkowalski_pc',
-    source: 'r/buildapc',
-    sourceUrl: 'https://www.reddit.com/r/buildapc/',
-    collectedOn: '2026-07-12',
-    rating: 5,
-    subject: 'am5',
-    quote: {
-      pl: 'Wziąłem B650 dwa lata temu głównie dlatego, że AMD obiecało wsparcie do 2027. W zeszłym miesiącu wymieniłem sam procesor, płyta i pamięć zostały. Aktualizacja BIOS-u, dziesięć minut roboty i tyle.',
-      en: 'I picked up a B650 two years ago mainly because AMD promised support through 2027. Last month I swapped just the CPU and kept the board and memory. A BIOS update, ten minutes of work, and that was it.',
-    },
-  },
-  {
-    id: 'air-vs-aio',
-    author: 'ThermalBudget',
-    source: "Tom's Hardware Forum",
-    sourceUrl: 'https://forums.tomshardware.com/',
-    collectedOn: '2026-06-28',
-    rating: 4,
-    subject: 'air-tower-dual',
-    quote: {
-      pl: 'Przesiadłem się z chłodnicy 240 mm na podwójną wieżę i temperatury pod obciążeniem wzrosły o dwa stopnie. Za to nie mam już buczenia pompy w tle i zapłaciłem połowę tego, co za AiO.',
-      en: 'I moved from a 240 mm AiO to a dual tower and my load temperatures went up by two degrees. In exchange the pump hum is gone and I paid half what the AiO cost.',
-    },
-  },
-  {
-    id: 'first-build-nerves',
-    author: 'anna.builds',
-    source: 'r/buildapc',
-    sourceUrl: 'https://www.reddit.com/r/buildapc/',
-    collectedOn: '2026-07-30',
-    rating: 5,
-    subject: 'assembly-step-by-step',
-    quote: {
-      pl: 'Bałam się, że coś spalę. Okazało się, że wszystko pasuje tylko w jedną stronę i po prostu nie da się tego pomylić. Najwięcej czasu zeszło mi na te malutkie kabelki od panelu przedniego.',
-      en: 'I was terrified I would fry something. It turned out everything only fits one way and you simply cannot get it wrong. What took me longest were those tiny front panel cables.',
-    },
-  },
-  {
-    id: 'psu-lesson',
-    author: 'r_nowak',
-    source: 'PCLab Forum',
-    sourceUrl: 'https://forum.pclab.pl/',
-    collectedOn: '2026-05-19',
-    rating: 3,
-    subject: 'choosing-psu',
-    quote: {
-      pl: 'Kupiłem tani zasilacz bez marki, żeby zmieścić się w budżecie. Po ośmiu miesiącach padł i zabrał ze sobą płytę główną. Drugi raz tego błędu nie popełnię.',
-      en: 'I bought a cheap unbranded PSU to stay inside my budget. Eight months later it died and took the motherboard with it. I will not make that mistake twice.',
-    },
-  },
-  {
-    id: 'itx-warning',
-    author: 'smallformfactor_pl',
-    source: 'r/sffpc',
-    sourceUrl: 'https://www.reddit.com/r/sffpc/',
-    collectedOn: '2026-07-05',
-    rating: 4,
-    subject: 'compact-itx',
-    quote: {
-      pl: 'ITX jest świetny, ale to nie jest zestaw na pierwszy raz. Kable trzeba układać w konkretnej kolejności, bo inaczej po prostu nie zamkniesz obudowy. Składałem trzy razy od nowa.',
-      en: 'ITX is great, but it is not a first build. Cables have to go in a specific order or the case simply will not close. I took mine apart and rebuilt it three times.',
-    },
-  },
-  {
-    id: 'memory-slots',
-    author: 'techsupport_veteran',
-    source: 'r/techsupport',
-    sourceUrl: 'https://www.reddit.com/r/techsupport/',
-    collectedOn: '2026-06-11',
-    rating: 5,
-    subject: 'first-boot-and-bios',
-    quote: {
-      pl: 'Połowa zgłoszeń „nie startuje” kończy się na źle włożonej pamięci albo monitorze wpiętym w płytę zamiast w kartę. Zawsze sprawdzajcie to dwoje najpierw.',
-      en: 'Half the "it will not boot" posts come down to badly seated memory or a monitor plugged into the board instead of the card. Always check those two first.',
-    },
-  },
-];
-
-export function getOpinionsFor(subject: string): Opinion[] {
-  return opinions.filter((opinion) => opinion.subject === subject);
-}
 
 export function getGlossaryTerm(slug: string): GlossaryTerm | undefined {
   return glossary.find((term) => term.slug === slug);

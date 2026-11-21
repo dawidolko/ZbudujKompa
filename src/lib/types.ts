@@ -147,7 +147,7 @@ export type Guide = {
 };
 
 /* =============================================================================
-   Glossary, FAQ and community opinions
+   Glossary and FAQ
    ============================================================================= */
 
 export type GlossaryTerm = {
@@ -161,27 +161,4 @@ export type FaqEntry = {
   id: string;
   question: Localized;
   answer: Localized;
-};
-
-/**
- * A community opinion.
- *
- * These are stored in the repository rather than fetched, and each one records
- * where it came from and when it was collected, so a reader can judge how much
- * weight to give it and check the original.
- */
-export type Opinion = {
-  id: string;
-  /** Display name or handle of the author. */
-  author: string;
-  /** Where it was published, e.g. "r/buildapc". */
-  source: string;
-  sourceUrl: string;
-  /** ISO date the opinion was collected. */
-  collectedOn: string;
-  /** Rating out of 5, when the source provided one. */
-  rating?: number;
-  quote: Localized;
-  /** What the opinion is about — a socket slug, cooling slug, or build slug. */
-  subject: string;
 };

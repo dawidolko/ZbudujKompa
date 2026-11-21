@@ -10,7 +10,6 @@ import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { getSocket, sockets } from '@/lib/sockets';
 import { builds } from '@/lib/builds';
-import { getOpinionsFor } from '@/lib/knowledge';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
@@ -66,7 +65,6 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
   const dict = getDictionary(typedLocale);
 
   const relatedBuilds = builds.filter((build) => build.socketSlug === socket.slug);
-  const socketOpinions = getOpinionsFor(socket.slug);
 
   const overclockingLabel = {
     full: dict.platform.ocFull,
@@ -231,36 +229,6 @@ export default async function SocketPage({ params }: { params: Promise<Params> }
                     <p className="text-xs text-text-muted">{t(build.useCase, typedLocale)}</p>
                   }
                 />
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      {/* ---- Opinions ---- */}
-      {socketOpinions.length > 0 ? (
-        <section className="container-page pb-14">
-          <SectionHeading title={dict.opinions.title} id="opinions" />
-          <ul className="grid gap-4 md:grid-cols-2">
-            {socketOpinions.map((opinion) => (
-              <li key={opinion.id}>
-                <figure className="h-full footprint p-5">
-                  <blockquote className="text-sm leading-relaxed text-text-secondary">
-                    <p>„{t(opinion.quote, typedLocale)}”</p>
-                  </blockquote>
-                  <figcaption className="mt-4 border-t border-border-subtle pt-3 text-xs text-text-muted">
-                    <span className="font-semibold text-text-secondary">{opinion.author}</span>
-                    {' · '}
-                    <a
-                      href={opinion.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="rounded-xs underline underline-offset-2 hover:text-text-brand focus-ring"
-                    >
-                      {opinion.source}
-                    </a>
-                  </figcaption>
-                </figure>
               </li>
             ))}
           </ul>

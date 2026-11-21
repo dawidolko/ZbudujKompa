@@ -61,13 +61,10 @@ export const en = {
       'The honest comparison: what each class of cooler actually handles, what it costs and what it asks of you in return.',
     buildsTitle: 'Reference builds',
     buildsLead:
-      'Complete part lists at four budgets, each with the reasoning for every component and an indicative price.',
+      'Complete part lists for six builds across budgets and uses, each with the reasoning for every component and an indicative price.',
     guidesTitle: 'Guides',
     guidesLead: 'From your first screw to diagnosing a machine that will not start.',
     faqTitle: 'Common questions',
-    opinionsTitle: 'What builders say',
-    opinionsLead:
-      'Collected from public forums, each with its source and the date it was gathered so you can check the original.',
     libraryTitle: 'What is here',
     libraryLead:
       'The site is a reference rather than a blog with a shop attached — here is what that amounts to in numbers.',
@@ -203,7 +200,8 @@ export const en = {
       standard: 'Supply standard',
       atx3: 'ATX 3.0 or 3.1',
       atx2: 'ATX 2.x or unknown',
-      standardHint: 'Printed on the box; anything bought since 2023 is usually ATX 3.x',
+      standardHint:
+        'Printed on the box or in the specification; if unsure, choose “ATX 2.x or unknown”',
       transientPeak: 'Transient peak',
       loadAtRecommended: 'Load at the recommended size',
       raisedForTransients: 'raised to cover spikes',
@@ -293,15 +291,6 @@ export const en = {
   faq: {
     title: 'Frequently asked questions',
     lead: 'The questions that come up most often, answered without hedging.',
-  },
-
-  opinions: {
-    title: 'Community opinions',
-    source: 'Source',
-    collectedOn: (date: string) => `Collected on ${date}`,
-    rating: (value: number) => `Rated ${value} out of 5`,
-    disclaimer:
-      'These are individual opinions collected from public forums, quoted with their source and collection date. They are not verified reviews and are not affiliated with any manufacturer.',
   },
 
   chat: {
@@ -603,7 +592,7 @@ export const en = {
       power: 'Power used',
       caseRise: 'Air temperature rise',
       explanation:
-        'Airflow falls in proportion to speed, but noise falls with the fifth power of it. Dropping to 70 per cent costs 30 per cent of the airflow and buys about 8 dB, which is clearly audible where the airflow loss usually is not. The relationship breaks down below roughly 500 rpm, where motor and bearing noise stop scaling. Rated airflow is measured with no restriction at all, so real flow through filters and a radiator is well below it.',
+        'Airflow falls in proportion to speed, but noise falls with the fifth power of it. Dropping to 70 per cent costs 30 per cent of the airflow and buys about 8 dB, which is clearly audible where the airflow loss usually is not. The relationship breaks down at very low speeds, where motor and bearing noise stop scaling. Rated airflow is measured with no restriction at all, so real flow through filters and a radiator is well below it.',
     },
     cable: {
       title: 'Display cable',

@@ -5,13 +5,12 @@ import { Callout } from '@/components/ui/Callout';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
-import { PageHeader, SectionHeading } from '@/components/layout/PageHeader';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { CheckIcon, AlertIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles, getCoolingProfile } from '@/lib/cooling';
-import { getOpinionsFor } from '@/lib/knowledge';
 import { catalogueCheckedAt } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
@@ -67,7 +66,6 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
 
   const typedLocale: Locale = locale;
   const dict = getDictionary(typedLocale);
-  const profileOpinions = getOpinionsFor(profile.slug);
 
   const typeLabel = {
     air: dict.cooling.typeAir,
@@ -178,36 +176,6 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
           </Callout>
         </div>
       </section>
-
-      {/* ---- Opinions ---- */}
-      {profileOpinions.length > 0 ? (
-        <section className="container-page pb-14">
-          <SectionHeading title={dict.opinions.title} id="opinions" />
-          <ul className="grid gap-4 md:grid-cols-2">
-            {profileOpinions.map((opinion) => (
-              <li key={opinion.id}>
-                <figure className="h-full footprint p-5">
-                  <blockquote className="text-sm leading-relaxed text-text-secondary">
-                    <p>„{t(opinion.quote, typedLocale)}”</p>
-                  </blockquote>
-                  <figcaption className="mt-4 border-t border-border-subtle pt-3 text-xs text-text-muted">
-                    <span className="font-semibold text-text-secondary">{opinion.author}</span>
-                    {' · '}
-                    <a
-                      href={opinion.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="rounded-xs underline underline-offset-2 hover:text-text-brand focus-ring"
-                    >
-                      {opinion.source}
-                    </a>
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
 
       <JsonLd
         data={{

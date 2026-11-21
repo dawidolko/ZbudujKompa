@@ -63,13 +63,10 @@ export const pl: Dictionary = {
       'Uczciwe porównanie: ile ciepła każda klasa chłodzenia faktycznie odprowadza, ile kosztuje i czego wymaga w zamian.',
     buildsTitle: 'Gotowe zestawy',
     buildsLead:
-      'Kompletne listy części w czterech budżetach, każda z uzasadnieniem doboru podzespołów i ceną orientacyjną.',
+      'Kompletne listy części dla sześciu zestawów w różnych budżetach i do różnych zastosowań, każda z uzasadnieniem doboru podzespołów i ceną orientacyjną.',
     guidesTitle: 'Poradniki',
     guidesLead: 'Od pierwszej śrubki po diagnostykę komputera, który nie chce wystartować.',
     faqTitle: 'Częste pytania',
-    opinionsTitle: 'Co mówią składający',
-    opinionsLead:
-      'Zebrane z publicznych forów, każda opinia ze źródłem i datą zebrania, żebyś mógł sprawdzić oryginał.',
     libraryTitle: 'Co tu jest',
     libraryLead:
       'Ten serwis to źródło wiedzy, a nie blog z doklejonym sklepem — oto ile tego jest w liczbach.',
@@ -206,7 +203,8 @@ export const pl: Dictionary = {
       standard: 'Standard zasilacza',
       atx3: 'ATX 3.0 lub 3.1',
       atx2: 'ATX 2.x albo nie wiem',
-      standardHint: 'Podane na opakowaniu; jednostki kupione po 2023 to zwykle ATX 3.x',
+      standardHint:
+        'Podane na opakowaniu lub w specyfikacji; jeśli nie masz pewności, wybierz „ATX 2.x albo nie wiem”',
       transientPeak: 'Szczyt chwilowy',
       loadAtRecommended: 'Obciążenie przy zalecanej mocy',
       raisedForTransients: 'podniesione ze względu na skoki',
@@ -308,15 +306,6 @@ export const pl: Dictionary = {
   faq: {
     title: 'Najczęstsze pytania',
     lead: 'Pytania, które padają najczęściej, z odpowiedziami bez owijania w bawełnę.',
-  },
-
-  opinions: {
-    title: 'Opinie społeczności',
-    source: 'Źródło',
-    collectedOn: (date: string) => `Zebrano ${date}`,
-    rating: (value: number) => `Ocena ${value} na 5`,
-    disclaimer:
-      'To pojedyncze opinie zebrane z publicznych forów, cytowane wraz ze źródłem i datą zebrania. Nie są zweryfikowanymi recenzjami ani nie pochodzą od producentów.',
   },
 
   chat: {
@@ -625,7 +614,7 @@ export const pl: Dictionary = {
       power: 'Pobór mocy',
       caseRise: 'Wzrost temperatury powietrza',
       explanation:
-        'Przepływ spada proporcjonalnie do obrotów, ale hałas spada z ich piątą potęgą. Zejście do 70 procent kosztuje 30 procent przepływu i daje około 8 dB ciszej — różnicę wyraźnie słyszalną tam, gdzie utraty przepływu zwykle nie widać. Zależność przestaje działać poniżej mniej więcej 500 obrotów, gdzie hałas silnika i łożyska przestaje maleć. Przepływ nominalny mierzy się bez żadnych oporów, więc realny przez filtry i chłodnicę jest wyraźnie niższy.',
+        'Przepływ spada proporcjonalnie do obrotów, ale hałas spada z ich piątą potęgą. Zejście do 70 procent kosztuje 30 procent przepływu i daje około 8 dB ciszej — różnicę wyraźnie słyszalną tam, gdzie utraty przepływu zwykle nie widać. Zależność przestaje działać przy bardzo niskich obrotach, gdzie hałas silnika i łożyska przestaje maleć. Przepływ nominalny mierzy się bez żadnych oporów, więc realny przez filtry i chłodnicę jest wyraźnie niższy.',
     },
     cable: {
       title: 'Kabel do monitora',

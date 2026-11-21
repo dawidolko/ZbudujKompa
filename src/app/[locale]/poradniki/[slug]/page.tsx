@@ -14,7 +14,6 @@ import { StepDiagram } from '@/components/diagrams';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { getGuide, guides, readingTime } from '@/lib/guides';
-import { getOpinionsFor } from '@/lib/knowledge';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { formatDate, t } from '@/lib/utils';
 
@@ -68,7 +67,6 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
     .map((relatedSlug) => getGuide(relatedSlug))
     .filter((item): item is NonNullable<typeof item> => Boolean(item));
 
-  const guideOpinions = getOpinionsFor(guide.slug);
   const totalMinutes = guide.steps.reduce((sum, step) => sum + (step.minutes ?? 0), 0);
 
   const difficultyLabel = {
@@ -177,35 +175,6 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
               </li>
             ))}
           </ol>
-
-          {/* ---- Opinions ---- */}
-          {guideOpinions.length > 0 ? (
-            <section className="mt-14">
-              <SectionHeading title={dict.opinions.title} id="opinions" />
-              <ul className="grid gap-4 md:grid-cols-2">
-                {guideOpinions.map((opinion) => (
-                  <li key={opinion.id}>
-                    <figure className="h-full border-t border-border-strong pt-3">
-                      <blockquote className="text-sm leading-relaxed text-text-secondary">
-                        <p>„{t(opinion.quote, typedLocale)}”</p>
-                      </blockquote>
-                      <figcaption className="mt-4 border-t border-border-subtle pt-3 text-xs text-text-muted">
-                        <span className="font-semibold text-text-secondary">{opinion.author}</span>{' '}
-                        <a
-                          href={opinion.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          className="rounded-xs underline underline-offset-2 hover:text-text-brand focus-ring"
-                        >
-                          {opinion.source}
-                        </a>
-                      </figcaption>
-                    </figure>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
 
           {/* ---- Related guides ---- */}
           {related.length > 0 ? (

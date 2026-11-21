@@ -6,7 +6,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { ArrowRightIcon, ChevronDownIcon, StarIcon } from '@/components/ui/Icon';
+import { ArrowRightIcon, ChevronDownIcon } from '@/components/ui/Icon';
 import { Photo, PhotoFigure } from '@/components/ui/Photo';
 import { QuickPicker } from '@/components/tools/QuickPicker';
 import { Carousel } from '@/components/widgets/Carousel';
@@ -22,7 +22,7 @@ import { sockets } from '@/lib/sockets';
 import { coolingProfiles } from '@/lib/cooling';
 import { builds } from '@/lib/builds';
 import { guides } from '@/lib/guides';
-import { faq, opinions } from '@/lib/knowledge';
+import { faq } from '@/lib/knowledge';
 import { t } from '@/lib/utils';
 
 export function generateStaticParams() {
@@ -48,7 +48,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const dict = getDictionary(typedLocale);
 
   const featuredGuides = guides.slice(0, 4);
-  const featuredOpinions = opinions.slice(0, 3);
 
   const fingers: { net: Net; ref: string; label: string }[] = [
     { net: 'cooling', ref: 'VRM1', label: dict.cooling.title },
@@ -494,57 +493,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         />
       </section>
 
-      {/* ---- Opinions ---- */}
-      <Chapter
-        id="opinions"
-        number={9}
-        title={dict.home.opinionsTitle}
-        lead={dict.home.opinionsLead}
-        className="[&_.chapter]:mt-8"
-      >
-        <ul className="bom-list">
-          {featuredOpinions.map((opinion) => (
-            <li key={opinion.id} className="border-b border-border-subtle py-5">
-              <figure>
-                {opinion.rating ? (
-                  <p className="mb-2 flex items-center gap-0.5 text-accent-fg">
-                    {/* The rating is spelled out for screen readers; the stars
-                        are decorative because colour and shape alone are not a
-                        reliable way to convey a value. */}
-                    <span className="sr-only">{dict.opinions.rating(opinion.rating)}</span>
-                    {Array.from({ length: opinion.rating }).map((_, index) => (
-                      <StarIcon key={index} className="size-3.5" />
-                    ))}
-                  </p>
-                ) : null}
-
-                <blockquote className="max-w-3xl text-text-primary">
-                  <p>„{t(opinion.quote, typedLocale)}”</p>
-                </blockquote>
-
-                <figcaption className="spec-label mt-2 flex flex-wrap gap-x-3">
-                  <span className="text-text-secondary">{opinion.author}</span>
-                  <a
-                    href={opinion.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    className="rounded-xs underline underline-offset-2 transition-colors hover:text-text-brand focus-ring"
-                  >
-                    {opinion.source}
-                  </a>
-                </figcaption>
-              </figure>
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-4 max-w-3xl text-xs text-text-muted">{dict.opinions.disclaimer}</p>
-      </Chapter>
-
       {/* ---- FAQ ---- */}
       <Chapter
         id="faq"
-        number={10}
+        number={9}
         title={dict.home.faqTitle}
         action={
           <ButtonLink href={localePath(typedLocale, '/faq')} variant="secondary" size="sm">
@@ -579,7 +531,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
            Last, after every piece of free reference material, so the site
            reads as help first and an offer of a hand second. It is a plain
            chapter in the site's own colours, not a banner. */}
-      <Chapter id="build-help" number={11} title={dict.services.bandTitle}>
+      <Chapter id="build-help" number={10} title={dict.services.bandTitle}>
         <div className="footprint p-5 md:p-6">
           <p className="max-w-2xl leading-relaxed text-text-secondary">{dict.services.bandLead}</p>
           <ul className="spec-label mt-4 flex flex-wrap gap-x-5 gap-y-1">

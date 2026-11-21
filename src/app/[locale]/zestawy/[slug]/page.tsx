@@ -13,7 +13,6 @@ import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { builds, buildPartPrice, buildPartQueries, buildTotal, getBuild } from '@/lib/builds';
 import { getSocket } from '@/lib/sockets';
-import { getOpinionsFor } from '@/lib/knowledge';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
@@ -69,7 +68,6 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
   const total = buildTotal(build);
 
   const socket = getSocket(build.socketSlug);
-  const buildOpinions = getOpinionsFor(build.slug);
 
   const difficultyLabel = {
     beginner: dict.builds.difficultyBeginner,
@@ -227,36 +225,6 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
               {dict.common.learnMore}
             </Link>
           </div>
-        </section>
-      ) : null}
-
-      {/* ---- Opinions ---- */}
-      {buildOpinions.length > 0 ? (
-        <section className="container-page pb-14">
-          <SectionHeading title={dict.opinions.title} id="opinions" />
-          <ul className="grid gap-4 md:grid-cols-2">
-            {buildOpinions.map((opinion) => (
-              <li key={opinion.id}>
-                <figure className="h-full footprint p-5">
-                  <blockquote className="text-sm leading-relaxed text-text-secondary">
-                    <p>„{t(opinion.quote, typedLocale)}”</p>
-                  </blockquote>
-                  <figcaption className="mt-4 border-t border-border-subtle pt-3 text-xs text-text-muted">
-                    <span className="font-semibold text-text-secondary">{opinion.author}</span>
-                    {' · '}
-                    <a
-                      href={opinion.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="rounded-xs underline underline-offset-2 hover:text-text-brand focus-ring"
-                    >
-                      {opinion.source}
-                    </a>
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
         </section>
       ) : null}
 
