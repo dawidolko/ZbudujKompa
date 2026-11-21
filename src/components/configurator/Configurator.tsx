@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useId, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Price } from '@/components/parts/Price';
 import { PriceChecked } from '@/components/parts/PriceChecked';
 import { usePriceStale } from '@/components/parts/usePriceStale';
@@ -14,6 +14,7 @@ import { BuildBoard } from './BuildBoard';
 import { PartPicker } from './PartPicker';
 import { ShoppingList } from './ShoppingList';
 import { autoPick } from '@/lib/parts/autopick';
+import { saveBuild } from '@/lib/parts/saved-build';
 
 /**
  * Build configurator.
@@ -31,6 +32,18 @@ export function Configurator({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const pickerId = useId();
   const [selection, setSelection] = useState<BuildSelection>({});
+
+  /* Every change is kept on this device so the calculators can load the
+     build. The first render is skipped: opening the configurator starts
+     empty, and saving that would wipe a build put together earlier. */
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    saveBuild(selection);
+  }, [selection]);
 
   const [budget, setBudget] = useState(8000);
   const [purpose, setPurpose] = useState<'gaming' | 'work' | 'office' | 'compact'>('gaming');

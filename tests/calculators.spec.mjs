@@ -230,5 +230,172 @@ check('a 10% gain does not', c.upgradeValue(100, 110, 1000).worthwhile, false);
 /* ---- Network transfer uses effective, not nominal, throughput ---- */
 check('50 GB over gigabit takes 512 s', Math.round(c.networkTransferTime(50, 1000).seconds), 512);
 
+/* ---- Connectors from the catalogue win over the wattage estimate ---- */
+const fromSpec = c.requiredConnectors(300, 0, 3, {
+  connector: '12v-2x6',
+  pcie8pin: 2,
+  cableRating: 300,
+});
+check('a 300 W card with a 16-pin socket uses 12V-2x6', fromSpec.uses12vhpwr, true);
+check('and takes two 8-pin plugs into its adapter', fromSpec.pcie8pin, 2);
+check('and names the minimum cable rating', fromSpec.cableRating, 300);
+check('and says the figure is the vendor’s', fromSpec.fromCatalogue, true);
+check(
+  'the estimate alone would not have predicted 12V-2x6',
+  c.requiredConnectors(300, 0, 3).uses12vhpwr,
+  false,
+);
+check(
+  'an 8-pin card keeps its own plug count',
+  c.requiredConnectors(304, 0, 3, { connector: '8pin', pcie8pin: 2 }).pcie8pin,
+  2,
+);
+
+/* ---- Power breakdown: every item is counted at its published figure ---- */
+const typical = c.buildPowerBreakdown({
+  cpuWatts: 162,
+  gpuWatts: 300,
+  chipset: 'amd',
+  ramModules: 2,
+  mainDriveWatts: 8.5,
+  nvme: 0,
+  sataSsd: 1,
+  hdd: 2,
+  fans: 4,
+  pumps: 1,
+  rgbLeds: 20,
+  usbDevices: 2,
+});
+/* 162 + 300 + 7 + 2×5 + 8.5 + 2.5 + 2×10.1 + 4×1.68 + 4.2 + 20×0.18 + 2×4.5 */
+check('the breakdown sums every item', typical.total, 533.72, 0.01);
+check('and reports the rest rounded up', typical.other, 72);
+check(
+  'empty categories are left out',
+  typical.items.some((item) => item.key === 'nvme'),
+  false,
+);
+check(
+  'two hard drives are one row of two',
+  typical.items.find((item) => item.key === 'hdd')?.count,
+  2,
+);
+check(
+  'a dual-chipset AMD board counts 14 W',
+  c
+    .buildPowerBreakdown({ ...c.TYPICAL_BUILD, cpuWatts: 100, gpuWatts: 0, chipset: 'amd-dual' })
+    .items.find((item) => item.key === 'board')?.watts,
+  14,
+);
+check(
+  'a card at 0 W (integrated graphics) has no row',
+  c
+    .buildPowerBreakdown({ ...c.TYPICAL_BUILD, cpuWatts: 100, gpuWatts: 0 })
+    .items.some((item) => item.key === 'gpu'),
+  false,
+);
+const sized = c.sizePowerSupply({
+  cpuPeakWatts: 162,
+  gpuWatts: 300,
+  otherWatts: typical.other,
+  atx3x: true,
+});
+check('the breakdown feeds the supply sizing', sized.estimated, 534);
+check('534 W with 30% headroom needs a 750 W unit', sized.recommended, 750);
+
+/* ---- Catalogue to calculator inputs ---- */
+const parts = await import('../src/lib/parts/index.ts');
+const inputs = await import('../src/lib/parts/calculator-inputs.ts');
+const saved = await import('../src/lib/parts/saved-build.ts');
+const board = (id) => parts.motherboards.find((item) => item.id === id);
+const cooler = (id) => parts.coolers.find((item) => item.id === id);
+
+check(
+  'X870E counts as two AMD chipsets',
+  inputs.chipsetClassOf(board('x870e-tomahawk')),
+  'amd-dual',
+);
+check('B650 counts as one AMD chipset', inputs.chipsetClassOf(board('b650m-pro-rs')), 'amd');
+check('B550 on AM4 counts as one AMD chipset', inputs.chipsetClassOf(board('b550-a-pro')), 'amd');
+check('Z890 counts as an Intel chipset', inputs.chipsetClassOf(board('z890-tomahawk')), 'intel');
+check(
+  'a dual tower maps to the dual-tower class',
+  inputs.thermalCoolerClass(cooler('nh-d15-g2')),
+  'dualTower',
+);
+check(
+  'a single tower maps to its class',
+  inputs.thermalCoolerClass(cooler('nh-u12a')),
+  'singleTower',
+);
+check('a low-profile cooler maps to boxed', inputs.thermalCoolerClass(cooler('nh-l12s')), 'boxed');
+check(
+  'a 420 mm AiO maps to the 360 class',
+  inputs.thermalCoolerClass(cooler('liquid-freezer-iii-420')),
+  'aio360',
+);
+check(
+  'a 240 mm AiO maps to the 240 class',
+  inputs.thermalCoolerClass(cooler('liquid-freezer-iii-240')),
+  'aio240',
+);
+check('a Gen 5 drive belongs in the Gen 5 slot', inputs.bestM2Slot(board('b650m-pro-rs'), 5), 0);
+check(
+  'a Gen 5 drive has no full-speed slot on an A620',
+  inputs.bestM2Slot(board('a620m-hdv'), 5),
+  -1,
+);
+check(
+  'the brand is not repeated in a label',
+  inputs.partLabel({ brand: 'AMD', name: 'AMD Wraith' }),
+  'AMD Wraith',
+);
+
+const loaded = inputs.buildParts({
+  cpu: 'ryzen-7-7800x3d',
+  gpu: 'rtx-5070-ti',
+  psu: 'no-such-psu',
+});
+check('a build resolves its parts', loaded.cpu?.peakPower, 162);
+check('and a part id that no longer exists is dropped', loaded.psu, undefined);
+
+/* ---- The saved configurator build is validated on the way back in ---- */
+check('nothing saved reads as no build', saved.parseSavedBuild(null), null);
+check('broken JSON reads as no build', saved.parseSavedBuild('{oops'), null);
+check(
+  'a part saved under the wrong category is dropped',
+  JSON.stringify(saved.parseSavedBuild('{"cpu":"rtx-5090","gpu":"rtx-5090"}')),
+  '{"gpu":"rtx-5090"}',
+);
+check('a build of unknown parts reads as no build', saved.parseSavedBuild('{"cpu":"nope"}'), null);
+
+/* ---- Catalogue data the calculators rely on ---- */
+for (const gpu of parts.gpus) {
+  check(`${gpu.id}: connector source is a vendor page`, /^https:\/\//.test(gpu.power.source), true);
+  /* Each 8-pin carries 150 W and the slot 75 W, so the plugs a vendor lists
+     must cover the card's board power. */
+  check(
+    `${gpu.id}: its 8-pin plugs cover its board power`,
+    gpu.power.pcie8pin * 150 + 75 >= gpu.tdp,
+    true,
+  );
+}
+for (const item of parts.motherboards) {
+  check(`${item.id}: M.2 list matches the slot count`, item.m2.length, item.m2Slots);
+  check(
+    `${item.id}: has fan headers and a spec source`,
+    item.fanHeaders > 0 && /^https:\/\//.test(item.specSource),
+    true,
+  );
+}
+for (const drive of parts.storage) {
+  if (drive.power !== undefined) {
+    check(
+      `${drive.id}: a power figure has a source`,
+      /^https:\/\//.test(drive.powerSource ?? ''),
+      true,
+    );
+  }
+}
+
 console.log(`\n${passed}/${passed + failed} passed`);
 process.exit(failed > 0 ? 1 : 0);

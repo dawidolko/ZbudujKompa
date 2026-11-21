@@ -340,20 +340,187 @@ export function estimateBottleneck(
  * the right cables — a 750 W unit with two PCIe connectors cannot power a card
  * that needs three, and the wattage figure gives no hint of that.
  */
-export function requiredConnectors(gpuWatts: number, driveCount: number, fanCount: number) {
+export function requiredConnectors(
+  gpuWatts: number,
+  driveCount: number,
+  fanCount: number,
+  /* The card's own connector specification, when it is known from the
+     catalogue. It wins over the wattage estimate, because the vendor's figure
+     is a fact while the estimate is arithmetic — an RTX 5070 Ti at 300 W uses
+     a 12V-2x6 socket that the wattage rule alone would not predict. */
+  gpuPower?: { connector: '12v-2x6' | '8pin'; pcie8pin: number; cableRating?: number },
+) {
   /* Each 8-pin PCIe connector is rated for 150 W, and the slot itself supplies
      75 W. Cards above roughly 300 W generally use the 12V-2x6 connector
      instead of multiple 8-pins. */
   const fromSlot = 75;
-  const pcie8pin = gpuWatts <= fromSlot ? 0 : Math.ceil((gpuWatts - fromSlot) / 150);
+  const estimated8pin = gpuWatts <= fromSlot ? 0 : Math.ceil((gpuWatts - fromSlot) / 150);
 
   return {
     eps8pin: 1,
-    pcie8pin,
-    uses12vhpwr: gpuWatts > 300,
+    pcie8pin: gpuPower ? gpuPower.pcie8pin : estimated8pin,
+    uses12vhpwr: gpuPower ? gpuPower.connector === '12v-2x6' : gpuWatts > 300,
+    /* Minimum rating of a native 12V-2x6 cable, where the vendor lists one. */
+    cableRating: gpuPower?.cableRating,
+    fromCatalogue: Boolean(gpuPower),
     sata: driveCount,
     /* Fan headers on a board are limited; beyond four, a hub is usually needed. */
     needsFanHub: fanCount > 4,
+  };
+}
+
+/* =============================================================================
+   Power budget of the whole build
+   ============================================================================= */
+
+/**
+ * Per-item power allowances for the parts around the CPU and graphics card.
+ *
+ * Each figure is a published number, not a guess, and the comment names
+ * where it comes from. Where a category varies, the figure is the upper end
+ * of a real product rather than an average, because a power supply is sized
+ * for the worst case.
+ */
+export const PART_POWER = {
+  /* Crucial: "5 watts per module for standard consumer memory" — Micron's own
+     sizing rule for DDR4 and DDR5, since neither publishes per-module draw.
+     crucial.com/support/articles-faq-memory/how-much-power-does-memory-use */
+  ramModule: 5,
+  /* Generic NVMe drive: Samsung 990 PRO, "Maximum: 8.5 W (Burst mode)" — the
+     highest figure a mainstream Gen 4 drive publishes. */
+  nvme: 8.5,
+  /* SATA SSD: Samsung 870 EVO datasheet, active average write up to 2.5 W. */
+  sataSsd: 2.5,
+  /* 3.5-inch hard drive: Seagate IronWolf 8 TB (7,200 rpm) datasheet,
+     "Average Operating Power 10.1" W. A 5,400 rpm drive draws about half. */
+  hdd: 10.1,
+  /* 120 mm case fan: Noctua NF-A12x25 PWM, "Input power (max) 1.68 W". The
+     Arctic P12 PWM PST draws 0.1 A at 12 V, so 1.68 W covers both. */
+  fan: 1.68,
+  /* AIO pump: Arctic Liquid Freezer III, pump "0.35 A | 12 V DC" = 4.2 W. */
+  aioPump: 4.2,
+  /* One addressable LED at full white: the WS2812B datasheet gives 12 mA per
+     colour channel plus 0.6 mA quiescent, so about 37 mA at 5 V. */
+  rgbLed: 0.18,
+  /* One USB device powered by the PC: the USB 3.x port budget of 900 mA at
+     5 V, which is the most a standard port has to supply. */
+  usbDevice: 4.5,
+} as const;
+
+/**
+ * Chipset power by platform.
+ *
+ * Intel publishes it: ARK lists "Chipset Base Power 6 W" for Z890, B860,
+ * B760 and Z790. AMD does not, so its figures are the ones reported for the
+ * Promontory 21 chip — "Maximum Power ~7W", doubled on X670, X670E and X870E,
+ * which use two of them. B550 and A620 are reported lower, so 7 W is the safe
+ * end for them too.
+ *
+ * Voltage-regulator losses, audio and networking are not itemised: no
+ * manufacturer publishes them, and the 30 per cent headroom the supply
+ * recommendation adds covers them.
+ */
+export const CHIPSET_POWER = {
+  intel: 6,
+  amd: 7,
+  'amd-dual': 14,
+} as const;
+
+export type ChipsetClass = keyof typeof CHIPSET_POWER;
+
+/**
+ * The rest of a typical build, used wherever the reader has only named the
+ * processor and the graphics card: a single-chipset board, two memory
+ * modules, one NVMe drive, three fans and a keyboard and mouse on USB.
+ */
+export const TYPICAL_BUILD = {
+  chipset: 'amd' as ChipsetClass,
+  ramModules: 2,
+  mainDriveWatts: PART_POWER.nvme,
+  nvme: 0,
+  sataSsd: 0,
+  hdd: 0,
+  fans: 3,
+  pumps: 0,
+  rgbLeds: 0,
+  usbDevices: 2,
+};
+
+export type PowerItem = {
+  key:
+    | 'cpu'
+    | 'gpu'
+    | 'board'
+    | 'ram'
+    | 'drive'
+    | 'nvme'
+    | 'sataSsd'
+    | 'hdd'
+    | 'fans'
+    | 'pump'
+    | 'rgb'
+    | 'usb';
+  count: number;
+  /** Watts for one item. */
+  each: number;
+  /** Watts for all of them. */
+  watts: number;
+};
+
+/**
+ * Sums a build's power, item by item.
+ *
+ * The flat "add 90 W for everything else" rule the calculator used to apply
+ * is right for a typical build and wrong for the ones people actually ask
+ * about — four hard drives, eight fans and an AIO add up to more than that,
+ * and a Mini-ITX box with one drive to far less. Listing each item shows the
+ * reader where the watts go.
+ */
+export function buildPowerBreakdown(input: {
+  cpuWatts: number;
+  gpuWatts: number;
+  chipset: ChipsetClass;
+  ramModules: number;
+  /** A specific drive from the catalogue, with its published draw. */
+  mainDriveWatts?: number;
+  nvme: number;
+  sataSsd: number;
+  hdd: number;
+  fans: number;
+  pumps: number;
+  rgbLeds: number;
+  usbDevices: number;
+}): { items: PowerItem[]; total: number; other: number } {
+  const item = (key: PowerItem['key'], count: number, each: number): PowerItem => ({
+    key,
+    count,
+    each,
+    watts: count * each,
+  });
+
+  const items = [
+    item('cpu', 1, input.cpuWatts),
+    item('gpu', 1, input.gpuWatts),
+    item('board', 1, CHIPSET_POWER[input.chipset]),
+    item('ram', input.ramModules, PART_POWER.ramModule),
+    item('drive', input.mainDriveWatts ? 1 : 0, input.mainDriveWatts ?? 0),
+    item('nvme', input.nvme, PART_POWER.nvme),
+    item('sataSsd', input.sataSsd, PART_POWER.sataSsd),
+    item('hdd', input.hdd, PART_POWER.hdd),
+    item('fans', input.fans, PART_POWER.fan),
+    item('pump', input.pumps, PART_POWER.aioPump),
+    item('rgb', input.rgbLeds, PART_POWER.rgbLed),
+    item('usb', input.usbDevices, PART_POWER.usbDevice),
+  ].filter((entry) => entry.count > 0 && entry.each > 0);
+
+  const total = items.reduce((sum, entry) => sum + entry.watts, 0);
+
+  return {
+    items,
+    total,
+    /* Rounded up, because the supply sizing works in whole watts and should
+       never round a real load down. */
+    other: Math.ceil(total - input.cpuWatts - input.gpuWatts),
   };
 }
 
