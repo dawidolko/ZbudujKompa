@@ -255,6 +255,28 @@ report(
   'a band was built from too few offers',
 );
 
+const used = { ...sample.shopping_results[0], second_hand_condition: 'used' };
+report(
+  extractOffers({ shopping_results: [used] }).length === 0,
+  'refuses an offer Google marks as second-hand',
+  'a second-hand offer was kept',
+);
+
+const unlinked = {
+  shopping_results: sample.shopping_results.map((result) => ({
+    ...result,
+    product_link: undefined,
+  })),
+};
+const fallback = bandFromResponse(unlinked, ryzen);
+report(
+  fallback?.sources.length === 1 &&
+    fallback.sources[0].url.startsWith('https://www.google.pl/search?') &&
+    fallback.sources[0].url.includes('tbm=shop'),
+  'offers without links still leave an https source',
+  'a band without offer links has no usable source',
+);
+
 report(
   !bandsDiffer({ min: 1, max: 2 }, { min: 1, max: 2 }) &&
     bandsDiffer({ min: 1, max: 2 }, { min: 1, max: 3 }),

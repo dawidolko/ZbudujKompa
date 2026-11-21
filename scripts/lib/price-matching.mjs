@@ -66,6 +66,9 @@ export function matchesPart(title, { must = [], not = [] }) {
 /*
  * Reads the offers out of a response. The price has to be stated in złoty:
  * `extracted_price` is a bare number, so it says nothing about the currency.
+ * Google marks second-hand listings with `second_hand_condition`, which is a
+ * surer sign than any word in the title, so those are dropped here. The link
+ * falls back to `link` when a result carries no `product_link`.
  */
 export function extractOffers(response) {
   const results = Array.isArray(response?.shopping_results) ? response.shopping_results : [];
@@ -74,12 +77,13 @@ export function extractOffers(response) {
     const label = String(result?.price ?? '');
     if (typeof price !== 'number' || !Number.isFinite(price) || price <= 0) return [];
     if (!/zł|pln/i.test(label)) return [];
+    if (result.second_hand_condition) return [];
     return [
       {
         title: String(result.title ?? ''),
         price,
         source: String(result.source ?? ''),
-        url: String(result.product_link ?? ''),
+        url: String(result.product_link ?? result.link ?? ''),
       },
     ];
   });
@@ -117,6 +121,9 @@ export function rejectOutliers(offers) {
  * survive. A null keeps the previous record rather than publishing a guess.
  * The band runs from the lowest credible offer to the median, which is the same
  * meaning the hand-checked figures have: lowest sensible and typical.
+ *
+ * Every record needs at least one https source, so when no offer carries a
+ * usable link the band points at the Google Shopping search it came from.
  */
 export function bandFromResponse(response, query, minOffers = MIN_OFFERS) {
   const matching = extractOffers(response)
@@ -129,11 +136,19 @@ export function bandFromResponse(response, query, minOffers = MIN_OFFERS) {
   const typical = median(prices);
   const sources = [...offers]
     .sort((a, b) => Math.abs(a.price - typical) - Math.abs(b.price - typical))
-    .filter((offer) => offer.url)
+    .filter((offer) => /^https:\/\//.test(offer.url))
     .slice(0, 3)
     .map((offer) => ({ label: offer.source || 'Google Shopping', url: offer.url }));
+  if (sources.length === 0) sources.push(shoppingSearch(query.q));
 
   return { min: Math.round(Math.min(...prices)), max: Math.round(typical), sources };
+}
+
+/* The Polish Google Shopping search for a query, used as a source of last resort. */
+export function shoppingSearch(q) {
+  const url = new URL('https://www.google.pl/search');
+  url.search = new URLSearchParams({ tbm: 'shop', hl: 'pl', gl: 'pl', q: q ?? '' }).toString();
+  return { label: 'Google Shopping', url: url.toString() };
 }
 
 /* True when a refresh changed a number, which is what is worth a commit. */

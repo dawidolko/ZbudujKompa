@@ -17,7 +17,7 @@ jobs:
   update:
     name: Refresh prices
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 180
     env:
       SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
     steps:
