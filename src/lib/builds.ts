@@ -26,8 +26,8 @@ export const builds: Build[] = [
       en: 'The cheapest sensible way into PC gaming',
     },
     description: {
-      pl: 'Zestaw zbudowany wokół dojrzałej platformy AM4, gdzie części są dziś najtańsze. Celem jest płynne granie w rozdzielczości 1080p bez wydawania pieniędzy na rzeczy, których w tym budżecie nie odczujesz.',
-      en: 'A build around the mature AM4 platform, where parts are cheapest today. The goal is smooth 1080p gaming without spending on things you would not notice at this budget.',
+      pl: 'Zestaw zbudowany wokół dojrzałej platformy AM4, gdzie części są dziś najtańsze, a pamięć DDR4 można przenieść ze starszego komputera — przy drożejącej DDR5 to realna oszczędność. Celem jest płynne granie w rozdzielczości 1080p bez wydawania pieniędzy na rzeczy, których w tym budżecie nie odczujesz. AM4 nie dostanie już nowych procesorów, więc procesor wymienisz najwyżej na mocniejszego Ryzena 5000.',
+      en: 'A build around the mature AM4 platform, where parts are cheapest today and DDR4 can be carried over from an older machine — a real saving while DDR5 keeps getting dearer. The goal is smooth 1080p gaming without spending on things you would not notice at this budget. AM4 will not get new processors, so the furthest CPU upgrade is a faster Ryzen 5000.',
     },
     useCase: {
       pl: 'Granie w 1080p, nauka, praca biurowa',
@@ -50,8 +50,8 @@ export const builds: Build[] = [
         kind: 'motherboard',
         name: 'MSI B550-A PRO',
         rationale: {
-          pl: 'B550 daje PCIe 4.0 dla karty i dysku, bez wentylatora na mostku. Solidne zasilanie w tej cenie.',
-          en: 'B550 provides PCIe 4.0 for the GPU and drive with no chipset fan. Solid power delivery at this price.',
+          pl: 'Z Ryzenem 5600 B550 daje PCIe 4.0 dla karty i dysku, bez wentylatora na mostku. Solidne zasilanie w tej cenie.',
+          en: 'With the Ryzen 5600, B550 provides PCIe 4.0 for the GPU and drive with no chipset fan. Solid power delivery at this price.',
         },
       },
       {
@@ -118,8 +118,8 @@ export const builds: Build[] = [
       en: 'The most sensible point on the price-performance curve',
     },
     description: {
-      pl: 'Zestaw na aktualnej platformie AM5, obliczony na granie w 1440p i kilka lat spokoju. Płyta z gniazdem AM5 pozwala w przyszłości wymienić sam procesor, bez wymiany pamięci i płyty głównej.',
-      en: 'A build on the current AM5 platform, aimed at 1440p gaming and a few years of not thinking about it. An AM5 board leaves room to swap only the CPU later, without replacing memory and motherboard.',
+      pl: 'Zestaw na aktualnej platformie AM5, obliczony na granie w 1440p i kilka lat spokoju. AMD deklaruje wsparcie AM5 do 2027 roku i dłużej, a kolejna generacja Ryzenów jest dla tej podstawki potwierdzona, więc w przyszłości wymienisz sam procesor, bez wymiany pamięci i płyty głównej.',
+      en: 'A build on the current AM5 platform, aimed at 1440p gaming and a few years of not thinking about it. AMD commits to AM5 support through 2027 and beyond, and the next Ryzen generation is confirmed for the socket, so you can later swap only the CPU without replacing memory and motherboard.',
     },
     useCase: {
       pl: 'Granie w 1440p, streaming, praca z grafiką',
@@ -210,8 +210,8 @@ export const builds: Build[] = [
       en: 'For rendering, video editing and compiling',
     },
     description: {
-      pl: 'Zestaw obliczony na zadania, które trwają godzinami i obciążają wszystkie rdzenie naraz. Priorytetem jest utrzymanie taktowań przy długim obciążeniu, stąd mocne chłodzenie i zasilacz z wyraźnym zapasem.',
-      en: 'A build aimed at work that runs for hours and loads every core at once. The priority is holding clocks under sustained load, hence strong cooling and a power supply with clear headroom.',
+      pl: 'Zestaw obliczony na zadania, które trwają godzinami i obciążają wszystkie rdzenie naraz. Priorytetem jest utrzymanie taktowań przy długim obciążeniu, stąd mocne chłodzenie i zasilacz z wyraźnym zapasem. LGA1851 dostała odświeżenie Core Ultra 200S Plus, które ma być na tej podstawce ostatnie, więc zestaw kupuje się na cały okres używania, bez planu wymiany procesora na nowszą generację.',
+      en: 'A build aimed at work that runs for hours and loads every core at once. The priority is holding clocks under sustained load, hence strong cooling and a power supply with clear headroom. LGA1851 has had its Core Ultra 200S Plus refresh, which is expected to be the last on the socket, so buy this build for its whole service life rather than planning a move to a newer CPU generation.',
     },
     useCase: {
       pl: 'Montaż wideo, render 3D, kompilacja kodu',
@@ -410,8 +410,8 @@ export const builds: Build[] = [
         kind: 'cpu',
         name: 'AMD Ryzen 7 8700G',
         rationale: {
-          pl: 'Najmocniejsza grafika zintegrowana na rynku desktopowym. Odtwarza 4K z akceleracją sprzętową i pozwala grać w 1080p bez osobnej karty.',
-          en: 'The strongest integrated graphics available on desktop. It decodes 4K in hardware and games at 1080p with no discrete card at all.',
+          pl: 'Najmocniejsza grafika zintegrowana wśród procesorów na wymienną podstawkę. Odtwarza 4K z akceleracją sprzętową i pozwala grać w 1080p bez osobnej karty.',
+          en: 'The strongest integrated graphics of any socketed desktop processor. It decodes 4K in hardware and games at 1080p with no discrete card at all.',
         },
       },
       {

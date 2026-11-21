@@ -56,8 +56,8 @@ export const cpus: Cpu[] = [
     multiScore: 72,
     unlocked: false,
     note: {
-      pl: 'Dodatkowa pamięć podręczna 3D V-Cache daje w grach przewagę, której nie widać w testach syntetycznych. Do samego grania trudno o lepszy wybór.',
-      en: 'The extra 3D V-Cache gives a gaming lead that synthetic benchmarks do not show. For gaming alone it is hard to beat.',
+      pl: 'Dodatkowa pamięć podręczna 3D V-Cache daje w grach przewagę, której nie widać w testach syntetycznych. Nowszy 9800X3D jest szybszy, ale ten wciąż należy do najlepszych procesorów do samego grania.',
+      en: 'The extra 3D V-Cache gives a gaming lead that synthetic benchmarks do not show. The newer 9800X3D is faster, but this one is still among the best processors for gaming alone.',
     },
   },
   {
@@ -122,8 +122,8 @@ export const cpus: Cpu[] = [
     multiScore: 68,
     unlocked: true,
     note: {
-      pl: 'Najmocniejsza grafika zintegrowana na desktopie. Pozwala grać w 1080p i odtwarzać 4K bez osobnej karty graficznej.',
-      en: 'The strongest integrated graphics on desktop. It games at 1080p and plays 4K with no discrete card at all.',
+      pl: 'Najmocniejsza grafika zintegrowana wśród procesorów na wymienną podstawkę. Pozwala grać w 1080p i odtwarzać 4K bez osobnej karty graficznej.',
+      en: 'The strongest integrated graphics of any socketed desktop processor. It games at 1080p and plays 4K with no discrete card at all.',
     },
   },
   /* ------------------------------------------------------------ AMD AM4 --- */
@@ -167,8 +167,8 @@ export const cpus: Cpu[] = [
     multiScore: 62,
     unlocked: false,
     note: {
-      pl: 'Ostatnia i najmocniejsza modernizacja dla AM4. Sensowna, jeśli masz już płytę i pamięć DDR4 — nie warto kupować platformy od zera.',
-      en: 'The last and strongest upgrade for AM4. Worth it if you already own the board and DDR4 — not worth buying the platform from scratch.',
+      pl: 'Najmocniejsza do gier modernizacja dla AM4, dziś w sklepach już prawie niedostępna. Sensowna, jeśli masz już płytę i pamięć DDR4 — nie warto kupować platformy od zera.',
+      en: 'The strongest gaming upgrade for AM4, now almost gone from shops. Worth it if you already own the board and DDR4 — not worth buying the platform from scratch.',
     },
   },
   /* -------------------------------------------------------- Intel 1851 --- */
@@ -191,8 +191,8 @@ export const cpus: Cpu[] = [
     unlocked: true,
     url: 'https://ark.intel.com/',
     note: {
-      pl: 'Rozsądny średniak Intela z wbudowanym NPU. Dobra wydajność wielowątkowa przy niskim poborze mocy w spoczynku.',
-      en: "Intel's sensible mid-range option with an on-package NPU. Good multi-threaded performance and low idle power.",
+      pl: 'Rozsądny średniak Intela z wbudowanym NPU. Dobra wydajność wielowątkowa przy niskim poborze mocy w spoczynku. Odświeżenie Core Ultra 200S Plus ma być ostatnią generacją na LGA1851, więc nie licz na wymianę samego procesora na nowszą generację.',
+      en: "Intel's sensible mid-range option with an on-package NPU. Good multi-threaded performance and low idle power. The Core Ultra 200S Plus refresh is expected to be the last generation on LGA1851, so do not count on dropping in a newer generation later.",
     },
   },
   {
@@ -280,8 +280,8 @@ export const cpus: Cpu[] = [
     multiScore: 76,
     unlocked: true,
     note: {
-      pl: 'Mocny średniak z możliwością podkręcania. Dobra opcja, jeśli masz już pamięć DDR4 i chcesz ją zachować.',
-      en: 'A strong mid-range chip with overclocking. A good option if you already own DDR4 and want to keep it.',
+      pl: 'Mocny średniak z możliwością podkręcania. Dobra opcja, jeśli masz już pamięć DDR4 i chcesz ją zachować. Przed instalacją systemu wgraj BIOS z mikrokodem 0x12F lub nowszym — chroni przed niestabilnością procesorów 13. i 14. generacji.',
+      en: 'A strong mid-range chip with overclocking. A good option if you already own DDR4 and want to keep it. Flash a BIOS with microcode 0x12F or newer before installing the operating system — it guards against the 13th and 14th generation instability issue.',
     },
   },
   {
@@ -383,7 +383,7 @@ export const cpus: Cpu[] = [
     cores: 8,
     threads: 16,
     tdp: 65,
-    peakPower: 88,
+    peakPower: 76,
     memory: ['ddr4'],
     integratedGraphics: false,
     gamingScore: 63,
@@ -434,8 +434,8 @@ export const cpus: Cpu[] = [
     multiScore: 85,
     unlocked: true,
     note: {
-      pl: 'Dużo rdzeni na dojrzałej platformie. Pod obciążeniem pobiera ponad 250 W — to nie jest procesor do słabego chłodzenia.',
-      en: 'Plenty of cores on a mature platform. It draws over 250 W under load — not a processor for weak cooling.',
+      pl: 'Dużo rdzeni na dojrzałej platformie. Pod obciążeniem pobiera ponad 250 W — to nie jest procesor do słabego chłodzenia. Przed instalacją systemu wgraj BIOS z mikrokodem 0x12F lub nowszym.',
+      en: 'Plenty of cores on a mature platform. It draws over 250 W under load — not a processor for weak cooling. Flash a BIOS with microcode 0x12F or newer before installing the operating system.',
     },
   },
   {

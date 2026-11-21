@@ -123,8 +123,8 @@ export const ramKits: Ram[] = [
     tier: tierOf('fury-beast-16-3200'),
     price: priceOf('fury-beast-16-3200'),
     note: {
-      pl: 'DDR4-3200 CL16 to najlepszy punkt cenowy dla Ryzenów na AM4 — szybsze moduły dają już niewiele.',
-      en: 'DDR4-3200 CL16 is the sweet spot for Ryzen on AM4 — faster kits add very little beyond it.',
+      pl: 'DDR4-3200 to oficjalnie obsługiwana prędkość Ryzenów na AM4 i bezpieczny wybór do taniego zestawu. DDR4-3600 CL16–18 daje jeszcze kilka procent, dalej zysk jest już znikomy.',
+      en: 'DDR4-3200 is the officially supported speed for Ryzen on AM4 and a safe choice for a budget build. DDR4-3600 CL16–18 adds a few more per cent; beyond that the gain is negligible.',
     },
   },
   {
@@ -141,8 +141,8 @@ export const ramKits: Ram[] = [
     tier: tierOf('vengeance-32-3600'),
     price: priceOf('vengeance-32-3600'),
     note: {
-      pl: 'Rozsądne 32 GB na DDR4. Przy AM4 warto sprawdzić, czy płyta utrzyma 3600 MHz stabilnie.',
-      en: 'A sensible 32 GB on DDR4. On AM4 it is worth checking the board holds 3600 MHz stably.',
+      pl: 'Rozsądne 32 GB na DDR4, a 3600 MT/s to dla Ryzenów na AM4 typowy złoty środek. Warto sprawdzić, czy płyta utrzyma profil stabilnie.',
+      en: 'A sensible 32 GB on DDR4, and 3600 MT/s is the usual sweet spot for Ryzen on AM4. It is worth checking the board holds the profile stably.',
     },
   },
   {

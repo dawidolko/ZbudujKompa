@@ -91,8 +91,8 @@ export const storage: Storage[] = [
     tier: tierOf('t705-2tb'),
     price: priceOf('t705-2tb'),
     note: {
-      pl: 'Najszybszy odczyt sekwencyjny na rynku. W grach różnica wobec dysku PCIe 4.0 jest w granicach dziesiątych części sekundy.',
-      en: 'The fastest sequential read available. In games the difference against a PCIe 4.0 drive is within tenths of a second.',
+      pl: 'Jeden z najszybszych dysków PCIe 5.0 w odczycie sekwencyjnym. W grach różnica wobec dysku PCIe 4.0 jest w granicach dziesiątych części sekundy.',
+      en: 'One of the fastest PCIe 5.0 drives for sequential reads. In games the difference against a PCIe 4.0 drive is within tenths of a second.',
     },
   },
   {

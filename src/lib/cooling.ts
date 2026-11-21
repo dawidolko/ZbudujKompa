@@ -165,20 +165,20 @@ export const coolingProfiles: CoolingProfile[] = [
       en: 'For CPUs that genuinely run hot',
     },
     description: {
-      pl: 'Chłodnica na trzy wentylatory 120 mm. Największa powierzchnia wymiany ciepła spośród gotowych zestawów, co pozwala utrzymać wysokie taktowania podczas długiego obciążenia wszystkich rdzeni.\n\nMa to sens przy procesorach powyżej 200 W lub przy zadaniach trwających godzinami — renderowaniu, kompilacji, obróbce wideo. Przy typowym graniu różnica wobec 240 mm bywa niewielka, bo gry rzadko obciążają wszystkie rdzenie naraz.',
-      en: 'A radiator sized for three 120 mm fans. It offers the largest heat exchange area among off-the-shelf coolers, which lets a CPU hold high clocks through sustained all-core load.\n\nThis matters with CPUs above 200 W or for work that runs for hours — rendering, compiling, video encoding. For typical gaming the gap to a 240 mm unit is often small, because games rarely load every core at once.',
+      pl: 'Chłodnica na trzy wentylatory 120 mm. Największa powierzchnia wymiany ciepła spośród popularnych gotowych zestawów (większe chłodnice 420 mm mieszczą się w niewielu obudowach), co pozwala utrzymać wysokie taktowania podczas długiego obciążenia wszystkich rdzeni.\n\nMa to sens przy procesorach powyżej 200 W lub przy zadaniach trwających godzinami — renderowaniu, kompilacji, obróbce wideo. Przy typowym graniu różnica wobec 240 mm bywa niewielka, bo gry rzadko obciążają wszystkie rdzenie naraz.',
+      en: 'A radiator sized for three 120 mm fans. It offers the largest heat exchange area among mainstream off-the-shelf coolers (larger 420 mm units fit few cases), which lets a CPU hold high clocks through sustained all-core load.\n\nThis matters with CPUs above 200 W or for work that runs for hours — rendering, compiling, video encoding. For typical gaming the gap to a 240 mm unit is often small, because games rarely load every core at once.',
     },
     wattage: { min: 220, max: 350 },
     noise: { min: 30, max: 40 },
     price: priceOf('class:aio-360'),
     pros: {
       pl: [
-        'Najwyższa wydajność wśród gotowych zestawów',
+        'Najwyższa wydajność wśród popularnych gotowych zestawów',
         'Utrzymuje taktowania przy długim obciążeniu wszystkich rdzeni',
         'Przy niskich obrotach wentylatorów bardzo cicha',
       ],
       en: [
-        'The highest performance among off-the-shelf coolers',
+        'The highest performance among mainstream off-the-shelf coolers',
         'Holds clocks through long all-core workloads',
         'Very quiet when the fans are allowed to run slowly',
       ],
@@ -186,12 +186,12 @@ export const coolingProfiles: CoolingProfile[] = [
     cons: {
       pl: [
         'Wymaga obudowy z miejscem na chłodnicę 360 mm',
-        'Najdroższy wariant gotowego chłodzenia',
+        'Jeden z najdroższych wariantów gotowego chłodzenia',
         'Przy graniu przewaga nad 240 mm często niewielka',
       ],
       en: [
         'Requires a case with room for a 360 mm radiator',
-        'The most expensive off-the-shelf option',
+        'One of the most expensive off-the-shelf options',
         'The advantage over 240 mm is often small when gaming',
       ],
     },

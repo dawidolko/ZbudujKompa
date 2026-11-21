@@ -12,6 +12,7 @@ export const newsArticles: Article[] = [
     slug: 'am5-wsparcie-przedluzone',
     category: 'news',
     published: '2026-08-05',
+    updated: '2026-11-21',
     perishable: true,
     author: 'Dawid Olko',
     tags: ['amd', 'am5', 'platformy'],
@@ -48,12 +49,22 @@ export const newsArticles: Article[] = [
           en: 'A support commitment covers the socket, not a specific board. If you are counting on swapping the processor in three years, buy a board with sensible power delivery and an actively supported chipset rather than the cheapest available.',
         },
       },
+      {
+        type: 'callout',
+        tone: 'info',
+        label: { pl: 'Aktualizacja: 21 listopada 2026', en: 'Update: 21 November 2026' },
+        text: {
+          pl: 'AMD nadal mówi o wsparciu AM5 do 2027 roku i dłużej, a dokumentacja producenta potwierdza, że kolejna generacja Ryzenów (Zen 6) trafi na tę podstawkę. Procesory te nie są jeszcze w sprzedaży — doniesienia wskazują na 2027 rok. Po stronie Intela LGA1851 dostał w marcu 2026 odświeżenie Core Ultra 200S Plus, które ma być ostatnią generacją na tej podstawce.',
+          en: 'AMD still describes AM5 support as running through 2027 and beyond, and its documentation confirms that the next Ryzen generation (Zen 6) will use the socket. Those processors are not on sale yet — reporting points to 2027. On the Intel side, LGA1851 received the Core Ultra 200S Plus refresh in March 2026, which is expected to be the last generation for that socket.',
+        },
+      },
     ],
   },
   {
     slug: 'ceny-pamieci-rosna',
     category: 'news',
     published: '2026-07-08',
+    updated: '2026-11-21',
     perishable: true,
     author: 'Dawid Olko',
     tags: ['pamięć', 'ceny', 'rynek'],
@@ -69,8 +80,8 @@ export const newsArticles: Article[] = [
       {
         type: 'paragraph',
         text: {
-          pl: 'Zapotrzebowanie na pamięć ze strony infrastruktury AI przełożyło się na ceny modułów konsumenckich. Zestaw 32 GB DDR5-6000, który jeszcze niedawno kosztował około 400 złotych, bywa dziś o kilkadziesiąt procent droższy.',
-          en: 'Memory demand from AI infrastructure has fed through into consumer module prices. A 32 GB DDR5-6000 kit that recently cost around 400 złoty can now be tens of per cent more.',
+          pl: 'Zapotrzebowanie na pamięć ze strony infrastruktury AI przełożyło się na ceny modułów konsumenckich. Popularny zestaw 32 GB DDR5-6000 kosztuje dziś o kilkadziesiąt procent więcej niż jeszcze kilka miesięcy temu.',
+          en: 'Memory demand from AI infrastructure has fed through into consumer module prices. A popular 32 GB DDR5-6000 kit now costs tens of per cent more than it did only a few months ago.',
         },
       },
       {
@@ -80,12 +91,22 @@ export const newsArticles: Article[] = [
           en: 'The practical conclusion is unsatisfying: there is no way to predict when prices return. If you are building now, buy the memory now — waiting for a fall is a bet, not a strategy. If you have a working machine, a memory upgrade is precisely the thing to postpone.',
         },
       },
+      {
+        type: 'callout',
+        tone: 'warning',
+        label: { pl: 'Aktualizacja: 21 listopada 2026', en: 'Update: 21 November 2026' },
+        text: {
+          pl: 'Wzrosty okazały się znacznie większe niż w lipcu: według danych Ceneo, które w listopadzie przeanalizował PurePC, pamięć DDR5 zdrożała w ciągu roku o ponad 300 procent. DDR4 też podrożała, ale mniej. Jeśli masz działające moduły DDR4, płyta AM4 albo LGA1700 w wersji DDR4 pozwoli je zachować — to dziś znacznie mocniejszy argument niż jeszcze rok temu.',
+          en: 'The rises turned out far larger than in July: according to Ceneo data analysed by PurePC in November, DDR5 prices rose by more than 300 per cent in a year. DDR4 went up too, but by less. If you have working DDR4 modules, an AM4 board or a DDR4 version of an LGA1700 board lets you keep them — a much stronger argument today than it was a year ago.',
+        },
+      },
     ],
   },
   {
     slug: 'nowy-standard-zasilaczy',
     category: 'news',
     published: '2026-06-02',
+    updated: '2026-11-21',
     perishable: true,
     author: 'Dawid Olko',
     tags: ['zasilacze', 'atx', 'standardy'],
@@ -108,8 +129,8 @@ export const newsArticles: Article[] = [
       {
         type: 'paragraph',
         text: {
-          pl: 'Realna zmiana dotyczy złącza. 12V-2x6 zastępuje 12VHPWR skróconymi stykami sygnałowymi i lepszym zatrzaskiem. Efekt jest taki, że niedociśnięta wtyczka nie dostaje zasilania zamiast pobierać prąd przez częściowy styk — a to właśnie ten mechanizm odpowiadał za przypadki przegrzewania złącz.',
-          en: 'The real change is the connector. 12V-2x6 replaces 12VHPWR with shortened sense pins and better latching. The effect is that a partially seated plug receives no power rather than drawing current through incomplete contact — and it was exactly that mechanism behind the reports of connectors overheating.',
+          pl: 'Realna zmiana dotyczy złącza. 12V-2x6 zastępuje 12VHPWR wersją ze skróconymi stykami sygnałowymi przy niezmienionym rozkładzie pinów, więc kable obu standardów są zamienne. Efekt jest taki, że przy niedociśniętej wtyczce styki sygnałowe rozłączają się pierwsze i karta nie pobiera pełnej mocy przez częściowy styk — a to właśnie ten mechanizm odpowiadał za przypadki przegrzewania złącz.',
+          en: 'The real change is the connector. 12V-2x6 replaces 12VHPWR with a version that has shortened sense pins and an unchanged pin-out, so cables for the two are interchangeable. The effect is that with a partially seated plug the sense pins disconnect first and the card does not draw full power through incomplete contact — and it was exactly that mechanism behind the reports of connectors overheating.',
         },
       },
       {
@@ -117,8 +138,8 @@ export const newsArticles: Article[] = [
         tone: 'warning',
         label: { pl: 'Nadal obowiązuje', en: 'Still applies' },
         text: {
-          pl: 'Bez względu na standard, wtyczkę trzeba wcisnąć do końca aż do kliknięcia i sprawdzić, czy jest równo osadzona na całej szerokości. Nowe złącze zmniejsza skutki błędu, ale go nie eliminuje.',
-          en: 'Whatever the standard, the plug has to be pushed fully home until it clicks, and checked for even seating across its whole width. The new connector reduces the consequences of a mistake but does not remove it.',
+          pl: 'Bez względu na standard, wtyczkę trzeba wcisnąć do końca aż do kliknięcia i sprawdzić, czy jest równo osadzona na całej szerokości. Unikaj też ostrego zginania kabla tuż przy wtyczce. Nowe złącze zmniejsza skutki błędu, ale go nie eliminuje.',
+          en: 'Whatever the standard, the plug has to be pushed fully home until it clicks, and checked for even seating across its whole width. Avoid sharp bends in the cable right next to the plug, too. The new connector reduces the consequences of a mistake but does not remove it.',
         },
       },
     ],

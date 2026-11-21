@@ -311,8 +311,8 @@ export const resources: Resource[] = [
     category: 'os',
     official: true,
     note: {
-      pl: 'Wymagania Windows 11, w tym TPM 2.0 i Secure Boot, które trzeba włączyć w BIOS-ie przed instalacją.',
-      en: 'Windows 11 requirements, including the TPM 2.0 and Secure Boot settings you enable in the BIOS before installing.',
+      pl: 'Wymagania Windows 11, w tym TPM 2.0 (fTPM w AMD lub PTT w Intelu) i Secure Boot, które często trzeba włączyć w BIOS-ie przed instalacją. Od wersji 24H2 procesor musi też obsługiwać instrukcje SSE4.2 i POPCNT.',
+      en: 'Windows 11 requirements, including TPM 2.0 (AMD fTPM or Intel PTT) and Secure Boot, which often have to be enabled in the BIOS before installing. Since version 24H2 the processor must also support the SSE4.2 and POPCNT instructions.',
     },
   },
   {
@@ -321,8 +321,8 @@ export const resources: Resource[] = [
     category: 'os',
     official: true,
     note: {
-      pl: 'Narzędzie do tworzenia nośników instalacyjnych USB. Pozwala też przygotować nośnik Windows 11 z pominięciem wymogu TPM i konta Microsoft.',
-      en: 'A tool for creating bootable USB installers. It can also prepare Windows 11 media that bypasses the TPM requirement and the Microsoft account prompt.',
+      pl: 'Narzędzie do tworzenia nośników instalacyjnych USB. Pozwala też przygotować nośnik Windows 11 z pominięciem wymogu TPM i konta Microsoft — nie obejdzie jednak wymogu SSE4.2 i POPCNT, a Microsoft nie gwarantuje aktualizacji na niewspieranym sprzęcie.',
+      en: 'A tool for creating bootable USB installers. It can also prepare Windows 11 media that bypasses the TPM requirement and the Microsoft account prompt — though not the SSE4.2 and POPCNT requirement, and Microsoft does not guarantee updates on unsupported hardware.',
     },
   },
   {
@@ -341,8 +341,8 @@ export const resources: Resource[] = [
     category: 'os',
     official: true,
     note: {
-      pl: 'Najpopularniejsza dystrybucja Linuksa dla początkujących, z pełnym wsparciem sprzętowym większości podzespołów.',
-      en: 'The most common Linux distribution for newcomers, with broad hardware support out of the box.',
+      pl: 'Najpopularniejsza dystrybucja Linuksa dla początkujących, z pełnym wsparciem sprzętowym większości podzespołów. Aktualne wydanie LTS to 26.04 z jądrem 7.0 — przy nowym sprzęcie wybieraj właśnie je.',
+      en: 'The most common Linux distribution for newcomers, with broad hardware support out of the box. The current LTS release is 26.04 with kernel 7.0 — choose it for new hardware.',
     },
   },
   {

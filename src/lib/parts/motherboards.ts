@@ -138,8 +138,8 @@ export const motherboards: Motherboard[] = [
     tier: tierOf('b550-a-pro'),
     price: priceOf('b550-a-pro'),
     note: {
-      pl: 'Sprawdzony średniak na AM4 z PCIe 4.0 dla karty i głównego dysku, bez wentylatora na mostku.',
-      en: 'A proven AM4 mid-range board with PCIe 4.0 for the GPU and primary drive, and no chipset fan.',
+      pl: 'Sprawdzony średniak na AM4 z PCIe 4.0 dla karty i głównego dysku, bez wentylatora na mostku. PCIe 4.0 działa z Ryzenami 3000 i 5000 — APU 5600G i 5700G pracują tu w trybie PCIe 3.0.',
+      en: 'A proven AM4 mid-range board with PCIe 4.0 for the GPU and primary drive, and no chipset fan. PCIe 4.0 works with Ryzen 3000 and 5000 — the 5600G and 5700G APUs run it at PCIe 3.0.',
     },
   },
   /* ------------------------------------------------------------ LGA1851 --- */
@@ -159,8 +159,8 @@ export const motherboards: Motherboard[] = [
     tier: tierOf('z890-tomahawk'),
     price: priceOf('z890-tomahawk'),
     note: {
-      pl: 'Pełne podkręcanie pamięci i mocne zasilanie — potrzebne przy Core Ultra 7 i wyżej, które pod obciążeniem pobierają 250 W.',
-      en: 'Full memory overclocking and strong power delivery — needed for Core Ultra 7 and above, which draw 250 W under load.',
+      pl: 'Pełne podkręcanie pamięci i mocne zasilanie — potrzebne przy Core Ultra 7 i wyżej, które pod obciążeniem pobierają 250 W. Procesory Core Ultra 200S Plus wymagają aktualizacji BIOS-u.',
+      en: 'Full memory overclocking and strong power delivery — needed for Core Ultra 7 and above, which draw 250 W under load. Core Ultra 200S Plus processors need a BIOS update.',
     },
   },
   {
@@ -179,8 +179,8 @@ export const motherboards: Motherboard[] = [
     tier: tierOf('b860m-pro'),
     price: priceOf('b860m-pro'),
     note: {
-      pl: 'Rozsądna płyta pod Core Ultra 5. Podkręcanie pamięci bez OC procesora, co przy modelach nie-K niczego nie odbiera.',
-      en: 'A sensible board for Core Ultra 5. Memory overclocking without CPU overclocking, which costs nothing on non-K models.',
+      pl: 'Rozsądna płyta pod Core Ultra 5. Podkręcanie pamięci bez OC procesora, co przy modelach nie-K niczego nie odbiera. Procesory Core Ultra 200S Plus wymagają aktualizacji BIOS-u.',
+      en: 'A sensible board for Core Ultra 5. Memory overclocking without CPU overclocking, which costs nothing on non-K models. Core Ultra 200S Plus processors need a BIOS update.',
     },
   },
   /* ------------------------------------------------------------ LGA1700 --- */
@@ -280,8 +280,8 @@ export const motherboards: Motherboard[] = [
     tier: tierOf('a620m-hdv'),
     price: priceOf('a620m-hdv'),
     note: {
-      pl: 'Najtańsze wejście w AM5. Słabe zasilanie i dwa sloty pamięci — wyłącznie do procesorów 65 W.',
-      en: 'The cheapest way onto AM5. Weak power delivery and two memory slots — for 65 W processors only.',
+      pl: 'Najtańsze wejście w AM5. Słabe zasilanie, dwa sloty pamięci i wyłącznie PCIe 4.0 — tylko do procesorów 65 W.',
+      en: 'The cheapest way onto AM5. Weak power delivery, two memory slots and PCIe 4.0 only — for 65 W processors only.',
     },
   },
   {

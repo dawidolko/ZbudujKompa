@@ -51,8 +51,8 @@ export const knowledgeBase: KnowledgeEntry[] = [
       en: ['socket', 'am5', 'am4', 'lga', 'platform', 'motherboard socket'],
     },
     answer: {
-      pl: 'Podstawka decyduje o chipsecie, generacji pamięci i mocowaniu chłodzenia — to pierwsza realna decyzja przy składaniu. Do nowego zestawu AMD wybierz AM5 (wsparcie zadeklarowane do 2027 roku), a do Intela LGA1851. AM4 i LGA1700 mają sens tylko przy ostrym budżecie albo gdy masz już pamięć DDR4.',
-      en: 'The socket determines the chipset, memory generation and cooler mounting — it is the first real decision in a build. For a new AMD system choose AM5 (support committed through 2027), and for Intel choose LGA1851. AM4 and LGA1700 only make sense on a tight budget or if you already own DDR4.',
+      pl: 'Podstawka decyduje o chipsecie, generacji pamięci i mocowaniu chłodzenia — to pierwsza realna decyzja przy składaniu. Najdłuższą ścieżkę modernizacji daje dziś AM5: AMD deklaruje wsparcie do 2027 roku i dłużej, a kolejna generacja Ryzenów (Zen 6) jest potwierdzona dla tej podstawki, choć jeszcze nie trafiła do sprzedaży. LGA1851 to solidna platforma Intela, ale odświeżenie Core Ultra 200S Plus jest najpewniej jej ostatnią generacją — kolejne procesory Intela mają przejść na nową podstawkę. AM4 i LGA1700 mają sens przy ostrym budżecie albo gdy masz już pamięć DDR4, którą przy obecnych cenach pamięci tym bardziej warto przenieść.',
+      en: "The socket determines the chipset, memory generation and cooler mounting — it is the first real decision in a build. AM5 offers the longest upgrade path today: AMD commits to support through 2027 and beyond, and the next Ryzen generation (Zen 6) is confirmed for the socket, although it is not on sale yet. LGA1851 is a sound Intel platform, but the Core Ultra 200S Plus refresh is most likely its last generation — Intel's next processors are expected to move to a new socket. AM4 and LGA1700 make sense on a tight budget or if you already own DDR4, which at today's memory prices is all the more worth carrying over.",
     },
     links: [
       { href: '/platformy', label: { pl: 'Porównanie platform', en: 'Platform comparison' } },
@@ -96,8 +96,8 @@ export const knowledgeBase: KnowledgeEntry[] = [
       en: ['ram', 'memory', 'ddr4', 'ddr5', 'expo', 'xmp', 'dual channel', 'gigabyte'],
     },
     answer: {
-      pl: '16 GB to dziś praktyczne minimum do grania, 32 GB to rozsądny standard, choć od 2026 roku pamięć bardzo zdrożała, więc przed wyborem pojemności sprawdź ceny. Zawsze montuj dwa moduły zamiast jednego — tryb dwukanałowy daje realny wzrost wydajności. Moduły wkładaj w sloty drugi i czwarty od procesora. Po złożeniu koniecznie włącz profil EXPO (AMD) lub XMP (Intel) w BIOS-ie, inaczej pamięć pracuje znacznie wolniej niż deklaruje opakowanie.',
-      en: '16 GB is the practical minimum for gaming today and 32 GB is a sensible standard, although memory has become far more expensive since 2026, so check prices before choosing a capacity. Always fit two modules rather than one — dual channel gives a real performance gain. Use the second and fourth slots from the CPU. Once built, enable the EXPO (AMD) or XMP (Intel) profile in the BIOS, or the memory will run far slower than the box claims.',
+      pl: '16 GB to dziś praktyczne minimum do grania, 32 GB to rozsądny standard, ale w 2026 roku ceny pamięci DDR5 wzrosły w ciągu roku o ponad 300 procent, więc przed wyborem pojemności sprawdź aktualne ceny. Jeśli masz już moduły DDR4, płyta AM4 albo LGA1700 w wersji DDR4 pozwoli je zachować — DDR4 i DDR5 nie są zamienne. Zawsze montuj dwa moduły zamiast jednego — tryb dwukanałowy daje realny wzrost wydajności. Moduły wkładaj w sloty drugi i czwarty od procesora. Po złożeniu koniecznie włącz profil EXPO (AMD) lub XMP (Intel) w BIOS-ie, inaczej pamięć pracuje znacznie wolniej niż deklaruje opakowanie.',
+      en: '16 GB is the practical minimum for gaming today and 32 GB is a sensible standard, but in 2026 DDR5 prices rose by more than 300 per cent in a year, so check current prices before choosing a capacity. If you already own DDR4 modules, an AM4 board or a DDR4 version of an LGA1700 board lets you keep them — DDR4 and DDR5 are not interchangeable. Always fit two modules rather than one — dual channel gives a real performance gain. Use the second and fourth slots from the CPU. Once built, enable the EXPO (AMD) or XMP (Intel) profile in the BIOS, or the memory will run far slower than the box claims.',
     },
     links: [
       {
@@ -217,8 +217,8 @@ export const knowledgeBase: KnowledgeEntry[] = [
       en: ['amd or intel', 'intel or amd', 'ryzen', 'core ultra', 'which cpu', 'what cpu'],
     },
     answer: {
-      pl: 'Oba producenci mają dziś dobre procesory i sama wydajność rzadko rozstrzyga. Praktyczne kryterium to platforma: AM5 ma zadeklarowane wsparcie do 2027 roku, więc później wymienisz sam procesor. Intel nadrabia w zadaniach wielowątkowych i poborze mocy w spoczynku. Do samego grania procesory AMD z pamięcią 3D V-Cache mają wyraźną przewagę.',
-      en: 'Both vendors make good processors today and raw performance rarely settles it. The practical criterion is the platform: AM5 has committed support through 2027, so you can swap only the CPU later. Intel leads in multi-threaded work and idle power. For gaming specifically, AMD parts with 3D V-Cache hold a clear advantage.',
+      pl: 'Oba producenci mają dziś dobre procesory i sama wydajność rzadko rozstrzyga. Praktyczne kryterium to platforma: AM5 ma zadeklarowane wsparcie do 2027 roku i dłużej, a Zen 6 jest dla niej potwierdzony, więc później wymienisz sam procesor. LGA1851 takiej ścieżki raczej nie da — odświeżenie Core Ultra 200S Plus ma być na niej ostatnie. Intel nadrabia w zadaniach wielowątkowych i poborze mocy w spoczynku. Do samego grania procesory AMD z pamięcią 3D V-Cache mają wyraźną przewagę.',
+      en: 'Both vendors make good processors today and raw performance rarely settles it. The practical criterion is the platform: AM5 has committed support through 2027 and beyond, and Zen 6 is confirmed for it, so you can swap only the CPU later. LGA1851 is unlikely to offer that path — the Core Ultra 200S Plus refresh is expected to be its last. Intel makes up ground in multi-threaded work and idle power. For gaming specifically, AMD parts with 3D V-Cache hold a clear advantage.',
     },
     links: [
       { href: '/platformy', label: { pl: 'Porównanie platform', en: 'Platform comparison' } },
@@ -252,6 +252,82 @@ export const knowledgeBase: KnowledgeEntry[] = [
       en: 'Three things get checked most often: whether the CPU matches the board socket, whether the memory is the right generation (DDR4 and DDR5 are not interchangeable), and whether the cooler fits the case. For the last one, check the case specification — maximum cooler height is always listed. We have a checker for this.',
     },
     links: [
+      {
+        href: '/narzedzia/kompatybilnosc',
+        label: { pl: 'Sprawdzarka zgodności', en: 'Compatibility checker' },
+      },
+    ],
+  },
+  {
+    id: 'windows',
+    keywords: {
+      pl: [
+        'windows',
+        'windows 10',
+        'windows 11',
+        'tpm',
+        'esu',
+        'secure boot',
+        'system operacyjny',
+        'koniec wsparcia',
+      ],
+      en: [
+        'windows',
+        'windows 10',
+        'windows 11',
+        'tpm',
+        'esu',
+        'secure boot',
+        'operating system',
+        'end of support',
+      ],
+    },
+    answer: {
+      pl: 'Wsparcie Windows 10 zakończyło się 14 października 2025 roku. Do 12 października 2027 roku możesz jeszcze dostawać same poprawki bezpieczeństwa w programie ESU — w Polsce i całym EOG zapis jest bezpłatny z kontem Microsoft — ale nowych funkcji już nie będzie. Windows 11 (obecnie wersja 26H2) wymaga UEFI z obsługą Secure Boot, TPM 2.0 (wystarczy fTPM w AMD albo PTT w Intelu, często trzeba je włączyć w BIOS-ie), 4 GB RAM, 64 GB miejsca i wspieranego procesora — w praktyce Intel od 8. generacji albo Ryzen od serii 2000. Od wersji 24H2 procesor musi też obsługiwać instrukcje SSE4.2 i POPCNT, więc na bardzo starym sprzęcie system w ogóle się nie uruchomi.',
+      en: 'Windows 10 support ended on 14 October 2025. Until 12 October 2027 you can still receive security fixes only through the ESU programme — in Poland and the rest of the EEA enrolment is free with a Microsoft account — but there will be no new features. Windows 11 (currently version 26H2) needs UEFI with Secure Boot capability, TPM 2.0 (AMD fTPM or Intel PTT is enough, though it often has to be enabled in the BIOS), 4 GB of RAM, 64 GB of storage and a supported processor — in practice Intel 8th generation or Ryzen 2000 series onwards. Since version 24H2 the CPU must also support the SSE4.2 and POPCNT instructions, so very old hardware cannot boot it at all.',
+    },
+    links: [
+      {
+        href: '/poradniki/instalacja-windows',
+        label: { pl: 'Instalacja Windows', en: 'Installing Windows' },
+      },
+      { href: '/zrodla', label: { pl: 'Źródła i narzędzia', en: 'Resources and tools' } },
+    ],
+  },
+  {
+    /* Upgrades of an existing machine are a different question from a new
+       build: the answer depends on what can be kept, not on what is best. */
+    id: 'older-hardware',
+    keywords: {
+      pl: [
+        'modernizacja',
+        'rozbudowa',
+        'starszy',
+        'stary',
+        'stara',
+        'stare',
+        'pcie 3',
+        'pcie 3.0',
+        'resizable bar',
+      ],
+      en: [
+        'upgrade',
+        'older',
+        'old pc',
+        'old computer',
+        'pcie 3',
+        'pcie 3.0',
+        'resizable bar',
+        'reuse',
+      ],
+    },
+    answer: {
+      pl: 'Starsza platforma wciąż ma sens, zwłaszcza że pamięć DDR5 bardzo zdrożała. Na AM4 najlepszą modernizacją jest Ryzen 5000 — dalej ta podstawka już nie prowadzi — z zachowaniem dotychczasowej pamięci DDR4; przed wymianą procesora sprawdź listę wspieranych procesorów płyty i zaktualizuj BIOS. Na LGA1700 z procesorem 13. lub 14. generacji (zwłaszcza i7 i i9) wgraj BIOS z mikrokodem 0x12F lub nowszym, zanim zainstalujesz system. Płyty z PCIe 3.0 (B450, A520, a także każda płyta z Ryzenem 5000G) ograniczają karty z interfejsem x8 — RTX 5060, 5060 Ti, 5050 czy RX 7600 — co najbardziej odczuwają wersje z 8 GB. Intel Arc B580 i B570 wymagają włączonego Resizable BAR, bez którego tracą dużo wydajności.',
+      en: "An older platform still makes sense, especially now that DDR5 has become so expensive. On AM4 the best upgrade is a Ryzen 5000 — the socket goes no further — keeping your existing DDR4; check the board's CPU support list and update the BIOS before swapping the processor. On LGA1700 with a 13th or 14th generation chip (i7 and i9 especially), flash a BIOS with microcode 0x12F or newer before installing the operating system. PCIe 3.0 boards (B450, A520, and any board running a Ryzen 5000G) hold back x8 cards — the RTX 5060, 5060 Ti, 5050 or RX 7600 — and the 8 GB versions feel it most. Intel Arc B580 and B570 need Resizable BAR enabled and lose a lot of performance without it.",
+    },
+    links: [
+      { href: '/platformy/am4', label: { pl: 'AM4', en: 'AM4' } },
+      { href: '/platformy/lga1700', label: { pl: 'LGA1700', en: 'LGA1700' } },
       {
         href: '/narzedzia/kompatybilnosc',
         label: { pl: 'Sprawdzarka zgodności', en: 'Compatibility checker' },

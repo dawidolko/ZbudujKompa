@@ -126,8 +126,8 @@ export const gpus: Gpu[] = [
     performanceScore: 44,
     targetResolution: '1440p',
     note: {
-      pl: 'Wersja 16 GB jest wyraźnie lepszym wyborem niż 8 GB — różnica w cenie zwraca się w nowszych grach, które przekraczają 8 GB.',
-      en: 'The 16 GB version is clearly the better buy over the 8 GB — the price difference pays off in newer games that exceed 8 GB.',
+      pl: 'Wersja 16 GB jest wyraźnie lepszym wyborem niż 8 GB — różnica w cenie zwraca się w nowszych grach, które przekraczają 8 GB. Karta korzysta z interfejsu PCIe 5.0 x8, więc na płycie z PCIe 3.0 traci część przepustowości.',
+      en: 'The 16 GB version is clearly the better buy over the 8 GB — the price difference pays off in newer games that exceed 8 GB. It uses a PCIe 5.0 x8 interface, so it loses some bandwidth on a PCIe 3.0 board.',
     },
   },
   {
@@ -145,8 +145,8 @@ export const gpus: Gpu[] = [
     performanceScore: 41,
     targetResolution: '1080p',
     note: {
-      pl: 'Dobry stosunek pamięci do ceny. 16 GB w tej półce to rzadkość i realna przewaga w nowszych tytułach.',
-      en: 'A good memory-to-price ratio. 16 GB at this tier is rare and a genuine advantage in newer titles.',
+      pl: 'Dobry stosunek pamięci do ceny. 16 GB w tej półce to rzadkość i realna przewaga w nowszych tytułach. Pełne 16 linii PCIe 5.0 sprawia, że dobrze znosi też starsze płyty z PCIe 3.0.',
+      en: 'A good memory-to-price ratio. 16 GB at this tier is rare and a genuine advantage in newer titles. A full sixteen PCIe 5.0 lanes mean it copes well with older PCIe 3.0 boards too.',
     },
   },
   {
@@ -164,8 +164,8 @@ export const gpus: Gpu[] = [
     performanceScore: 34,
     targetResolution: '1080p',
     note: {
-      pl: 'Sensowna do 1080p, ale 8 GB pamięci to dziś minimum i w części nowych gier trzeba będzie zejść z ustawieniami tekstur.',
-      en: 'Sensible for 1080p, but 8 GB is the bare minimum today and some new games will need their texture settings lowered.',
+      pl: 'Sensowna do 1080p, ale 8 GB pamięci to dziś minimum i w części nowych gier trzeba będzie zejść z ustawieniami tekstur. Interfejs PCIe 5.0 x8 oznacza, że na płycie z PCIe 3.0 braki pamięci odczuwa się mocniej.',
+      en: 'Sensible for 1080p, but 8 GB is the bare minimum today and some new games will need their texture settings lowered. Its PCIe 5.0 x8 interface means running short of memory hurts more on a PCIe 3.0 board.',
     },
   },
   {
@@ -183,8 +183,8 @@ export const gpus: Gpu[] = [
     performanceScore: 28,
     targetResolution: '1080p',
     note: {
-      pl: 'Najtańsze rozsądne wejście w granie w 1080p. Do wyższych rozdzielczości zdecydowanie za słaba.',
-      en: 'The cheapest reasonable entry into 1080p gaming. Decidedly not enough for higher resolutions.',
+      pl: 'Najtańsze rozsądne wejście w granie w 1080p. Do wyższych rozdzielczości zdecydowanie za słaba. Korzysta tylko z ośmiu linii PCIe 4.0, więc na płycie z PCIe 3.0 traci część przepustowości.',
+      en: 'The cheapest reasonable entry into 1080p gaming. Decidedly not enough for higher resolutions. It uses only eight PCIe 4.0 lanes, so it loses some bandwidth on a PCIe 3.0 board.',
     },
   },
   {
@@ -221,8 +221,8 @@ export const gpus: Gpu[] = [
     performanceScore: 26,
     targetResolution: '1080p',
     note: {
-      pl: 'Najtańsza karta z aktualnej generacji. Do e-sportu w 1080p w porządku, do nowych tytułów AAA już z trudem.',
-      en: 'The cheapest card of the current generation. Fine for esports at 1080p, a struggle for new AAA titles.',
+      pl: 'Najtańsza karta z aktualnej generacji NVIDII. Do e-sportu w 1080p w porządku, do nowych tytułów AAA już z trudem. Interfejs PCIe 5.0 x8 — na płycie z PCIe 3.0 traci część przepustowości.',
+      en: "The cheapest card in NVIDIA's current generation. Fine for esports at 1080p, a struggle for new AAA titles. Its PCIe 5.0 x8 interface loses some bandwidth on a PCIe 3.0 board.",
     },
   },
   {
@@ -241,8 +241,8 @@ export const gpus: Gpu[] = [
     targetResolution: '1080p',
     url: 'https://www.intel.com/content/www/us/en/products/details/discrete-gpus/arc.html',
     note: {
-      pl: '12 GB pamięci w budżetowej półce, co jest tu rzadkością. Sterowniki wyraźnie dojrzały, ale w starszych tytułach wciąż bywają nierówne.',
-      en: '12 GB of memory at a budget price, which is rare here. The drivers have matured considerably, though older titles can still be uneven.',
+      pl: '12 GB pamięci w budżetowej półce, co jest tu rzadkością. Sterowniki wyraźnie dojrzały, ale w starszych tytułach wciąż bywają nierówne. Wymaga włączonego Resizable BAR i najlepiej czuje się z nowszym procesorem — ze starszym i słabszym sterownik obciąża CPU bardziej niż u konkurencji. Interfejs PCIe 4.0 x8.',
+      en: "12 GB of memory at a budget price, which is rare here. The drivers have matured considerably, though older titles can still be uneven. It needs Resizable BAR enabled and is happiest with a recent processor — with an older, weaker CPU its driver overhead is higher than its rivals'. PCIe 4.0 x8 interface.",
     },
   },
 ];

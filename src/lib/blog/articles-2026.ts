@@ -170,6 +170,7 @@ export const articles2026: Article[] = [
     slug: 'czy-warto-8gb-vram',
     category: 'buying',
     published: '2026-07-22',
+    updated: '2026-11-21',
     perishable: true,
     author: 'Dawid Olko',
     photo: 'gpu-card',
@@ -226,6 +227,7 @@ export const articles2026: Article[] = [
             'Ray tracing w czymkolwiek nowszym niż 2023 rok.',
             'Rozdzielczość 1440p i wyżej z ustawieniami powyżej średnich.',
             'Modding, zwłaszcza paczki tekstur — potrafią podwoić zapotrzebowanie.',
+            'Starsza płyta z PCIe 3.0. RTX 5060, 5060 Ti i 5050 korzystają tylko z ośmiu linii PCIe (RX 7600 również), więc gdy zabraknie pamięci, dociąganie danych przez wolniejszą magistralę boli podwójnie.',
             'Zakup z myślą o kilku latach. Trend jest jednokierunkowy.',
           ],
           en: [
@@ -233,6 +235,7 @@ export const articles2026: Article[] = [
             'Ray tracing in anything newer than 2023.',
             'Resolutions of 1440p and above at settings past medium.',
             'Modding, texture packs especially — they can double the requirement.',
+            'An older PCIe 3.0 board. The RTX 5060, 5060 Ti and 5050 use only eight PCIe lanes (as does the RX 7600), so when memory runs out, pulling data over the slower bus hurts twice over.',
             'Buying with several years in mind. The trend runs one way.',
           ],
         },
@@ -419,6 +422,7 @@ export const articles2026: Article[] = [
     slug: 'czy-warto-teraz-kupowac-komputer',
     category: 'opinion',
     published: '2026-04-11',
+    updated: '2026-11-21',
     perishable: true,
     author: 'Dawid Olko',
     photo: 'hero-workbench',
@@ -478,6 +482,15 @@ export const articles2026: Article[] = [
         text: {
           pl: 'Jeśli komputer jest ci potrzebny teraz i masz budżet, kup teraz. Trzy miesiące czekania kosztują cię trzy miesiące używania sprzętu, a zyskujesz przeciętnie kilka procent wydajności za tę samą cenę.',
           en: 'If you need the machine now and have the budget, buy now. Three months of waiting costs you three months of using it, and gains you on average a few per cent of performance for the same money.',
+        },
+      },
+      {
+        type: 'callout',
+        tone: 'warning',
+        label: { pl: 'Aktualizacja: 21 listopada 2026', en: 'Update: 21 November 2026' },
+        text: {
+          pl: 'Od kwietnia zmieniły się dwie rzeczy. Pamięć DDR5 zdrożała w ciągu roku o ponad 300 procent, więc jeśli możesz zachować dotychczasowe moduły DDR4, modernizacja w obrębie AM4 albo LGA1700 w wersji DDR4 bywa dziś rozsądniejsza niż przesiadka na nową platformę. Druga zmiana dotyczy Intela: odświeżenie Core Ultra 200S Plus ma być ostatnią generacją na LGA1851, a kolejne procesory (Nova Lake) mają według doniesień trafić na nową podstawkę LGA1954 w pierwszym kwartale 2027 roku. Kupując LGA1851, nie licz więc na wymianę samego procesora na nowszą generację.',
+          en: 'Two things have changed since April. DDR5 prices rose by more than 300 per cent in a year, so if you can keep your existing DDR4 modules, an upgrade within AM4 or a DDR4 version of LGA1700 can now be more sensible than moving to a new platform. The second change concerns Intel: the Core Ultra 200S Plus refresh is expected to be the last generation on LGA1851, and the next processors (Nova Lake) are reported to move to a new LGA1954 socket in the first quarter of 2027. If you buy LGA1851, do not count on swapping in a newer generation of CPU later.',
         },
       },
     ],

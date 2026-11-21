@@ -136,8 +136,8 @@ export const faq: FaqEntry[] = [
       en: 'AMD or Intel?',
     },
     answer: {
-      pl: 'Oba producenci oferują dziś dobre procesory i różnica w wydajności rzadko decyduje. Praktyczne kryterium to platforma: AM5 od AMD ma zadeklarowane wsparcie do 2027 roku, co daje realną ścieżkę wymiany samego procesora w przyszłości. Intel nadrabia w zadaniach wielowątkowych i w poborze mocy w spoczynku. Do samego grania procesory AMD z pamięcią 3D V-Cache mają wyraźną przewagę.',
-      en: 'Both vendors make good processors today, and raw performance rarely settles it. The practical criterion is the platform: AMD has committed to supporting AM5 through 2027, which gives a real path to swapping only the CPU later. Intel leads in multi-threaded work and idle power draw. For gaming specifically, AMD parts with 3D V-Cache hold a clear advantage.',
+      pl: 'Oba producenci oferują dziś dobre procesory i różnica w wydajności rzadko decyduje. Praktyczne kryterium to platforma: AM5 od AMD ma zadeklarowane wsparcie do 2027 roku i dłużej, a kolejna generacja Ryzenów (Zen 6) jest dla niej potwierdzona, choć jeszcze niedostępna — to realna ścieżka wymiany samego procesora w przyszłości. LGA1851 Intela takiej ścieżki raczej nie da: odświeżenie Core Ultra 200S Plus ma być na tej podstawce ostatnie. Intel nadrabia w zadaniach wielowątkowych i w poborze mocy w spoczynku. Do samego grania procesory AMD z pamięcią 3D V-Cache mają wyraźną przewagę.',
+      en: "Both vendors make good processors today, and raw performance rarely settles it. The practical criterion is the platform: AMD has committed to supporting AM5 through 2027 and beyond, and the next Ryzen generation (Zen 6) is confirmed for it, though not yet available — a real path to swapping only the CPU later. Intel's LGA1851 is unlikely to offer that path: the Core Ultra 200S Plus refresh is expected to be the last on that socket. Intel makes up ground in multi-threaded work and idle power draw. For gaming specifically, AMD parts with 3D V-Cache hold a clear advantage.",
     },
   },
   {
@@ -158,8 +158,8 @@ export const faq: FaqEntry[] = [
       en: 'How much RAM do I need?',
     },
     answer: {
-      pl: '16 GB to dziś praktyczne minimum do grania, a 32 GB jest rozsądnym standardem, zwłaszcza jeśli obok gry działa przeglądarka i komunikator. 64 GB ma sens dopiero przy montażu wideo, renderze 3D lub pracy z maszynami wirtualnymi. Zawsze montuj dwa moduły zamiast jednego — tryb dwukanałowy daje realny wzrost wydajności.',
-      en: '16 GB is the practical minimum for gaming today, and 32 GB is a sensible standard, particularly with a browser and chat application running alongside a game. 64 GB only starts to make sense for video editing, 3D rendering or virtual machines. Always fit two modules rather than one — dual channel gives a real performance gain.',
+      pl: '16 GB to dziś praktyczne minimum do grania, a 32 GB jest rozsądnym standardem, zwłaszcza jeśli obok gry działa przeglądarka i komunikator. 64 GB ma sens dopiero przy montażu wideo, renderze 3D lub pracy z maszynami wirtualnymi. Zawsze montuj dwa moduły zamiast jednego — tryb dwukanałowy daje realny wzrost wydajności. Pamięć DDR5 zdrożała w 2026 roku o ponad 300 procent w skali roku, więc przy modernizacji platformy z DDR4 warto rozważyć zachowanie dotychczasowych modułów.',
+      en: '16 GB is the practical minimum for gaming today, and 32 GB is a sensible standard, particularly with a browser and chat application running alongside a game. 64 GB only starts to make sense for video editing, 3D rendering or virtual machines. Always fit two modules rather than one — dual channel gives a real performance gain. DDR5 prices rose by more than 300 per cent year on year in 2026, so when upgrading a DDR4 platform it is worth considering keeping the modules you already have.',
     },
   },
   {
@@ -180,8 +180,8 @@ export const faq: FaqEntry[] = [
       en: 'Can I reuse parts from an old computer?',
     },
     answer: {
-      pl: 'Obudowę, dyski i często zasilacz — tak, o ile ma wystarczającą moc i nie ma więcej niż około siedmiu lat. Pamięci zwykle nie: DDR4 i DDR5 nie są wzajemnie zgodne, a wyboru dokonujesz wraz z płytą główną. Chłodzenie bywa zgodne między podstawkami jednego producenta, na przykład AM4 i AM5.',
-      en: 'The case, drives and often the power supply — yes, provided it has enough capacity and is not much more than seven years old. Memory usually not: DDR4 and DDR5 are mutually incompatible, and the choice is fixed by the motherboard. Coolers are sometimes compatible across a vendor sockets, AM4 and AM5 being one example.',
+      pl: 'Obudowę, dyski i często zasilacz — tak, o ile ma wystarczającą moc i nie ma więcej niż około siedmiu lat. Pamięć tylko wtedy, gdy nowa płyta przyjmuje tę samą generację: DDR4 i DDR5 nie są wzajemnie zgodne. Przy obecnych cenach DDR5 zachowanie modułów DDR4 na płycie AM4 albo LGA1700 w wersji DDR4 to mocny argument za tymi platformami. Chłodzenie bywa zgodne między podstawkami jednego producenta, na przykład AM4 i AM5 albo LGA1700 i LGA1851.',
+      en: "The case, drives and often the power supply — yes, provided it has enough capacity and is not much more than seven years old. Memory only if the new board takes the same generation: DDR4 and DDR5 are mutually incompatible. At current DDR5 prices, keeping DDR4 modules on an AM4 board or a DDR4 version of an LGA1700 board is a strong argument for those platforms. Coolers are often compatible across one vendor's sockets, AM4 and AM5 or LGA1700 and LGA1851 being examples.",
     },
   },
   {

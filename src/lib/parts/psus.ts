@@ -23,14 +23,14 @@ export const psus: Psu[] = [
     efficiency: 'Bronze',
     modular: 'no',
     formFactor: 'ATX',
-    atx31: true,
+    atx31: false,
     warranty: 3,
     tier: tierOf('system-power-10-550'),
     price: priceOf('system-power-10-550'),
     url: 'https://www.bequiet.com/en/powersupply',
     note: {
-      pl: 'Najtańszy zasilacz, który można polecić bez zastrzeżeń. Kable nieodłączane, więc nadmiar trzeba gdzieś schować.',
-      en: 'The cheapest supply that can be recommended without caveats. Non-modular, so the excess cable has to go somewhere.',
+      pl: 'Starsza konstrukcja zgodna z ATX 2.52, bez złącza 12V-2x6. Do słabszej karty nadal wystarczy, ale do nowego zestawu lepiej wybrać następcę, System Power 11, zgodnego z ATX 3.1. Kable nieodłączane.',
+      en: 'An older ATX 2.52 design with no 12V-2x6 connector. Still enough for a modest card, but for a new build its ATX 3.1 successor, the System Power 11, is the better pick. Non-modular cables.',
     },
   },
   {
@@ -102,8 +102,8 @@ export const psus: Psu[] = [
     tier: tierOf('prime-tx-1000'),
     price: priceOf('prime-tx-1000'),
     note: {
-      pl: 'Konieczny przy RTX 5090. Sprawność Titanium i dwunastoletnia gwarancja, ale cena odpowiada jakości.',
-      en: 'Required for an RTX 5090. Titanium efficiency and a twelve-year warranty, though the price matches the quality.',
+      pl: 'Spełnia zalecenie 1000 W dla RTX 5090. Sprawność Titanium i dwunastoletnia gwarancja, ale cena odpowiada jakości.',
+      en: 'Meets the 1000 W recommendation for an RTX 5090. Titanium efficiency and a twelve-year warranty, though the price matches the quality.',
     },
   },
   {
