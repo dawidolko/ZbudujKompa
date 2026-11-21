@@ -122,8 +122,8 @@ export const cpus: Cpu[] = [
     multiScore: 68,
     unlocked: true,
     note: {
-      pl: 'Najmocniejsza grafika zintegrowana wśród procesorów na wymienną podstawkę. Pozwala grać w 1080p i odtwarzać 4K bez osobnej karty graficznej.',
-      en: 'The strongest integrated graphics of any socketed desktop processor. It games at 1080p and plays 4K with no discrete card at all.',
+      pl: 'Najmocniejsza grafika zintegrowana wśród procesorów na wymienną podstawkę. Bez osobnej karty odtwarza 4K i pozwala grać w 1080p w lżejsze gry, zwykle na niskich ustawieniach.',
+      en: 'The strongest integrated graphics of any socketed desktop processor. With no discrete card it plays 4K video and runs lighter games at 1080p, usually on low settings.',
     },
   },
   /* ------------------------------------------------------------ AMD AM4 --- */
@@ -346,8 +346,8 @@ export const cpus: Cpu[] = [
     multiScore: 100,
     unlocked: true,
     note: {
-      pl: 'Najszybszy procesor do gier i jednocześnie do pracy. Cena odpowiada temu, że nie trzeba wybierać między jednym a drugim.',
-      en: 'The fastest processor for games and for work at the same time. The price reflects not having to choose between them.',
+      pl: 'Szesnaście rdzeni z pamięcią 3D V-Cache na jednym z dwóch chipletów: w grach w czołówce, wielowątkowo na poziomie 9950X. Od kwietnia 2026 AMD sprzedaje też 9950X3D2 z V-Cache na obu chipletach, ale w samych grach jednochipletowe 9800X3D i 9850X3D bywają minimalnie szybsze.',
+      en: 'Sixteen cores with 3D V-Cache on one of its two chiplets: near the top in games and at 9950X level in multi-threaded work. Since April 2026 AMD also sells the 9950X3D2 with V-Cache on both chiplets, though for gaming alone the single-chiplet 9800X3D and 9850X3D can be slightly faster.',
     },
   },
   {

@@ -41,7 +41,7 @@ const buildableCases = [
     { case: 'terra', cooler: 'nh-d15-g2', cpu: 'ryzen-7-9700x' },
     false,
   ],
-  ['a 336 mm card in a case allowing 322 mm', { case: 'terra', gpu: 'rtx-5090' }, false],
+  ['a 304 mm card in a case allowing 322 mm', { case: 'terra', gpu: 'rtx-5090' }, true],
   ['an F-suffix CPU with no graphics card', { cpu: 'core-i5-14400f' }, false],
   ['an ATX board in a Mini-ITX case', { case: 'terra', motherboard: 'tuf-b650-plus-wifi' }, false],
   ['an ATX supply in an SFX-only case', { case: 'terra', psu: 'pure-power-12m-750' }, false],

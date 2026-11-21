@@ -74,8 +74,8 @@ export const coolingProfiles: CoolingProfile[] = [
       en: 'AiO-class performance without a pump',
     },
     description: {
-      pl: 'Dwa bloki lamel i zwykle dwa wentylatory. Konstrukcja dorównuje pod względem odprowadzania ciepła chłodzeniom wodnym z chłodnicą 240 mm, zachowując prostotę i niezawodność powietrza.\n\nCena za to jest fizyczna: takie chłodzenie waży od 1,2 do 1,5 kg i potrafi zająć jedną trzecią szerokości obudowy. Przed zakupem koniecznie sprawdź maksymalną wysokość w specyfikacji swojej obudowy.',
-      en: 'Two fin stacks and usually two fans. This class matches 240 mm liquid coolers on heat removal while keeping the simplicity and reliability of air.\n\nThe cost is physical: these coolers weigh 1.2 to 1.5 kg and can occupy a third of the width of the case. Check your case specification for maximum cooler height before buying.',
+      pl: 'Dwa bloki lamel i zwykle dwa wentylatory. Konstrukcja dorównuje pod względem odprowadzania ciepła chłodzeniom wodnym z chłodnicą 240 mm, zachowując prostotę i niezawodność powietrza.\n\nCena za to jest fizyczna: takie chłodzenie waży mniej więcej od 1 do 1,5 kg i potrafi zająć jedną trzecią szerokości obudowy. Przed zakupem koniecznie sprawdź maksymalną wysokość w specyfikacji swojej obudowy.',
+      en: 'Two fin stacks and usually two fans. This class matches 240 mm liquid coolers on heat removal while keeping the simplicity and reliability of air.\n\nThe cost is physical: these coolers weigh roughly 1 to 1.5 kg and can occupy a third of the width of the case. Check your case specification for maximum cooler height before buying.',
     },
     wattage: { min: 180, max: 280 },
     noise: { min: 26, max: 36 },
@@ -96,12 +96,12 @@ export const coolingProfiles: CoolingProfile[] = [
       pl: [
         'Duża masa obciążająca płytę główną',
         'Często zasłania pierwszy slot pamięci',
-        'Wymaga obudowy o szerokości co najmniej 165 mm',
+        'Wymaga obudowy mieszczącej chłodzenie o wysokości około 155–170 mm',
       ],
       en: [
         'Significant mass hanging off the motherboard',
         'Often overhangs the first memory slot',
-        'Needs a case at least 165 mm wide',
+        'Needs a case with roughly 155–170 mm of cooler clearance',
       ],
     },
     bestFor: {

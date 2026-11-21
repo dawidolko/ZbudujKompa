@@ -87,8 +87,8 @@ export const priceQueries: Record<string, PriceQuery> = {
     not: ['DDR4'],
   },
   'lowprofile-32-6000': {
-    q: 'Corsair Vengeance Low Profile 32GB DDR5-6000',
-    must: ['Vengeance', 'Low Profile', '32GB', mhz(6000)],
+    q: 'G.Skill Ripjaws S5 32GB DDR5-6000 CL30',
+    must: ['Ripjaws S5', '32GB', mhz(6000), cl(30)],
   },
   'fury-beast-16-3200': {
     q: 'Kingston Fury Beast 16GB DDR4-3200 CL16',

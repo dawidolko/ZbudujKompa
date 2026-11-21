@@ -236,8 +236,8 @@ export const knowledgeBase: KnowledgeEntry[] = [
       en: ['budget', 'how much money', 'price', 'cost', 'cheap', 'cheapest', 'affordable', 'spend'],
     },
     answer: {
-      pl: 'W zestawie do grania karta graficzna decyduje o liczbie klatek najbardziej i zwykle powinna pochłonąć 35–45 procent budżetu. Nie tnij natomiast zasilacza ani chłodzenia — te podzespoły przetrwają kilka kolejnych zestawów. Mamy cztery gotowe listy zakupowe w różnych budżetach, każda z uzasadnieniem doboru części.',
-      en: 'In a gaming build the graphics card determines frame rate more than anything else and should usually take 35–45 per cent of the budget. Do not cut the power supply or cooler, though — those carry over into several later builds. We have four ready-made shopping lists at different budgets, each with the reasoning for every part.',
+      pl: 'W zestawie do grania karta graficzna decyduje o liczbie klatek najbardziej i zwykle powinna pochłonąć 35–45 procent budżetu. Nie tnij natomiast zasilacza ani chłodzenia — te podzespoły przetrwają kilka kolejnych zestawów. Mamy sześć gotowych list zakupowych w różnych budżetach i do różnych zastosowań, każda z uzasadnieniem doboru części.',
+      en: 'In a gaming build the graphics card determines frame rate more than anything else and should usually take 35–45 per cent of the budget. Do not cut the power supply or cooler, though — those carry over into several later builds. We have six ready-made shopping lists at different budgets and for different uses, each with the reasoning for every part.',
     },
     links: [{ href: '/zestawy', label: { pl: 'Gotowe zestawy', en: 'Reference builds' } }],
   },

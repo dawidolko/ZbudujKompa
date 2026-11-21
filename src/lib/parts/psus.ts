@@ -24,7 +24,7 @@ export const psus: Psu[] = [
     modular: 'no',
     formFactor: 'ATX',
     atx31: false,
-    warranty: 3,
+    warranty: 5,
     tier: tierOf('system-power-10-550'),
     price: priceOf('system-power-10-550'),
     url: 'https://www.bequiet.com/en/powersupply',
@@ -97,13 +97,13 @@ export const psus: Psu[] = [
     efficiency: 'Titanium',
     modular: 'full',
     formFactor: 'ATX',
-    atx31: true,
+    atx31: false,
     warranty: 12,
     tier: tierOf('prime-tx-1000'),
     price: priceOf('prime-tx-1000'),
     note: {
-      pl: 'Spełnia zalecenie 1000 W dla RTX 5090. Sprawność Titanium i dwunastoletnia gwarancja, ale cena odpowiada jakości.',
-      en: 'Meets the 1000 W recommendation for an RTX 5090. Titanium efficiency and a twelve-year warranty, though the price matches the quality.',
+      pl: 'Spełnia zalecenie 1000 W dla RTX 5090 i ma kabel 12VHPWR, ale model 1000 W to konstrukcja sprzed ATX 3.x — seria PRIME TX zgodna z ATX 3.1 ma tylko wersje 1300 i 1600 W. Sprawność Titanium i dwunastoletnia gwarancja, ale cena odpowiada jakości.',
+      en: 'Meets the 1000 W recommendation for an RTX 5090 and has a 12VHPWR cable, but the 1000 W model predates ATX 3.x — the ATX 3.1 PRIME TX comes only in 1300 and 1600 W. Titanium efficiency and a twelve-year warranty, though the price matches the quality.',
     },
   },
   {
@@ -156,8 +156,8 @@ export const psus: Psu[] = [
     tier: tierOf('mpg-a1000g'),
     price: priceOf('mpg-a1000g'),
     note: {
-      pl: 'Tysiąc watów ze złączem 12V-2x6 w zestawie. Sensowna podstawa pod najmocniejsze karty bez przepłacania za Titanium.',
-      en: 'A thousand watts with a 12V-2x6 connector included. A sensible base for the fastest cards without paying for Titanium.',
+      pl: 'Tysiąc watów z natywnym 16-pinowym kablem do karty (600 W). Sensowna podstawa pod najmocniejsze karty bez przepłacania za Titanium.',
+      en: 'A thousand watts with a native 16-pin graphics card cable (600 W). A sensible base for the fastest cards without paying for Titanium.',
     },
   },
   {
@@ -170,7 +170,7 @@ export const psus: Psu[] = [
     modular: 'full',
     formFactor: 'SFX',
     atx31: true,
-    warranty: 10,
+    warranty: 7,
     tier: tierOf('sf850l'),
     price: priceOf('sf850l'),
     note: {
@@ -188,12 +188,12 @@ export const psus: Psu[] = [
     modular: 'no',
     formFactor: 'ATX',
     atx31: true,
-    warranty: 3,
+    warranty: 5,
     tier: tierOf('system-power-11-750'),
     price: priceOf('system-power-11-750'),
     note: {
-      pl: 'Tania jednostka o rozsądnej mocy. Kable nieodłączane i tylko trzyletnia gwarancja — to widać w cenie.',
-      en: 'An inexpensive unit at a sensible wattage. Non-modular with a three-year warranty — and the price reflects it.',
+      pl: 'Tania jednostka o rozsądnej mocy. Kable nieodłączane i pięcioletnia gwarancja, o połowę krótsza niż w serii Pure Power — to widać w cenie.',
+      en: 'An inexpensive unit at a sensible wattage. Non-modular, with a five-year warranty, half that of the Pure Power range — and the price reflects it.',
     },
   },
   {
@@ -206,7 +206,7 @@ export const psus: Psu[] = [
     modular: 'no',
     formFactor: 'ATX',
     atx31: true,
-    warranty: 3,
+    warranty: 5,
     tier: tierOf('system-power-11-550'),
     price: priceOf('system-power-11-550'),
     note: {

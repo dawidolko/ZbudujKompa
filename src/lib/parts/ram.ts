@@ -30,8 +30,8 @@ export const ramKits: Ram[] = [
     price: priceOf('flare-x5-32-6000'),
     url: 'https://www.gskill.com/qvl',
     note: {
-      pl: 'DDR5-6000 CL30 to punkt, w którym Ryzen pracuje najefektywniej — powyżej kontroler przechodzi w tryb dzielony i wydajność spada.',
-      en: 'DDR5-6000 CL30 is where Ryzen runs most efficiently — above it the controller drops into a divided mode and performance falls.',
+      pl: 'DDR5-6000 CL30 to punkt, w którym Ryzen 7000 i 9000 pracuje najefektywniej — powyżej kontroler pamięci zwykle przechodzi w tryb dzielony 1:2, który potrafi zabrać więcej, niż daje wyższa częstotliwość.',
+      en: 'DDR5-6000 CL30 is where Ryzen 7000 and 9000 run most efficiently — above it the memory controller usually switches to a divided 1:2 mode, which can cost more than the extra frequency gains.',
     },
   },
   {
@@ -63,13 +63,13 @@ export const ramKits: Ram[] = [
     modules: 2,
     speed: 6000,
     casLatency: 30,
-    height: 34,
+    height: 35,
     tier: tierOf('vengeance-64-6000'),
     price: priceOf('vengeance-64-6000'),
     url: 'https://www.corsair.com/memory-finder',
     note: {
-      pl: '64 GB to próg, powyżej którego montaż 4K i render przestają korzystać z pliku wymiany. Do grania to nadmiar.',
-      en: '64 GB is the threshold above which 4K editing and rendering stop hitting the swap file. For gaming it is excess.',
+      pl: '64 GB daje montażowi 4K i renderowi zapas, zanim zaczną korzystać z pliku wymiany. Do grania to nadmiar.',
+      en: '64 GB gives 4K editing and rendering room before they spill into the swap file. For gaming it is excess.',
     },
   },
   {
@@ -93,19 +93,19 @@ export const ramKits: Ram[] = [
   {
     id: 'lowprofile-32-6000',
     category: 'ram',
-    name: 'Vengeance LPX Low Profile 32 GB (2×16) DDR5-6000',
-    brand: 'Corsair',
+    name: 'Ripjaws S5 32 GB (2×16) DDR5-6000 CL30',
+    brand: 'G.Skill',
     type: 'ddr5',
     capacity: 32,
     modules: 2,
     speed: 6000,
-    casLatency: 36,
-    height: 22,
+    casLatency: 30,
+    height: 33,
     tier: tierOf('lowprofile-32-6000'),
     price: priceOf('lowprofile-32-6000'),
     note: {
-      pl: 'Niskie moduły bez wysokich radiatorów — konieczne pod dużymi wieżami powietrznymi i w obudowach Mini-ITX.',
-      en: 'Low-profile modules without tall heat spreaders — necessary under large air towers and in Mini-ITX cases.',
+      pl: 'Niskie moduły (33 mm) bez wysokich radiatorów — mieszczą się pod większością dużych wież powietrznych i pasują do obudów Mini-ITX.',
+      en: 'Low 33 mm modules without tall heat spreaders — they clear most large air towers and suit Mini-ITX cases.',
     },
   },
   /* --------------------------------------------------------------- DDR4 --- */

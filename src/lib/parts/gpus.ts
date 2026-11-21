@@ -11,7 +11,10 @@ import { priceOf, tierOf } from './pricing.ts';
  *
  * `length` and `slots` exist because they are the two specifications that
  * actually stop a build — a card that does not physically fit the case is a
- * problem no amount of performance makes up for.
+ * problem no amount of performance makes up for. Where the vendor sells its
+ * own card (NVIDIA Founders Edition, AMD reference RX 7600, Intel Arc B580
+ * Limited Edition) the figures are that card's; otherwise they are a typical
+ * partner model, and the specific model's page is the one to check.
  *
  * `power` is copied from the vendor's own specification page, linked in
  * `source`: NVIDIA's "Supplementary Power Connectors", AMD's "Additional
@@ -37,14 +40,14 @@ export const gpus: Gpu[] = [
       cableRating: 600,
       source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5090/',
     },
-    length: 336,
-    slots: 3,
+    length: 304,
+    slots: 2,
     performanceScore: 100,
     targetResolution: '4K',
     url: 'https://www.nvidia.com/en-eu/geforce/graphics-cards/',
     note: {
-      pl: 'Najszybsza karta na rynku i jedyna sensowna do 4K przy 120 klatkach z ray tracingiem. Wymaga zasilacza 1000 W i obudowy, w której się zmieści.',
-      en: 'The fastest card available and the only sensible choice for 4K at 120 frames with ray tracing. It needs a 1000 W supply and a case it actually fits.',
+      pl: 'Najszybsza karta na rynku i wybór do 4K z ray tracingiem przy wysokiej liczbie klatek. NVIDIA zaleca zasilacz 1000 W. Wymiary dotyczą wersji Founders Edition (304 mm, dwa sloty) — karty partnerów bywają dłuższe i grubsze, więc sprawdź konkretny model.',
+      en: 'The fastest card available and the pick for 4K with ray tracing at high frame rates. NVIDIA recommends a 1000 W supply. The dimensions are the Founders Edition (304 mm, two slots) — partner cards are often longer and thicker, so check the specific model.',
     },
   },
   {
@@ -64,7 +67,7 @@ export const gpus: Gpu[] = [
       source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5080/',
     },
     length: 304,
-    slots: 3,
+    slots: 2,
     performanceScore: 82,
     targetResolution: '4K',
     note: {
@@ -182,7 +185,7 @@ export const gpus: Gpu[] = [
     price: priceOf('rx-9060-xt'),
     vram: 16,
     tdp: 160,
-    recommendedPsu: 550,
+    recommendedPsu: 450,
     power: {
       connector: '8pin',
       pcie8pin: 1,
@@ -282,7 +285,7 @@ export const gpus: Gpu[] = [
     price: priceOf('rtx-5050'),
     vram: 8,
     tdp: 130,
-    recommendedPsu: 500,
+    recommendedPsu: 550,
     power: {
       connector: '8pin',
       pcie8pin: 1,

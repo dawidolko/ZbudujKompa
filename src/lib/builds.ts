@@ -242,8 +242,8 @@ export const builds: Build[] = [
         kind: 'ram',
         name: 'Corsair Vengeance 64 GB (2×32) DDR5-6000 CL30',
         rationale: {
-          pl: '64 GB to próg, powyżej którego montaż 4K i render przestają korzystać z pliku wymiany.',
-          en: '64 GB is the threshold above which 4K editing and rendering stop hitting the swap file.',
+          pl: '64 GB daje montażowi 4K i renderowi zapas, zanim zaczną korzystać z pliku wymiany.',
+          en: '64 GB gives 4K editing and rendering room before they spill into the swap file.',
         },
       },
       {
@@ -340,7 +340,7 @@ export const builds: Build[] = [
       },
       {
         kind: 'gpu',
-        name: 'NVIDIA GeForce RTX 5070 12 GB (wersja 2-slot)',
+        name: 'NVIDIA GeForce RTX 5070 12 GB (2-slot)',
         rationale: {
           pl: 'Wersja dwuslotowa jest tu wymogiem — sprawdź długość karty w specyfikacji obudowy przed zakupem.',
           en: 'A two-slot version is mandatory here — check the card length against the case specification before buying.',
@@ -410,8 +410,8 @@ export const builds: Build[] = [
         kind: 'cpu',
         name: 'AMD Ryzen 7 8700G',
         rationale: {
-          pl: 'Najmocniejsza grafika zintegrowana wśród procesorów na wymienną podstawkę. Odtwarza 4K z akceleracją sprzętową i pozwala grać w 1080p bez osobnej karty.',
-          en: 'The strongest integrated graphics of any socketed desktop processor. It decodes 4K in hardware and games at 1080p with no discrete card at all.',
+          pl: 'Najmocniejsza grafika zintegrowana wśród procesorów na wymienną podstawkę. Odtwarza 4K z akceleracją sprzętową i bez osobnej karty pozwala grać w 1080p w lżejsze gry, zwykle na niskich ustawieniach.',
+          en: 'The strongest integrated graphics of any socketed desktop processor. It decodes 4K in hardware and, with no discrete card, runs lighter games at 1080p, usually on low settings.',
         },
       },
       {
@@ -486,8 +486,8 @@ export const builds: Build[] = [
       en: 'Backups, file server, media server, containerised services',
     },
     expectation: {
-      pl: 'Kilka jednoczesnych strumieni wideo z transkodowaniem sprzętowym i pobór około 25–35 W w spoczynku, co przy pracy ciągłej daje sensowny rachunek za prąd.',
-      en: 'Several simultaneous video streams with hardware transcoding, at roughly 25–35 W idle — which keeps the electricity bill reasonable for a machine that never turns off.',
+      pl: 'Kilka jednoczesnych strumieni wideo z transkodowaniem sprzętowym i niski pobór mocy w spoczynku — przy dwóch dyskach talerzowych to zwykle kilkadziesiąt watów, co przy pracy ciągłej daje sensowny rachunek za prąd.',
+      en: 'Several simultaneous video streams with hardware transcoding, at a low idle draw — typically a few tens of watts with two hard drives — which keeps the electricity bill reasonable for a machine that never turns off.',
     },
     parts: [
       {
@@ -502,8 +502,8 @@ export const builds: Build[] = [
         kind: 'motherboard',
         name: 'ASUS PRIME B760M-A',
         rationale: {
-          pl: 'Sześć portów SATA plus dwa gniazda M.2 — kluczowe, gdy dysków ma być więcej niż dwa.',
-          en: 'Six SATA ports plus two M.2 sockets — the deciding factor once you need more than two drives.',
+          pl: 'Cztery porty SATA plus dwa gniazda M.2 — miejsce na dysk systemowy, dwa dyski na dane i dwa kolejne w przyszłości.',
+          en: 'Four SATA ports plus two M.2 sockets — room for the system drive, the two data drives and two more later.',
         },
       },
       {
@@ -526,8 +526,8 @@ export const builds: Build[] = [
         kind: 'psu',
         name: 'be quiet! Pure Power 13 M 650 W 80+ Gold',
         rationale: {
-          pl: 'Przy pracy ciągłej sprawność zasilacza przekłada się wprost na rachunek. Certyfikat Gold zwraca się w ciągu kilku lat.',
-          en: 'With a machine that never switches off, PSU efficiency shows up directly on the bill. A Gold rating pays for itself over a few years.',
+          pl: 'Przy niskim poborze serwera w spoczynku przewaga sprawności Gold nad Bronze to zaledwie kilka watów, więc sama się nie zwróci. Ten zasilacz wybrano za dziesięcioletnią gwarancję, pełną modularność i wentylator, który przy małym obciążeniu stoi.',
+          en: "At a server's low idle draw, Gold beats Bronze by only a few watts, so the efficiency alone will not pay back. This unit is here for its ten-year warranty, full modularity and a fan that stops at low load.",
         },
       },
       {
@@ -587,7 +587,7 @@ const buildPartIds: Record<string, { id: string; quantity?: number }[]> = {
   'Arctic Liquid Freezer III Pro 360': [{ id: 'liquid-freezer-iii-pro-360' }],
   'AMD Ryzen 7 9700X': [{ id: 'ryzen-7-9700x' }],
   'Gigabyte B650I AX': [{ id: 'b650i-ax' }],
-  'NVIDIA GeForce RTX 5070 12 GB (wersja 2-slot)': [{ id: 'rtx-5070' }],
+  'NVIDIA GeForce RTX 5070 12 GB (2-slot)': [{ id: 'rtx-5070' }],
   'Corsair SF750 750 W SFX 80+ Platinum': [{ id: 'sf750' }],
   'Fractal Design Terra': [{ id: 'terra' }],
   'Noctua NH-L12S': [{ id: 'nh-l12s' }],

@@ -293,8 +293,8 @@ export const motherboards: Motherboard[] = [
     tier: tierOf('prime-b760m-a'),
     price: priceOf('prime-b760m-a'),
     note: {
-      pl: 'Tania płyta pod Intela z sześcioma portami SATA — dobra podstawa serwera domowego.',
-      en: 'An inexpensive Intel board with six SATA ports — a good foundation for a home server.',
+      pl: 'Tania płyta pod Intela z czterema portami SATA i dwoma gniazdami M.2 — dobra podstawa serwera domowego.',
+      en: 'An inexpensive Intel board with four SATA ports and two M.2 sockets — a good foundation for a home server.',
     },
   },
   {
@@ -328,8 +328,8 @@ export const motherboards: Motherboard[] = [
     tier: tierOf('b760m-ddr4'),
     price: priceOf('b760m-ddr4'),
     note: {
-      pl: 'Wersja DDR4 tej samej płyty. Sensowna wyłącznie wtedy, gdy masz już moduły DDR4 i chcesz je przenieść.',
-      en: 'The DDR4 version of the same board. Only sensible if you already own DDR4 modules and want to carry them over.',
+      pl: 'Płyta DDR4 na tym samym chipsecie B760, tyle że od MSI. Sensowna wyłącznie wtedy, gdy masz już moduły DDR4 i chcesz je przenieść.',
+      en: 'A DDR4 board on the same B760 chipset, from MSI rather than ASUS. Only sensible if you already own DDR4 modules and want to carry them over.',
     },
   },
   {
@@ -367,8 +367,8 @@ export const motherboards: Motherboard[] = [
     tier: tierOf('x670e-hero'),
     price: priceOf('x670e-hero'),
     note: {
-      pl: 'Flagowa płyta z pięcioma gniazdami M.2 i bardzo mocnym zasilaniem. Sensowna wyłącznie przy ekstremalnym podkręcaniu.',
-      en: 'A flagship board with five M.2 slots and very strong power delivery. Only sensible for extreme overclocking.',
+      pl: 'Flagowa płyta z pięcioma gniazdami M.2 (jedno na dołączonej karcie rozszerzeń) i bardzo mocnym zasilaniem. Sensowna wyłącznie przy ekstremalnym podkręcaniu.',
+      en: 'A flagship board with five M.2 slots (one on the bundled expansion card) and very strong power delivery. Only sensible for extreme overclocking.',
     },
   },
   {
