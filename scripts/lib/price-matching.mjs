@@ -177,6 +177,28 @@ export function bandFromResponse(response, query, minOffers = MIN_OFFERS) {
   return { min: Math.round(Math.min(...prices)), max: Math.round(typical), sources };
 }
 
+/*
+ * Why a response gave no band, as one log line: how many results came back, how
+ * many were new Polish offers in złoty, how many matched the part, and a few
+ * titles that did not match. That is enough to tell a too strict query from a
+ * part that shops have stopped listing, without spending another search.
+ */
+export function describeMiss(response, query) {
+  const results = Array.isArray(response?.shopping_results) ? response.shopping_results : [];
+  const offers = extractOffers(response).filter(isNewPolishOffer);
+  const matching = offers.filter((offer) => matchesPart(offer.title, query));
+  const examples = offers
+    .filter((offer) => !matchesPart(offer.title, query))
+    .slice(0, 3)
+    .map((offer) => JSON.stringify(offer.title.slice(0, 70)))
+    .join(', ');
+  return (
+    `${results.length} results, ${offers.length} new in zł, ${matching.length} matching` +
+    `, ${rejectOutliers(matching).length} after outliers` +
+    (examples ? `; unmatched: ${examples}` : '')
+  );
+}
+
 /* The Polish Google Shopping search for a query, used as a source of last resort. */
 export function shoppingSearch(q) {
   const url = new URL('https://www.google.pl/search');

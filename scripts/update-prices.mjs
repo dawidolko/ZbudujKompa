@@ -26,6 +26,7 @@ import {
   bandFromResponse,
   bandsDiffer,
   CATEGORY_NOT,
+  describeMiss,
   MIN_OFFERS,
   mergeRefresh,
   refusalReason,
@@ -103,14 +104,16 @@ for (const [index, [id, record]] of queue.entries()) {
   }
 
   const restoring = record.min === null;
-  const query = priceQueries[id];
-  const band = bandFromResponse(
-    response,
-    { ...query, not: [...(query.not ?? []), ...(CATEGORY_NOT[categoryOf.get(id)] ?? [])] },
-    restoring ? RESTORE_MIN_OFFERS : MIN_OFFERS,
-  );
-  if (!band) console.log(`  ${id}: too few matching offers, keeping ${record.checkedAt}`);
-  else if (restoring) console.log(`  ${id}: price restored at ${band.min}-${band.max}`);
+  const base = priceQueries[id];
+  const query = {
+    ...base,
+    not: [...(base.not ?? []), ...(CATEGORY_NOT[categoryOf.get(id)] ?? [])],
+  };
+  const band = bandFromResponse(response, query, restoring ? RESTORE_MIN_OFFERS : MIN_OFFERS);
+  if (!band) {
+    console.log(`  ${id}: too few matching offers, keeping ${record.checkedAt}`);
+    console.log(`    ${describeMiss(response, query)}`);
+  } else if (restoring) console.log(`  ${id}: price restored at ${band.min}-${band.max}`);
   else if (bandsDiffer(record, band)) {
     console.log(`  ${id}: ${record.min}-${record.max} -> ${band.min}-${band.max}`);
   }

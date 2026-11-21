@@ -12,6 +12,7 @@ import {
   bandFromResponse,
   bandsDiffer,
   CATEGORY_NOT,
+  describeMiss,
   extractOffers,
   implausibleStep,
   isNewPolishOffer,
@@ -383,6 +384,12 @@ report(
   ),
   'every category word list names a real category',
   'a category word list names an unknown category',
+);
+
+report(
+  /^\d+ results, \d+ new in zł, 0 matching/.test(describeMiss(sample, { must: ['no such part'] })),
+  'a miss is explained with counts and unmatched titles',
+  'a miss has no explanation',
 );
 
 console.log('\nRefusing a run');
