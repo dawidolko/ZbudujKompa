@@ -931,8 +931,10 @@ export function estimateLoadTemp(input: {
     temperature,
     caseRise,
     coolerRise,
-    /* 95 °C is where Ryzen holds by design and Intel begins reducing clocks.
-       Reaching it is not a fault — modern boost algorithms treat it as a
+    /* 95 °C is the limit Ryzen 7000 and 9000 hold by design; Intel's limit
+       sits a little higher, at 100 °C on 13th and 14th gen and 105 °C on
+       Core Ultra 200S, so for Intel this flag is early. Reaching it is not a
+       fault — modern boost algorithms treat it as a
        target — but it does mean the cooler is the limit on performance. */
     throttles: temperature >= 95,
   };

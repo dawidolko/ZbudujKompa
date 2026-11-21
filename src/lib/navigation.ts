@@ -163,8 +163,8 @@ export const navigation: NavSection[] = [
         href: '/kalkulatory',
         label: { pl: 'Kalkulatory', en: 'Calculators' },
         description: {
-          pl: 'Dziesięć przeliczników do planowania zestawu',
-          en: 'Ten calculators for planning a build',
+          pl: 'Czternaście przeliczników do planowania zestawu',
+          en: 'Fourteen calculators for planning a build',
         },
       },
       {
