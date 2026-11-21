@@ -167,8 +167,8 @@ export const cpus: Cpu[] = [
     multiScore: 62,
     unlocked: false,
     note: {
-      pl: 'Najmocniejsza do gier modernizacja dla AM4, dziś w sklepach już prawie niedostępna. Sensowna, jeśli masz już płytę i pamięć DDR4 — nie warto kupować platformy od zera.',
-      en: 'The strongest gaming upgrade for AM4, now almost gone from shops. Worth it if you already own the board and DDR4 — not worth buying the platform from scratch.',
+      pl: 'Najmocniejsza do gier modernizacja dla AM4. W czerwcu 2026 AMD wznowiło jego sprzedaż jako 10th Anniversary Edition. Sensowna, jeśli masz już płytę i pamięć DDR4 — nie warto kupować platformy od zera.',
+      en: 'The strongest gaming upgrade for AM4. AMD brought it back in June 2026 as the 10th Anniversary Edition. Worth it if you already own the board and DDR4 — not worth buying the platform from scratch.',
     },
   },
   /* -------------------------------------------------------- Intel 1851 --- */

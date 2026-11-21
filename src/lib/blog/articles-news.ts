@@ -18,19 +18,19 @@ export const newsArticles: Article[] = [
     tags: ['amd', 'am5', 'platformy'],
     related: ['ile-naprawde-potrzeba-vram'],
     title: {
-      pl: 'AMD potwierdza wsparcie AM5 poza rok 2027',
-      en: 'AMD confirms AM5 support beyond 2027',
+      pl: 'AMD przedłuża wsparcie AM5 do 2029 roku',
+      en: 'AMD extends AM5 support through 2029',
     },
     summary: {
-      pl: 'Producent ponownie zadeklarował długie życie podstawki. Co to znaczy w praktyce dla kogoś, kto składa zestaw dzisiaj.',
-      en: 'The manufacturer has restated its commitment to the socket. What that means in practice for someone building today.',
+      pl: 'Producent wydłużył deklarowane życie podstawki o dwa lata. Co to znaczy w praktyce dla kogoś, kto składa zestaw dzisiaj.',
+      en: 'The manufacturer has added two years to its commitment to the socket. What that means in practice for someone building today.',
     },
     body: [
       {
         type: 'paragraph',
         text: {
-          pl: 'Deklaracja o wsparciu podstawki AM5 do co najmniej 2027 roku została powtórzona, a wypowiedzi przedstawicieli sugerują, że okres może być dłuższy. Dla osoby planującej zakup ma to konkretne znaczenie.',
-          en: 'The commitment to supporting AM5 through at least 2027 has been restated, and comments from company representatives suggest the window may be longer. For someone planning a purchase this has concrete implications.',
+          pl: 'Na Computeksie pod koniec maja 2026 roku AMD przedłużyło deklarację wsparcia podstawki AM5 do 2029 roku — dwa lata dłużej niż wcześniej zapowiadany rok 2027. Dla osoby planującej zakup ma to konkretne znaczenie.',
+          en: 'At Computex at the end of May 2026, AMD extended its support commitment for the AM5 socket through 2029 — two years beyond the 2027 it had promised before. For someone planning a purchase this has concrete implications.',
         },
       },
       {
@@ -54,8 +54,8 @@ export const newsArticles: Article[] = [
         tone: 'info',
         label: { pl: 'Aktualizacja: 21 listopada 2026', en: 'Update: 21 November 2026' },
         text: {
-          pl: 'AMD nadal mówi o wsparciu AM5 do 2027 roku i dłużej, a dokumentacja producenta potwierdza, że kolejna generacja Ryzenów (Zen 6) trafi na tę podstawkę. Procesory te nie są jeszcze w sprzedaży — doniesienia wskazują na 2027 rok. Po stronie Intela LGA1851 dostał w marcu 2026 odświeżenie Core Ultra 200S Plus, które ma być ostatnią generacją na tej podstawce.',
-          en: 'AMD still describes AM5 support as running through 2027 and beyond, and its documentation confirms that the next Ryzen generation (Zen 6) will use the socket. Those processors are not on sale yet — reporting points to 2027. On the Intel side, LGA1851 received the Core Ultra 200S Plus refresh in March 2026, which is expected to be the last generation for that socket.',
+          pl: 'Deklaracja wsparcia AM5 do 2029 roku obowiązuje, a dokumentacja producenta potwierdza, że kolejna generacja Ryzenów (Zen 6) trafi na tę podstawkę. Procesory te nie są jeszcze w sprzedaży — doniesienia wskazują na 2027 rok. Po stronie Intela LGA1851 dostał w marcu 2026 odświeżenie Core Ultra 200S Plus, które ma być ostatnią generacją na tej podstawce.',
+          en: 'The commitment to support AM5 through 2029 stands, and AMD's documentation confirms that the next Ryzen generation (Zen 6) will use the socket. Those processors are not on sale yet — reporting points to 2027. On the Intel side, LGA1851 received the Core Ultra 200S Plus refresh in March 2026, which is expected to be the last generation for that socket.',
         },
       },
     ],
