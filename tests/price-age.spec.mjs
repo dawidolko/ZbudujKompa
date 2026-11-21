@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { catalogueCheckedAt, PRICE_STALE_DAYS } from '../src/lib/parts/pricing.ts';
+import { priceRecords } from '../src/lib/parts/prices.ts';
 
 /*
  * The rule that a price past its age limit is never shown, checked against a
@@ -11,12 +12,18 @@ import { catalogueCheckedAt, PRICE_STALE_DAYS } from '../src/lib/parts/pricing.t
 
 const BASE = process.env.TEST_BASE_URL ?? 'http://localhost:3000';
 const DAY = 86_400_000;
+/* Parts are checked on different days, so "fresh" counts from the oldest check
+   and "expired" from the newest: only then is every figure past the limit. */
 const checked = Date.parse(`${catalogueCheckedAt()}T00:00:00Z`);
+const newest = Object.values(priceRecords)
+  .map((record) => record.checkedAt)
+  .sort()
+  .at(-1);
 const fresh = new Date(checked + 10 * DAY);
-const expired = new Date(checked + (PRICE_STALE_DAYS + 1) * DAY);
+const expired = new Date(Date.parse(`${newest}T00:00:00Z`) + (PRICE_STALE_DAYS + 1) * DAY);
 
-/* A figure followed by the currency, which is how every price is written. */
-const FIGURE = /\d[\d\s ,.]*\s?zł/;
+/* A figure with its currency: "699 zł" in Polish, "PLN 699" in English. */
+const FIGURE = /\d[\d\s ,.]*\s?zł|PLN\s?\d/;
 
 const PRICED_PAGES = [
   '/pl/zestawy/',

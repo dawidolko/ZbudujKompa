@@ -8,6 +8,7 @@ import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { upgradeValue } from '@/lib/calculators';
 import { cpus, gpus } from '@/lib/parts';
+import { formatPln } from '@/lib/utils';
 import { CalculatorShell, ResultRow, ResultValue, SelectField } from '../CalculatorShell';
 
 /**
@@ -105,11 +106,11 @@ export function UpgradeCalculator({ locale }: { locale: Locale }) {
             label={
               stale ? `${dict.calc.upgrade.cost} (${dict.prices.estimate})` : dict.calc.upgrade.cost
             }
-            value={`~${Math.round(result.cost)} zł`}
+            value={`~${formatPln(Math.round(result.cost), locale)}`}
           />
           <ResultRow
             label={dict.calc.upgrade.perHundred}
-            value={`${result.pointsPerHundred.toFixed(2)} pkt`}
+            value={`${result.pointsPerHundred.toFixed(2)} ${dict.calc.upgrade.points}`}
             emphasis
           />
           <PriceChecked locale={locale} className="mt-3" />

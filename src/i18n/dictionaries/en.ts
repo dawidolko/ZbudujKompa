@@ -390,7 +390,7 @@ export const en = {
 
   calc: {
     title: 'Calculators',
-    lead: 'Seven tools for the questions that come up while planning a build, each showing its reasoning rather than just a number.',
+    lead: 'Fourteen tools for the questions that come up while planning a build, each showing its reasoning rather than just a number.',
     energy: {
       title: 'Running cost',
       lead: 'What a machine costs to run over a year, with idle and load counted separately.',
@@ -400,7 +400,9 @@ export const en = {
       loadHours: 'Hours under load per day',
       idleHours: 'Hours idling per day',
       price: 'Electricity price',
-      priceHint: 'Check your bill; the Polish average is around 1 zł',
+      priceUnit: 'PLN/kWh',
+      priceHint:
+        'Default PLN 1.10: the typical 2026 cost on the Polish G11 tariff with energy, distribution and VAT (about PLN 1.04 to 1.13 depending on the operator; energy alone averages PLN 495.16/MWh net under the URE-approved tariffs). Most accurate: divide your bill by the kWh used.',
       efficiency: 'Supply efficiency',
       efficiencyHint: 'The meter reads what enters the supply, not what leaves it',
       yearlyCost: 'Per year',
@@ -409,8 +411,9 @@ export const en = {
       atTheWall: 'At the wall, under load',
       fromIdle: 'From idling',
       fromLoad: 'From load',
+      working: 'Working',
       explanation:
-        'The cost is calculated from the draw at the wall, which is the DC figure divided by the supply efficiency — a 400 W build on a Gold unit is billed as 444 W. Most calculators skip that step and understate the bill by about a tenth. Idle and load are separated because a gaming machine idles for most of its life, and costing every hour at peak draw overstates it several times over.',
+        'Step by step: (1) the idle and load draws are each divided by the supply efficiency to give the draw at the wall; (2) each is multiplied by its hours per day, and both are summed over a year (365 days); (3) the total in kWh is multiplied by the price per kWh. The cost is calculated from the draw at the wall, which is the DC figure divided by the supply efficiency — a 400 W build on a Gold unit is billed as 444 W. Most calculators skip that step and understate the bill by about a tenth. Idle and load are separated because a gaming machine idles for most of its life, and costing every hour at peak draw overstates it several times over.',
     },
     noise: {
       title: 'Fan noise',
@@ -592,11 +595,12 @@ export const en = {
       to: 'Considering',
       gain: 'Performance gain',
       cost: 'Approximate cost',
-      perHundred: 'Points per 100 zł',
+      perHundred: 'Points per PLN 100',
+      points: 'pts',
       worth: 'a noticeable difference',
       notWorth: 'you would struggle to notice',
       explanation:
-        'Below roughly 15 per cent, a difference is rarely perceptible while playing — it shows on a chart and not in use. The cost used is the new part on its own rather than the difference between the two, because the old one only offsets it if you actually sell it. Points per hundred złoty exist for comparison between options; the absolute figure means nothing on its own.',
+        'Below roughly 15 per cent, a difference is rarely perceptible while playing — it shows on a chart and not in use. The cost used is the new part on its own rather than the difference between the two, because the old one only offsets it if you actually sell it. The cost is the midpoint of the checked price range of the new part — Polish shop prices in złoty (PLN) including VAT, with the check date shown under the result. Points per hundred złoty exist for comparison between options; the absolute figure means nothing on its own.',
     },
     frames: {
       title: 'Frames and refresh rate',
@@ -624,7 +628,7 @@ export const en = {
       limited: 'the slot limits the drive',
       notLimited: 'the drive runs at full speed',
       explanation:
-        'The second and third M.2 slots on a board frequently run at a lower PCIe generation or on fewer lanes than the first, and nothing tells you when a drive is being held back. The practical rule is to put the fastest drive in the slot nearest the processor, which is the one wired directly to it. Bear in mind that sequential speed barely affects game loading anyway — random reads dominate there, and those are similar across generations.',
+        'The second and third M.2 slots on a board frequently run at a lower PCIe generation or on fewer lanes than the first, and nothing tells you when a drive is being held back. The practical rule is to put the fastest drive in the slot nearest the processor, which is the one wired directly to it. Check the lane-sharing table in the board manual too: on some AM5 and LGA1851 boards, filling an extra PCIe 5.0 M.2 slot drops the graphics slot to x8, and on older boards an occupied M.2 slot can disable SATA ports. Bear in mind that sequential speed barely affects game loading anyway — random reads dominate there, and those are similar across generations.',
     },
     bottleneck: {
       title: 'Balance check',
@@ -709,7 +713,9 @@ export const en = {
   },
 
   prices: {
-    checked: (date: string) => `Prices checked ${date}`,
+    checked: (date: string) =>
+      `Prices checked ${date}. Polish shop prices in złoty (PLN), VAT included, not converted.`,
+    currencyUnit: 'PLN',
     stale: (date: string) =>
       `Prices last checked ${date}. That is too long ago, so they stay hidden until they are checked again.`,
     checkCurrent: 'Check current price',

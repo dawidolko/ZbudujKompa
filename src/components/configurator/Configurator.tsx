@@ -113,7 +113,7 @@ export function Configurator({ locale }: { locale: Locale }) {
                   }
                   className="h-11 w-full rounded-sm border border-border-default bg-bg-base px-3 text-sm text-text-primary focus-ring"
                 />
-                <span className="text-sm text-text-muted">zł</span>
+                <span className="text-sm text-text-muted">{dict.prices.currencyUnit}</span>
               </div>
             </div>
 

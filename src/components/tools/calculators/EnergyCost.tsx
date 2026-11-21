@@ -3,8 +3,8 @@
 import { useMemo, useState } from 'react';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
-import { localeTags } from '@/i18n/config';
 import { PSU_EFFICIENCY, splitEnergyCost } from '@/lib/calculators';
+import { formatPln } from '@/lib/utils';
 import {
   CalculatorShell,
   NumberField,
@@ -28,7 +28,7 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
   const [loadWatts, setLoadWatts] = useState(400);
   const [loadHours, setLoadHours] = useState(3);
   const [idleHours, setIdleHours] = useState(5);
-  const [price, setPrice] = useState(1.0);
+  const [price, setPrice] = useState(1.1);
   const [grade, setGrade] = useState<keyof typeof PSU_EFFICIENCY>('Gold');
 
   const result = useMemo(
@@ -36,12 +36,11 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
     [idleWatts, loadWatts, loadHours, idleHours, price, grade],
   );
 
-  const money = (value: number) =>
-    new Intl.NumberFormat(localeTags[locale], {
-      style: 'currency',
-      currency: 'PLN',
-      maximumFractionDigits: 0,
-    }).format(value);
+  const money = (value: number) => formatPln(value, locale);
+  const rate = price.toLocaleString(locale === 'pl' ? 'pl-PL' : 'en-GB', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   return (
     <CalculatorShell
@@ -86,7 +85,7 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
           />
           <NumberField
             label={dict.calc.energy.price}
-            unit="zł/kWh"
+            unit={dict.calc.energy.priceUnit}
             value={price}
             onChange={setPrice}
             min={0.1}
@@ -124,6 +123,10 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
           <ResultRow
             label={dict.calc.energy.fromLoad}
             value={`${Math.round(result.loadKwh)} kWh (${Math.round((result.loadKwh / result.totalKwh) * 100)}%)`}
+          />
+          <ResultRow
+            label={dict.calc.energy.working}
+            value={`${Math.round(result.totalKwh)} kWh × ${rate} ${dict.calc.energy.priceUnit} ≈ ${money(result.cost)}`}
           />
         </>
       }

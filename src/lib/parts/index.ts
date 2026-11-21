@@ -39,14 +39,19 @@ export const categoryOrder: PartCategory[] = [
 ];
 
 /**
- * Formats a price band for display, e.g. "420 – 560 zł", or one figure when both
- * ends are equal. A part with no price says so rather than showing a zero.
+ * Formats a price band for display, e.g. "420 – 560 zł" in Polish and
+ * "PLN 420 – 560" in English, or one figure when both ends are equal. The
+ * amounts stay in złoty in both languages, because they are Polish shop prices.
+ * A part with no price says so rather than showing a zero.
  */
 export function formatPriceRange(range: PriceRange, locale: Locale): string {
   if (range.unavailable) return locale === 'pl' ? 'Brak ceny' : 'No price';
   const format = new Intl.NumberFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
     maximumFractionDigits: 0,
   });
-  if (range.min === range.max) return `${format.format(range.min)} zł`;
-  return `${format.format(range.min)} – ${format.format(range.max)} zł`;
+  const figures =
+    range.min === range.max
+      ? format.format(range.min)
+      : `${format.format(range.min)} – ${format.format(range.max)}`;
+  return locale === 'pl' ? `${figures} zł` : `PLN ${figures}`;
 }

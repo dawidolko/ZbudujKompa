@@ -24,25 +24,30 @@ export function t<T>(field: Localized<T>, locale: Locale): T {
 /**
  * Formatters are cached per locale. Constructing an Intl formatter is
  * comparatively expensive and listing pages format dozens of values.
+ *
+ * Every amount on the site is a Polish retail price in złoty, VAT included, and
+ * is never converted: Polish shows "1499 zł", English shows "PLN 1,499", so an
+ * English reader cannot mistake it for euros or pounds.
  */
-const priceFormatters = new Map<Locale, Intl.NumberFormat>();
+const moneyFormatters = new Map<Locale, Intl.NumberFormat>();
 
-function priceFormatter(locale: Locale): Intl.NumberFormat {
-  let formatter = priceFormatters.get(locale);
+function moneyFormatter(locale: Locale): Intl.NumberFormat {
+  let formatter = moneyFormatters.get(locale);
   if (!formatter) {
     formatter = new Intl.NumberFormat(localeTags[locale], {
       style: 'currency',
       currency: 'PLN',
+      currencyDisplay: locale === 'pl' ? 'symbol' : 'code',
       maximumFractionDigits: 0,
     });
-    priceFormatters.set(locale, formatter);
+    moneyFormatters.set(locale, formatter);
   }
   return formatter;
 }
 
-/** Formats a price given in grosz, e.g. 149900 -> "1499 zł" / "PLN 1,499". */
-export function formatPrice(grosze: number, locale: Locale): string {
-  return priceFormatter(locale).format(grosze / 100);
+/** Formats an amount in whole złoty, e.g. 1499 -> "1499 zł" / "PLN 1,499". */
+export function formatPln(amount: number, locale: Locale): string {
+  return moneyFormatter(locale).format(amount);
 }
 
 /** Formats a date for the active locale. */

@@ -410,7 +410,7 @@ export const pl: Dictionary = {
 
   calc: {
     title: 'Kalkulatory',
-    lead: 'Siedem narzędzi do pytań, które pojawiają się przy planowaniu zestawu — każde pokazuje uzasadnienie, a nie samą liczbę.',
+    lead: 'Czternaście narzędzi do pytań, które pojawiają się przy planowaniu zestawu — każde pokazuje uzasadnienie, a nie samą liczbę.',
     energy: {
       title: 'Koszt prądu',
       lead: 'Ile kosztuje roczne używanie komputera, z osobnym liczeniem spoczynku i obciążenia.',
@@ -420,7 +420,9 @@ export const pl: Dictionary = {
       loadHours: 'Godzin pod obciążeniem dziennie',
       idleHours: 'Godzin w spoczynku dziennie',
       price: 'Cena prądu',
-      priceHint: 'Sprawdź na rachunku; w Polsce to około 1 zł',
+      priceUnit: 'zł/kWh',
+      priceHint:
+        'Domyślnie 1,10 zł: typowy koszt taryfy G11 w 2026 roku z energią, dystrybucją i VAT (od ok. 1,04 do 1,13 zł zależnie od operatora; sama energia według taryf URE to średnio 495,16 zł/MWh netto). Najdokładniej: podziel kwotę rachunku przez zużyte kWh.',
       efficiency: 'Sprawność zasilacza',
       efficiencyHint: 'Licznik mierzy to, co wchodzi do zasilacza, nie to, co z niego wychodzi',
       yearlyCost: 'Rocznie',
@@ -429,8 +431,9 @@ export const pl: Dictionary = {
       atTheWall: 'Z gniazdka, pod obciążeniem',
       fromIdle: 'Ze spoczynku',
       fromLoad: 'Z obciążenia',
+      working: 'Obliczenie',
       explanation:
-        'Koszt liczony jest od poboru z gniazdka, czyli od wartości prądu stałego podzielonej przez sprawność zasilacza — zestaw 400 W na jednostce Gold płaci jak za 444 W. Większość kalkulatorów pomija ten krok i zaniża rachunek o mniej więcej dziesiątą część. Spoczynek i obciążenie są liczone osobno, bo komputer do grania przez większość życia stoi bezczynnie, a liczenie każdej godziny po szczytowym poborze zawyża wynik kilkukrotnie.',
+        'Krok po kroku: (1) pobór w spoczynku i pod obciążeniem dzielimy przez sprawność zasilacza, co daje pobór z gniazdka; (2) każdy z nich mnożymy przez jego godziny dziennie i sumujemy na rok (365 dni); (3) wynik w kWh mnożymy przez cenę za kWh. Koszt liczony jest od poboru z gniazdka, czyli od wartości prądu stałego podzielonej przez sprawność zasilacza — zestaw 400 W na jednostce Gold płaci jak za 444 W. Większość kalkulatorów pomija ten krok i zaniża rachunek o mniej więcej dziesiątą część. Spoczynek i obciążenie są liczone osobno, bo komputer do grania przez większość życia stoi bezczynnie, a liczenie każdej godziny po szczytowym poborze zawyża wynik kilkukrotnie.',
     },
     noise: {
       title: 'Hałas wentylatorów',
@@ -613,10 +616,11 @@ export const pl: Dictionary = {
       gain: 'Przyrost wydajności',
       cost: 'Orientacyjny koszt',
       perHundred: 'Punktów na 100 zł',
+      points: 'pkt',
       worth: 'zauważalna różnica',
       notWorth: 'trudno będzie to zauważyć',
       explanation:
-        'Poniżej mniej więcej 15 procent różnicy rzadko da się odczuć podczas grania — widać ją na wykresie, a nie w użyciu. Jako koszt liczona jest sama nowa część, a nie różnica między nimi, bo starą odzyskujesz tylko wtedy, gdy faktycznie ją sprzedasz. Punkty na sto złotych służą do porównywania opcji; sama liczba w oderwaniu nic nie znaczy.',
+        'Poniżej mniej więcej 15 procent różnicy rzadko da się odczuć podczas grania — widać ją na wykresie, a nie w użyciu. Jako koszt liczona jest sama nowa część, a nie różnica między nimi, bo starą odzyskujesz tylko wtedy, gdy faktycznie ją sprzedasz. Koszt to środek sprawdzonego przedziału cen nowej części — ceny brutto z polskich sklepów, z datą sprawdzenia podaną pod wynikiem. Punkty na sto złotych służą do porównywania opcji; sama liczba w oderwaniu nic nie znaczy.',
     },
     frames: {
       title: 'Klatki a odświeżanie',
@@ -644,7 +648,7 @@ export const pl: Dictionary = {
       limited: 'slot ogranicza dysk',
       notLimited: 'dysk pracuje z pełną prędkością',
       explanation:
-        'Drugi i trzeci slot M.2 na płycie często pracują w niższej generacji PCIe albo na mniejszej liczbie linii niż pierwszy, a nic nie informuje o tym, że dysk jest hamowany. Praktyczna zasada: najszybszy dysk wkładaj w slot najbliżej procesora, bo to ten podłączony bezpośrednio do niego. Miej przy tym na uwadze, że prędkość sekwencyjna i tak niewiele zmienia przy wczytywaniu gier — decydują tam odczyty losowe, a te są zbliżone między generacjami.',
+        'Drugi i trzeci slot M.2 na płycie często pracują w niższej generacji PCIe albo na mniejszej liczbie linii niż pierwszy, a nic nie informuje o tym, że dysk jest hamowany. Praktyczna zasada: najszybszy dysk wkładaj w slot najbliżej procesora, bo to ten podłączony bezpośrednio do niego. Sprawdź też tabelę współdzielenia linii w instrukcji płyty: na części płyt AM5 i LGA1851 zajęcie dodatkowego slotu M.2 PCIe 5.0 obniża slot karty graficznej do x8, a na starszych płytach zajęty slot M.2 potrafi wyłączyć porty SATA. Miej przy tym na uwadze, że prędkość sekwencyjna i tak niewiele zmienia przy wczytywaniu gier — decydują tam odczyty losowe, a te są zbliżone między generacjami.',
     },
     bottleneck: {
       title: 'Sprawdzenie balansu',
@@ -731,7 +735,8 @@ export const pl: Dictionary = {
   },
 
   prices: {
-    checked: (date: string) => `Ceny sprawdzone ${date}`,
+    checked: (date: string) => `Ceny sprawdzone ${date}. Ceny brutto w złotych z polskich sklepów.`,
+    currencyUnit: 'zł',
     stale: (date: string) =>
       `Ostatnie sprawdzenie cen: ${date}. To zbyt dawno, więc ukrywamy je, dopóki nie zostaną sprawdzone ponownie.`,
     checkCurrent: 'Sprawdź aktualną cenę',
