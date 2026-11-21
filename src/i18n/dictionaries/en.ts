@@ -817,6 +817,77 @@ export const en = {
     repositoryText: 'This site is open source. Corrections are welcome as issues or pull requests.',
   },
 
+  services: {
+    title: 'Help building your computer',
+    lead: 'I can help you choose parts, check a list you already have, put the machine together, or find out why the one you own is misbehaving.',
+    navLabel: 'Build it with me',
+    ctaPrimary: 'Email me',
+    ctaSecondary: 'See my workstation',
+
+    introTitle: 'What this is',
+    introBody:
+      'This site exists so you can build a PC yourself, and I still recommend that you do. If you would rather have someone look over your plan or sit down with you for the assembly, write to me and we will work out how I can help.',
+
+    helpTitle: 'What I can help with',
+    helpLead: 'Any one of these on its own, or all of them in turn.',
+    help: [
+      {
+        title: 'Choosing parts',
+        body: 'Tell me your budget and what the machine is for. You get a specific parts list with the reasoning for each choice, and no push towards expensive parts you would never use.',
+      },
+      {
+        title: 'Checking your parts list',
+        body: 'Already picked your parts and want to be sure they fit together? I will check compatibility, power supply headroom and physical clearances before you buy anything.',
+      },
+      {
+        title: 'Assembly',
+        body: 'Building, cable routing, the operating system, drivers and a BIOS update, so the machine is ready to use rather than a box of parts.',
+      },
+      {
+        title: 'Diagnostics and upgrades',
+        body: 'Machine slowing down, running loud or shutting off? I will look for the cause and tell you honestly whether an upgrade makes sense or a new build is the better route.',
+      },
+    ],
+
+    stepsTitle: 'How it works',
+    stepsLead: 'You can stop after any step and carry on by yourself.',
+    steps: [
+      {
+        title: 'You write to me',
+        body: 'An email with your budget and what the machine is for. Mention any brand or case size preferences too.',
+      },
+      {
+        title: 'You get a parts list',
+        body: 'Specific parts with the reasoning behind every choice. You are welcome to take it, buy everything and build it yourself.',
+      },
+      {
+        title: 'We put it together',
+        body: 'If you want help with the assembly, we pick a time and build it from the parts you bought.',
+      },
+      {
+        title: 'We check that it works',
+        body: 'A test under load, with the operating system and drivers installed, before you start using it.',
+      },
+    ],
+
+    honestTitle: 'Before you write',
+    honestBody:
+      'I am a private person and I help with this myself, so how quickly I reply depends on what else I have on. I do not sell parts and I take no commission from any shop: you buy everything yourself, from a retailer you choose, and the warranty stays with you. That is exactly why I can recommend what I actually think makes sense.',
+
+    contactTitle: 'Get in touch',
+    contactLead: 'Email is fastest — I usually reply the same day.',
+    emailLabel: 'Email',
+    portfolioLabel: 'Portfolio',
+    workstationLabel: 'My workstation',
+    instagramLabel: 'Instagram',
+    facebookLabel: 'Facebook',
+
+    bandTitle: 'Would rather not build it alone?',
+    bandLead:
+      'Write to me and I will help you choose parts, check your list, or put the machine together with you.',
+    bandCta: 'See how it works',
+  },
+
   accessibility: {
     title: 'Accessibility',
     lead: 'What this site does to stay usable for everyone, and where it falls short.',

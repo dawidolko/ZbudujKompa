@@ -6,7 +6,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { LinkCard } from '@/components/ui/Card';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { ChevronDownIcon, StarIcon } from '@/components/ui/Icon';
+import { ArrowRightIcon, ChevronDownIcon, StarIcon } from '@/components/ui/Icon';
 import { Photo, PhotoFigure } from '@/components/ui/Photo';
 import { QuickPicker } from '@/components/tools/QuickPicker';
 import { Carousel } from '@/components/widgets/Carousel';
@@ -573,6 +573,34 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </li>
           ))}
         </ul>
+      </Chapter>
+
+      {/* ---- Help building it ----
+           Last, after every piece of free reference material, so the site
+           reads as help first and an offer of a hand second. It is a plain
+           chapter in the site's own colours, not a banner. */}
+      <Chapter id="build-help" number={11} title={dict.services.bandTitle}>
+        <div className="footprint p-5 md:p-6">
+          <p className="max-w-2xl leading-relaxed text-text-secondary">{dict.services.bandLead}</p>
+          <ul className="spec-label mt-4 flex flex-wrap gap-x-5 gap-y-1">
+            {dict.services.help.map((item) => (
+              <li key={item.title} className="flex items-center gap-2">
+                <span className="size-1.5 shrink-0 rounded-full bg-accent-fg" aria-hidden="true" />
+                {item.title}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5">
+            <ButtonLink
+              href={localePath(typedLocale, '/zloz-u-mnie')}
+              variant="secondary"
+              className="max-w-full whitespace-normal"
+            >
+              {dict.services.bandCta}
+              <ArrowRightIcon className="size-4 shrink-0" aria-hidden="true" />
+            </ButtonLink>
+          </div>
+        </div>
       </Chapter>
 
       <JsonLd

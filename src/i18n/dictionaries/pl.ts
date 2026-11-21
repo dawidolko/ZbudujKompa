@@ -840,6 +840,77 @@ export const pl: Dictionary = {
       'Ten serwis jest otwartoźródłowy. Poprawki mile widziane jako zgłoszenia lub pull requesty.',
   },
 
+  services: {
+    title: 'Pomoc w złożeniu komputera',
+    lead: 'Pomogę dobrać podzespoły, sprawdzić listę, którą już masz, złożyć komputer albo znaleźć przyczynę, gdy obecny sprawia kłopoty.',
+    navLabel: 'Złóż u mnie',
+    ctaPrimary: 'Napisz do mnie',
+    ctaSecondary: 'Zobacz moje stanowisko',
+
+    introTitle: 'Na czym to polega',
+    introBody:
+      'Ten serwis powstał po to, żebyś mógł złożyć komputer samodzielnie — i nadal do tego zachęcam. Jeśli jednak wolisz, żeby ktoś przejrzał twój plan albo usiadł z tobą do montażu, napisz do mnie i ustalimy, jak mogę pomóc.',
+
+    helpTitle: 'W czym mogę pomóc',
+    helpLead: 'W każdej z tych rzeczy osobno albo we wszystkich po kolei.',
+    help: [
+      {
+        title: 'Dobór podzespołów',
+        body: 'Podajesz budżet i to, do czego komputer ma służyć. Dostajesz konkretną listę części z uzasadnieniem każdego wyboru — bez namawiania na droższe rzeczy, których nie wykorzystasz.',
+      },
+      {
+        title: 'Sprawdzenie twojej listy',
+        body: 'Masz już wybrane części i chcesz mieć pewność, że wszystko do siebie pasuje? Sprawdzę zgodność, zapas mocy zasilacza i wymiary, zanim cokolwiek kupisz.',
+      },
+      {
+        title: 'Złożenie komputera',
+        body: 'Montaż, prowadzenie kabli, instalacja systemu, sterowniki i aktualizacja BIOS-u — tak, żeby komputer był gotowy do pracy, a nie pudełkiem z częściami.',
+      },
+      {
+        title: 'Diagnostyka i modernizacja',
+        body: 'Komputer zwalnia, głośno pracuje albo się wyłącza? Poszukam przyczyny i powiem szczerze, czy warto go rozbudować, czy lepiej złożyć nowy.',
+      },
+    ],
+
+    stepsTitle: 'Jak to wygląda krok po kroku',
+    stepsLead: 'Po każdym kroku możesz przejąć sprawę i dalej działać sam.',
+    steps: [
+      {
+        title: 'Piszesz',
+        body: 'Mail z budżetem i tym, do czego komputer ma służyć. Jeśli masz preferencje co do marek albo rozmiaru obudowy, też o nich napisz.',
+      },
+      {
+        title: 'Dostajesz listę części',
+        body: 'Konkretne podzespoły z wyjaśnieniem każdego wyboru. Możesz ją wziąć, kupić wszystko i złożyć komputer sam — to w porządku.',
+      },
+      {
+        title: 'Składamy komputer',
+        body: 'Jeśli chcesz pomocy przy montażu, umawiamy się na termin i składamy go z części, które kupiłeś.',
+      },
+      {
+        title: 'Sprawdzamy, czy działa',
+        body: 'Test pod obciążeniem, zainstalowany system i sterowniki — zanim zaczniesz z niego korzystać.',
+      },
+    ],
+
+    honestTitle: 'Zanim napiszesz',
+    honestBody:
+      'Jestem osobą prywatną i pomagam w tym sam, więc czas odpowiedzi zależy od tego, ile mam akurat na głowie. Nie sprzedaję części i nie biorę prowizji od żadnego sklepu: wszystko kupujesz sam, tam, gdzie chcesz, a gwarancja zostaje przy tobie. Dzięki temu polecam to, co faktycznie uważam za sensowne.',
+
+    contactTitle: 'Kontakt',
+    contactLead: 'Najszybciej mailem — zwykle odpisuję tego samego dnia.',
+    emailLabel: 'E-mail',
+    portfolioLabel: 'Portfolio',
+    workstationLabel: 'Moje stanowisko',
+    instagramLabel: 'Instagram',
+    facebookLabel: 'Facebook',
+
+    bandTitle: 'Wolisz nie składać sam?',
+    bandLead:
+      'Napisz do mnie — pomogę dobrać części, sprawdzę twoją listę albo razem złożymy komputer.',
+    bandCta: 'Zobacz, jak to wygląda',
+  },
+
   accessibility: {
     title: 'Dostępność',
     lead: 'Co ten serwis robi, żeby był używalny dla każdego, i gdzie ma braki.',

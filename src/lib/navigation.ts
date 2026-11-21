@@ -256,6 +256,7 @@ export function allContentRoutes(): string[] {
     '/mapa-serwisu',
     '/o-serwisie',
     '/kontakt',
+    '/zloz-u-mnie',
   ];
 }
 
@@ -282,6 +283,7 @@ export const footerNavigation: { label: Localized; links: NavLink[] }[] = [
       { href: '/zrodla', label: { pl: 'Źródła', en: 'Sources' } },
       { href: '/mapa-serwisu', label: { pl: 'Mapa serwisu', en: 'Site map' } },
       { href: '/kontakt', label: { pl: 'Kontakt', en: 'Contact' } },
+      { href: '/zloz-u-mnie', label: { pl: 'Złóż u mnie', en: 'Build it with me' } },
       { href: '/dostepnosc', label: { pl: 'Dostępność', en: 'Accessibility' } },
     ],
   },

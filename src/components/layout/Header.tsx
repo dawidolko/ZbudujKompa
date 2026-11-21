@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Logo } from '@/components/brand/Logo';
-import { ChevronDownIcon, CloseIcon, MenuIcon } from '@/components/ui/Icon';
+import { ArrowRightIcon, ChevronDownIcon, CloseIcon, MenuIcon } from '@/components/ui/Icon';
 import { getDictionary } from '@/i18n';
 import { localePath, type Locale } from '@/i18n/config';
 import { navigation } from '@/lib/navigation';
@@ -223,6 +223,21 @@ export function Header({ locale }: { locale: Locale }) {
         </nav>
 
         <div className="ml-auto flex items-stretch border-l border-border-subtle">
+          {/* Help building a computer: one more cell of the strip, in the
+              navigation's own colours, so it reads as a page of the site
+              rather than an advert beside it. */}
+          <Link
+            href={localePath(locale, '/zloz-u-mnie')}
+            aria-current={isCurrent('/zloz-u-mnie') ? 'page' : undefined}
+            className={cn(
+              'hidden items-center border-r border-border-subtle px-3.5 text-sm font-semibold whitespace-nowrap transition-colors focus-ring-inset xl:inline-flex',
+              isCurrent('/zloz-u-mnie')
+                ? 'text-text-primary shadow-[inset_0_-3px_0_var(--accent-fg)]'
+                : 'text-text-brand hover:bg-bg-muted hover:text-text-primary',
+            )}
+          >
+            {dict.services.navLabel}
+          </Link>
           <LanguageSwitcher locale={locale} />
           <ThemeToggle locale={locale} className="border-l border-border-subtle" />
 
@@ -246,6 +261,17 @@ export function Header({ locale }: { locale: Locale }) {
         className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto border-t border-border-strong bg-bg-base lg:hidden"
       >
         <nav aria-label={dict.nav.mainNavigation} className="container-page py-4">
+          {/* First, since the desktop strip shows it beside the menu and it
+              would otherwise sit below every section here. */}
+          <Link
+            href={localePath(locale, '/zloz-u-mnie')}
+            aria-current={isCurrent('/zloz-u-mnie') ? 'page' : undefined}
+            className="mb-5 flex min-h-11 items-center justify-between gap-3 border border-border-default px-3 py-2 text-sm font-semibold text-text-brand transition-colors hover:bg-bg-muted hover:text-text-primary focus-ring"
+          >
+            {dict.services.navLabel}
+            <ArrowRightIcon className="size-4 shrink-0" aria-hidden="true" />
+          </Link>
+
           <ul className="flex flex-col gap-5">
             {navigation.map((section) => (
               <li key={section.id}>

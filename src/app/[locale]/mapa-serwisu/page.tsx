@@ -115,6 +115,7 @@ export default async function SiteMapPage({ params }: { params: Promise<Params> 
                 { href: '/o-serwisie', label: dict.about.title },
                 { href: '/zrodla', label: dict.resources.title },
                 { href: '/kontakt', label: dict.contact.title },
+                { href: '/zloz-u-mnie', label: dict.services.title },
                 { href: '/dostepnosc', label: dict.accessibility.title },
                 { href: '/mapa-serwisu', label: dict.sitemap.title },
               ].map((link) => (
