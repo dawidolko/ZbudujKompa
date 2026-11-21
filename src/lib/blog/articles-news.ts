@@ -122,8 +122,8 @@ export const newsArticles: Article[] = [
       {
         type: 'paragraph',
         text: {
-          pl: 'Wokół ATX 3.1 narosło nieporozumienie: standard nie podnosi wymagań co do znoszenia chwilowych skoków poboru. Te są identyczne jak w ATX 3.0 — 200 procent mocy znamionowej przez 100 mikrosekund, 180 procent przez milisekundę.',
-          en: 'A misunderstanding has grown around ATX 3.1: the standard does not raise the requirements for surviving transient spikes. Those are identical to ATX 3.0 — 200 per cent of rated power for 100 microseconds, 180 per cent for a millisecond.',
+          pl: 'Wokół ATX 3.1 narosło nieporozumienie: standard nie podnosi wymagań co do znoszenia chwilowych skoków poboru. Poziomy pozostają takie jak w ATX 3.0 — 200 procent mocy znamionowej przez 100 mikrosekund, 180 procent przez milisekundę — zmieniły się tylko szczegóły procedury testowej.',
+          en: 'A misunderstanding has grown around ATX 3.1: the standard does not raise the requirements for surviving transient spikes. The levels stay as in ATX 3.0 — 200 per cent of rated power for 100 microseconds, 180 per cent for a millisecond — and only details of the test procedure changed.',
         },
       },
       {
@@ -157,8 +157,8 @@ export const newsArticles: Article[] = [
       en: 'Seven mistakes people make on a first build',
     },
     summary: {
-      pl: 'Zebrane z setek zgłoszeń „nie startuje". Wszystkie są odwracalne, a większość zajmuje minutę.',
-      en: 'Collected from hundreds of "it will not start" reports. All are reversible, and most take a minute to fix.',
+      pl: 'Najczęstsze przyczyny w wątkach „nie startuje". Prawie wszystkie są niegroźne, a większość naprawisz w minutę.',
+      en: 'The usual causes behind "it will not start" threads. Nearly all are harmless, and most take a minute to fix.',
     },
     body: [
       {
@@ -197,8 +197,8 @@ export const newsArticles: Article[] = [
         tone: 'success',
         label: { pl: 'Dobra wiadomość', en: 'The good news' },
         text: {
-          pl: 'Żaden z tych błędów niczego nie niszczy. Każdy da się cofnąć, a sześć z siedmiu zajmuje mniej niż minutę.',
-          en: 'None of these mistakes damages anything. Every one is reversible, and six of the seven take under a minute.',
+          pl: 'Prawie wszystkie te błędy da się cofnąć bez szkody, a pięć z siedmiu zajmuje mniej niż minutę. Wyjątkiem jest dystans pod miejscem bez otworu — zwarcie może uszkodzić płytę, dlatego sprawdź dystanse, zanim ją przykręcisz.',
+          en: 'Nearly all of these can be undone without harm, and five of the seven take under a minute. The exception is a standoff under a spot with no hole — the short can damage the board, so check the standoffs before you screw it in.',
         },
       },
     ],

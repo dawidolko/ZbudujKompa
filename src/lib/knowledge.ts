@@ -125,8 +125,8 @@ export const faq: FaqEntry[] = [
       en: 'Does a self-built PC cost less than a prebuilt one?',
     },
     answer: {
-      pl: 'Zwykle tak, ale różnica jest mniejsza, niż się powszechnie sądzi — najczęściej od 10 do 20 procent. Realna korzyść leży gdzie indziej: sam wybierasz każdy podzespół, więc producent nie oszczędzi na zasilaczu ani chłodzeniu, których w specyfikacji gotowego zestawu często się nie wymienia.',
-      en: 'Usually yes, but the gap is smaller than commonly assumed — typically 10 to 20 per cent. The real benefit lies elsewhere: you choose every part, so no manufacturer economises on the power supply or cooler, which prebuilt specifications frequently leave unlisted.',
+      pl: 'Zwykle tak, ale różnica bywa mniejsza, niż się powszechnie sądzi, i zależy od promocji oraz cen części w danym momencie. Realna korzyść leży gdzie indziej: sam wybierasz każdy podzespół, więc producent nie oszczędzi na zasilaczu ani chłodzeniu, których w specyfikacji gotowego zestawu często się nie wymienia.',
+      en: 'Usually yes, but the gap is often smaller than commonly assumed, and it depends on current part prices and promotions. The real benefit lies elsewhere: you choose every part, so no manufacturer economises on the power supply or cooler, which prebuilt specifications frequently leave unlisted.',
     },
   },
   {

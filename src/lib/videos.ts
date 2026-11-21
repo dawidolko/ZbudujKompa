@@ -188,8 +188,8 @@ export const videos: Video[] = [
     language: 'en',
     dated: true,
     note: {
-      pl: 'Starszy materiał, ale zasada się nie zmieniła: dwa moduły zamiast czterech to pewniejszy profil pamięci.',
-      en: 'An older piece, but the principle has not changed: two modules rather than four holds a memory profile more reliably.',
+      pl: 'Starszy test DDR4 porównujący cztery moduły z dwoma przy tej samej pojemności. Jego wnioski dotyczą DDR4 — przy DDR5 cztery moduły utrudniają utrzymanie profilu pamięci, dlatego polecamy dwa.',
+      en: 'An older DDR4 test comparing four modules with two at the same capacity. Its conclusions are about DDR4 — on DDR5, four modules make the rated profile harder to hold, which is why we recommend two.',
     },
   },
   {
