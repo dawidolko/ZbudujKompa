@@ -14,6 +14,12 @@ import { priceOf, tierOf } from './pricing.ts';
  * `memoryType` is a single value, never a list. No board takes both DDR4 and
  * DDR5 — the choice is fixed the moment you buy it, and modelling it as a list
  * would let the checker approve a combination that cannot exist.
+ *
+ * `m2` and `fanHeaders` are read from the manufacturer's specification page
+ * in `specSource`. Lane widths are for Ryzen 9000/7000 and the current Intel
+ * generation; Ryzen 8000 APUs run some slots narrower, which the page also
+ * lists. `fanHeaders` counts every 4-pin fan and pump header — CPU, CPU_OPT,
+ * pump and system — because each of them can drive a fan.
  */
 export const motherboards: Motherboard[] = [
   /* ---------------------------------------------------------------- AM5 --- */
@@ -27,7 +33,14 @@ export const motherboards: Motherboard[] = [
     formFactor: 'Micro-ATX',
     memoryType: 'ddr5',
     memorySlots: 4,
-    m2Slots: 2,
+    m2Slots: 3,
+    m2: [
+      { label: 'M2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M2_2', gen: 4, lanes: 4, wiredTo: 'chipset' },
+      { label: 'M2_3', gen: 4, lanes: 2, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 5,
+    specSource: 'https://www.asrock.com/mb/AMD/B650M%20Pro%20RS/index.asp#Specification',
     vrmRating: 130,
     wifi: false,
     tier: tierOf('b650m-pro-rs'),
@@ -49,6 +62,23 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 4,
     m2Slots: 3,
+    m2: [
+      { label: 'M.2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_2', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      {
+        label: 'M.2_3',
+        gen: 4,
+        lanes: 4,
+        wiredTo: 'chipset',
+        note: {
+          pl: 'Zajęcie M.2_3 wyłącza gniazdo PCIEX16_2.',
+          en: 'Populating M.2_3 disables the PCIEX16_2 slot.',
+        },
+      },
+    ],
+    fanHeaders: 7,
+    specSource:
+      'https://www.asus.com/motherboards-components/motherboards/tuf-gaming/tuf-gaming-b650-plus-wifi/techspec/',
     vrmRating: 180,
     wifi: true,
     tier: tierOf('tuf-b650-plus-wifi'),
@@ -70,6 +100,23 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 4,
     m2Slots: 4,
+    m2: [
+      { label: 'M.2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      {
+        label: 'M.2_2',
+        gen: 5,
+        lanes: 4,
+        wiredTo: 'cpu',
+        note: {
+          pl: 'Dzieli linie z tylnymi portami USB 40 Gb/s — przy zajętym M.2_2 obie strony domyślnie pracują w x2.',
+          en: 'Shares lanes with the rear USB 40 Gbps ports — with M.2_2 in use both run at x2 by default.',
+        },
+      },
+      { label: 'M.2_3', gen: 4, lanes: 4, wiredTo: 'chipset' },
+      { label: 'M.2_4', gen: 4, lanes: 4, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 8,
+    specSource: 'https://www.msi.com/Motherboard/MAG-X870E-TOMAHAWK-WIFI/Specification',
     vrmRating: 260,
     wifi: true,
     tier: tierOf('x870e-tomahawk'),
@@ -91,6 +138,12 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 2,
     m2Slots: 2,
+    m2: [
+      { label: 'M2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M2_2', gen: 4, lanes: 4, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 3,
+    specSource: 'https://pg.asrock.com/mb/AMD/B650I%20Lightning%20WiFi/index.asp#Specification',
     vrmRating: 150,
     wifi: true,
     tier: tierOf('b650i-lightning'),
@@ -111,6 +164,9 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 2,
     m2Slots: 1,
+    m2: [{ label: 'M.2', gen: 4, lanes: 4, wiredTo: 'cpu' }],
+    fanHeaders: 3,
+    specSource: 'https://www.gigabyte.com/Motherboard/B650I-AX-rev-12/sp',
     vrmRating: 120,
     wifi: true,
     tier: tierOf('b650i-ax'),
@@ -133,6 +189,21 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr4',
     memorySlots: 4,
     m2Slots: 2,
+    m2: [
+      { label: 'M2_1', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      {
+        label: 'M2_2',
+        gen: 3,
+        lanes: 4,
+        wiredTo: 'chipset',
+        note: {
+          pl: 'Dysk NVMe w M.2_2 wyłącza gniazdo PCI_E3.',
+          en: 'An NVMe drive in M.2_2 disables the PCI_E3 slot.',
+        },
+      },
+    ],
+    fanHeaders: 8,
+    specSource: 'https://www.msi.com/Motherboard/B550-A-PRO/Specification',
     vrmRating: 140,
     wifi: false,
     tier: tierOf('b550-a-pro'),
@@ -154,6 +225,14 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 4,
     m2Slots: 4,
+    m2: [
+      { label: 'M.2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_2', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_3', gen: 4, lanes: 4, wiredTo: 'chipset' },
+      { label: 'M.2_4', gen: 4, lanes: 4, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 8,
+    specSource: 'https://www.msi.com/Motherboard/MAG-Z890-TOMAHAWK-WIFI/Specification',
     vrmRating: 280,
     wifi: true,
     tier: tierOf('z890-tomahawk'),
@@ -173,7 +252,14 @@ export const motherboards: Motherboard[] = [
     formFactor: 'Micro-ATX',
     memoryType: 'ddr5',
     memorySlots: 4,
-    m2Slots: 2,
+    m2Slots: 3,
+    m2: [
+      { label: 'M.2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_2', gen: 4, lanes: 4, wiredTo: 'chipset' },
+      { label: 'M.2_3', gen: 4, lanes: 2, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 5,
+    specSource: 'https://www.msi.com/Motherboard/PRO-B860M-A-WIFI/Specification',
     vrmRating: 160,
     wifi: true,
     tier: tierOf('b860m-pro'),
@@ -195,6 +281,13 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 4,
     m2Slots: 2,
+    m2: [
+      { label: 'M.2_1', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_2', gen: 4, lanes: 4, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 4,
+    specSource:
+      'https://www.asus.com/motherboards-components/motherboards/prime/prime-b760m-a/techspec/',
     vrmRating: 150,
     wifi: false,
     tier: tierOf('prime-b760m-a'),
@@ -215,6 +308,21 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr4',
     memorySlots: 4,
     m2Slots: 2,
+    m2: [
+      { label: 'M.2_1', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      {
+        label: 'M.2_2',
+        gen: 4,
+        lanes: 4,
+        wiredTo: 'chipset',
+        note: {
+          pl: 'Dysk M.2 SATA w tym gnieździe wyłącza port SATA5.',
+          en: 'An M.2 SATA drive in this slot disables the SATA5 port.',
+        },
+      },
+    ],
+    fanHeaders: 3,
+    specSource: 'https://www.msi.com/Motherboard/PRO-B760M-P-DDR4/Specification',
     vrmRating: 140,
     wifi: false,
     tier: tierOf('b760m-ddr4'),
@@ -235,6 +343,25 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 4,
     m2Slots: 5,
+    m2: [
+      { label: 'M.2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_2', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_3', gen: 4, lanes: 4, wiredTo: 'chipset' },
+      { label: 'M.2_4', gen: 4, lanes: 4, wiredTo: 'chipset' },
+      {
+        label: 'ROG Gen-Z.2',
+        gen: 5,
+        lanes: 4,
+        wiredTo: 'cpu',
+        note: {
+          pl: 'Gniazdo na dołączonej karcie M.2 w PCIEX16_2 — obniża gniazdo karty graficznej do x8.',
+          en: 'On the bundled M.2 card in PCIEX16_2 — it drops the graphics slot to x8.',
+        },
+      },
+    ],
+    fanHeaders: 8,
+    specSource:
+      'https://rog.asus.com/motherboards/rog-crosshair/rog-crosshair-x670e-hero-model/spec/',
     vrmRating: 300,
     wifi: true,
     tier: tierOf('x670e-hero'),
@@ -255,6 +382,13 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 4,
     m2Slots: 3,
+    m2: [
+      { label: 'M.2_1', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_2', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M.2_3', gen: 4, lanes: 4, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 8,
+    specSource: 'https://www.msi.com/Motherboard/MAG-B850-TOMAHAWK-WIFI/Specification',
     vrmRating: 220,
     wifi: true,
     tier: tierOf('b850-tomahawk'),
@@ -274,7 +408,13 @@ export const motherboards: Motherboard[] = [
     formFactor: 'Micro-ATX',
     memoryType: 'ddr5',
     memorySlots: 2,
-    m2Slots: 1,
+    m2Slots: 2,
+    m2: [
+      { label: 'M2_1', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M2_2', gen: 3, lanes: 2, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 4,
+    specSource: 'https://www.asrock.com/mb/AMD/A620M-HDVM.2/index.asp#Specification',
     vrmRating: 90,
     wifi: false,
     tier: tierOf('a620m-hdv'),
@@ -295,6 +435,14 @@ export const motherboards: Motherboard[] = [
     memoryType: 'ddr5',
     memorySlots: 4,
     m2Slots: 4,
+    m2: [
+      { label: 'M2A_CPU', gen: 5, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M2B_CPU', gen: 4, lanes: 4, wiredTo: 'cpu' },
+      { label: 'M2Q_SB', gen: 4, lanes: 4, wiredTo: 'chipset' },
+      { label: 'M2M_SB', gen: 4, lanes: 4, wiredTo: 'chipset' },
+    ],
+    fanHeaders: 6,
+    specSource: 'https://www.gigabyte.com/Motherboard/Z890-AORUS-ELITE-WIFI7/sp',
     vrmRating: 270,
     wifi: true,
     tier: tierOf('z890-aorus-elite'),

@@ -35,6 +35,9 @@ export const storage: Storage[] = [
     brand: 'Samsung',
     kind: 'nvme',
     capacity: 2000,
+    power: 4.6,
+    powerSource:
+      'https://www.samsung.com/uk/memory-storage/nvme-ssd/990-evo-plus-2tb-nvme-pcie-gen-4-mz-v9s2t0bw/',
     readSpeed: 7250,
     pcieGen: 4,
     tbw: 1200,
@@ -53,6 +56,9 @@ export const storage: Storage[] = [
     brand: 'Samsung',
     kind: 'nvme',
     capacity: 2000,
+    power: 8.5,
+    powerSource:
+      'https://www.samsung.com/us/memory-storage/nvme-ssd/990-pro-2tb-nvme-pcie-gen-4-mz-v9p2t0b-am/',
     readSpeed: 7450,
     pcieGen: 4,
     tbw: 1200,
@@ -70,6 +76,9 @@ export const storage: Storage[] = [
     brand: 'Western Digital',
     kind: 'hdd',
     capacity: 4000,
+    power: 4.8,
+    powerSource:
+      'https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/product/internal-drives/wd-blue-hdd/product-brief-western-digital-wd-blue-pc-hdd.pdf',
     readSpeed: 180,
     tier: tierOf('wd-blue-4tb-hdd'),
     price: priceOf('wd-blue-4tb-hdd'),
@@ -85,6 +94,10 @@ export const storage: Storage[] = [
     brand: 'Crucial',
     kind: 'nvme',
     capacity: 2000,
+    /* Crucial's flyer gives no power figure; this is the peak Tom's Hardware
+       measured, matching the 11.5 W the drive itself reports over SMART. */
+    power: 11.5,
+    powerSource: 'https://www.tomshardware.com/pc-components/ssds/crucial-t705-2tb-ssd-review/2',
     readSpeed: 14500,
     pcieGen: 5,
     tbw: 1200,
@@ -136,6 +149,9 @@ export const storage: Storage[] = [
     brand: 'Seagate',
     kind: 'hdd',
     capacity: 8000,
+    power: 10.1,
+    powerSource:
+      'https://www.seagate.com/www-content/datasheets/pdfs/ironwolf-12tb-emea-DS1904-21-2207US-en_EU.pdf',
     readSpeed: 210,
     tier: tierOf('ironwolf-8tb'),
     price: priceOf('ironwolf-8tb'),

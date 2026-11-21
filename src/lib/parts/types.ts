@@ -73,6 +73,17 @@ export type Cpu = PartBase & {
   unlocked: boolean;
 };
 
+/** One M.2 storage slot: the link it runs at and where its lanes come from. */
+export type M2Slot = {
+  /** The label printed on the board and in the manual, e.g. "M.2_1". */
+  label: string;
+  gen: 3 | 4 | 5;
+  lanes: 2 | 4;
+  wiredTo: 'cpu' | 'chipset';
+  /** Lane sharing or another caveat the manufacturer lists for this slot. */
+  note?: Localized;
+};
+
 export type Motherboard = PartBase & {
   category: 'motherboard';
   socket: string;
@@ -81,6 +92,12 @@ export type Motherboard = PartBase & {
   memoryType: 'ddr4' | 'ddr5';
   memorySlots: number;
   m2Slots: number;
+  /** Every M.2 storage slot, fastest first, from the manufacturer's page. */
+  m2: M2Slot[];
+  /** 4-pin fan and pump headers in total (CPU, CPU_OPT, pump and system). */
+  fanHeaders: number;
+  /** Manufacturer specification page the slot and header figures come from. */
+  specSource: string;
   /** Maximum sustained CPU power this board's VRM comfortably supports. */
   vrmRating: number;
   wifi: boolean;
@@ -98,6 +115,29 @@ export type Ram = PartBase & {
   height: number;
 };
 
+/**
+ * The power connectors a graphics card needs.
+ *
+ * Wattage alone does not tell you which cables a supply must have, so this
+ * is recorded as the vendor states it rather than derived from board power.
+ */
+export type GpuPower = {
+  /** The socket on the card: the 16-pin 12V-2x6, or classic 8-pin PCIe. */
+  connector: '12v-2x6' | '8pin';
+  /**
+   * 8-pin PCIe cables needed: the card's own sockets, or for a 12V-2x6 card
+   * the inputs of the adapter in the box.
+   */
+  pcie8pin: number;
+  /**
+   * Minimum rating of a native 12V-2x6 cable, in watts, where the vendor
+   * lists one. On an 8-pin card it is the 16-pin alternative NVIDIA accepts.
+   */
+  cableRating?: number;
+  /** Vendor specification page the figures were read from. */
+  source: string;
+};
+
 export type Gpu = PartBase & {
   category: 'gpu';
   vram: number;
@@ -105,6 +145,8 @@ export type Gpu = PartBase & {
   tdp: number;
   /** Manufacturer's recommended PSU wattage. */
   recommendedPsu: number;
+  /** Power connectors the vendor specifies for the card. */
+  power: GpuPower;
   length: number;
   slots: number;
   /** Relative rasterisation performance, 0-100. */
@@ -122,6 +164,14 @@ export type Storage = PartBase & {
   pcieGen?: 3 | 4 | 5;
   /** Endurance in terabytes written, where the manufacturer publishes it. */
   tbw?: number;
+  /**
+   * Highest published power draw in watts (maximum, or average active where
+   * that is all the datasheet gives). Absent where the maker publishes none,
+   * in which case the PSU calculator falls back to a generic figure.
+   */
+  power?: number;
+  /** Where `power` comes from. */
+  powerSource?: string;
 };
 
 export type Psu = PartBase & {
@@ -154,6 +204,12 @@ export type Case = PartBase & {
 export type Cooler = PartBase & {
   category: 'cooler';
   kind: 'air' | 'aio';
+  /**
+   * Physical design of an air cooler. The thermal calculator maps it onto a
+   * cooler class, because a single and a dual tower differ far more than
+   * their wattage ratings suggest.
+   */
+  design?: 'boxed' | 'low-profile' | 'single-tower' | 'dual-tower';
   /** Sockets this cooler ships mounting hardware for. */
   sockets: string[];
   /** Sustained wattage it can dissipate without becoming loud. */

@@ -12,6 +12,13 @@ import { priceOf, tierOf } from './pricing.ts';
  * `length` and `slots` exist because they are the two specifications that
  * actually stop a build — a card that does not physically fit the case is a
  * problem no amount of performance makes up for.
+ *
+ * `power` is copied from the vendor's own specification page, linked in
+ * `source`: NVIDIA's "Supplementary Power Connectors", AMD's "Additional
+ * Power Connector" and Intel's reference-card "Power Connectors". AMD sells
+ * no reference RX 9000 card, so a partner model can differ — some RX 9070 XT
+ * designs use three 8-pin plugs or a 12V-2x6 — and the figure here is the
+ * one AMD specifies.
  */
 export const gpus: Gpu[] = [
   {
@@ -24,6 +31,12 @@ export const gpus: Gpu[] = [
     vram: 32,
     tdp: 575,
     recommendedPsu: 1000,
+    power: {
+      connector: '12v-2x6',
+      pcie8pin: 4,
+      cableRating: 600,
+      source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5090/',
+    },
     length: 336,
     slots: 3,
     performanceScore: 100,
@@ -44,6 +57,12 @@ export const gpus: Gpu[] = [
     vram: 16,
     tdp: 360,
     recommendedPsu: 850,
+    power: {
+      connector: '12v-2x6',
+      pcie8pin: 3,
+      cableRating: 450,
+      source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5080/',
+    },
     length: 304,
     slots: 3,
     performanceScore: 82,
@@ -63,6 +82,12 @@ export const gpus: Gpu[] = [
     vram: 16,
     tdp: 300,
     recommendedPsu: 750,
+    power: {
+      connector: '12v-2x6',
+      pcie8pin: 2,
+      cableRating: 300,
+      source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/',
+    },
     length: 300,
     slots: 3,
     performanceScore: 70,
@@ -82,6 +107,12 @@ export const gpus: Gpu[] = [
     vram: 12,
     tdp: 250,
     recommendedPsu: 650,
+    power: {
+      connector: '12v-2x6',
+      pcie8pin: 2,
+      cableRating: 300,
+      source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/',
+    },
     length: 242,
     slots: 2,
     performanceScore: 58,
@@ -101,6 +132,12 @@ export const gpus: Gpu[] = [
     vram: 16,
     tdp: 304,
     recommendedPsu: 750,
+    power: {
+      connector: '8pin',
+      pcie8pin: 2,
+      source:
+        'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070xt.html',
+    },
     length: 287,
     slots: 3,
     performanceScore: 66,
@@ -121,6 +158,12 @@ export const gpus: Gpu[] = [
     vram: 16,
     tdp: 180,
     recommendedPsu: 600,
+    power: {
+      connector: '8pin',
+      pcie8pin: 1,
+      cableRating: 300,
+      source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/',
+    },
     length: 242,
     slots: 2,
     performanceScore: 44,
@@ -140,6 +183,12 @@ export const gpus: Gpu[] = [
     vram: 16,
     tdp: 160,
     recommendedPsu: 550,
+    power: {
+      connector: '8pin',
+      pcie8pin: 1,
+      source:
+        'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9060xt.html',
+    },
     length: 250,
     slots: 2,
     performanceScore: 41,
@@ -159,6 +208,12 @@ export const gpus: Gpu[] = [
     vram: 8,
     tdp: 145,
     recommendedPsu: 550,
+    power: {
+      connector: '8pin',
+      pcie8pin: 1,
+      cableRating: 300,
+      source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/',
+    },
     length: 200,
     slots: 2,
     performanceScore: 34,
@@ -178,6 +233,12 @@ export const gpus: Gpu[] = [
     vram: 8,
     tdp: 165,
     recommendedPsu: 550,
+    power: {
+      connector: '8pin',
+      pcie8pin: 1,
+      source:
+        'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series/amd-radeon-rx-7600.html',
+    },
     length: 204,
     slots: 2,
     performanceScore: 28,
@@ -197,6 +258,12 @@ export const gpus: Gpu[] = [
     vram: 16,
     tdp: 220,
     recommendedPsu: 650,
+    power: {
+      connector: '8pin',
+      pcie8pin: 2,
+      source:
+        'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070.html',
+    },
     length: 270,
     slots: 2,
     performanceScore: 56,
@@ -216,6 +283,12 @@ export const gpus: Gpu[] = [
     vram: 8,
     tdp: 130,
     recommendedPsu: 500,
+    power: {
+      connector: '8pin',
+      pcie8pin: 1,
+      cableRating: 300,
+      source: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5050/',
+    },
     length: 200,
     slots: 2,
     performanceScore: 26,
@@ -235,6 +308,12 @@ export const gpus: Gpu[] = [
     vram: 12,
     tdp: 190,
     recommendedPsu: 600,
+    power: {
+      connector: '8pin',
+      pcie8pin: 1,
+      source:
+        'https://www.intel.com/content/www/us/en/products/sku/241598/intel-arc-b580-graphics/specifications.html',
+    },
     length: 272,
     slots: 2,
     performanceScore: 32,
