@@ -9,7 +9,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { getDictionary } from '@/i18n';
 import { isLocale, localePath, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles } from '@/lib/cooling';
-import { priceRecord } from '@/lib/parts';
+import { catalogueCheckedAt } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
@@ -118,7 +118,13 @@ export default async function CoolingPage({ params }: { params: Promise<Params> 
         </div>
         <PriceChecked
           locale={typedLocale}
-          checkedAt={priceRecord('class:air-tower-single').checkedAt}
+          checkedAt={
+            coolingProfiles
+              .map((profile) => profile.price.checkedAt)
+              .filter((date): date is string => Boolean(date))
+              .sort()
+              .at(0) ?? catalogueCheckedAt()
+          }
           className="mt-3"
         />
       </section>

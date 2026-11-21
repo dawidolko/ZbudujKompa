@@ -12,7 +12,7 @@ import { getDictionary } from '@/i18n';
 import { isLocale, locales, localeTags, type Locale } from '@/i18n/config';
 import { coolingProfiles, getCoolingProfile } from '@/lib/cooling';
 import { getOpinionsFor } from '@/lib/knowledge';
-import { priceRecord } from '@/lib/parts';
+import { catalogueCheckedAt } from '@/lib/parts';
 import { absoluteLocaleUrl, canonicalUrl, ogImage, seoDescription, seoTitle } from '@/lib/site';
 import { t } from '@/lib/utils';
 
@@ -122,7 +122,7 @@ export default async function CoolingDetailPage({ params }: { params: Promise<Pa
         </dl>
         <PriceChecked
           locale={typedLocale}
-          checkedAt={priceRecord(`class:${profile.slug}`).checkedAt}
+          checkedAt={profile.price.checkedAt ?? catalogueCheckedAt()}
           className="mt-3"
         />
       </section>

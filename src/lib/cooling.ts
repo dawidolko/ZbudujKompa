@@ -1,4 +1,4 @@
-import { priceOf } from './parts/pricing.ts';
+import { groupPriceOf, priceOf } from './parts/pricing.ts';
 import type { CoolingProfile, CoolingType } from './types';
 
 /**
@@ -7,7 +7,10 @@ import type { CoolingProfile, CoolingType } from './types';
  * Split by class rather than by product, because the choice a reader actually
  * faces is "air or AiO", not "which of these forty coolers". Wattage and noise
  * figures are realistic bands for the class, not headline numbers from a single
- * product's marketing page. Prices come from the dated records in `parts/prices.ts`.
+ * product's marketing page. A class price is derived from the catalogue coolers
+ * that belong to it, so it follows their dated records in `parts/prices.ts` and
+ * every price refresh; only the custom loop, which no shop sells as one kit,
+ * keeps a record of its own.
  */
 export const coolingProfiles: CoolingProfile[] = [
   {
@@ -27,7 +30,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 95, max: 180 },
     noise: { min: 24, max: 34 },
-    price: priceOf('class:air-tower-single'),
+    price: groupPriceOf(['assassin-x-120', 'nh-u12a']),
     pros: {
       pl: [
         'Brak pompy — nic nie może przeciec ani się zatrzeć',
@@ -76,7 +79,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 180, max: 280 },
     noise: { min: 26, max: 36 },
-    price: priceOf('class:air-tower-dual'),
+    price: groupPriceOf(['peerless-assassin-120', 'phantom-spirit-120', 'ak620', 'nh-d15-g2']),
     pros: {
       pl: [
         'Wydajność porównywalna z chłodnicą 240 mm',
@@ -123,7 +126,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 150, max: 250 },
     noise: { min: 28, max: 38 },
-    price: priceOf('class:aio-240'),
+    price: groupPriceOf(['liquid-freezer-iii-240']),
     pros: {
       pl: [
         'Wolna przestrzeń wokół gniazda procesora',
@@ -170,7 +173,7 @@ export const coolingProfiles: CoolingProfile[] = [
     },
     wattage: { min: 220, max: 350 },
     noise: { min: 30, max: 40 },
-    price: priceOf('class:aio-360'),
+    price: groupPriceOf(['liquid-freezer-iii-pro-360', 'liquid-freezer-iii-360', 'kraken-360']),
     pros: {
       pl: [
         'Najwyższa wydajność wśród popularnych gotowych zestawów',

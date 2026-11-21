@@ -1586,8 +1586,7 @@ export const priceRecords: Record<string, PriceRecord> = {
         url: 'https://www.ceneo.pl/;szukaj-amd+wraith+stealth',
       },
     ],
-    note: 'Free in a boxed Ryzen. 28 zł is the loose unit from nine shops.',
-    manual: true,
+    note: 'Free in a boxed Ryzen; the figures are the loose unit, refreshed like any other part.',
   },
   'core-i5-14400': {
     min: 722,
@@ -1670,70 +1669,6 @@ export const priceRecords: Record<string, PriceRecord> = {
       },
     ],
     note: 'Ten offers on Ceneo for the black version, ACFRE00180A.',
-  },
-  'class:air-tower-single': {
-    min: 80,
-    max: 579,
-    checkedAt: '2026-11-06',
-    sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-thermalright+assassin+x+120+r+se',
-      },
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-noctua+nh-u12a',
-      },
-    ],
-    manual: true,
-  },
-  'class:air-tower-dual': {
-    min: 172,
-    max: 689,
-    checkedAt: '2026-11-06',
-    sources: [
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-thermalright+peerless+assassin+120+se',
-      },
-      {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=noctua%20nh-d15%20g2',
-      },
-    ],
-    manual: true,
-  },
-  'class:aio-240': {
-    min: 349,
-    max: 429,
-    checkedAt: '2026-11-06',
-    sources: [
-      {
-        label: 'Morele',
-        url: 'https://www.morele.net/wyszukiwarka/?q=arctic+liquid+freezer+iii+240',
-      },
-      {
-        label: 'Ceneo',
-        url: 'https://www.ceneo.pl/;szukaj-ACFRE00150A',
-      },
-    ],
-    manual: true,
-  },
-  'class:aio-360': {
-    min: 422,
-    max: 979,
-    checkedAt: '2026-11-06',
-    sources: [
-      {
-        label: 'Morele',
-        url: 'https://www.morele.net/wyszukiwarka/?q=arctic+liquid+freezer+iii+360',
-      },
-      {
-        label: 'x-kom',
-        url: 'https://www.x-kom.pl/szukaj?q=nzxt%20kraken%20360%20rgb',
-      },
-    ],
-    manual: true,
   },
   'class:custom-loop': {
     min: null,

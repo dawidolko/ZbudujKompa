@@ -34,6 +34,28 @@ export function priceOf(id: string): PriceRange {
   return min === null ? { min: 0, max: 0, unavailable: true } : { min, max, checkedAt };
 }
 
+/**
+ * The price band of a group of parts, such as a cooling class.
+ *
+ * Derived rather than stored: it runs from the cheapest member's low end to
+ * the dearest member's typical price, and carries the oldest member's date. A
+ * class therefore moves with every refresh of its parts and expires with the
+ * stalest of them, and no figure for it is written down anywhere else.
+ */
+export function groupPriceOf(ids: string[]): PriceRange {
+  const priced = ids.map(priceOf).filter((range) => !range.unavailable);
+  if (priced.length === 0) return { min: 0, max: 0, unavailable: true };
+  const oldest = priced
+    .map((range) => range.checkedAt!)
+    .sort()
+    .at(0);
+  return {
+    min: Math.min(...priced.map((range) => range.min)),
+    max: Math.max(...priced.map((range) => range.max)),
+    checkedAt: oldest,
+  };
+}
+
 /** Where a part sits in its category's price range. */
 export function tierOf(id: string): PriceTier {
   const { tier } = priceRecord(id);
