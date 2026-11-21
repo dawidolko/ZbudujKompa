@@ -279,7 +279,7 @@ export const en = {
     worthKnowing: 'Worth knowing',
     checksPassed: 'Checks passed',
     priceNote:
-      'Ranges from Polish shops: from the lowest sensible price for a new unit to the typical price at a large shop. We check them by hand, so this is not a live price list. Follow a shop link to see current offers.',
+      'Ranges from Polish shops: from the lowest sensible price for a new unit to the typical price at a large shop. Each carries the date it was checked — by hand or by the automatic refresh from Google Shopping offers — so this is not a live price list, and a price older than 45 days is hidden. Follow a shop link to see current offers.',
     comparison: 'Compare',
     presets: 'Start from a reference build',
     presetsLead:
@@ -401,8 +401,8 @@ export const en = {
       idleHours: 'Hours idling per day',
       price: 'Electricity price',
       priceUnit: 'PLN/kWh',
-      priceHint:
-        'Default PLN 1.10: the typical 2026 cost on the Polish G11 tariff with energy, distribution and VAT (about PLN 1.04 to 1.13 depending on the operator; energy alone averages PLN 495.16/MWh net under the URE-approved tariffs). Most accurate: divide your bill by the kWh used.',
+      priceHint: (price: string, period: string, provisional: boolean) =>
+        `Default PLN ${price}: the average Polish household electricity price from Eurostat for the ${period.endsWith('S1') ? 'first' : 'second'} half of ${period.slice(0, 4)}${provisional ? ' (provisional)' : ''}, with distribution, taxes and fixed charges spread over each kWh. The per-kWh rate on a bill is usually a little lower — about PLN 1.04–1.13 on the G11 tariff in 2026. Most accurate: divide your bill by the kWh used.`,
       efficiency: 'Supply efficiency',
       efficiencyHint: 'The meter reads what enters the supply, not what leaves it',
       yearlyCost: 'Per year',
@@ -707,7 +707,7 @@ export const en = {
     openedTabs: (count: number, shop: string) => `Opened ${count} search tabs at ${shop}.`,
     searchAt: (shop: string, part: string) => `Search for ${part} at ${shop} (opens in a new tab)`,
     priceDisclaimer:
-      'Ranges from Polish shops, checked by hand, not a live price list. Check the current price at the shop before buying.',
+      'Ranges from Polish shops with the date they were checked, not a live price list. Check the current price at the shop before buying.',
     disclaimer:
       'These links open a search at the retailer with the part name already entered — no shop here publishes an API a static site could read, so a real search is the honest equivalent of a basket. None of them are affiliate links and this site earns nothing from them. Always check the exact model and its current price at the retailer before ordering.',
   },

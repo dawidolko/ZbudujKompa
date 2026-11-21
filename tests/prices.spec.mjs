@@ -20,6 +20,8 @@ import {
   rejectOutliers,
   renderPricesModule,
 } from '../scripts/lib/price-matching.mjs';
+import { latestPrice, renderEnergyModule } from '../scripts/lib/energy-price.mjs';
+import { electricityPrice } from '../src/lib/energy-price.ts';
 import { allParts } from '../src/lib/parts/selection.ts';
 import { autoPick } from '../src/lib/parts/autopick.ts';
 import { priceQueries } from '../src/lib/parts/price-queries.ts';
@@ -428,6 +430,48 @@ report(
   ),
   'and leaves the data module in place',
   'a failed run damaged the data module',
+);
+
+console.log('\nThe electricity price');
+
+/* Shaped like Eurostat's JSON-stat answer for nrg_pc_204, trimmed to what is read. */
+const eurostat = {
+  updated: '2026-10-19T23:00:00+0200',
+  value: { 0: 1.0827, 1: 1.1505, 2: 1.2724 },
+  status: { 2: 'p' },
+  dimension: { time: { category: { index: { '2025-S1': 0, '2025-S2': 1, '2026-S1': 2 } } } },
+};
+const latest = latestPrice(eurostat);
+report(
+  latest?.pricePerKwh === 1.2724 && latest.period === '2026-S1' && latest.provisional,
+  'takes the newest period and notes that it is provisional',
+  `read ${JSON.stringify(latest)}`,
+);
+report(
+  latestPrice({ ...eurostat, value: { 0: 1.0827, 1: 1.1505 } })?.period === '2025-S2',
+  'skips a period that has no value yet',
+  'picked a period with no value',
+);
+report(
+  latestPrice({ ...eurostat, value: { 2: 127.24 } }) === null &&
+    latestPrice({}) === null &&
+    latestPrice(null) === null,
+  'refuses an implausible figure or an empty answer',
+  'accepted a broken answer',
+);
+report(
+  renderEnergyModule(latest).includes('export const electricityPrice') &&
+    renderEnergyModule(latest).includes('eurostat'),
+  'the electricity module renders with its export and source',
+  'the rendered electricity module is incomplete',
+);
+report(
+  electricityPrice.pricePerKwh > 0.3 &&
+    electricityPrice.pricePerKwh < 5 &&
+    /^\d{4}-S[12]$/.test(electricityPrice.period) &&
+    electricityPrice.source.url.startsWith('https://'),
+  'the stored electricity price is plausible, dated and sourced',
+  'the stored electricity price is malformed',
 );
 
 console.log(`\n${passed}/${passed + failed} passed`);

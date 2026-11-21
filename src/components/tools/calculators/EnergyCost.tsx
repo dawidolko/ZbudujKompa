@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { getDictionary } from '@/i18n';
 import type { Locale } from '@/i18n/config';
 import { PSU_EFFICIENCY, splitEnergyCost } from '@/lib/calculators';
+import { electricityPrice } from '@/lib/energy-price';
 import { formatPln } from '@/lib/utils';
 import {
   CalculatorShell,
@@ -28,7 +29,7 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
   const [loadWatts, setLoadWatts] = useState(400);
   const [loadHours, setLoadHours] = useState(3);
   const [idleHours, setIdleHours] = useState(5);
-  const [price, setPrice] = useState(1.1);
+  const [price, setPrice] = useState(Math.round(electricityPrice.pricePerKwh * 100) / 100);
   const [grade, setGrade] = useState<keyof typeof PSU_EFFICIENCY>('Gold');
 
   const result = useMemo(
@@ -91,7 +92,14 @@ export function EnergyCostCalculator({ locale }: { locale: Locale }) {
             min={0.1}
             max={3}
             step={0.05}
-            hint={dict.calc.energy.priceHint}
+            hint={dict.calc.energy.priceHint(
+              electricityPrice.pricePerKwh.toLocaleString(locale === 'pl' ? 'pl-PL' : 'en-GB', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }),
+              electricityPrice.period,
+              electricityPrice.provisional,
+            )}
           />
           <SelectField
             label={dict.calc.energy.efficiency}

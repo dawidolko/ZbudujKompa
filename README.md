@@ -176,38 +176,39 @@ Copy [`.env.example`](.env.example) to `.env.local`. Every variable is compiled 
 
 The site is static, so it cannot show live prices. Instead each price is checked on a known day and that day is shown beside it. Once a check is more than 45 days old the price is not shown at all: the figure and every total that includes it are replaced by "Check current price" and the live links. Live links per part open the current search on Ceneo, Allegro and Amazon.pl, with no affiliate tags.
 
-**Currency:** every figure is a Polish shop price in złoty, VAT included, and is never converted. Polish pages write `699 – 809 zł`, English pages write `PLN 699 – 809`, and the check-date line under each list says so in both languages. The running-cost calculator defaults to 1.10 zł/kWh, the typical 2026 G11 cost with distribution and VAT, and names the URE tariff average (495.16 zł/MWh net for energy alone) in its hint.
+**Currency:** every figure is a Polish shop price in złoty, VAT included, and is never converted. Polish pages write `699 – 809 zł`, English pages write `PLN 699 – 809`, and the check-date line under each list says so in both languages. The running-cost calculator defaults to the newest Eurostat figure for Polish households (dataset `nrg_pc_204`, 2,500–4,999 kWh a year, all taxes included), stored in [`src/lib/energy-price.ts`](src/lib/energy-price.ts) and refreshed by the same workflow, without a key; its hint names the period and notes that Eurostat spreads fixed charges over each kWh, so a bill's per-kWh rate is a little lower.
 
 **What a range means:** the low end is the lowest sensible price for a new unit, usually the Ceneo lowest with several shops behind it. The high end is the typical in-stock price at a mainstream shop. For cards with many models, that is the median of the listings seen, taking the lower middle value of an even set, so a range only holds prices a shop displayed.
 
 **How the age limit is enforced:** every figure goes through one component, [`Price`](src/components/parts/Price.tsx), and a total carries the oldest date among its parts. The limit is applied three times. The build judges the static HTML against its own date, and a daily scheduled deploy keeps that current. The browser judges it again against the reader's clock. A small head script hides expired figures before the first paint, so they never show while the page hydrates. Budget logic, such as the automatic build and the upgrade calculator, keeps using stored values and labels them as an estimate. A total of many parts shows the prompt alone, with the live links next to each of its parts or, on the builds overview, on the build's own page.
 
-**Where the data is:** [`src/lib/parts/prices.ts`](src/lib/parts/prices.ts) is the only place a price is written. Each record has `min`, `max`, `tier`, `checkedAt` and `sources`, plus an optional `note` on how the figures were chosen. Cooling class ranges are there too, as `class:` records.
+**Where the data is:** [`src/lib/parts/prices.ts`](src/lib/parts/prices.ts) is the only place a price is written. Each record has `min`, `max`, `tier`, `checkedAt` and `sources`, plus an optional `note` on how the figures were chosen. Nothing else in the code holds a price: build totals, the automatic build, the upgrade calculator and the cooling class ranges are all computed from these records. A cooling class runs from its cheapest catalogue cooler to its dearest and carries the oldest of their dates; only the custom loop keeps a `class:` record, with no price, because no Polish shop sells a complete loop kit.
 
 **Parts with no price:** when a part is discontinued or has no credible offer, its `min` and `max` are `null` and `reason` says why. The interface shows "No price", autopick skips the part, and totals state how many parts they exclude. Out-of-stock prices are not used as evidence, because they turned out to be stale.
 
 ### Data sources
 
-| Source                        | Used for                     | Status                                                                                                                                      |
-| ----------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ceneo, x-kom, Morele, Proline | The figures in `prices.ts`   | Read by hand on the check date. The site never fetches them, and scraping them in code breaks their terms                                   |
-| SerpApi Google Shopping       | The optional monthly refresh | Ready for a key. **Has not yet run against the real API**                                                                                   |
-| Amazon Creators API           | Not used                     | Needs an Associates account with [10 qualifying sales in 30 days](https://affiliate-program.amazon.com/creatorsapi/docs/en-us/introduction) |
-| Allegro API                   | Not used                     | Public listing access could not be confirmed                                                                                                |
-| Geizhals                      | Not used                     | No free public data API, and it refuses automated requests                                                                                  |
+| Source                        | Used for                   | Status                                                                                                                                      |
+| ----------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ceneo, x-kom, Morele, Proline | The figures in `prices.ts` | Read by hand on the check date. The site never fetches them, and scraping them in code breaks their terms                                   |
+| SerpApi Google Shopping       | The twice-monthly refresh  | Ready for a key. **Has not yet run against the real API**                                                                                   |
+| Amazon Creators API           | Not used                   | Needs an Associates account with [10 qualifying sales in 30 days](https://affiliate-program.amazon.com/creatorsapi/docs/en-us/introduction) |
+| Allegro API                   | Not used                   | Public listing access could not be confirmed                                                                                                |
+| Geizhals                      | Not used                   | No free public data API, and it refuses automated requests                                                                                  |
 
 ### How to refresh
 
 **By hand:** check each part, edit `src/lib/parts/prices.ts`, and set `checkedAt`. If a price leaves its tier's limits in [`price-tiers.ts`](src/lib/parts/price-tiers.ts), update `tier` in the same record. A large market move also has to go into `BUDGET_SPLIT` in `src/lib/parts/autopick.ts`.
 
-**Automatically:** create a free account at [SerpApi](https://serpapi.com/), then add the key as a repository secret named `SERPAPI_KEY`. `.github/workflows/update-prices.yml` then runs on the 3rd of each month, or on demand from the Actions tab. Without the secret it exits cleanly and changes nothing.
+**Automatically:** create a free account at [SerpApi](https://serpapi.com/), then add the key as a repository secret named `SERPAPI_KEY`. `.github/workflows/update-prices.yml` then runs on the 3rd and the 17th of each month, or on demand from the Actions tab. Without the secret it exits cleanly and changes nothing.
 
-- The free plan allows 250 searches a month and 50 an hour. The catalogue uses one search per part, so a run fits the month and waits 75 seconds between searches to fit the hour. That makes a run take about two hours; the job allows three. When no offer carries a link, the record cites the Google Shopping search instead, so it always has an https source.
+- The free plan allows 250 searches a month and 50 an hour. The catalogue uses one search per part, about 100 a run, so two runs fit the month and waits 75 seconds between searches to fit the hour. That makes a run take about two hours; the job allows three. When no offer carries a link, the record cites the Google Shopping search instead, so it always has an https source.
 - For each part the script keeps Polish-priced offers whose title really is that part, drops used stock (by title words and by Google's `second_hand_condition` flag), foreign marketplaces and outliers, then writes the lowest remaining offer and the median. A part with fewer than three matches keeps its previous record and date, so it reaches the age limit and is hidden rather than given a false date.
 - A part whose typical price leaves its tier by more than 10 percent moves to the tier that fits. The limits per category are in [`price-tiers.ts`](src/lib/parts/price-tiers.ts).
 - A part with no price is restored once at least five reliable offers return. Priced parts are searched first, so a quota that runs out costs restorations rather than prices on show. `manual` records are skipped.
 - A run that refreshes fewer than half of the priced parts writes nothing, so a broken key or feed cannot overwrite good data. A run that stops later keeps what it found. Either way, when the key exists and the refresh failed, the workflow ends in failure.
-- Otherwise it commits the file, dates included, then starts a deploy.
+- The electricity price is read from Eurostat in the same job on every schedule, key or not. The file only changes when Eurostat publishes, and a failed read leaves it as it was and fails the job.
+- Otherwise it commits the files, dates included, then starts a deploy.
 
 Before relying on it, do one supervised run and review the diff: the parsing is tested against a [hand-written sample](tests/fixtures/serpapi-google-shopping.sample.json) shaped from the documentation, and the Polish price format in it is an assumption. On the free plan, SerpApi's Legal Shield does not apply, and its terms leave responsibility for how the data is used with you. Google's DMCA suit against SerpApi was dismissed in July 2026 with leave to amend, so check where that stands.
 
@@ -299,7 +300,7 @@ ZbudujKompa/
 │   ├── docker/            # Dockerfile, compose, nginx, security headers
 │   └── scripts/           # Brand assets, photo pipeline, chat key, secret scanning
 ├── docs/screenshots/      # README imagery
-├── scripts/               # Optional monthly price refresh through SerpApi
+├── scripts/               # Twice-monthly price refresh through SerpApi
 ├── public/                # Icons, OG image, photos, videos, manifest, CNAME
 ├── src/
 │   ├── app/

@@ -2,7 +2,10 @@ name: Update prices
 
 on:
   schedule:
-    - cron: '17 4 3 * *'
+    # The 3rd and the 17th: at most 17 days between runs, so a part has to miss
+    # two refreshes in a row before it reaches the 45-day limit. Two runs of
+    # about 100 searches fit the free plan's 250 a month.
+    - cron: '17 4 3,17 * *'
   workflow_dispatch:
 
 permissions:
@@ -28,51 +31,57 @@ jobs:
             echo "present=true" >> "$GITHUB_OUTPUT"
           else
             echo "present=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::SERPAPI_KEY is not set, so prices were not refreshed."
+            echo "::notice::SERPAPI_KEY is not set, so part prices were not refreshed. The electricity price still is."
           fi
 
       - uses: actions/checkout@v4
-        if: steps.key.outputs.present == 'true'
 
       - uses: actions/setup-node@v4
-        if: steps.key.outputs.present == 'true'
         with:
           node-version: '22'
           cache: npm
 
       - name: Install dependencies
-        if: steps.key.outputs.present == 'true'
         run: npm ci --no-audit --no-fund
 
-      - name: Refresh prices
+      - name: Refresh part prices
         id: refresh
         if: steps.key.outputs.present == 'true'
         continue-on-error: true
         run: node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/update-prices.mjs
 
-      - name: Format the data module
-        if: steps.key.outputs.present == 'true'
-        run: npx prettier --write src/lib/parts/prices.ts
+      # Eurostat needs no key, so this runs on every schedule.
+      - name: Refresh the electricity price
+        id: energy
+        continue-on-error: true
+        run: node scripts/update-energy-price.mjs
+
+      - name: Format the data modules
+        run: npx prettier --write src/lib/parts/prices.ts src/lib/energy-price.ts
 
       - name: Commit and deploy
-        if: steps.key.outputs.present == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- src/lib/parts/prices.ts; then
+          if git diff --quiet -- src/lib/parts/prices.ts src/lib/energy-price.ts; then
             echo "No value changed."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/lib/parts/prices.ts
-          git commit -m "chore: refresh part prices"
+          git add src/lib/parts/prices.ts src/lib/energy-price.ts
+          git commit -m "chore: refresh part and electricity prices"
           git pull --rebase origin main
           git push origin HEAD:main
           gh workflow run deploy.yml --ref main
 
-      - name: Fail when the refresh failed
-        if: steps.key.outputs.present == 'true' && steps.refresh.outcome == 'failure'
+      - name: Fail when a refresh failed
+        if: steps.refresh.outcome == 'failure' || steps.energy.outcome == 'failure'
         run: |
-          echo "::error::The price refresh failed although SERPAPI_KEY is set. Prices expire 45 days after their last check, so this needs a look."
+          if [ "${{ steps.refresh.outcome }}" = "failure" ]; then
+            echo "::error::The part price refresh failed although SERPAPI_KEY is set. Prices expire 45 days after their last check, so this needs a look."
+          fi
+          if [ "${{ steps.energy.outcome }}" = "failure" ]; then
+            echo "::error::The electricity price could not be read from Eurostat. The calculator keeps its previous figure."
+          fi
           exit 1

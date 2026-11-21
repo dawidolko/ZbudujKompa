@@ -292,7 +292,7 @@ export const pl: Dictionary = {
     worthKnowing: 'Warto wiedzieć',
     checksPassed: 'Sprawdzone poprawnie',
     priceNote:
-      'Widełki z polskich sklepów: od najniższej rozsądnej ceny nowej sztuki do typowej ceny w dużym sklepie. Sprawdzamy je ręcznie, więc to nie jest cennik na żywo. Aktualne oferty zobaczysz po kliknięciu linku do sklepu.',
+      'Widełki z polskich sklepów: od najniższej rozsądnej ceny nowej sztuki do typowej ceny w dużym sklepie. Każda ma datę sprawdzenia — ręcznego albo automatycznego, z ofert Google Shopping — więc to nie jest cennik na żywo, a cena starsza niż 45 dni znika. Aktualne oferty zobaczysz po kliknięciu linku do sklepu.',
     comparison: 'Porównaj',
     presets: 'Zacznij od gotowego zestawu',
     presetsLead: 'Wczytaj kompletną konfigurację i dostosuj ją, zamiast zaczynać od pustej listy.',
@@ -421,8 +421,8 @@ export const pl: Dictionary = {
       idleHours: 'Godzin w spoczynku dziennie',
       price: 'Cena prądu',
       priceUnit: 'zł/kWh',
-      priceHint:
-        'Domyślnie 1,10 zł: typowy koszt taryfy G11 w 2026 roku z energią, dystrybucją i VAT (od ok. 1,04 do 1,13 zł zależnie od operatora; sama energia według taryf URE to średnio 495,16 zł/MWh netto). Najdokładniej: podziel kwotę rachunku przez zużyte kWh.',
+      priceHint: (price: string, period: string, provisional: boolean) =>
+        `Domyślnie ${price} zł: średnia cena prądu dla gospodarstw domowych w Polsce według Eurostatu za ${period.endsWith('S1') ? 'I' : 'II'} półrocze ${period.slice(0, 4)}${provisional ? ' (dane wstępne)' : ''}, z dystrybucją, podatkami i opłatami stałymi rozłożonymi na kWh. Stawka za kWh na rachunku bywa nieco niższa — w taryfie G11 w 2026 roku około 1,04–1,13 zł. Najdokładniej: podziel kwotę rachunku przez zużyte kWh.`,
       efficiency: 'Sprawność zasilacza',
       efficiencyHint: 'Licznik mierzy to, co wchodzi do zasilacza, nie to, co z niego wychodzi',
       yearlyCost: 'Rocznie',
@@ -729,7 +729,7 @@ export const pl: Dictionary = {
     searchAt: (shop: string, part: string) =>
       `Szukaj ${part} w sklepie ${shop} (otwiera się w nowej karcie)`,
     priceDisclaimer:
-      'Widełki z polskich sklepów sprawdzane ręcznie, a nie cennik na żywo. Przed zakupem sprawdź aktualną cenę w sklepie.',
+      'Widełki z polskich sklepów z datą sprawdzenia, a nie cennik na żywo. Przed zakupem sprawdź aktualną cenę w sklepie.',
     disclaimer:
       'Te odnośniki otwierają wyszukiwanie w sklepie z wpisaną nazwą części — żaden z tych sklepów nie udostępnia API, które strona statyczna mogłaby odczytać, więc realne wyszukiwanie jest uczciwym odpowiednikiem koszyka. Żaden z linków nie jest afiliacyjny i serwis nic na nich nie zarabia. Przed zamówieniem zawsze sprawdź dokładny model i jego aktualną cenę w sklepie.',
   },
