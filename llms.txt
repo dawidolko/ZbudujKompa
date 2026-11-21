@@ -1,0 +1,27 @@
+# ZbudujKompa
+
+> ZbudujKompa is a free guide to building a PC, in Polish and English, by Dawid Olko: a configurator with compatibility checks, a parts catalogue, ready builds, calculators, guides and a glossary.
+
+## Tools
+
+- [PC configurator](https://zbudujkompa.dawidolko.pl/pl/konfigurator/): choose parts and check that they fit together
+- [Compatibility checker](https://zbudujkompa.dawidolko.pl/pl/narzedzia/kompatybilnosc/): test a set of parts against each other
+- [Calculators](https://zbudujkompa.dawidolko.pl/pl/kalkulatory/): power, clearance, noise, energy and more
+
+## Knowledge
+
+- [Guides](https://zbudujkompa.dawidolko.pl/pl/poradniki/): step-by-step PC building guides
+- [Articles](https://zbudujkompa.dawidolko.pl/pl/artykuly/): explanations of specific buying decisions
+- [Parts catalogue](https://zbudujkompa.dawidolko.pl/pl/podzespoly/): components by category and brand
+- [Platforms](https://zbudujkompa.dawidolko.pl/pl/platformy/): CPU sockets and their chipsets
+- [Ready builds](https://zbudujkompa.dawidolko.pl/pl/zestawy/): complete parts lists for typical uses
+- [Glossary](https://zbudujkompa.dawidolko.pl/pl/slownik/): the terms explained
+
+## Languages
+
+- [Polish version](https://zbudujkompa.dawidolko.pl/pl/): the default language
+- [English version](https://zbudujkompa.dawidolko.pl/en/): the same site in English
+
+## Author
+
+- [Dawid Olko](https://dawidolko.pl): Fullstack / AI Developer who built this site
