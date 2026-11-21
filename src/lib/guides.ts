@@ -14,7 +14,7 @@ const hardwareGuides: Guide[] = [
     slug: 'assembly-step-by-step',
     category: 'assembly',
     difficulty: 'beginner',
-    updated: '2026-08-01',
+    updated: '2026-11-21',
     related: ['first-boot-and-bios', 'cable-management', 'troubleshooting-no-post'],
     title: {
       pl: 'Składanie komputera krok po kroku',
@@ -86,9 +86,10 @@ const hardwareGuides: Guide[] = [
             'To najczęściej mylony krok w całym montażu i jednocześnie najłatwiejszy do naprawienia. Instrukcja płyty głównej podaje właściwe sloty wprost — zwykle są to A2 i B2, czyli drugi i czwarty licząc od procesora.',
             'Dlaczego akurat te dwa: procesor rozmawia z pamięcią dwoma niezależnymi kanałami. Moduły w slotach 2 i 4 trafiają po jednym na kanał, więc obie drogi pracują równolegle i przepustowość się podwaja. Dwa moduły w sąsiadujących slotach lądują na tym samym kanale, drugi zostaje pusty i tracisz połowę przepustowości. W grach to zwykle od 10 do 20 procent klatek, a w zintegrowanej grafice nawet dwukrotna różnica.',
             'Otwórz zatrzaski na końcach slotów. Część płyt, zwłaszcza tańszych i Mini-ITX, ma zatrzask tylko z jednej strony — to normalne i nie oznacza wady. Wycięcie w dolnej krawędzi modułu jest przesunięte względem środka i pasuje tylko w jednej orientacji, więc odwrotnie modułu nie włożysz.',
-            'Ustaw moduł nad slotem tak, żeby wycięcie pokryło się z wypustką, i dociskaj równomiernie z obu końców naraz. Wymagana siła jest wyraźnie większa, niż podpowiada intuicja — spokojnie kilkanaście kilogramów nacisku. Docisk pojedynczego końca przekrzywia moduł i zwykle kończy się tym, że jeden bok wchodzi, a drugi zostaje uniesiony.',
+            'Ustaw moduł nad slotem tak, żeby wycięcie pokryło się z wypustką, i dociskaj równomiernie z obu końców naraz. Wymagana siła jest wyraźnie większa, niż podpowiada intuicja — spokojnie około dziesięciu kilogramów nacisku. Docisk pojedynczego końca przekrzywia moduł i zwykle kończy się tym, że jeden bok wchodzi, a drugi zostaje uniesiony.',
             'Zatrzaski muszą zaskoczyć same i słychać wyraźne kliknięcie. Jeśli musisz je domykać palcem, moduł nie wszedł do końca. Po zamontowaniu spójrz na moduły z boku: złote styki powinny zniknąć całkowicie w slocie, równo na całej długości. Widoczny pasek styków z jednej strony to najczęstsza przyczyna komputera, który nie daje obrazu przy pierwszym uruchomieniu.',
-            'Cztery moduły zamiast dwóch to nie zawsze lepiej. Kontroler pamięci obciążony czterema kośćmi często nie utrzymuje deklarowanego profilu EXPO ani XMP i trzeba zejść z częstotliwości. Jeśli planujesz 32 GB, dwa moduły po 16 GB są pewniejsze niż cztery po 8 GB.',
+            'Cztery moduły zamiast dwóch to nie zawsze lepiej, a przy DDR5 szczególnie. Kontroler pamięci obciążony czterema kośćmi często nie utrzymuje deklarowanego profilu EXPO ani XMP i trzeba zejść z częstotliwości. Jeśli planujesz 32 GB, dwa moduły po 16 GB są pewniejsze niż cztery po 8 GB; 64 GB najlepiej kupić jako zestaw dwóch modułów po 32 GB.',
+            'DDR4 i DDR5 mają wycięcie w innym miejscu i nie pasują do cudzych slotów. AM5 i LGA1851 obsługują wyłącznie DDR5, AM4 wyłącznie DDR4, a płyty LGA1700 występują w wersji DDR4 albo DDR5 — nigdy obu naraz. Jeśli budujesz na AM4 albo płycie LGA1700 z DDR4, żeby wykorzystać posiadaną pamięć, to przy obecnych cenach DDR5 rozsądny wybór; sprawdź tylko w instrukcji płyty, że jest to wersja na DDR4.',
           ],
           en: [
             'This is the most commonly mistaken step in the whole build, and also the easiest to correct. The motherboard manual states the correct slots explicitly — usually A2 and B2, meaning the second and fourth counting from the CPU.',
@@ -96,7 +97,8 @@ const hardwareGuides: Guide[] = [
             'Open the clips at the ends of the slots. Some boards, particularly cheaper ones and Mini-ITX, have a clip on one side only — that is normal and not a defect. The notch in the bottom edge of the module is off-centre and fits one orientation only, so it cannot go in backwards.',
             'Line the notch up with the key in the slot and press down evenly at both ends at once. The force needed is noticeably more than intuition suggests — comfortably ten kilograms of pressure. Pushing one end first tilts the module and usually ends with one side seated and the other standing proud.',
             'The clips must snap shut on their own with an audible click. If you have to close them with a finger, the module is not fully in. Once fitted, look along the modules from the side: the gold contacts should disappear completely into the slot, evenly along their whole length. A visible strip of contacts at one end is the single most common cause of a machine that gives no display on first boot.',
-            'Four modules instead of two is not automatically better. A memory controller loaded with four sticks often cannot hold the rated EXPO or XMP profile, forcing a drop in frequency. If you are planning 32 GB, two 16 GB modules are a safer bet than four 8 GB ones.',
+            'Four modules instead of two is not automatically better, and on DDR5 even less so. A memory controller loaded with four sticks often cannot hold the rated EXPO or XMP profile, forcing a drop in frequency. If you are planning 32 GB, two 16 GB modules are a safer bet than four 8 GB ones; for 64 GB, buy a kit of two 32 GB modules.',
+            'DDR4 and DDR5 have the notch in a different place and will not fit a slot meant for the other type. AM5 and LGA1851 take DDR5 only, AM4 takes DDR4 only, and LGA1700 boards come in a DDR4 or a DDR5 version — never both. Building on AM4 or a DDR4 LGA1700 board to reuse memory you already own is a sensible choice at current DDR5 prices; just confirm in the board manual that it is the DDR4 version.',
           ],
         },
       },
@@ -107,13 +109,15 @@ const hardwareGuides: Guide[] = [
         body: {
           pl: [
             'Zrób to teraz, dopóki płyta leży poza obudową. Po zamontowaniu karty graficznej dostęp do górnego slotu M.2 bywa całkowicie zablokowany.',
+            'Wybierz slot według instrukcji płyty: dysk systemowy najlepiej do górnego slotu M.2, podłączonego do procesora. Na części płyt zajęcie niektórych slotów M.2 wyłącza wybrane porty SATA albo zmniejsza liczbę linii slotu karty graficznej — instrukcja ma tabelę, które gniazda dzielą linie.',
             'Zdejmij radiator ze slotu M.2, jeśli płyta go ma, i pamiętaj o usunięciu folii ochronnej z podkładki termicznej pod spodem. Pozostawiona folia to częsty powód przegrzewania się dysku.',
-            'Wsuń dysk pod kątem około 30 stopni, dociśnij poziomo i przykręć jedną małą śrubką. Nie dokręcaj jej mocno — wystarczy, by dysk nie odskakiwał.',
+            'Wsuń dysk pod kątem około 30 stopni, dociśnij poziomo i przykręć jedną małą śrubką albo zablokuj beznarzędziowym zatrzaskiem, jeśli płyta go ma. Śrubki nie dokręcaj mocno — wystarczy, by dysk nie odskakiwał. Prawidłowo zamontowany dysk leży płasko, a złote styki są w całości schowane w złączu.',
           ],
           en: [
             'Do this now, while the board is still outside the case. Once the graphics card is in, access to the top M.2 slot is often completely blocked.',
+            'Pick the slot from the board manual: the system drive is best in the top M.2 slot, which is wired to the CPU. On some boards, populating certain M.2 slots disables some SATA ports or reduces the lanes of the graphics card slot — the manual has a table of which sockets share lanes.',
             'Remove the M.2 heatsink if the board has one, and remember to peel the protective film off the thermal pad underneath. Leaving that film on is a common cause of a drive running hot.',
-            'Slide the drive in at roughly 30 degrees, press it flat and secure it with the single small screw. Do not overtighten — it only needs to stop the drive springing back up.',
+            'Slide the drive in at roughly 30 degrees, press it flat and secure it with the single small screw, or with the tool-free latch if the board has one. Do not overtighten the screw — it only needs to stop the drive springing back up. A correctly fitted drive lies flat, with its gold contacts fully hidden in the connector.',
           ],
         },
       },
@@ -128,15 +132,17 @@ const hardwareGuides: Guide[] = [
         body: {
           pl: [
             'Ilość pasty: kropla wielkości ziarna grochu na środku pokrywy procesora. Nacisk chłodzenia rozprowadzi ją równomiernie. Rozsmarowywanie pasty kartą nie jest potrzebne i zwykle wprowadza pęcherzyki powietrza.',
-            'Backplate montuje się od spodu płyty głównej — to kolejny powód, by nie przykręcać jeszcze płyty do obudowy. Sprawdź w instrukcji, którego zestawu mocowań użyć dla swojej podstawki.',
-            'Śruby dokręcaj naprzemiennie, po trochu, jak koła w samochodzie. Dokręcenie jednej strony do końca przed drugą przechyla blok i pozostawia część powierzchni bez kontaktu.',
-            'Wentylator podłącz do gniazda opisanego CPU_FAN. Płyta sprawdza to gniazdo przy starcie i wiele modeli odmawia uruchomienia, gdy nie wykryje tam obrotów.',
+            'Na platformach Intela backplate chłodzenia montuje się od spodu płyty głównej — to kolejny powód, by nie przykręcać jeszcze płyty do obudowy. Na AMD AM4 i AM5 większość chłodzeń korzysta z metalowej płytki fabrycznie przykręconej od spodu płyty: zdejmujesz tylko dwa plastikowe uchwyty z wierzchu, a metalowa płytka zostaje na miejscu. Sprawdź w instrukcji chłodzenia, którego zestawu mocowań użyć dla swojej podstawki.',
+            'Starsze chłodzenie przeniesione z innego komputera: mocowanie AM4 pasuje w większości przypadków do AM5, a LGA1851 ma te same otwory co LGA1700. Chłodzenie z LGA1200 lub LGA115x wymaga natomiast osobnego zestawu mocowań do LGA1700/1851, bo rozstaw otworów jest inny — producenci często go udostępniają.',
+            'Zdejmij folię ochronną z podstawy chłodzenia, jeśli jest. Śruby dokręcaj naprzemiennie, po trochu, jak koła w samochodzie, aż wszystkie dojdą do oporu. Dokręcenie jednej strony do końca przed drugą przechyla blok i pozostawia część powierzchni bez kontaktu.',
+            'Wentylator podłącz do gniazda opisanego CPU_FAN, a pompę chłodzenia wodnego do gniazda AIO_PUMP lub PUMP_FAN, jeśli płyta je ma. Płyta sprawdza CPU_FAN przy starcie i wiele modeli odmawia uruchomienia, gdy nie wykryje tam obrotów.',
           ],
           en: [
             'How much paste: a pea-sized dot in the centre of the CPU lid. The cooler pressure spreads it evenly. Spreading it manually with a card is unnecessary and usually introduces air bubbles.',
-            'The backplate mounts from behind the motherboard — another reason not to have screwed the board into the case yet. Check the manual for which mounting hardware your socket uses.',
-            'Tighten the screws alternately and a little at a time, like wheel nuts on a car. Fully tightening one side before the other tilts the block and leaves part of the surface out of contact.',
-            'Connect the fan to the header marked CPU_FAN. The board checks that header at startup, and many models refuse to boot if they detect no fan speed there.',
+            'On Intel platforms the cooler backplate mounts from behind the motherboard — another reason not to have screwed the board into the case yet. On AMD AM4 and AM5 most coolers use the backplate already fitted to the board: you remove only the two plastic brackets on top and leave the metal plate in place. Check the cooler manual for which mounting hardware your socket uses.',
+            'Reusing an older cooler from another machine: an AM4 mount fits AM5 in most cases, and LGA1851 has the same holes as LGA1700. A cooler from LGA1200 or LGA115x, however, needs a separate LGA1700/1851 mounting kit, because the hole spacing is different — manufacturers often supply one.',
+            'Peel the protective film off the cooler base if there is one. Tighten the screws alternately and a little at a time, like wheel nuts on a car, until they all reach their stop. Fully tightening one side before the other tilts the block and leaves part of the surface out of contact.',
+            'Connect the fan to the header marked CPU_FAN, and a liquid cooler pump to the AIO_PUMP or PUMP_FAN header if the board has one. The board checks CPU_FAN at startup, and many models refuse to boot if they detect no fan speed there.',
           ],
         },
       },
@@ -188,13 +194,13 @@ const hardwareGuides: Guide[] = [
         body: {
           pl: [
             'Zasilacz montuj wentylatorem w dół, jeśli obudowa ma pod nim otwór wentylacyjny i filtr. Zasysa wtedy chłodne powietrze spod obudowy zamiast ciepłego z jej wnętrza.',
-            'Podłącz trzy główne kable: 24-pinowy do płyty głównej, 8-pinowy EPS do zasilania procesora w górnej części płyty oraz zasilanie karty graficznej. Kabel EPS jest najczęściej pomijany, a bez niego komputer w ogóle nie ruszy.',
-            'W przypadku kart z gniazdem 12V-2x6 dociśnij wtyczkę zdecydowanie, aż usłyszysz kliknięcie, i sprawdź, czy złącze jest wsunięte do końca na całej szerokości. Niedociśnięta wtyczka w tym standardzie potrafi się przegrzać.',
+            'Podłącz dwa kable do płyty: 24-pinowy z boku płyty oraz 8-pinowy EPS do zasilania procesora w jej lewym górnym rogu. Kabel EPS jest najczęściej pomijany, a bez niego komputer w ogóle nie ruszy. Jeśli płyta ma dwa gniazda EPS (8+8 albo 8+4), pierwsze jest obowiązkowe, a drugie przydaje się głównie przy najmocniejszych procesorach — podłącz je, jeśli zasilacz ma drugi kabel.',
+            'Kabel zasilania karty graficznej przeprowadź teraz do miejsca, gdzie stanie karta, ale wepniesz go dopiero po jej montażu. Przy kartach z gniazdami 8-pin PCIe użyj osobnego kabla do każdego gniazda zamiast jednego kabla z dwiema końcówkami — szczególnie przy mocniejszych kartach.',
           ],
           en: [
             'Mount the PSU fan-down if the case has a vent and filter beneath it. It then draws cool air from under the case rather than warm air from inside it.',
-            'Connect the three main cables: the 24-pin to the motherboard, the 8-pin EPS for CPU power at the top of the board, and the graphics card power. The EPS cable is the one most often forgotten, and without it the machine will not start at all.',
-            'For cards using the 12V-2x6 connector, push the plug in firmly until it clicks and check that it is fully seated across its whole width. A partially seated plug in this standard can overheat.',
+            'Connect two cables to the board: the 24-pin on the side of the board and the 8-pin EPS for CPU power in its top-left corner. The EPS cable is the one most often forgotten, and without it the machine will not start at all. If the board has two EPS sockets (8+8 or 8+4), the first is mandatory and the second matters mainly for the most powerful CPUs — connect it if the PSU has a second cable.',
+            'Route the graphics card power cable now to where the card will sit, but plug it in only after the card is installed. For cards with 8-pin PCIe sockets, use a separate cable for each socket rather than one cable with two plugs on it — particularly on more powerful cards.',
           ],
         },
       },
@@ -206,12 +212,16 @@ const hardwareGuides: Guide[] = [
           pl: [
             'Karta idzie do górnego slotu PCIe — tego najbliżej procesora. To jedyny slot podłączony bezpośrednio do procesora pełną liczbą linii.',
             'Wykręć odpowiednią liczbę zaślepek z tyłu obudowy. Współczesne karty zajmują najczęściej trzy sloty, choć fizyczne złącze mają jedno.',
-            'Dociśnij kartę, aż zatrzask przy slocie kliknie. Nowoczesne karty są ciężkie — jeśli twoja wyraźnie się ugina, rozważ podpórkę, zwłaszcza gdy komputer bywa przenoszony.',
+            'Dociśnij kartę, aż zatrzask przy slocie kliknie, i przykręć jej śledź do obudowy. Nowoczesne karty są ciężkie — jeśli twoja wyraźnie się ugina, rozważ podpórkę, zwłaszcza gdy komputer bywa przenoszony.',
+            'Teraz wepnij zasilanie karty. Wtyczkę 12V-2x6 (następcę 12VHPWR, z tym samym układem pinów) dociśnij prosto, aż kliknie, i obejrzyj ją z boku: nie może być szczeliny między wtyczką a gniazdem na żadnym końcu. Nie zaginaj kabla ostro tuż przy wtyczce. Niedociśnięta albo naprężona na boki wtyczka w tym standardzie potrafi się przegrzać.',
+            'Starsza płyta z PCIe 3.0 (na przykład AM4 z chipsetem B450 lub A520 albo z APU Ryzen 5000G): karty z ośmioma liniami — RTX 5060 Ti, 5060, 5050, RX 7600 czy Arc B580 i B570 — tracą tam część przepustowości, co najbardziej odczuwają wersje z 8 GB pamięci. Karta z pełnymi szesnastoma liniami, jak RX 9060 XT, jest na takiej płycie bezpieczniejsza.',
           ],
           en: [
             'The card goes in the top PCIe slot — the one closest to the CPU. It is the only slot wired directly to the processor with the full number of lanes.',
             'Remove the right number of blanking plates from the back of the case. Modern cards usually occupy three slots even though they have a single physical connector.',
-            'Press the card down until the slot latch clicks. Modern cards are heavy — if yours visibly sags, consider a support bracket, particularly if the machine gets moved around.',
+            'Press the card down until the slot latch clicks, then screw its bracket to the case. Modern cards are heavy — if yours visibly sags, consider a support bracket, particularly if the machine gets moved around.',
+            'Now plug in the card power. Push a 12V-2x6 plug (the successor to 12VHPWR, with the same pin-out) in straight until it clicks, then look at it from the side: there must be no gap between plug and socket at either end. Do not bend the cable sharply right at the plug. A partially seated or sideways-stressed plug in this standard can overheat.',
+            'An older board with PCIe 3.0 (for example AM4 with a B450 or A520 chipset, or with a Ryzen 5000G APU): cards with eight lanes — RTX 5060 Ti, 5060, 5050, RX 7600 or Arc B580 and B570 — lose some bandwidth there, which hurts the 8 GB versions most. A card with the full sixteen lanes, such as the RX 9060 XT, is the safer choice on such a board.',
           ],
         },
       },
@@ -221,12 +231,12 @@ const hardwareGuides: Guide[] = [
         title: { pl: 'Kontrola przed pierwszym uruchomieniem', en: 'Checks before first power-on' },
         body: {
           pl: [
-            'Zanim zamkniesz obudowę, przejdź listę: kabel 24-pin, kabel EPS procesora, zasilanie karty graficznej, wentylator procesora w gnieździe CPU_FAN, pamięć w slotach 2 i 4, wszystkie zatrzaski zamknięte.',
+            'Zanim zamkniesz obudowę, przejdź listę: kabel 24-pin, kabel EPS procesora, zasilanie karty graficznej wsunięte do końca, wentylator procesora w gnieździe CPU_FAN, pamięć w slotach 2 i 4, wszystkie zatrzaski zamknięte, monitor podłączony do karty graficznej, a nie do płyty.',
             'Sprawdź, czy żaden kabel nie leży w płaszczyźnie łopatek wentylatora. To najczęstsza przyczyna głośnego stukania przy pierwszym starcie.',
             'Panele boczne zostaw na razie zdjęte. Jeśli coś wymaga poprawki, będziesz miał do tego dostęp bez ponownego rozkręcania obudowy.',
           ],
           en: [
-            'Before closing the case, run the list: 24-pin cable, CPU EPS cable, graphics card power, CPU fan in the CPU_FAN header, memory in slots 2 and 4, every latch closed.',
+            'Before closing the case, run the list: 24-pin cable, CPU EPS cable, graphics card power fully seated, CPU fan in the CPU_FAN header, memory in slots 2 and 4, every latch closed, monitor connected to the graphics card rather than the board.',
             'Check that no cable sits in the path of a fan blade. That is the most common cause of a loud ticking noise on first start.',
             'Leave the side panels off for now. If something needs correcting, you will have access without taking the case apart again.',
           ],
@@ -238,8 +248,13 @@ const hardwareGuides: Guide[] = [
     slug: 'first-boot-and-bios',
     category: 'assembly',
     difficulty: 'beginner',
-    updated: '2026-08-01',
-    related: ['assembly-step-by-step', 'troubleshooting-no-post'],
+    updated: '2026-11-21',
+    related: [
+      'assembly-step-by-step',
+      'ustawienia-bios',
+      'instalacja-windows',
+      'troubleshooting-no-post',
+    ],
     title: {
       pl: 'Pierwsze uruchomienie i ustawienia BIOS',
       en: 'First boot and BIOS setup',
@@ -256,13 +271,40 @@ const hardwareGuides: Guide[] = [
         body: {
           pl: [
             'Podłącz monitor do karty graficznej, nie do złącza na płycie głównej. To najczęstszy powód czarnego ekranu przy pierwszym starcie w zestawie z osobną kartą.',
-            'Włącz przełącznik z tyłu zasilacza, a potem przycisk zasilania obudowy. Pierwsze uruchomienie trwa dłużej niż kolejne — płyta uczy się konfiguracji pamięci, co przy DDR5 potrafi zająć nawet minutę z ciemnym ekranem.',
-            'Jeśli po dwóch minutach nie ma obrazu, wyłącz zasilanie i przejdź do poradnika o braku obrazu przy starcie. Nie zostawiaj komputera w tym stanie na dłużej.',
+            'Włącz przełącznik z tyłu zasilacza, a potem przycisk zasilania obudowy. Pierwsze uruchomienie trwa dłużej niż kolejne — płyta uczy się konfiguracji pamięci. Przy DDR5 potrafi to zająć minutę lub więcej z ciemnym ekranem i świecącą diodą DRAM, a komputer może się przy tym sam zrestartować. To normalne: nie przerywaj, nie wciskaj resetu. Na DDR4 trening trwa zwykle kilka sekund.',
+            'Start się udał, gdy zobaczysz logo producenta płyty albo ekran BIOS-u. Jeśli po pięciu minutach nadal nie ma obrazu, a diody diagnostyczne na płycie nie zmieniają stanu, wyłącz zasilanie i przejdź do poradnika o braku obrazu przy starcie.',
           ],
           en: [
             'Connect the monitor to the graphics card, not to the motherboard output. That is the single most common cause of a black screen on first boot in a system with a discrete card.',
-            'Flip the switch at the back of the PSU, then press the case power button. The first start takes longer than later ones — the board is training the memory configuration, which on DDR5 can take up to a minute with a dark screen.',
-            'If there is no picture after two minutes, cut the power and move to the no-display troubleshooting guide. Do not leave the machine sitting in that state.',
+            'Flip the switch at the back of the PSU, then press the case power button. The first start takes longer than later ones — the board is training the memory configuration. On DDR5 that can take a minute or more with a dark screen and the DRAM LED lit, and the machine may restart itself along the way. This is normal: do not interrupt it or press reset. On DDR4 training usually takes a few seconds.',
+            'You have a picture when the board maker logo or the BIOS screen appears. If there is still no picture after five minutes and the diagnostic LEDs on the board are not changing, cut the power and move to the no-display troubleshooting guide.',
+          ],
+        },
+      },
+      {
+        id: 'bios-update',
+        minutes: 15,
+        title: { pl: 'Czy potrzebujesz aktualizacji BIOS-u', en: 'Whether you need a BIOS update' },
+        tools: {
+          pl: ['Pendrive sformatowany w FAT32'],
+          en: ['A USB stick formatted as FAT32'],
+        },
+        warning: {
+          pl: 'Nie wyłączaj komputera i nie odłączaj zasilania podczas aktualizacji BIOS-u. Przerwana aktualizacja potrafi zablokować płytę.',
+          en: 'Do not switch off or unplug the machine while the BIOS is updating. An interrupted update can brick the board.',
+        },
+        body: {
+          pl: [
+            'Na ekranie głównym BIOS-u odczytaj jego wersję i porównaj z najnowszą na stronie pomocy technicznej twojego modelu płyty. W nowym zestawie aktualizacja przed instalacją systemu jest szczególnie ważna w trzech przypadkach.',
+            'Intel Core 13. i 14. generacji (zwłaszcza i7 i i9): BIOS z mikrokodem 0x12F lub nowszym usuwa przyczynę niestabilności tych procesorów. Wgraj go, zanim zainstalujesz system, i zostaw domyślny profil zasilania Intela, który nowy BIOS ustawia.',
+            'Ryzen 9000 na starszej płycie B650 lub X670 oraz Core Ultra 200S Plus (250K Plus, 270K Plus) na płycie Z890 lub B860 z pierwszej serii: płyta wyprodukowana przed premierą procesora może go nie rozpoznać i w ogóle nie dać obrazu. Pomaga funkcja BIOS Flashback (nazwy różnią się między producentami): wgrywa BIOS z pendrive bez działającego procesora i pamięci — szczegóły w instrukcji płyty.',
+            'Jeśli komputer startuje, aktualizuj wbudowanym narzędziem BIOS-u (EZ Flash, M-Flash, Q-Flash i podobne) z pliku na pendrivie, a nie programem w Windows. Po aktualizacji ustawienia wracają do fabrycznych, więc ponownie włącz profil pamięci i sprawdź TPM; kolejny start może znów potrwać dłużej przez ponowny trening pamięci.',
+          ],
+          en: [
+            'Read the BIOS version from its main screen and compare it with the newest one on the support page for your board model. In a new build, updating before installing the operating system matters most in three cases.',
+            'Intel Core 13th and 14th gen (especially i7 and i9): a BIOS with microcode 0x12F or newer removes the cause of the instability affecting these processors. Flash it before installing the system, and keep the Intel default power profile the new BIOS selects.',
+            'Ryzen 9000 on an older B650 or X670 board, and Core Ultra 200S Plus (250K Plus, 270K Plus) on a first-wave Z890 or B860 board: a board made before the processor launched may not recognise it and give no picture at all. BIOS Flashback helps (each maker names it differently): it flashes the BIOS from a USB stick without a working CPU or memory — the board manual has the details.',
+            'If the machine does start, update with the built-in BIOS tool (EZ Flash, M-Flash, Q-Flash and the like) from a file on the USB stick rather than a Windows program. An update resets the settings to defaults, so enable the memory profile again and check TPM; the next start may take longer again while the memory retrains.',
           ],
         },
       },
@@ -276,13 +318,13 @@ const hardwareGuides: Guide[] = [
         },
         body: {
           pl: [
-            'Wejdź do BIOS-u klawiszem Delete lub F2 zaraz po włączeniu komputera. Odszukaj ustawienie o nazwie EXPO (płyty AMD) lub XMP (płyty Intel).',
-            'Wybierz profil pierwszy, zapisz i uruchom ponownie. Po restarcie sprawdź w Menedżerze zadań Windows, czy pamięć raportuje deklarowaną częstotliwość.',
+            'Wejdź do BIOS-u klawiszem Delete lub F2 zaraz po włączeniu komputera. Odszukaj ustawienie o nazwie EXPO (pamięci DDR5 na płytach AMD) lub XMP (płyty Intel). Płyty AM5 zwykle przyjmują też zestawy z samym XMP, a na płytach AM4 z DDR4 profil XMP bywa nazwany DOCP albo A-XMP.',
+            'Wybierz profil pierwszy, naciśnij F10, żeby zapisać, i uruchom ponownie. Po zmianie płyta znów trenuje pamięć, więc ten start może potrwać dłużej. Po restarcie sprawdź w Menedżerze zadań Windows, w zakładce Wydajność i pozycji Pamięć, czy szybkość odpowiada tej z opakowania, na przykład 6000 MT/s.',
             'Jeśli komputer po włączeniu profilu nie startuje, wyczyść ustawienia BIOS-u zworką lub przyciskiem na płycie i spróbuj profilu drugiego, jeśli jest dostępny. Niestabilność przy profilu fabrycznym zdarza się i nie oznacza wadliwej pamięci.',
           ],
           en: [
-            'Enter the BIOS with Delete or F2 immediately after powering on. Find the setting called EXPO on AMD boards or XMP on Intel boards.',
-            'Select the first profile, save and restart. After the reboot, check in Windows Task Manager that the memory reports its rated frequency.',
+            'Enter the BIOS with Delete or F2 immediately after powering on. Find the setting called EXPO (DDR5 memory on AMD boards) or XMP (Intel boards). AM5 boards usually accept XMP-only kits too, and on AM4 boards with DDR4 the XMP profile is often labelled DOCP or A-XMP.',
+            'Select the first profile, press F10 to save, and restart. The board retrains the memory after the change, so this start may take longer. After the reboot, check in Windows Task Manager, under Performance and then Memory, that the speed matches the box, for example 6000 MT/s.',
             'If the machine will not start with the profile enabled, clear the BIOS with the jumper or button on the board and try the second profile if one is offered. Instability with a rated profile does happen and does not mean the memory is faulty.',
           ],
         },
@@ -310,7 +352,7 @@ const hardwareGuides: Guide[] = [
     slug: 'troubleshooting-no-post',
     category: 'troubleshooting',
     difficulty: 'intermediate',
-    updated: '2026-08-01',
+    updated: '2026-11-21',
     related: ['assembly-step-by-step', 'first-boot-and-bios'],
     title: {
       pl: 'Komputer się nie uruchamia — diagnostyka',
@@ -346,13 +388,19 @@ const hardwareGuides: Guide[] = [
         body: {
           pl: [
             'Najpierw sprawdź, czy monitor jest podłączony do karty graficznej, a nie do płyty głównej. To przyczyna w większości zgłoszeń tego objawu.',
+            'Przy pierwszym starcie z DDR5 daj komputerowi kilka minut: trening pamięci potrafi trwać minutę lub dłużej przy czarnym ekranie i jest normalny. Dopiero gdy dioda DRAM świeci bez zmian przez około pięć minut, szukaj przyczyny.',
             'Wyjmij pamięć i włóż ponownie, mocno, aż zatrzaski klikną. Następnie spróbuj uruchomić komputer z jednym modułem w slocie drugim od procesora. Źle osadzona pamięć to druga najczęstsza przyczyna.',
             'Sprawdź diody diagnostyczne na płycie głównej. Większość współczesnych płyt ma cztery diody opisane CPU, DRAM, VGA i BOOT — świecąca wskazuje etap, na którym start się zatrzymał, co oszczędza sporo zgadywania.',
+            'Świecąca dioda CPU przy poprawnie podłączonym kablu EPS często oznacza BIOS starszy niż procesor. Typowe przypadki: Ryzen 9000 na wczesnej płycie B650 lub X670, Ryzen 5000 na płycie B450 lub X470, Intel 13. i 14. generacji na wczesnej płycie Z690 lub B660, Core Ultra 200S Plus na pierwszych płytach Z890 lub B860. Rozwiązaniem jest aktualizacja przez BIOS Flashback, która nie wymaga działającego procesora.',
+            'Jeśli monitor jest podłączony do płyty, sprawdź, czy procesor w ogóle ma zintegrowaną grafikę. Procesory Intela z literą F w nazwie i większość Ryzenów 5000 (poza modelami G) jej nie mają, więc złącza na płycie nigdy nie pokażą obrazu.',
           ],
           en: [
             'First check the monitor is connected to the graphics card and not the motherboard. That accounts for most reports of this symptom.',
+            'On a first start with DDR5, give the machine a few minutes: memory training can take a minute or more with a black screen and is normal. Only start looking for a cause when the DRAM LED has stayed lit, unchanged, for around five minutes.',
             'Remove the memory and refit it firmly until the clips click. Then try starting with a single module in the second slot from the CPU. Badly seated memory is the second most common cause.',
             'Check the diagnostic LEDs on the motherboard. Most modern boards have four, marked CPU, DRAM, VGA and BOOT — the lit one shows where startup stopped, which saves a lot of guessing.',
+            'A lit CPU LED with the EPS cable correctly connected often means a BIOS older than the processor. Typical cases: Ryzen 9000 on an early B650 or X670 board, Ryzen 5000 on a B450 or X470 board, Intel 13th and 14th gen on an early Z690 or B660 board, Core Ultra 200S Plus on first-wave Z890 or B860 boards. The fix is an update through BIOS Flashback, which does not need a working CPU.',
+            'If the monitor is connected to the board, check whether the CPU has integrated graphics at all. Intel chips with an F in the name and most Ryzen 5000 parts (other than the G models) do not, so the board outputs will never show a picture.',
           ],
         },
       },
@@ -364,11 +412,13 @@ const hardwareGuides: Guide[] = [
         },
         body: {
           pl: [
+            'Przy pierwszym starcie, po wyczyszczeniu BIOS-u albo po włączeniu profilu pamięci jeden czy dwa restarty są normalne — płyta trenuje DDR5. Pętla, która trwa dłużej niż kilka minut, to już objaw problemu.',
             'Krótka pętla, po dwie do trzech sekund, zwykle oznacza problem z pamięcią lub jej profilem. Wyczyść ustawienia BIOS-u i uruchom bez włączonego EXPO lub XMP.',
             'Jeśli pętla pojawia się dopiero pod obciążeniem, podejrzewaj zasilacz o zbyt małej mocy albo źle dociśnięty kabel zasilania karty graficznej.',
             'Sprawdź też, czy chłodzenie procesora jest dociśnięte równomiernie. Blok przechylony na jedną stronę powoduje natychmiastowe przegrzanie i wyłączenie zabezpieczające.',
           ],
           en: [
+            'On a first start, after clearing the BIOS or after enabling the memory profile, one or two restarts are normal — the board is training DDR5. A loop that goes on for more than a few minutes is a genuine symptom.',
             'A short loop, two to three seconds at a time, usually points at the memory or its profile. Clear the BIOS and start with EXPO or XMP disabled.',
             'If the loop only appears under load, suspect an underpowered PSU or a poorly seated graphics card power cable.',
             'Also check that the CPU cooler is evenly tightened. A block tilted to one side causes immediate overheating and a protective shutdown.',
@@ -430,7 +480,7 @@ const hardwareGuides: Guide[] = [
     slug: 'choosing-cooling',
     category: 'cooling',
     difficulty: 'beginner',
-    updated: '2026-08-01',
+    updated: '2026-11-21',
     related: ['assembly-step-by-step', 'thermal-paste'],
     title: {
       pl: 'Jak wybrać chłodzenie procesora',
@@ -446,12 +496,12 @@ const hardwareGuides: Guide[] = [
         title: { pl: 'Zacznij od poboru mocy procesora', en: 'Start with the CPU power draw' },
         body: {
           pl: [
-            'Sprawdź wartość TDP lub maksymalnego poboru mocy swojego procesora i dodaj do niej około 15 procent zapasu. Chłodzenie pracujące stale na granicy swoich możliwości to chłodzenie głośne.',
+            'Sprawdź maksymalny pobór mocy swojego procesora i dodaj do niego około 15 procent zapasu. Sam TDP zaniża ten pobór: w AMD szukaj wartości PPT, która wynosi około 1,35 TDP (230 W dla procesora 170 W), w Intelu wartości Maximum Turbo Power (na przykład 250 W dla Core Ultra 9 285K). Chłodzenie pracujące stale na granicy swoich możliwości to chłodzenie głośne.',
             'Do około 150 W wystarczy dobra pojedyncza wieża. Między 150 a 250 W sensowna jest podwójna wieża lub chłodnica 240 mm. Powyżej 250 W warto rozważyć chłodnicę 360 mm.',
             'Ten jeden parametr rozstrzyga większość przypadków. Reszta to już kwestia wymiarów i preferencji.',
           ],
           en: [
-            'Look up the TDP or peak power figure for your CPU and add roughly 15 per cent of headroom. A cooler permanently running at its limit is a loud cooler.',
+            'Look up the peak power figure for your CPU and add roughly 15 per cent of headroom. TDP alone understates it: for AMD look for PPT, which is about 1.35 times TDP (230 W for a 170 W part), and for Intel look for Maximum Turbo Power (250 W for a Core Ultra 9 285K, for example). A cooler permanently running at its limit is a loud cooler.',
             'Up to about 150 W, a good single tower is enough. Between 150 and 250 W, a dual tower or a 240 mm radiator makes sense. Above 250 W, a 360 mm radiator is worth considering.',
             'That single figure settles most cases. The rest comes down to dimensions and preference.',
           ],
@@ -469,11 +519,13 @@ const hardwareGuides: Guide[] = [
             'Przy chłodzeniu powietrznym sprawdź dwie wartości: maksymalną wysokość chłodzenia w obudowie i wysokość radiatorów pamięci. Podwójne wieże często zachodzą nad pierwszy slot pamięci.',
             'Przy chłodzeniu wodnym sprawdź, gdzie obudowa przewiduje montaż chłodnicy i jakiego rozmiaru. Deklaracja „obsługuje 360 mm” bywa prawdziwa tylko dla jednej pozycji montażowej.',
             'Uwzględnij też grubość chłodnicy razem z wentylatorami — zwykle 52 do 60 mm. W wąskich obudowach chłodnica potrafi kolidować z pamięcią lub sekcją zasilania płyty.',
+            'Sprawdź też zgodność z podstawką. Większość chłodzeń do AM4 pasuje do AM5, a chłodzenia do LGA1700 pasują do LGA1851. Starsze chłodzenie z LGA1200 lub LGA115x wymaga zestawu mocowań do LGA1700/1851 — zanim kupisz nowe chłodzenie, sprawdź, czy producent twojego obecnego go nie oferuje.',
           ],
           en: [
             'For air cooling, check two numbers: the maximum cooler height the case allows and the height of your memory heat spreaders. Dual towers often overhang the first memory slot.',
             'For liquid cooling, check where the case supports a radiator and at what size. A claim of "supports 360 mm" is sometimes true for one mounting position only.',
             'Account for radiator thickness including fans — usually 52 to 60 mm. In narrow cases a radiator can foul the memory or the board power section.',
+            'Check socket compatibility too. Most AM4 coolers fit AM5, and LGA1700 coolers fit LGA1851. An older cooler from LGA1200 or LGA115x needs an LGA1700/1851 mounting kit — before buying a new cooler, check whether the maker of your current one offers it.',
           ],
         },
       },
@@ -532,7 +584,7 @@ const hardwareGuides: Guide[] = [
     slug: 'choosing-psu',
     category: 'basics',
     difficulty: 'beginner',
-    updated: '2026-08-01',
+    updated: '2026-11-21',
     related: ['assembly-step-by-step'],
     title: {
       pl: 'Dobór zasilacza',
@@ -570,12 +622,14 @@ const hardwareGuides: Guide[] = [
           pl: [
             'Kieruj się okresem gwarancji. Producenci dają 10 lat gwarancji tylko na konstrukcje, którym ufają — to sygnał wiarygodniejszy niż sam certyfikat sprawności.',
             'Modularne kable są wygodne, ale nie wpływają na jakość zasilania. To udogodnienie montażowe, za które warto dopłacić tylko przy ciasnej obudowie.',
-            'Jeśli twoja karta ma złącze 12V-2x6, wybierz zasilacz zgodny z ATX 3.1. Standard ten uwzględnia skoki poboru współczesnych kart, dzięki czemu zabezpieczenia nie wyłączają komputera bez powodu.',
+            'Przy nowym zakupie wybierz zasilacz zgodny z ATX 3.1. Ten standard zastąpił ATX 3.0, ma natywny kabel 12V-2x6 i uwzględnia krótkie skoki poboru współczesnych kart, dzięki czemu zabezpieczenia nie wyłączają komputera bez powodu. Kable 12VHPWR z zasilaczy ATX 3.0 mają ten sam układ pinów i pasują do gniazd 12V-2x6.',
+            'Starszy zasilacz ATX 2.x z przejściówką z kilku wtyczek 8-pin też zasili nową kartę, ale sprawdź zapas mocy z poprzedniego kroku i wiek zasilacza. Przejściówkę dołączoną do karty wepnij tak, by każda jej wtyczka 8-pin miała osobny kabel.',
           ],
           en: [
             'Use the warranty period as a guide. Manufacturers offer ten-year warranties only on designs they trust — a more reliable signal than the efficiency badge alone.',
             'Modular cables are convenient but do not affect power quality. They are an assembly convenience, worth paying for mainly in a cramped case.',
-            'If your card uses a 12V-2x6 connector, choose a supply that meets ATX 3.1. That standard accounts for the transient spikes modern cards produce, so the protection circuits do not shut the machine down without cause.',
+            'When buying new, choose a supply that meets ATX 3.1. That standard replaced ATX 3.0, has a native 12V-2x6 cable and accounts for the brief power spikes modern cards produce, so the protection circuits do not shut the machine down without cause. 12VHPWR cables from ATX 3.0 supplies have the same pin-out and fit 12V-2x6 sockets.',
+            'An older ATX 2.x supply with an adapter from several 8-pin plugs can still power a new card, but check the headroom from the previous step and the age of the unit. Connect the adapter that came with the card so that each of its 8-pin plugs has its own cable.',
           ],
         },
       },
