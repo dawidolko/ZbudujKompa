@@ -55,7 +55,7 @@ export const newsArticles: Article[] = [
         label: { pl: 'Aktualizacja: 21 listopada 2026', en: 'Update: 21 November 2026' },
         text: {
           pl: 'Deklaracja wsparcia AM5 do 2029 roku obowiązuje, a dokumentacja producenta potwierdza, że kolejna generacja Ryzenów (Zen 6) trafi na tę podstawkę. Procesory te nie są jeszcze w sprzedaży — doniesienia wskazują na 2027 rok. Po stronie Intela LGA1851 dostał w marcu 2026 odświeżenie Core Ultra 200S Plus, które ma być ostatnią generacją na tej podstawce.',
-          en: 'The commitment to support AM5 through 2029 stands, and AMD's documentation confirms that the next Ryzen generation (Zen 6) will use the socket. Those processors are not on sale yet — reporting points to 2027. On the Intel side, LGA1851 received the Core Ultra 200S Plus refresh in March 2026, which is expected to be the last generation for that socket.',
+          en: "The commitment to support AM5 through 2029 stands, and AMD's documentation confirms that the next Ryzen generation (Zen 6) will use the socket. Those processors are not on sale yet — reporting points to 2027. On the Intel side, LGA1851 received the Core Ultra 200S Plus refresh in March 2026, which is expected to be the last generation for that socket.",
         },
       },
     ],
