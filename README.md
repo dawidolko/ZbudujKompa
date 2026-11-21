@@ -34,7 +34,7 @@ There is no backend, no database and no tracking. Everything is prerendered to f
 - 💬 **Assistant** — A docked chat assistant answering from a local knowledge base, with no API key required and an optional LLM layered on top
 - 🌐 **Bilingual** — Every route exists in Polish and English with correct `hreflang`, `lang` and canonical URLs; Polish is the default
 - 🎨 **Design** — Laid out as a hardware service manual: an interactive board drawing, a side index on guides, and datasheet tables, in both themes. See [Design](#-design)
-- ♿ **Accessible** — WCAG 2.2 Level AA in both light and dark themes, verified by an automated axe suite
+- ♿ **Accessible** — WCAG 2.2 Level AA in both light and dark themes, checked page by page with an automated axe suite
 
 ---
 
@@ -226,7 +226,7 @@ Findings come in three grades, and the middle one is the point:
 
 Every message explains itself. `Incompatible` on its own sends someone back to a forum; _"this board takes DDR5 and that kit is DDR4"_ tells them what to change.
 
-The engine lives in [`src/lib/parts/compatibility.ts`](src/lib/parts/compatibility.ts) and is covered by [15 tests](tests/compatibility.spec.mjs).
+The engine lives in [`src/lib/parts/compatibility.ts`](src/lib/parts/compatibility.ts) and is covered by [the compatibility test suite](tests/compatibility.spec.mjs).
 
 ---
 
