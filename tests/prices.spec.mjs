@@ -11,7 +11,9 @@ import { fileURLToPath } from 'node:url';
 import {
   bandFromResponse,
   bandsDiffer,
+  CATEGORY_NOT,
   extractOffers,
+  implausibleStep,
   isNewPolishOffer,
   matchesPart,
   median,
@@ -298,7 +300,8 @@ report(
 console.log('\nApplying a run');
 
 const stored = {
-  gpu: { min: 1000, max: 1200, tier: 'budget', checkedAt: '2026-01-01', sources: [] },
+  gpu: { min: 2400, max: 2500, tier: 'budget', checkedAt: '2026-01-01', sources: [] },
+  cpu: { min: 1349, max: 1365, tier: 'high', checkedAt: '2026-01-01', sources: [] },
   same: { min: 500, max: 600, tier: 'budget', checkedAt: '2026-01-01', sources: [] },
   gone: {
     min: null,
@@ -313,7 +316,8 @@ const stored = {
 const applied = mergeRefresh(
   stored,
   [
-    { id: 'gpu', band: { min: 4000, max: 4300, sources: [{ label: 'x', url: 'https://x.pl' }] } },
+    { id: 'gpu', band: { min: 3000, max: 3300, sources: [{ label: 'x', url: 'https://x.pl' }] } },
+    { id: 'cpu', band: { min: 9528, max: 11411, sources: [] } },
     { id: 'same', band: { min: 500, max: 600, sources: [] } },
     { id: 'gone', band: { min: 700, max: 800, sources: [] } },
     { id: 'missed', band: null },
@@ -343,6 +347,45 @@ report(
   'a part with too few offers keeps its old date, so it can expire',
   'a part with no evidence was marked as checked',
 );
+
+report(
+  applied.next.cpu.min === 1349 &&
+    applied.next.cpu.checkedAt === '2026-01-01' &&
+    applied.held.some((hold) => hold.startsWith('cpu')),
+  'a band that jumps sevenfold is held, not published',
+  `the processor moved to ${applied.next.cpu.min}`,
+);
+report(
+  implausibleStep({ min: 1459, max: 1459 }, { min: 900, max: 1304 }) !== null &&
+    implausibleStep({ min: 699, max: 809 }, { min: 720, max: 809 }) === null &&
+    implausibleStep({ min: 0, max: 28 }, { min: 20, max: 30 }) === null &&
+    implausibleStep({ min: null, max: null }, { min: 700, max: 800 }) === null,
+  'the step limit checks both ends and skips free or unpriced parts',
+  'the step limit is wrong',
+);
+
+console.log('\nCategory words');
+
+const gamingPc = 'PC Gaming AMD Ryzen 7 7800X3D RTX 5070 32GB DDR5 1TB SSD';
+report(
+  !matchesPart(gamingPc, { must: ['7800X3D'], not: CATEGORY_NOT.cpu }) &&
+    matchesPart('Procesor AMD Ryzen 7 7800X3D BOX', { must: ['7800X3D'], not: CATEGORY_NOT.cpu }) &&
+    matchesPart('AMD Ryzen 7 8700G z grafiką Radeon 780M', {
+      must: ['8700G'],
+      not: CATEGORY_NOT.cpu,
+    }),
+  'a computer that names a card is not a processor, an APU still is',
+  'the processor filter is wrong',
+);
+report(
+  Object.keys(CATEGORY_NOT).every((category) =>
+    allParts.some((part) => part.category === category),
+  ),
+  'every category word list names a real category',
+  'a category word list names an unknown category',
+);
+
+console.log('\nRefusing a run');
 
 report(
   refusalReason({ refreshed: 0, pricedRefreshed: 0, pricedQueued: 100 }) !== null &&

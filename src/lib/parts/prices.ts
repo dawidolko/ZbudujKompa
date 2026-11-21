@@ -34,62 +34,52 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'ryzen-7-7800x3d': {
-    min: 9528,
-    max: 11411,
-    tier: 'flagship',
+    min: 1349,
+    max: 1365,
+    tier: 'high',
     checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Netland24',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 7 7800X3D&prds=catalogid:9048742128775687646,productid:6053463417924184460,headlineOfferDocid:17603872965395534895,imageDocid:15137619638225937756,gpcid:13657314013612574376,mid:576462884737973339,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/151188370',
       },
       {
-        label: 'Ceneo.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 7 7800X3D&prds=catalogid:6683097657655387331,productid:9088771353490398057,headlineOfferDocid:333672950505264817,imageDocid:7958539446355859748,gpcid:6531982694391057337,mid:576462511974145899,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Kaufland.pl - Goldfrieza',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 7 7800X3D&prds=catalogid:11254777738926433561,productid:15136521816435084526,headlineOfferDocid:15581972350889365033,imageDocid:5703420386628355071,gpcid:14151350605333168357,mid:576462834657512242,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=amd+ryzen+7+7800x3d',
       },
     ],
+    note: 'Six shops at 1349 zł and Komputronik at 1365 zł. A single Amazon.pl offer at 1314 zł was left out.',
   },
   'ryzen-7-9700x': {
-    min: 6449,
-    max: 9090,
-    tier: 'flagship',
+    min: 1169,
+    max: 1199,
+    tier: 'midrange',
     checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Ceneo.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 7 9700X&prds=catalogid:7614956172542564094,productid:9340623734168291800,headlineOfferDocid:548654138426018269,imageDocid:8173511017661763677,gpcid:2971758175078396119,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/171280719',
       },
       {
-        label: 'Allegro',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 7 9700X&prds=catalogid:14651846761789635463,productid:5798015821236316157,headlineOfferDocid:17234184558235029820,imageDocid:17692208628789694458,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Empik.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 7 9700X&prds=catalogid:14551065651441065049,productid:10982015637495021480,headlineOfferDocid:2110331382297365589,imageDocid:6144592248171373224,gpcid:6000130692758678221,mid:576462915369497111,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=ryzen%207%209700x',
       },
     ],
+    note: 'x-kom, Morele, Media Expert and Euro at 1199 zł, in stock.',
   },
   'ryzen-9-9950x': {
-    min: 15070,
-    max: 16379,
+    min: 2035,
+    max: 2349,
     tier: 'flagship',
-    checkedAt: '2026-11-21',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'ProLine SA',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 9 9950X&prds=productid:4122451885053691348,headlineOfferDocid:4122451885053691348,imageDocid:1621174189364812539,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-ryzen+9+9950x',
       },
       {
-        label: 'kontrast.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 9 9950X&prds=productid:8057900491292876024,headlineOfferDocid:8057900491292876024,imageDocid:1888351773236915914,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Sferis.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 9 9950X&prds=catalogid:7047986690709697912,productid:4525616268262496839,headlineOfferDocid:9412435692217282955,imageDocid:6691167647479429153,gpcid:11893571854929920749,mid:576462823386427981,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=ryzen%209%209950x',
       },
     ],
   },
@@ -154,44 +144,30 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'core-ultra-5-245k': {
-    min: 8134,
-    max: 10592,
-    tier: 'flagship',
+    min: 889,
+    max: 942,
+    tier: 'value',
     checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'kontrast.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 5 245K&prds=productid:13970565177651604575,headlineOfferDocid:13970565177651604575,imageDocid:15271497392120736561,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'kontrast.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 5 245K&prds=productid:1140532444345138288,headlineOfferDocid:1140532444345138288,imageDocid:18272759186763636247,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'sklep.pccpolska.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 5 245K&prds=productid:17860086815643448364,headlineOfferDocid:17860086815643448364,imageDocid:13737064118026908114,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/175358046',
       },
     ],
+    note: 'Sferis 889 zł and Morele 942 zł. A single Amazon.pl offer at 748 zł was left out, and x-kom listed it out of stock.',
   },
   'core-ultra-7-265k': {
-    min: 900,
-    max: 1304,
+    min: 1459,
+    max: 1459,
     tier: 'high',
     checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Morele.net',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 7 265K&prds=catalogid:8844433872921289965,productid:10852353514290194748,headlineOfferDocid:17495007592283234407,imageDocid:10085871658403795283,rds:PC_863653243037637913|PROD_PC_863653243037637913,gpcid:863653243037637913,mid:576462897985115738,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Ceneo.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 7 265K&prds=catalogid:16586250633734304262,productid:9501110724451871100,headlineOfferDocid:8177701139007182973,imageDocid:6335783617779328590,rds:PC_3786638106346829225|PROD_PC_3786638106346829225,gpcid:3786638106346829225,mid:576462895437999315,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'SuperTech.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 7 265K&prds=catalogid:547081563906507744,productid:1857426988169538170,headlineOfferDocid:2082210270450740640,imageDocid:15235267154593794573,gpcid:11889519665151611337,mid:576462892658356061,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/175216878',
       },
     ],
+    note: 'Only Komputronik had it in stock; x-kom showed the same price out of stock.',
   },
   'core-i5-14400f': {
     min: 617,
@@ -234,44 +210,30 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'ryzen-5-9600x': {
-    min: 1138,
-    max: 1700,
-    tier: 'high',
+    min: 739,
+    max: 749,
+    tier: 'value',
     checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'Kaufland.pl - Flatprime',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 5 9600X&prds=catalogid:813198632105416070,productid:14913033097076802360,headlineOfferDocid:17376687594579408005,imageDocid:16152699425899337917,rds:PC_7662051941873554599|PROD_PC_7662051941873554599,gpcid:7662051941873554599,mid:576462576363238415,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'omnivo24.erli.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 5 9600X&prds=catalogid:14895668449842727793,productid:7448467340305264368,headlineOfferDocid:14414641295310574572,imageDocid:4117614863385250530,gpcid:14762653079904040066,mid:576462912441384049,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Allegro',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 5 9600X&prds=productid:15361063843865910585,headlineOfferDocid:15361063843865910585,imageDocid:8887114593493283841,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/171280884',
       },
     ],
+    note: 'x-kom, Media Expert, Euro and Neonet at 749 zł.',
   },
   'ryzen-9-7900x3d': {
-    min: 1350,
-    max: 1989,
+    min: 2249,
+    max: 2275,
     tier: 'flagship',
-    checkedAt: '2026-11-21',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'Allegro',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 9 7900X3D&prds=catalogid:3429139788648418872,productid:11887402911577604005,headlineOfferDocid:13652788523084634900,imageDocid:17719630688220903567,rds:PC_1672234633786852805|PROD_PC_1672234633786852805,gpcid:1672234633786852805,mid:576462530857753364,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'AiO',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 9 7900X3D&prds=catalogid:1496095583484632629,productid:2287417483512863129,headlineOfferDocid:1762180107361641619,imageDocid:8245669369175550756,gpcid:13928533008218629284,mid:576462567158653081,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Ceneo.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Ryzen 9 7900X3D&prds=catalogid:5398183657621880424,productid:7078774025075543727,headlineOfferDocid:7655656264298684626,imageDocid:9096816420731194627,rds:PC_550086850699400977|PROD_PC_550086850699400977,gpcid:550086850699400977,mid:576462913723794823,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-ryzen+9+7900x3d',
       },
     ],
+    note: 'Only three shops list the box; x-kom showed 2939 zł out of stock.',
   },
   'ryzen-9-9950x3d': {
     min: 2300,
@@ -334,22 +296,18 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'core-ultra-9-285k': {
-    min: 14699,
-    max: 16014,
+    min: 2160,
+    max: 2499,
     tier: 'flagship',
-    checkedAt: '2026-11-21',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'Microless.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 9 285K&prds=productid:16306187138052584045,headlineOfferDocid:16306187138052584045,imageDocid:183661715771270143,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-core+ultra+9+285k',
       },
       {
-        label: 'Allegro',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 9 285K&prds=productid:6333617001770123215,headlineOfferDocid:6333617001770123215,imageDocid:16096229504840911813,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Allegro',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Core Ultra 9 285K&prds=productid:14379764576668856569,headlineOfferDocid:14379764576668856569,imageDocid:16096229504840911813,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=core%20ultra%209%20285k',
       },
     ],
   },
@@ -883,24 +841,21 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'rtx-5070': {
-    min: 2686,
+    min: 4099,
     max: 4399,
     tier: 'midrange',
     checkedAt: '2026-11-21',
     sources: [
       {
-        label: 'kakto.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=GeForce RTX 5070 12GB&prds=catalogid:5383841093738560613,productid:16217077328390997439,headlineOfferDocid:14007463305067041434,imageDocid:8588401337274809763,rds:PC_1330966908701396787|PROD_PC_1330966908701396787,gpcid:9841163386130156987,mid:576462839969128792,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=rtx%205070',
       },
       {
-        label: 'Proshop.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=GeForce RTX 5070 12GB&prds=catalogid:17569199379496583020,productid:12382126979590892947,headlineOfferDocid:7791568572145997482,imageDocid:4580127022560237466,rds:PC_8004901747238251109|PROD_PC_8004901747238251109,gpcid:8004901747238251109,mid:576462576365281587,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Allegro',
-        url: 'https://www.google.pl/search?ibp=oshop&q=GeForce RTX 5070 12GB&prds=catalogid:3939895799144274039,productid:1135596422098969225,headlineOfferDocid:15217934884705104140,imageDocid:11570052124492895290,rds:PC_8934873140492000569|PROD_PC_8934873140492000569,gpcid:8934873140492000569,mid:576462892663530865,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=rtx+5070',
       },
     ],
+    note: 'Zotac Twin Edge 4099 zł at x-kom; MSI Ventus 4399 zł.',
   },
   'rx-9070-xt': {
     min: 3999,
@@ -1043,22 +998,18 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'arc-b580': {
-    min: 2687,
-    max: 3270,
-    tier: 'midrange',
-    checkedAt: '2026-11-21',
+    min: 1798,
+    max: 1799,
+    tier: 'budget',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'broozy.erli.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Arc B580&prds=catalogid:8435769504057362549,productid:10101964785815100802,headlineOfferDocid:12025264287707938159,imageDocid:13739708465496380007,rds:PC_9631196681075255347|PROD_PC_9631196681075255347,gpcid:9631196681075255347,mid:576462814735017041,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-intel+arc+b580',
       },
       {
-        label: 'tradaxsklep.erli.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Arc B580&prds=catalogid:1781342752553248606,productid:18367103876847656092,headlineOfferDocid:2881857455190757733,imageDocid:12043318596767492837,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Proshop.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Intel Arc B580&prds=catalogid:5048834692314011597,productid:4994042750717235651,headlineOfferDocid:16193488490969917864,imageDocid:9480978262451129561,rds:PC_6128764626812351150|PROD_PC_6128764626812351150,gpcid:6128764626812351150,mid:576462860399495084,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=arc%20b580',
       },
     ],
   },
@@ -1276,24 +1227,21 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: 'One Ceneo offer at 1347.50 zł was treated as an outlier. x-kom sells the Pure Power 13 M 750 W at 499 zł.',
   },
   'focus-gx-850': {
-    min: 1060,
-    max: 1665,
-    tier: 'flagship',
-    checkedAt: '2026-11-21',
+    min: 599,
+    max: 834,
+    tier: 'midrange',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'Empik.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Seasonic Focus GX-850&prds=productid:8791100668740028448,headlineOfferDocid:8791100668740028448,imageDocid:2287816855555069516,rds:PC_12845545200465390361|PROD_PC_12845545200465390361,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Proline',
+        url: 'https://proline.pl/?qp=seasonic+focus+gx+850',
       },
       {
-        label: 'balta.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Seasonic Focus GX-850&prds=productid:12805945664695476961,headlineOfferDocid:12805945664695476961,imageDocid:14964321514666021705,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Empik.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Seasonic Focus GX-850&prds=productid:5011514569417248073,headlineOfferDocid:5011514569417248073,imageDocid:16954622866438793075,rds:PC_9711072821542461483|PROD_PC_9711072821542461483,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Morele',
+        url: 'https://www.morele.net/wyszukiwarka/?q=seasonic+focus+gx+850',
       },
     ],
+    note: 'ATX 3.1 v4 black. x-kom showed 799 zł out of stock.',
   },
   'prime-tx-1000': {
     min: null,
@@ -1362,22 +1310,18 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'mpg-a1000g': {
-    min: 839,
-    max: 1179,
-    tier: 'high',
-    checkedAt: '2026-11-21',
+    min: 499,
+    max: 559,
+    tier: 'value',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'Ceneo.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=MSI MPG A1000G PCIE5&prds=catalogid:12850104338967009312,productid:6227707667429369530,headlineOfferDocid:10665319822009120742,imageDocid:10626717661378874906,rds:PC_15445986654643247333|PROD_PC_15445986654643247333,gpcid:15445986654643247333,mid:576462898012862550,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-msi+mpg+a1000g+pcie5',
       },
       {
-        label: 'Backbone Krzysztof Raczyński',
-        url: 'https://www.google.pl/search?ibp=oshop&q=MSI MPG A1000G PCIE5&prds=productid:6658478792324879225,headlineOfferDocid:6658478792324879225,imageDocid:9649877238723811832,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Empik.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=MSI MPG A1000G PCIE5&prds=catalogid:10013289003654169096,productid:18015908946548899115,headlineOfferDocid:17652143550707242458,imageDocid:7386707589331420083,gpcid:13197544645212777375,mid:576462916870996392,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=msi%20mpg%20a1000g%20pcie5',
       },
     ],
   },
@@ -1533,24 +1477,17 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'o11-dynamic-evo': {
-    min: 221,
-    max: 354,
-    tier: 'budget',
-    checkedAt: '2026-11-21',
+    min: 793,
+    max: 793,
+    tier: 'high',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'Microless.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Lian Li O11 Dynamic EVO&prds=catalogid:7024655590733725954,productid:10662003649065116986,headlineOfferDocid:17774877665788725052,imageDocid:4668411542561096824,rds:PC_11176194984169133233|PROD_PC_11176194984169133233,gpcid:11176194984169133233,mid:576462916115155190,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Microless.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Lian Li O11 Dynamic EVO&prds=catalogid:2959059672595542146,productid:10912736757309399191,headlineOfferDocid:13410468810811940421,imageDocid:4668411542561096824,rds:PC_3614259895656947872|PROD_PC_3614259895656947872,gpcid:8793663973374599760,mid:576462845884010709,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Kaufland.pl - M Plus L',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Lian Li O11 Dynamic EVO&prds=catalogid:18128596608269299076,productid:11506402168480085645,headlineOfferDocid:7273738605042020276,imageDocid:4816479580949226877,rds:PC_1124865484021124486|PROD_PC_1124865484021124486,gpcid:1124865484021124486,mid:576462887969963007,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-lian+li+o11+dynamic+evo',
       },
     ],
+    note: 'One white unit on Ceneo. Morele sells the RGB version at 699 to 769 zł.',
   },
   'meshify-2-compact': {
     min: 476,
@@ -1610,22 +1547,18 @@ export const priceRecords: Record<string, PriceRecord> = {
     ],
   },
   'peerless-assassin-120': {
-    min: 99,
-    max: 141,
+    min: 172,
+    max: 199,
     tier: 'value',
-    checkedAt: '2026-11-21',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'Amazon.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Thermalright Peerless Assassin 120 SE&prds=productid:4154433452610251310,headlineOfferDocid:4154433452610251310,imageDocid:4410539189276042912,rds:PC_9289671145611270125|PROD_PC_9289671145611270125,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-thermalright+peerless+assassin+120+se',
       },
       {
-        label: 'Amazon.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Thermalright Peerless Assassin 120 SE&prds=catalogid:14997786145962388061,productid:14979592699365863073,headlineOfferDocid:10392688282882205032,imageDocid:8660010038691500768,rds:PC_3988342626118889696|PROD_PC_3988342626118889696,gpcid:3988342626118889696,mid:576462576359303534,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Amazon.pl',
-        url: 'https://www.google.pl/search?ibp=oshop&q=Thermalright Peerless Assassin 120 SE&prds=catalogid:16814560649047873127,productid:15330293257181087283,headlineOfferDocid:10392688282882205032,imageDocid:8660010038691500768,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'x-kom',
+        url: 'https://www.x-kom.pl/szukaj?q=peerless%20assassin%20120%20se',
       },
     ],
   },
@@ -1776,24 +1709,17 @@ export const priceRecords: Record<string, PriceRecord> = {
     note: 'Only the ARGB White non-Pro was listed. The Pro 420 sells from 399 zł.',
   },
   'stock-wraith': {
-    min: 72,
-    max: 72,
+    min: 0,
+    max: 28,
     tier: 'budget',
-    checkedAt: '2026-11-21',
+    checkedAt: '2026-11-06',
     sources: [
       {
-        label: 'Microless.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Wraith Stealth&prds=catalogid:12766384651965163322,productid:15013448818269860144,headlineOfferDocid:12946735098348600235,imageDocid:12950589278254484984,rds:PC_4748385603997805421|PROD_PC_4748385603997805421,gpcid:16513785667618221340,mid:576462917077331026,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'Microless.com',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Wraith Stealth&prds=productid:17610949790486762714,headlineOfferDocid:17610949790486762714,imageDocid:12950589278254484984,rds:PC_16212460009098239217|PROD_PC_16212460009098239217,pvt:hg&hl=pl&gl=pl&udm=28',
-      },
-      {
-        label: 'WSData',
-        url: 'https://www.google.pl/search?ibp=oshop&q=AMD Wraith Stealth&prds=productid:257823127722745423,headlineOfferDocid:257823127722745423,imageDocid:12202010078159766487,rds:PC_16284510475634336048|PROD_PC_16284510475634336048,pvt:hg&hl=pl&gl=pl&udm=28',
+        label: 'Ceneo',
+        url: 'https://www.ceneo.pl/;szukaj-amd+wraith+stealth',
       },
     ],
+    note: 'Free in a boxed Ryzen; the figures are the loose unit, refreshed like any other part.',
   },
   'core-i5-14400': {
     min: 699,

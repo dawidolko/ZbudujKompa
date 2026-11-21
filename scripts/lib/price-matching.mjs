@@ -34,7 +34,40 @@ const CONDITION_WORDS = [
 ];
 
 /* Whole machines, whose titles list parts they merely contain. */
-const WHOLE_MACHINES = ['komputer', 'laptop', 'notebook', 'desktop'];
+const WHOLE_MACHINES = [
+  'komputer',
+  'laptop',
+  'notebook',
+  'desktop',
+  'workstation',
+  'stacja robocza',
+];
+
+/*
+ * Words that put an offer in another category. A gaming PC listed as "Ryzen 7
+ * 7800X3D RTX 5070 32GB 1TB" names no machine at all, so a processor title that
+ * also names a graphics card, a drive or an operating system is a whole computer
+ * or a bundle, never the processor on its own. "Radeon" alone is left out because
+ * a Ryzen with integrated graphics carries it in its name.
+ */
+export const CATEGORY_NOT = {
+  cpu: ['RTX', 'GTX', 'GeForce', 'RX', 'SSD', 'HDD', 'NVMe', 'Windows', 'płyta', 'zestaw'],
+  gpu: ['Ryzen', 'Core i3', 'Core i5', 'Core i7', 'Core i9', 'Core Ultra', 'SSD', 'Windows'],
+  motherboard: ['RTX', 'GeForce', 'zestaw'],
+  psu: ['obudowa', 'RTX', 'GeForce'],
+  case: ['zasilacz', 'RTX', 'GeForce', 'Ryzen'],
+  cooler: ['Ryzen', 'Core i5', 'Core i7', 'Core Ultra'],
+};
+
+/*
+ * How far one run may move a price that was already confirmed. A part does not
+ * get 40 % dearer or 30 % cheaper in the two weeks between runs, so a band
+ * outside these limits is a wrong match: a whole computer, a bundle, a second-
+ * hand listing or another model. The part keeps its previous record, date
+ * included, and the run log names it so a person can check it by hand.
+ */
+const MAX_STEP_UP = 1.4;
+const MAX_STEP_DOWN = 0.7;
 
 /* Marketplaces that ship from abroad, so the price is not a Polish shelf price. */
 const FOREIGN_MARKETPLACES = ['ebay', 'aliexpress', 'temu', 'alibaba', 'wish'];
@@ -151,6 +184,28 @@ export function shoppingSearch(q) {
   return { label: 'Google Shopping', url: url.toString() };
 }
 
+/*
+ * Why a new band cannot follow the previous record, or null when it may. Both
+ * ends are checked: the low end guards against a single bad offer, the typical
+ * price against a whole set of wrong matches. A previous figure of zero (a part
+ * that comes free in the box) gives nothing to compare with on that end.
+ */
+export function implausibleStep(previous, band) {
+  if (previous.min === null || previous.max === null) return null;
+  const ends = [
+    ['low end', previous.min, band.min],
+    ['typical price', previous.max, band.max],
+  ];
+  for (const [name, before, after] of ends) {
+    if (before <= 0) continue;
+    const ratio = after / before;
+    if (ratio > MAX_STEP_UP || ratio < MAX_STEP_DOWN) {
+      return `${name} ${before} -> ${after} zł (x${ratio.toFixed(2)})`;
+    }
+  }
+  return null;
+}
+
 /* True when a refresh changed a number, which is what is worth a commit. */
 export function bandsDiffer(previous, next) {
   return previous.min !== next.min || previous.max !== next.max;
@@ -160,16 +215,29 @@ export function bandsDiffer(previous, next) {
  * Applies a run to the records. `outcomes` holds one { id, band } per part the
  * run got an answer for, with a null band where too few offers survived: that
  * part keeps its record, date included, so it ages out rather than being
- * refreshed on no evidence. A part with no price comes back on a band, and the
- * tier follows the new typical price through `tierFor`.
+ * refreshed on no evidence. A band that moves a confirmed price too far is held
+ * the same way and listed in `held`. A part with no price comes back on a band,
+ * and the tier follows the new typical price through `tierFor`.
  */
 export function mergeRefresh(records, outcomes, { today, tierFor }) {
   const next = structuredClone(records);
-  const summary = { refreshed: 0, pricedRefreshed: 0, changed: [], restored: [], retiered: [] };
+  const summary = {
+    refreshed: 0,
+    pricedRefreshed: 0,
+    changed: [],
+    restored: [],
+    retiered: [],
+    held: [],
+  };
 
   for (const { id, band } of outcomes) {
     if (!band) continue;
     const previous = records[id];
+    const jump = implausibleStep(previous, band);
+    if (jump) {
+      summary.held.push(`${id}: ${jump}`);
+      continue;
+    }
     const restored = previous.min === null;
     const tier = previous.tier ? tierFor(id, previous.tier, band.max) : undefined;
 

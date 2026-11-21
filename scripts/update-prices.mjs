@@ -10,7 +10,9 @@
  * The free plan allows 250 searches a month and 50 an hour, so the script spends
  * one search per part and waits between searches to stay under the hourly limit.
  *
- * A part keeps its previous record when too few offers match it. A part with no
+ * A part keeps its previous record when too few offers match it, or when the
+ * offers would move its price further than a real price moves between runs,
+ * which is what a whole computer or a bundle in the results looks like. A part with no
  * price gets one back when enough reliable offers return, and a part's tier
  * follows its price. A run that fails for most parts writes nothing and exits
  * with an error; one that stops late keeps what it found and still exits with
@@ -23,6 +25,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import {
   bandFromResponse,
   bandsDiffer,
+  CATEGORY_NOT,
   MIN_OFFERS,
   mergeRefresh,
   refusalReason,
@@ -100,9 +103,10 @@ for (const [index, [id, record]] of queue.entries()) {
   }
 
   const restoring = record.min === null;
+  const query = priceQueries[id];
   const band = bandFromResponse(
     response,
-    priceQueries[id],
+    { ...query, not: [...(query.not ?? []), ...(CATEGORY_NOT[categoryOf.get(id)] ?? [])] },
     restoring ? RESTORE_MIN_OFFERS : MIN_OFFERS,
   );
   if (!band) console.log(`  ${id}: too few matching offers, keeping ${record.checkedAt}`);
@@ -123,6 +127,7 @@ console.log(
     `${run.restored.length} restored, ${run.retiered.length} moved tier.`,
 );
 for (const move of run.retiered) console.log(`  tier ${move}`);
+for (const hold of run.held) console.log(`::warning::Held, check by hand: ${hold}`);
 
 /* A failed run writes nothing: the file keeps its good data, and the failure
    reaches the workflow through the exit code. */
