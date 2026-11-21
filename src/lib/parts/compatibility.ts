@@ -316,8 +316,8 @@ export function checkCompatibility(selection: BuildSelection): CompatibilityRepo
         level: 'warning',
         categories: ['psu', 'gpu'],
         message: {
-          pl: 'Ten zasilacz nie spełnia ATX 3.1, a karta pobiera powyżej 250 W. Zabezpieczenia mogą wyłączać komputer przy skokach poboru.',
-          en: 'This supply does not meet ATX 3.1 and the card draws over 250 W. Its protection may shut the machine down on transient spikes.',
+          pl: 'Ten zasilacz nie spełnia ATX 3.0 ani 3.1, a karta pobiera powyżej 250 W. Starsze normy nie uwzględniają krótkich skoków poboru współczesnych kart, więc zabezpieczenia mogą wtedy wyłączać komputer. Wybierz zasilacz ATX 3.x albo z wyraźnym zapasem mocy.',
+          en: 'This supply meets neither ATX 3.0 nor 3.1, and the card draws over 250 W. Older standards do not allow for the short power spikes of modern cards, so its protection may shut the machine down. Choose an ATX 3.x supply or one with clear headroom.',
         },
       });
     }
