@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://zbudujkompa.dawidolko.pl/sitemap.xml
